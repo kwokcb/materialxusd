@@ -1,0 +1,1394 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\Examples\OpenPBR\open_pbr_velvet\Velvet.oso
+shader Velvet	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"Velvet"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Nworld_space	"world"		%read{2,2} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_base_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base Weight"} %meta{string,page,"Base"} %meta{string,help,"Multiplier on the intensity of the reflection from the diffuse and metallic base."} %meta{string,widget,"number"}  %read{31,361} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_base_color	0.0199999996 0.0199999996 0.0199999996		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Base Color"} %meta{string,page,"Base"} %meta{string,help,"Color of the reflection from the diffuse and metallic base."}  %read{31,113} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_base_diffuse_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base Diffuse Roughness"} %meta{string,page,"Base"} %meta{int,uiadvanced,1} %meta{string,help,"Roughness of the diffuse reflection. Higher values cause the surface to appear flatter."} %meta{string,widget,"number"}  %read{338,360} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_base_metalness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base Metalness"} %meta{string,page,"Base"} %meta{string,help,"Specifies how metallic the base material appears (dials the base from pure dielectric to pure metal)."} %meta{string,widget,"number"}  %read{133,376} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_specular_weight	1		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Specular Weight"} %meta{string,page,"Specular"} %meta{string,help,"Multiplies the specular reflectivity."} %meta{string,widget,"number"}  %read{32,284} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_specular_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"} %meta{string,page,"Specular"} %meta{string,help,"Color of the specular reflection (controls the physical edge-tint for metals, and a non-physical overall tint for dielectrics)."}  %read{32,311} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_specular_roughness	0.800000012		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Roughness"} %meta{string,page,"Specular"} %meta{string,help,"The roughness of the specular reflection. Lower numbers produce sharper reflections, higher numbers produce blurrier reflections."} %meta{string,widget,"number"}  %read{36,167} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_specular_ior	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Specular Index of Refraction"} %meta{string,page,"Specular"} %meta{string,help,"Index of refraction of the dielectric base."} %meta{string,widget,"number"}  %read{39,135} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_specular_roughness_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Anisotropy"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"The directional bias of the roughness of the metal/dielectric base, resulting in increasingly stretched highlights along the tangent direction."} %meta{string,widget,"number"}  %read{185,185} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_transmission_weight	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission Weight"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Mixture weight between the transparent and opaque dielectric base. The greater the value the more transparent the material."} %meta{string,widget,"number"}  %read{368,370} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_transmission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Color"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Controls color of the transparent base due to Beer's law volumetric absorption under the surface (reverts to a non-physical tint when transmission_depth is zero)."}  %read{48,64} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_transmission_depth	0		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Transmission Depth"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Specifies the distance light travels inside the transparent base before it becomes exactly the transmission_color according to Beer's law."} %meta{string,widget,"number"}  %read{43,240} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_transmission_scatter	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Scatter"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the color of light volumetrically scattered inside the transparent base. Suitable for materials with visually significant scattering such as honey, fruit juice, murky water, opalescent glass, or milky glass."}  %read{82,88} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_transmission_scatter_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Transmission Anisotropy"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the volumetric scattering in the transparent base."} %meta{string,widget,"number"}  %read{335,335} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_transmission_dispersion_scale	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission Dispersion Scale"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Linearly scales the amount of dispersion."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_transmission_dispersion_abbe_number	20		%meta{float,min,0} %meta{float,slidermin,9} %meta{float,slidermax,91} %meta{string,label,"Transmission Dispersion Abbe Number"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Physical Abbe number of the dielectric medium, describing how much the dielectric index of refraction varies across wavelengths."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_subsurface_weight	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Subsurface Weight"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Mixture weight which dials the opaque dielectric base between diffuse reflection and subsurface scattering. A value of 1.0 indicates full subsurface scattering and a value 0 for diffuse reflection only."} %meta{string,widget,"number"}  %read{113,365} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_subsurface_color	0.800000012 0.800000012 0.800000012		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Color"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The observed reflection color of the subsurface scattering medium."}  %read{96,131} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_subsurface_radius	1		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Subsurface Radius"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Length scale of the subsurface scattering mean free path."} %meta{string,widget,"number"}  %read{101,101} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_subsurface_radius_scale	1 0.5 0.25		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Radius Scale"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"RGB multiplier to subsurface_radius, giving the per-channel scattering mean-free-paths."}  %read{101,101} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Subsurface Anisotropy"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the phase-function of subsurface scattering, where zero scatters light evenly, positive values scatter forwards, and negative values scatter backwards."} %meta{string,widget,"number"}  %read{98,354} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_fuzz_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Fuzz Weight"} %meta{string,page,"Fuzz"} %meta{int,uiadvanced,1} %meta{string,help,"The presence weight of a fuzz layer that can be used to approximate microfibers, for fabrics such as velvet and satin as well as dust grains."} %meta{string,widget,"number"}  %read{248,248} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_fuzz_color	0.400000006 0.400000006 0.400000006		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Fuzz Color"} %meta{string,page,"Fuzz"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the fuzz layer."}  %read{247,247} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_fuzz_roughness	0.5		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Fuzz Roughness"} %meta{string,page,"Fuzz"} %meta{int,uiadvanced,1} %meta{string,help,"The roughness of the fuzz layer."} %meta{string,widget,"number"}  %read{247,247} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_coat_weight	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Weight"} %meta{string,page,"Coat"} %meta{string,help,"The presence weight of a reflective clear-coat layer on top of the material. Use for materials such as car paint or an oily layer."} %meta{string,widget,"number"}  %read{114,400} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_coat_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Coat Color"} %meta{string,page,"Coat"} %meta{string,help,"The color of the clear-coat layer's transparency, due to absorption in the coat."}  %read{116,383} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_coat_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Roughness"} %meta{string,page,"Coat"} %meta{string,help,"The roughness of the clear-coat reflections. The lower the value, the sharper the reflection."} %meta{string,widget,"number"}  %read{16,34} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_coat_roughness_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Anisotropy"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The directional bias of the roughness of the clear-coat layer, resulting in increasingly stretched highlights along the coat tangent direction."} %meta{string,widget,"number"}  %read{18,18} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_coat_ior	1.60000002		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Coat Index of Refraction"} %meta{string,page,"Coat"} %meta{string,help,"The index of refraction of the clear-coat layer."} %meta{string,widget,"number"}  %read{39,259} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_coat_darkening	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Darkening"} %meta{string,page,"Coat"} %meta{string,help,"Modulates the physical coat darkening effect."} %meta{string,widget,"number"}  %read{114,114} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_thin_film_weight	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Thin Film Weight"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"Coverage weight of the thin-film. Use for materials such as multi-tone car paint or soap bubbles."} %meta{string,widget,"number"}  %read{286,317} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_thin_film_thickness	0.5		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Thin Film Thickness"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The thickness of the thin-film layer on the base (in micrometers)."} %meta{string,widget,"number"}  %read{38,38} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_thin_film_ior	1.39999998		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Thin Film Index of Refraction"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The index of refraction of the thin-film."} %meta{string,widget,"number"}  %read{271,300} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_emission_luminance	0		%meta{float,min,0} %meta{float,slidermax,1000} %meta{string,label,"Emission Luminance"} %meta{string,page,"Emission"} %meta{string,help,"The amount of emitted light, as a luminance in nits."} %meta{string,widget,"number"}  %read{117,117} %write{2147483647,-1}
+param	color	open_pbr_surface_surfaceshader_emission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Emission Color"} %meta{string,page,"Emission"} %meta{string,help,"The color of the emitted light."}  %read{117,117} %write{2147483647,-1}
+param	float	open_pbr_surface_surfaceshader_geometry_opacity	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Opacity"} %meta{string,page,"Geometry"} %meta{string,help,"The opacity of the entire material."} %meta{string,widget,"number"}  %read{409,409} %write{2147483647,-1}
+param	int	open_pbr_surface_surfaceshader_geometry_thin_walled	0		%meta{string,label,"Thin Walled"} %meta{string,page,"Geometry"} %meta{int,uiadvanced,1} %meta{string,help,"If true the surface is double-sided and represents an infinitesimally thin shell. Suitable for extremely geometrically thin objects such as leaves or paper."} %meta{string,widget,"checkBox"}  %read{102,102} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{425,425}
+global	vector	I	%read{386,386} %write{2147483647,-1}
+global	normal	N	%read{2,387} %write{2147483647,-1}
+local	float	___669_rough_sq_out	%read{25,192} %write{16,183}
+local	float	___669_aniso_invert_amount_tmp	%read{18,185} %write{17,184}
+local	float	___669_aniso_invert_out	%read{19,193} %write{18,185}
+local	float	___669_aniso_invert_sq_out	%read{21,188} %write{19,186}
+local	float	___669_denom_in2_tmp	%read{21,188} %write{20,187}
+local	float	___669_denom_out	%read{23,190} %write{21,188}
+local	float	___669_fraction_in1_tmp	%read{23,190} %write{22,189}
+local	float	___669_fraction_out	%read{24,191} %write{23,190}
+local	float	___669_sqrt_out	%read{25,192} %write{24,191}
+local	float	___669_alpha_x_out	%read{26,194} %write{25,192}
+local	float	___669_alpha_y_out	%read{28,195} %write{26,193}
+local	float	___669_result_out.x	%read{29,196} %write{27,194} %mystruct{___669_result_out} %mystructfield{0}
+local	float	___669_result_out.y	%read{30,197} %write{28,195} %mystruct{___669_result_out} %mystructfield{1}
+local	int	___670_N_extract_0_index_tmp	%read{58,82} %write{56,80}
+local	float	___670_N_extract_0_out	%read{65,89} %write{58,82}
+local	int	___670_N_extract_1_index_tmp	%read{61,85} %write{59,83}
+local	float	___670_N_extract_1_out	%read{66,90} %write{61,85}
+local	int	___670_N_extract_2_index_tmp	%read{64,88} %write{62,86}
+local	float	___670_N_extract_2_out	%read{67,91} %write{64,88}
+local	float	___671_separate_outr	%read{68,92} %write{52,89}
+local	float	___671_separate_outg	%read{68,92} %write{53,90}
+local	float	___671_separate_outb	%read{68,92} %write{54,91}
+local	vector	___671_combine_out	%read{69,93} %write{68,92}
+local	vector	___672_combine_out	%read{73,219} %write{72,218}
+local	color	___673_reflection_tint	%read{259,329} %write{253,324}
+local	color	___673_transmission_tint	%read{259,329} %write{257,328}
+local	color	___675_combine_out	%read{166,212} %write{165,211}
+local	float	___687_x	%read{394,394} %write{393,393}
+local	float	___688_NdotV	%read{390,390} %write{388,388}
+local	color	___688_f	%read{396,396} %write{395,395}
+local	color	___689_reflection_tint	%read{271,283} %write{265,278}
+local	color	___689_transmission_tint	%read{271,283} %write{269,282}
+local	color	___690_extinction	%read{334,335} %write{333,333}
+local	color	___690_albedo	%read{335,335} %write{334,334}
+local	closure color	___692_null_closure	%read{249,403} %write{12,12}
+local	float	___692_coat_roughness_vector_out.x	%read{259,259} %write{13,29} %mystruct{___692_coat_roughness_vector_out} %mystructfield{0}
+local	float	___692_coat_roughness_vector_out.y	%read{259,259} %write{14,30} %mystruct{___692_coat_roughness_vector_out} %mystructfield{1}
+local	color	___692_metal_reflectivity_out	%read{271,283} %write{31,31}
+local	color	___692_metal_edgecolor_out	%read{2147483647,-1} %write{32,32}
+local	float	___692_coat_roughness_to_power_4_in2_tmp	%read{34,34} %write{33,33}
+local	float	___692_coat_roughness_to_power_4_out	%read{119,119} %write{34,34}
+local	float	___692_specular_roughness_to_power_4_in2_tmp	%read{36,36} %write{35,35}
+local	float	___692_specular_roughness_to_power_4_out	%read{134,134} %write{36,36}
+local	float	___692_thin_film_thickness_nm_in2_tmp	%read{38,38} %write{37,37}
+local	float	___692_thin_film_thickness_nm_out	%read{271,300} %write{38,38}
+local	float	___692_specular_to_coat_ior_ratio_out	%read{121,124} %write{39,39}
+local	float	___692_coat_to_specular_ior_ratio_out	%read{126,126} %write{40,40}
+local	float	___692_if_transmission_tint_value2_tmp	%read{43,43} %write{41,41}
+local	color	___692_if_transmission_tint_in1_tmp	%read{46,46} %write{42,42}
+local	color	___692_if_transmission_tint_out	%read{324,328} %write{46,48}
+local	vector	___692_transmission_color_vector_out	%read{128,128} %write{50,69}
+local	vector	___692_transmission_depth_vector_out	%read{129,154} %write{70,73}
+local	vector	___692_transmission_scatter_vector_out	%read{129,129} %write{74,93}
+local	float	___692_subsurface_color_nonnegative_in2_tmp	%read{95,95} %write{94,94}
+local	color	___692_subsurface_color_nonnegative_out	%read{338,353} %write{96,96}
+local	float	___692_one_minus_subsurface_scatter_anisotropy_in1_tmp	%read{98,98} %write{97,97}
+local	float	___692_one_minus_subsurface_scatter_anisotropy_out	%read{130,130} %write{98,98}
+local	float	___692_one_plus_subsurface_scatter_anisotropy_in1_tmp	%read{100,100} %write{99,99}
+local	float	___692_one_plus_subsurface_scatter_anisotropy_out	%read{131,131} %write{100,100}
+local	color	___692_subsurface_radius_scaled_out	%read{354,354} %write{101,101}
+local	float	___692_subsurface_selector_out	%read{356,358} %write{103,103}
+local	float	___692_base_color_nonnegative_in2_tmp	%read{105,105} %write{104,104}
+local	color	___692_base_color_nonnegative_out	%read{360,360} %write{106,106}
+local	float	___692_coat_ior_minus_one_in2_tmp	%read{108,108} %write{107,107}
+local	float	___692_coat_ior_minus_one_out	%read{132,132} %write{108,108}
+local	float	___692_coat_ior_plus_one_in1_tmp	%read{110,110} %write{109,109}
+local	float	___692_coat_ior_plus_one_out	%read{132,132} %write{110,110}
+local	float	___692_coat_ior_sqr_out	%read{162,162} %write{111,111}
+local	color	___692_Emetal_out	%read{133,133} %write{112,112}
+local	color	___692_Edielectric_out	%read{133,133} %write{113,113}
+local	float	___692_coat_weight_times_coat_darkening_out	%read{224,224} %write{114,114}
+local	color	___692_coat_attenuation_bg_tmp	%read{116,116} %write{115,115}
+local	color	___692_coat_attenuation_out	%read{379,379} %write{116,116}
+local	color	___692_emission_weight_out	%read{382,382} %write{117,117}
+local	float	___692_two_times_coat_roughness_to_power_4_in2_tmp	%read{119,119} %write{118,118}
+local	float	___692_two_times_coat_roughness_to_power_4_out	%read{134,134} %write{119,119}
+local	float	___692_specular_to_coat_ior_ratio_tir_fix_value2_tmp	%read{121,121} %write{120,120}
+local	float	___692_specular_to_coat_ior_ratio_tir_fix_out	%read{135,135} %write{124,126}
+local	vector	___692_transmission_color_ln_out	%read{137,137} %write{128,128}
+local	vector	___692_scattering_coeff_out	%read{143,161} %write{129,129}
+local	color	___692_subsurface_thin_walled_brdf_factor_out	%read{340,340} %write{130,130}
+local	color	___692_subsurface_thin_walled_btdf_factor_out	%read{344,344} %write{131,131}
+local	float	___692_coat_ior_to_F0_sqrt_out	%read{147,147} %write{132,132}
+local	color	___692_Ebase_out	%read{202,202} %write{133,133}
+local	float	___692_add_coat_and_spec_roughnesses_to_power_4_out	%read{149,149} %write{134,134}
+local	float	___692_eta_s_out	%read{151,153} %write{135,135}
+local	float	___692_extinction_coeff_denom_in2_tmp	%read{137,137} %write{136,136}
+local	vector	___692_extinction_coeff_denom_out	%read{154,154} %write{137,137}
+local	float	___692_if_volume_scattering_value2_tmp	%read{140,140} %write{138,138}
+local	vector	___692_if_volume_scattering_in2_tmp	%read{145,145} %write{139,139}
+local	vector	___692_if_volume_scattering_out	%read{333,334} %write{143,145}
+local	float	___692_coat_ior_to_F0_out	%read{156,156} %write{147,147}
+local	float	___692_min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp	%read{149,149} %write{148,148}
+local	float	___692_min_1_add_coat_and_spec_roughnesses_to_power_4_out	%read{158,158} %write{149,149}
+local	float	___692_eta_s_minus_one_in2_tmp	%read{151,151} %write{150,150}
+local	float	___692_eta_s_minus_one_out	%read{159,160} %write{151,151}
+local	float	___692_eta_s_plus_one_in2_tmp	%read{153,153} %write{152,152}
+local	float	___692_eta_s_plus_one_out	%read{160,160} %write{153,153}
+local	vector	___692_extinction_coeff_out	%read{161,161} %write{154,154}
+local	float	___692_one_minus_coat_F0_in1_tmp	%read{156,156} %write{155,155}
+local	float	___692_one_minus_coat_F0_out	%read{162,165} %write{156,156}
+local	float	___692_coat_affected_specular_roughness_in2_tmp	%read{158,158} %write{157,157}
+local	float	___692_coat_affected_specular_roughness_out	%read{167,167} %write{158,158}
+local	float	___692_sign_eta_s_minus_one_out	%read{221,221} %write{159,159}
+local	float	___692_specular_F0_sqrt_out	%read{168,168} %write{160,160}
+local	vector	___692_absorption_coeff_out	%read{171,235} %write{161,161}
+local	float	___692_one_minus_coat_F0_over_eta2_out	%read{179,179} %write{162,162}
+local	color	___692_one_minus_coat_F0_color_out	%read{395,395} %write{163,166}
+local	float	___692_effective_specular_roughness_out	%read{183,183} %write{167,167}
+local	float	___692_specular_F0_out	%read{198,198} %write{168,168}
+local	int	___692_absorption_coeff_x_index_tmp	%read{171,171} %write{169,169}
+local	float	___692_absorption_coeff_x_out	%read{199,199} %write{171,171}
+local	int	___692_absorption_coeff_y_index_tmp	%read{174,174} %write{172,172}
+local	float	___692_absorption_coeff_y_out	%read{199,199} %write{174,174}
+local	int	___692_absorption_coeff_z_index_tmp	%read{177,177} %write{175,175}
+local	float	___692_absorption_coeff_z_out	%read{208,208} %write{177,177}
+local	float	___692_Kcoat_in1_tmp	%read{179,179} %write{178,178}
+local	float	___692_Kcoat_out	%read{201,202} %write{179,179}
+local	float	___692_main_roughness_out.x	%read{271,329} %write{180,196} %mystruct{___692_main_roughness_out} %mystructfield{0}
+local	float	___692_main_roughness_out.y	%read{271,329} %write{181,197} %mystruct{___692_main_roughness_out} %mystructfield{1}
+local	float	___692_scaled_specular_F0_out	%read{206,206} %write{198,198}
+local	float	___692_absorption_coeff_min_x_y_out	%read{208,208} %write{199,199}
+local	float	___692_one_minus_Kcoat_in1_tmp	%read{201,201} %write{200,200}
+local	float	___692_one_minus_Kcoat_out	%read{211,211} %write{201,201}
+local	color	___692_Ebase_Kcoat_out	%read{214,214} %write{202,202}
+local	float	___692_scaled_specular_F0_clamped_low_tmp	%read{207,207} %write{203,203}
+local	float	___692_scaled_specular_F0_clamped_high_tmp	%read{206,206} %write{204,204}
+local	float	___692_scaled_specular_F0_clamped_out	%read{215,215} %write{207,207}
+local	float	___692_absorption_coeff_min_out	%read{218,230} %write{208,208}
+local	color	___692_one_minus_Kcoat_color_out	%read{220,220} %write{209,212}
+local	color	___692_one_minus_Ebase_Kcoat_in1_tmp	%read{214,214} %write{213,213}
+local	color	___692_one_minus_Ebase_Kcoat_out	%read{220,220} %write{214,214}
+local	float	___692_sqrt_scaled_specular_F0_out	%read{221,221} %write{215,215}
+local	vector	___692_absorption_coeff_min_vector_out	%read{222,222} %write{216,219}
+local	color	___692_base_darkening_out	%read{224,224} %write{220,220}
+local	float	___692_modulated_eta_s_epsilon_out	%read{226,228} %write{221,221}
+local	vector	___692_absorption_coeff_shifted_out	%read{233,233} %write{222,222}
+local	color	___692_modulated_base_darkening_bg_tmp	%read{224,224} %write{223,223}
+local	color	___692_modulated_base_darkening_out	%read{378,378} %write{224,224}
+local	float	___692_one_plus_modulated_eta_s_epsilon_in1_tmp	%read{226,226} %write{225,225}
+local	float	___692_one_plus_modulated_eta_s_epsilon_out	%read{237,237} %write{226,226}
+local	float	___692_one_minus_modulated_eta_s_epsilon_in1_tmp	%read{228,228} %write{227,227}
+local	float	___692_one_minus_modulated_eta_s_epsilon_out	%read{237,237} %write{228,228}
+local	float	___692_if_absorption_coeff_shifted_value1_tmp	%read{230,230} %write{229,229}
+local	vector	___692_if_absorption_coeff_shifted_out	%read{243,243} %write{233,235}
+local	float	___692_modulated_eta_s_out	%read{300,329} %write{237,237}
+local	float	___692_if_volume_absorption_value2_tmp	%read{240,240} %write{238,238}
+local	vector	___692_if_volume_absorption_in2_tmp	%read{245,245} %write{239,239}
+local	vector	___692_if_volume_absorption_out	%read{333,333} %write{243,245}
+local	closure color	___692_fuzz_bsdf_out	%read{381,381} %write{248,248}
+local	closure color	___692_coat_bsdf_out	%read{380,380} %write{249,260}
+local	closure color	___692_metal_bsdf_tf_out	%read{288,288} %write{261,272}
+local	closure color	___692_metal_bsdf_out	%read{287,287} %write{273,284}
+local	closure color	___692_metal_bsdf_tf_mix_out	%read{376,376} %write{289,289}
+local	closure color	___692_dielectric_reflection_tf_out	%read{317,317} %write{290,301}
+local	closure color	___692_dielectric_reflection_out	%read{316,316} %write{302,313}
+local	closure color	___692_dielectric_reflection_tf_mix_out	%read{372,372} %write{318,318}
+local	closure color	___692_dielectric_transmission_out	%read{336,336} %write{319,330}
+local	closure color	___692_dielectric_volume_out	%read{336,336} %write{331,335}
+local	closure color	___692_dielectric_volume_transmission_out	%read{370,370} %write{336,336}
+local	float	___692_subsurface_thin_walled_reflection_bsdf_weight_tmp	%read{339,339} %write{337,337}
+local	closure color	___692_subsurface_thin_walled_reflection_bsdf_out	%read{340,340} %write{339,339}
+local	closure color	___692_subsurface_thin_walled_reflection_out	%read{349,349} %write{340,340}
+local	float	___692_subsurface_thin_walled_transmission_bsdf_weight_tmp	%read{343,343} %write{341,341}
+local	closure color	___692_subsurface_thin_walled_transmission_bsdf_out	%read{344,344} %write{343,343}
+local	closure color	___692_subsurface_thin_walled_transmission_out	%read{348,348} %write{344,344}
+local	float	___692_subsurface_thin_walled_mix_tmp	%read{347,349} %write{345,345}
+local	closure color	___692_subsurface_thin_walled_out	%read{358,358} %write{350,350}
+local	closure color	___692_subsurface_bsdf_out	%read{357,357} %write{351,354}
+local	closure color	___692_selected_subsurface_out	%read{365,365} %write{359,359}
+local	closure color	___692_diffuse_bsdf_out	%read{364,364} %write{361,361}
+local	closure color	___692_opaque_base_out	%read{369,369} %write{366,366}
+local	closure color	___692_dielectric_substrate_out	%read{372,372} %write{371,371}
+local	closure color	___692_dielectric_base_out	%read{375,375} %write{372,372}
+local	closure color	___692_base_substrate_out	%read{378,378} %write{377,377}
+local	closure color	___692_darkened_base_substrate_out	%read{379,379} %write{378,378}
+local	closure color	___692_coat_substrate_attenuated_out	%read{380,380} %write{379,379}
+local	closure color	___692_coat_layer_out	%read{381,381} %write{380,380}
+local	closure color	___692_fuzz_layer_out	%read{406,406} %write{381,381}
+local	closure color	___692_uncoated_emission_edf_out	%read{383,399} %write{382,382}
+local	closure color	___692_coat_tinted_emission_edf_out	%read{396,396} %write{383,383}
+local	closure color	___692_coated_emission_edf_out	%read{400,400} %write{384,396}
+local	closure color	___692_emission_edf_out	%read{407,407} %write{401,401}
+local	closure color	___692_shader_constructor_out.bsdf	%read{412,412} %write{402,406} %mystruct{___692_shader_constructor_out} %mystructfield{0}
+local	closure color	___692_shader_constructor_out.edf	%read{413,413} %write{403,407} %mystruct{___692_shader_constructor_out} %mystructfield{1}
+local	float	___692_shader_constructor_out.opacity	%read{411,414} %write{404,411} %mystruct{___692_shader_constructor_out} %mystructfield{2}
+local	float	___693_opacity_weight	%read{420,422} %write{418,418}
+local	closure color	null_closure	%read{8,9} %write{0,0}
+local	vector	geomprop_Nworld_out1	%read{247,360} %write{2,2}
+local	vector	geomprop_Tworld_out1	%read{259,329} %write{7,7}
+local	closure color	open_pbr_surface_surfaceshader_out.bsdf	%read{419,419} %write{8,412} %mystruct{open_pbr_surface_surfaceshader_out} %mystructfield{0}
+local	closure color	open_pbr_surface_surfaceshader_out.edf	%read{419,419} %write{9,413} %mystruct{open_pbr_surface_surfaceshader_out} %mystructfield{1}
+local	float	open_pbr_surface_surfaceshader_out.opacity	%read{417,417} %write{10,414} %mystruct{open_pbr_surface_surfaceshader_out} %mystructfield{2}
+local	closure color	Velvet_out	%read{425,425} %write{424,424}
+const	int	$const1	0		%read{0,169} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{1,1} %write{2147483647,-1}
+const	string	$const3	"common"		%read{2,2} %write{2147483647,-1}
+temp	vector	$tmp1	%read{7,7} %write{6,6}
+const	int	$const4	2		%read{3,175} %write{2147483647,-1}
+temp	float	$tmp2	%read{6,6} %write{3,3}
+const	float	$const5	0		%read{6,418} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{4,4}
+temp	float	$tmp4	%read{6,6} %write{5,5}
+const	float	$const6	1		%read{10,422} %write{2147483647,-1}
+const	string	$const7	"NG_open_pbr_surface_surfaceshader"		%read{11,11} %write{2147483647,-1}
+const	string	$const8	"NG_open_pbr_anisotropy"		%read{15,182} %write{2147483647,-1}
+const	float	$const9	2		%read{22,189} %write{2147483647,-1}
+const	float	$const10	4		%read{33,35} %write{2147483647,-1}
+const	float	$const11	1000		%read{37,37} %write{2147483647,-1}
+const	color	$const12	1 1 1		%read{42,283} %write{2147483647,-1}
+temp	int	$tmp5	%read{45,45} %write{43,43}
+const	string	$const13	"mx_ternary"		%read{44,241} %write{2147483647,-1}
+const	vector	$const14	0 0 0		%read{50,239} %write{2147483647,-1}
+const	string	$const15	"NG_convert_color3_vector3"		%read{51,75} %write{2147483647,-1}
+const	string	$const16	"NG_separate3_color3"		%read{55,79} %write{2147483647,-1}
+const	string	$const17	"mx_extract"		%read{57,176} %write{2147483647,-1}
+const	int	$const18	1		%read{59,172} %write{2147483647,-1}
+const	string	$const19	"NG_convert_float_vector3"		%read{71,217} %write{2147483647,-1}
+temp	color	$tmp6	%read{96,96} %write{95,95}
+temp	float	$tmp7	%read{103,103} %write{102,102}
+temp	color	$tmp8	%read{106,106} %write{105,105}
+temp	int	$tmp9	%read{123,123} %write{121,121}
+const	float	$const20	-1		%read{136,136} %write{2147483647,-1}
+temp	int	$tmp10	%read{142,142} %write{140,140}
+const	float	$const21	0.25		%read{157,157} %write{2147483647,-1}
+const	color	$const22	0 0 0		%read{163,395} %write{2147483647,-1}
+const	string	$const23	"NG_convert_float_color3"		%read{164,210} %write{2147483647,-1}
+const	float	$const24	0.99999		%read{204,204} %write{2147483647,-1}
+const	string	$const25	"clamp"		%read{205,416} %write{2147483647,-1}
+temp	float	$tmp11	%read{207,207} %write{206,206}
+temp	int	$tmp12	%read{232,232} %write{230,230}
+temp	int	$tmp13	%read{242,242} %write{240,240}
+temp	closure color	$tmp14	%read{248,248} %write{247,247}
+const	string	$const26	"sheen_bsdf"		%read{247,247} %write{2147483647,-1}
+const	float	$const27	1.5		%read{259,329} %write{2147483647,-1}
+const	string	$const28	"ggx"		%read{259,329} %write{2147483647,-1}
+const	string	$const29	"R"		%read{251,325} %write{2147483647,-1}
+const	string	$const30	"mx_dielectric_bsdf"		%read{250,320} %write{2147483647,-1}
+const	string	$const31	"T"		%read{251,325} %write{2147483647,-1}
+temp	int	$tmp16	%read{252,252} %write{251,251}
+temp	int	$tmp17	%read{256,256} %write{255,255}
+temp	closure color	$tmp18	%read{260,260} %write{259,259}
+const	string	$const32	"thinfilm_thickness"		%read{259,329} %write{2147483647,-1}
+const	string	$const33	"thinfilm_ior"		%read{259,329} %write{2147483647,-1}
+const	string	$const34	"dielectric_bsdf"		%read{259,329} %write{2147483647,-1}
+const	float	$const35	5		%read{271,394} %write{2147483647,-1}
+const	string	$const36	"mx_generalized_schlick_bsdf"		%read{262,274} %write{2147483647,-1}
+temp	int	$tmp20	%read{264,264} %write{263,263}
+temp	int	$tmp21	%read{268,268} %write{267,267}
+temp	closure color	$tmp22	%read{272,272} %write{271,271}
+const	string	$const37	"generalized_schlick_bsdf"		%read{271,283} %write{2147483647,-1}
+temp	int	$tmp24	%read{276,276} %write{275,275}
+temp	int	$tmp25	%read{280,280} %write{279,279}
+temp	closure color	$tmp26	%read{284,284} %write{283,283}
+const	string	$const38	"mix"		%read{285,397} %write{2147483647,-1}
+temp	float	$tmp27	%read{287,287} %write{286,286}
+temp	closure color	$tmp28	%read{289,289} %write{287,287}
+temp	closure color	$tmp29	%read{289,289} %write{288,288}
+temp	int	$tmp30	%read{293,293} %write{292,292}
+temp	int	$tmp31	%read{297,297} %write{296,296}
+temp	closure color	$tmp32	%read{301,301} %write{300,300}
+temp	int	$tmp33	%read{305,305} %write{304,304}
+temp	int	$tmp34	%read{309,309} %write{308,308}
+temp	closure color	$tmp35	%read{313,313} %write{312,312}
+temp	float	$tmp36	%read{316,316} %write{315,315}
+temp	closure color	$tmp37	%read{318,318} %write{316,316}
+temp	closure color	$tmp38	%read{318,318} %write{317,317}
+temp	int	$tmp39	%read{322,322} %write{321,321}
+temp	int	$tmp40	%read{326,326} %write{325,325}
+temp	closure color	$tmp41	%read{330,330} %write{329,329}
+const	string	$const39	"mx_anisotropic_vdf"		%read{332,332} %write{2147483647,-1}
+const	string	$const40	"anisotropic_vdf"		%read{335,335} %write{2147483647,-1}
+const	string	$const41	"layer"		%read{336,381} %write{2147483647,-1}
+temp	closure color	$tmp42	%read{339,339} %write{338,338}
+const	string	$const42	"oren_nayar_diffuse_bsdf"		%read{338,360} %write{2147483647,-1}
+temp	closure color	$tmp43	%read{343,343} %write{342,342}
+const	string	$const43	"translucent_bsdf"		%read{342,342} %write{2147483647,-1}
+const	float	$const44	0.5		%read{345,345} %write{2147483647,-1}
+temp	float	$tmp44	%read{348,348} %write{347,347}
+temp	closure color	$tmp45	%read{350,350} %write{348,348}
+temp	closure color	$tmp46	%read{350,350} %write{349,349}
+const	string	$const45	"mx_subsurface_bsdf"		%read{352,352} %write{2147483647,-1}
+temp	color	$tmp47	%read{354,354} %write{353,353}
+const	string	$const46	"subsurface_bssrdf"		%read{354,354} %write{2147483647,-1}
+temp	float	$tmp48	%read{357,357} %write{356,356}
+temp	closure color	$tmp49	%read{359,359} %write{357,357}
+temp	closure color	$tmp50	%read{359,359} %write{358,358}
+temp	closure color	$tmp51	%read{361,361} %write{360,360}
+temp	float	$tmp52	%read{364,364} %write{363,363}
+temp	closure color	$tmp53	%read{366,366} %write{364,364}
+temp	closure color	$tmp54	%read{366,366} %write{365,365}
+temp	float	$tmp55	%read{369,369} %write{368,368}
+temp	closure color	$tmp56	%read{371,371} %write{369,369}
+temp	closure color	$tmp57	%read{371,371} %write{370,370}
+temp	float	$tmp58	%read{375,375} %write{374,374}
+temp	closure color	$tmp59	%read{377,377} %write{375,375}
+temp	closure color	$tmp60	%read{377,377} %write{376,376}
+const	string	$const47	"uniform_edf"		%read{382,382} %write{2147483647,-1}
+const	string	$const48	"mx_generalized_schlick_edf"		%read{385,385} %write{2147483647,-1}
+temp	float	$tmp62	%read{388,388} %write{387,387}
+temp	vector	$tmp63	%read{387,387} %write{386,386}
+const	string	$const49	"mx_fresnel_schlick"		%read{389,389} %write{2147483647,-1}
+temp	float	$tmp64	%read{392,392} %write{390,390}
+temp	float	$tmp65	%read{393,393} %write{392,392}
+temp	float	$tmp66	%read{395,395} %write{394,394}
+temp	float	$tmp67	%read{399,399} %write{398,398}
+temp	closure color	$tmp68	%read{401,401} %write{399,399}
+temp	closure color	$tmp69	%read{401,401} %write{400,400}
+const	string	$const50	"mx_surface"		%read{405,405} %write{2147483647,-1}
+temp	float	$tmp70	%read{410,410} %write{409,409}
+const	string	$const51	"mx_surfacematerial"		%read{415,415} %write{2147483647,-1}
+temp	float	$tmp71	%read{418,418} %write{417,417}
+temp	closure color	$tmp72	%read{420,420} %write{419,419}
+temp	closure color	$tmp73	%read{424,424} %write{420,420}
+temp	closure color	$tmp74	%read{423,423} %write{421,421}
+const	string	$const52	"transparent"		%read{421,421} %write{2147483647,-1}
+temp	float	$tmp75	%read{423,423} %write{422,422}
+temp	closure color	$tmp76	%read{424,424} %write{423,423}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:737
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{737} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:738
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const2 3 	%line{738} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:739
+#     surfaceshader open_pbr_surface_surfaceshader_out = surfaceshader(null_closure, null_closure, 1.0);
+	compref		$tmp2 N $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{739} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const5 $tmp4 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:740
+#     NG_open_pbr_surface_surfaceshader(open_pbr_surface_surfaceshader_base_weight, open_pbr_surface_surfaceshader_base_color, open_pbr_surface_surfaceshader_base_diffuse_roughness, open_pbr_surface_surfaceshader_base_metalness, open_pbr_surface_surfaceshader_specular_weight, open_pbr_surface_surfaceshader_specular_color, open_pbr_surface_surfaceshader_specular_roughness, open_pbr_surface_surfaceshader_specular_ior, open_pbr_surface_surfaceshader_specular_roughness_anisotropy, open_pbr_surface_surfaceshader_transmission_weight, open_pbr_surface_surfaceshader_transmission_color, open_pbr_surface_surfaceshader_transmission_depth, open_pbr_surface_surfaceshader_transmission_scatter, open_pbr_surface_surfaceshader_transmission_scatter_anisotropy, open_pbr_surface_surfaceshader_transmission_dispersion_scale, open_pbr_surface_surfaceshader_transmission_dispersion_abbe_number, open_pbr_surface_surfaceshader_subsurface_weight, open_pbr_surface_surfaceshader_subsurface_color, open_pbr_surface_surfaceshader_subsurface_radius, open_pbr_surface_surfaceshader_subsurface_radius_scale, open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy, open_pbr_surface_surfaceshader_fuzz_weight, open_pbr_surface_surfaceshader_fuzz_color, open_pbr_surface_surfaceshader_fuzz_roughness, open_pbr_surface_surfaceshader_coat_weight, open_pbr_surface_surfaceshader_coat_color, open_pbr_surface_surfaceshader_coat_roughness, open_pbr_surface_surfaceshader_coat_roughness_anisotropy, open_pbr_surface_surfaceshader_coat_ior, open_pbr_surface_surfaceshader_coat_darkening, open_pbr_surface_surfaceshader_thin_film_weight, open_pbr_surface_surfaceshader_thin_film_thickness, open_pbr_surface_surfaceshader_thin_film_ior, open_pbr_surface_surfaceshader_emission_luminance, open_pbr_surface_surfaceshader_emission_color, open_pbr_surface_surfaceshader_geometry_opacity, open_pbr_surface_surfaceshader_geometry_thin_walled, geomprop_Nworld_out1, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Tworld_out1, open_pbr_surface_surfaceshader_out);
+	assign		open_pbr_surface_surfaceshader_out.bsdf null_closure 	%line{740} %argrw{"wr"}
+	assign		open_pbr_surface_surfaceshader_out.edf null_closure 	%argrw{"wr"}
+	assign		open_pbr_surface_surfaceshader_out.opacity $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:741
+#     MATERIAL Velvet_out = mx_surfacematerial(open_pbr_surface_surfaceshader_out, backsurfaceshader, displacementshader1);
+	functioncall	$const7 415 	%line{741} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:197
+#     vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+	assign		___692_null_closure $const1 	%line{197} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:198
+#     NG_open_pbr_anisotropy(coat_roughness, coat_roughness_anisotropy, coat_roughness_vector_out);
+	assign		___692_coat_roughness_vector_out.x $const5 	%line{198} %argrw{"wr"}
+	assign		___692_coat_roughness_vector_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:199
+#     color metal_reflectivity_out = base_color * base_weight;
+	functioncall	$const8 31 	%line{199} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:20
+#     float aniso_invert_amount_tmp = 1.000000;
+	mul		___669_rough_sq_out open_pbr_surface_surfaceshader_coat_roughness open_pbr_surface_surfaceshader_coat_roughness 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:21
+#     float aniso_invert_out = aniso_invert_amount_tmp - anisotropy;
+	assign		___669_aniso_invert_amount_tmp $const6 	%line{21} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:22
+#     float aniso_invert_sq_out = aniso_invert_out * aniso_invert_out;
+	sub		___669_aniso_invert_out ___669_aniso_invert_amount_tmp open_pbr_surface_surfaceshader_coat_roughness_anisotropy 	%line{22} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:23
+#     float denom_in2_tmp = 1.000000;
+	mul		___669_aniso_invert_sq_out ___669_aniso_invert_out ___669_aniso_invert_out 	%line{23} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:24
+#     float denom_out = aniso_invert_sq_out + denom_in2_tmp;
+	assign		___669_denom_in2_tmp $const6 	%line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:25
+#     float fraction_in1_tmp = 2.000000;
+	add		___669_denom_out ___669_aniso_invert_sq_out ___669_denom_in2_tmp 	%line{25} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:26
+#     float fraction_out = fraction_in1_tmp / denom_out;
+	assign		___669_fraction_in1_tmp $const9 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:27
+#     float sqrt_out = sqrt(fraction_out);
+	div		___669_fraction_out ___669_fraction_in1_tmp ___669_denom_out 	%line{27} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:28
+#     float alpha_x_out = rough_sq_out * sqrt_out;
+	sqrt		___669_sqrt_out ___669_fraction_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:29
+#     float alpha_y_out = aniso_invert_out * alpha_x_out;
+	mul		___669_alpha_x_out ___669_rough_sq_out ___669_sqrt_out 	%line{29} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:30
+#     vector2 result_out = { alpha_x_out,alpha_y_out };
+	mul		___669_alpha_y_out ___669_aniso_invert_out ___669_alpha_x_out 	%line{30} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:31
+#     out = result_out;
+	assign		___669_result_out.x ___669_alpha_x_out 	%line{31} %argrw{"wr"}
+	assign		___669_result_out.y ___669_alpha_y_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:32
+# }
+	assign		___692_coat_roughness_vector_out.x ___669_result_out.x 	%line{32} %argrw{"wr"}
+	assign		___692_coat_roughness_vector_out.y ___669_result_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:200
+#     color metal_edgecolor_out = specular_color * specular_weight;
+	mul		___692_metal_reflectivity_out open_pbr_surface_surfaceshader_base_color open_pbr_surface_surfaceshader_base_weight 	%line{200} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:201
+#     float coat_roughness_to_power_4_in2_tmp = 4.000000;
+	mul		___692_metal_edgecolor_out open_pbr_surface_surfaceshader_specular_color open_pbr_surface_surfaceshader_specular_weight 	%line{201} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:202
+#     float coat_roughness_to_power_4_out = pow(coat_roughness, coat_roughness_to_power_4_in2_tmp);
+	assign		___692_coat_roughness_to_power_4_in2_tmp $const10 	%line{202} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:203
+#     float specular_roughness_to_power_4_in2_tmp = 4.000000;
+	pow		___692_coat_roughness_to_power_4_out open_pbr_surface_surfaceshader_coat_roughness ___692_coat_roughness_to_power_4_in2_tmp 	%line{203} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:204
+#     float specular_roughness_to_power_4_out = pow(specular_roughness, specular_roughness_to_power_4_in2_tmp);
+	assign		___692_specular_roughness_to_power_4_in2_tmp $const10 	%line{204} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:205
+#     float thin_film_thickness_nm_in2_tmp = 1000.000000;
+	pow		___692_specular_roughness_to_power_4_out open_pbr_surface_surfaceshader_specular_roughness ___692_specular_roughness_to_power_4_in2_tmp 	%line{205} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:206
+#     float thin_film_thickness_nm_out = thin_film_thickness * thin_film_thickness_nm_in2_tmp;
+	assign		___692_thin_film_thickness_nm_in2_tmp $const11 	%line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:207
+#     float specular_to_coat_ior_ratio_out = specular_ior / coat_ior;
+	mul		___692_thin_film_thickness_nm_out open_pbr_surface_surfaceshader_thin_film_thickness ___692_thin_film_thickness_nm_in2_tmp 	%line{207} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:208
+#     float coat_to_specular_ior_ratio_out = coat_ior / specular_ior;
+	div		___692_specular_to_coat_ior_ratio_out open_pbr_surface_surfaceshader_specular_ior open_pbr_surface_surfaceshader_coat_ior 	%line{208} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:209
+#     float if_transmission_tint_value2_tmp = 0.000000;
+	div		___692_coat_to_specular_ior_ratio_out open_pbr_surface_surfaceshader_coat_ior open_pbr_surface_surfaceshader_specular_ior 	%line{209} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:210
+#     color if_transmission_tint_in1_tmp = color(1.000000, 1.000000, 1.000000);
+	assign		___692_if_transmission_tint_value2_tmp $const5 	%line{210} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:211
+#     color if_transmission_tint_out = mx_ternary(transmission_depth > if_transmission_tint_value2_tmp, if_transmission_tint_in1_tmp, transmission_color);
+	assign		___692_if_transmission_tint_in1_tmp $const12 	%line{211} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:212
+#     vector transmission_color_vector_out = vector(0.0);
+	gt		$tmp5 open_pbr_surface_surfaceshader_transmission_depth ___692_if_transmission_tint_value2_tmp 	%line{212} %argrw{"wrr"}
+	functioncall	$const13 50 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:20
+# color mx_ternary(int expr, color v1, color v2) { if (expr) return v1; else return v2; }
+	if		$tmp5 48 50 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{20} %argrw{"r"}
+	assign		___692_if_transmission_tint_out ___692_if_transmission_tint_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___692_if_transmission_tint_out open_pbr_surface_surfaceshader_transmission_color 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:213
+#     NG_convert_color3_vector3(transmission_color, transmission_color_vector_out);
+	assign		___692_transmission_color_vector_out $const14 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{213} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:214
+#     vector transmission_depth_vector_out = vector(0.0);
+	functioncall	$const15 70 	%line{214} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:50
+#     float separate_outg = 0.0;
+	assign		___671_separate_outr $const5 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:51
+#     float separate_outb = 0.0;
+	assign		___671_separate_outg $const5 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:52
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___671_separate_outb $const5 	%line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:53
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const16 68 	%line{53} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:37
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___670_N_extract_0_index_tmp $const1 	%line{37} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:38
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const17 59 	%line{38} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_0_out open_pbr_surface_surfaceshader_transmission_color ___670_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:39
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___670_N_extract_1_index_tmp $const18 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{39} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:40
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const17 62 	%line{40} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_1_out open_pbr_surface_surfaceshader_transmission_color ___670_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:41
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___670_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{41} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:42
+#     outr = N_extract_0_out;
+	functioncall	$const17 65 	%line{42} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_2_out open_pbr_surface_surfaceshader_transmission_color ___670_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:43
+#     outg = N_extract_1_out;
+	assign		___671_separate_outr ___670_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:44
+#     outb = N_extract_2_out;
+	assign		___671_separate_outg ___670_N_extract_1_out 	%line{44} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:45
+# }
+	assign		___671_separate_outb ___670_N_extract_2_out 	%line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:54
+#     out = combine_out;
+	vector		___671_combine_out ___671_separate_outr ___671_separate_outg ___671_separate_outb 	%line{54} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:55
+# }
+	assign		___692_transmission_color_vector_out ___671_combine_out 	%line{55} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:215
+#     NG_convert_float_vector3(transmission_depth, transmission_depth_vector_out);
+	assign		___692_transmission_depth_vector_out $const14 	%line{215} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:216
+#     vector transmission_scatter_vector_out = vector(0.0);
+	functioncall	$const19 74 	%line{216} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:60
+#     out = combine_out;
+	vector		___672_combine_out open_pbr_surface_surfaceshader_transmission_depth open_pbr_surface_surfaceshader_transmission_depth open_pbr_surface_surfaceshader_transmission_depth 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:61
+# }
+	assign		___692_transmission_depth_vector_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:217
+#     NG_convert_color3_vector3(transmission_scatter, transmission_scatter_vector_out);
+	assign		___692_transmission_scatter_vector_out $const14 	%line{217} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:218
+#     float subsurface_color_nonnegative_in2_tmp = 0.000000;
+	functioncall	$const15 94 	%line{218} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:50
+#     float separate_outg = 0.0;
+	assign		___671_separate_outr $const5 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:51
+#     float separate_outb = 0.0;
+	assign		___671_separate_outg $const5 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:52
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___671_separate_outb $const5 	%line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:53
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const16 92 	%line{53} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:37
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___670_N_extract_0_index_tmp $const1 	%line{37} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:38
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const17 83 	%line{38} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_0_out open_pbr_surface_surfaceshader_transmission_scatter ___670_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:39
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___670_N_extract_1_index_tmp $const18 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{39} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:40
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const17 86 	%line{40} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_1_out open_pbr_surface_surfaceshader_transmission_scatter ___670_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:41
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___670_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{41} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:42
+#     outr = N_extract_0_out;
+	functioncall	$const17 89 	%line{42} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___670_N_extract_2_out open_pbr_surface_surfaceshader_transmission_scatter ___670_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:43
+#     outg = N_extract_1_out;
+	assign		___671_separate_outr ___670_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:44
+#     outb = N_extract_2_out;
+	assign		___671_separate_outg ___670_N_extract_1_out 	%line{44} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:45
+# }
+	assign		___671_separate_outb ___670_N_extract_2_out 	%line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:54
+#     out = combine_out;
+	vector		___671_combine_out ___671_separate_outr ___671_separate_outg ___671_separate_outb 	%line{54} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:55
+# }
+	assign		___692_transmission_scatter_vector_out ___671_combine_out 	%line{55} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:219
+#     color subsurface_color_nonnegative_out = max(subsurface_color, subsurface_color_nonnegative_in2_tmp);
+	assign		___692_subsurface_color_nonnegative_in2_tmp $const5 	%line{219} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:220
+#     float one_minus_subsurface_scatter_anisotropy_in1_tmp = 1.000000;
+	assign		$tmp6 ___692_subsurface_color_nonnegative_in2_tmp 	%line{220} %argrw{"wr"}
+	max		___692_subsurface_color_nonnegative_out open_pbr_surface_surfaceshader_subsurface_color $tmp6 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:221
+#     float one_minus_subsurface_scatter_anisotropy_out = one_minus_subsurface_scatter_anisotropy_in1_tmp - subsurface_scatter_anisotropy;
+	assign		___692_one_minus_subsurface_scatter_anisotropy_in1_tmp $const6 	%line{221} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:222
+#     float one_plus_subsurface_scatter_anisotropy_in1_tmp = 1.000000;
+	sub		___692_one_minus_subsurface_scatter_anisotropy_out ___692_one_minus_subsurface_scatter_anisotropy_in1_tmp open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy 	%line{222} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:223
+#     float one_plus_subsurface_scatter_anisotropy_out = one_plus_subsurface_scatter_anisotropy_in1_tmp + subsurface_scatter_anisotropy;
+	assign		___692_one_plus_subsurface_scatter_anisotropy_in1_tmp $const6 	%line{223} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:224
+#     color subsurface_radius_scaled_out = subsurface_radius_scale * subsurface_radius;
+	add		___692_one_plus_subsurface_scatter_anisotropy_out ___692_one_plus_subsurface_scatter_anisotropy_in1_tmp open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy 	%line{224} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:225
+#     float subsurface_selector_out = float(geometry_thin_walled);
+	mul		___692_subsurface_radius_scaled_out open_pbr_surface_surfaceshader_subsurface_radius_scale open_pbr_surface_surfaceshader_subsurface_radius 	%line{225} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:226
+#     float base_color_nonnegative_in2_tmp = 0.000000;
+	assign		$tmp7 open_pbr_surface_surfaceshader_geometry_thin_walled 	%line{226} %argrw{"wr"}
+	assign		___692_subsurface_selector_out $tmp7 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:227
+#     color base_color_nonnegative_out = max(base_color, base_color_nonnegative_in2_tmp);
+	assign		___692_base_color_nonnegative_in2_tmp $const5 	%line{227} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:228
+#     float coat_ior_minus_one_in2_tmp = 1.000000;
+	assign		$tmp8 ___692_base_color_nonnegative_in2_tmp 	%line{228} %argrw{"wr"}
+	max		___692_base_color_nonnegative_out open_pbr_surface_surfaceshader_base_color $tmp8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:229
+#     float coat_ior_minus_one_out = coat_ior - coat_ior_minus_one_in2_tmp;
+	assign		___692_coat_ior_minus_one_in2_tmp $const6 	%line{229} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:230
+#     float coat_ior_plus_one_in1_tmp = 1.000000;
+	sub		___692_coat_ior_minus_one_out open_pbr_surface_surfaceshader_coat_ior ___692_coat_ior_minus_one_in2_tmp 	%line{230} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:231
+#     float coat_ior_plus_one_out = coat_ior_plus_one_in1_tmp + coat_ior;
+	assign		___692_coat_ior_plus_one_in1_tmp $const6 	%line{231} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:232
+#     float coat_ior_sqr_out = coat_ior * coat_ior;
+	add		___692_coat_ior_plus_one_out ___692_coat_ior_plus_one_in1_tmp open_pbr_surface_surfaceshader_coat_ior 	%line{232} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:233
+#     color Emetal_out = base_color * specular_weight;
+	mul		___692_coat_ior_sqr_out open_pbr_surface_surfaceshader_coat_ior open_pbr_surface_surfaceshader_coat_ior 	%line{233} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:234
+#     color Edielectric_out = mix(base_color, subsurface_color, subsurface_weight);
+	mul		___692_Emetal_out open_pbr_surface_surfaceshader_base_color open_pbr_surface_surfaceshader_specular_weight 	%line{234} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:235
+#     float coat_weight_times_coat_darkening_out = coat_weight * coat_darkening;
+	mix		___692_Edielectric_out open_pbr_surface_surfaceshader_base_color open_pbr_surface_surfaceshader_subsurface_color open_pbr_surface_surfaceshader_subsurface_weight 	%line{235} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:236
+#     color coat_attenuation_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	mul		___692_coat_weight_times_coat_darkening_out open_pbr_surface_surfaceshader_coat_weight open_pbr_surface_surfaceshader_coat_darkening 	%line{236} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:237
+#     color coat_attenuation_out = mix(coat_attenuation_bg_tmp, coat_color, coat_weight);
+	assign		___692_coat_attenuation_bg_tmp $const12 	%line{237} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:238
+#     color emission_weight_out = emission_color * emission_luminance;
+	mix		___692_coat_attenuation_out ___692_coat_attenuation_bg_tmp open_pbr_surface_surfaceshader_coat_color open_pbr_surface_surfaceshader_coat_weight 	%line{238} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:239
+#     float two_times_coat_roughness_to_power_4_in2_tmp = 2.000000;
+	mul		___692_emission_weight_out open_pbr_surface_surfaceshader_emission_color open_pbr_surface_surfaceshader_emission_luminance 	%line{239} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:240
+#     float two_times_coat_roughness_to_power_4_out = coat_roughness_to_power_4_out * two_times_coat_roughness_to_power_4_in2_tmp;
+	assign		___692_two_times_coat_roughness_to_power_4_in2_tmp $const9 	%line{240} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:241
+#     float specular_to_coat_ior_ratio_tir_fix_value2_tmp = 1.000000;
+	mul		___692_two_times_coat_roughness_to_power_4_out ___692_coat_roughness_to_power_4_out ___692_two_times_coat_roughness_to_power_4_in2_tmp 	%line{241} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:242
+#     float specular_to_coat_ior_ratio_tir_fix_out = mx_ternary(specular_to_coat_ior_ratio_out > specular_to_coat_ior_ratio_tir_fix_value2_tmp, specular_to_coat_ior_ratio_out, coat_to_specular_ior_ratio_out);
+	assign		___692_specular_to_coat_ior_ratio_tir_fix_value2_tmp $const6 	%line{242} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:243
+#     vector transmission_color_ln_out = log(transmission_color_vector_out);
+	gt		$tmp9 ___692_specular_to_coat_ior_ratio_out ___692_specular_to_coat_ior_ratio_tir_fix_value2_tmp 	%line{243} %argrw{"wrr"}
+	functioncall	$const13 128 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp9 126 128 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___692_specular_to_coat_ior_ratio_tir_fix_out ___692_specular_to_coat_ior_ratio_out 	%argrw{"wr"}
+	return
+	assign		___692_specular_to_coat_ior_ratio_tir_fix_out ___692_coat_to_specular_ior_ratio_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:244
+#     vector scattering_coeff_out = transmission_scatter_vector_out / transmission_depth_vector_out;
+	log		___692_transmission_color_ln_out ___692_transmission_color_vector_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{244} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:245
+#     color subsurface_thin_walled_brdf_factor_out = subsurface_color * one_minus_subsurface_scatter_anisotropy_out;
+	div		___692_scattering_coeff_out ___692_transmission_scatter_vector_out ___692_transmission_depth_vector_out 	%line{245} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:246
+#     color subsurface_thin_walled_btdf_factor_out = subsurface_color * one_plus_subsurface_scatter_anisotropy_out;
+	mul		___692_subsurface_thin_walled_brdf_factor_out open_pbr_surface_surfaceshader_subsurface_color ___692_one_minus_subsurface_scatter_anisotropy_out 	%line{246} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:247
+#     float coat_ior_to_F0_sqrt_out = coat_ior_minus_one_out / coat_ior_plus_one_out;
+	mul		___692_subsurface_thin_walled_btdf_factor_out open_pbr_surface_surfaceshader_subsurface_color ___692_one_plus_subsurface_scatter_anisotropy_out 	%line{247} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:248
+#     color Ebase_out = mix(Edielectric_out, Emetal_out, base_metalness);
+	div		___692_coat_ior_to_F0_sqrt_out ___692_coat_ior_minus_one_out ___692_coat_ior_plus_one_out 	%line{248} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:249
+#     float add_coat_and_spec_roughnesses_to_power_4_out = two_times_coat_roughness_to_power_4_out + specular_roughness_to_power_4_out;
+	mix		___692_Ebase_out ___692_Edielectric_out ___692_Emetal_out open_pbr_surface_surfaceshader_base_metalness 	%line{249} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:250
+#     float eta_s_out = mix(specular_ior, specular_to_coat_ior_ratio_tir_fix_out, coat_weight);
+	add		___692_add_coat_and_spec_roughnesses_to_power_4_out ___692_two_times_coat_roughness_to_power_4_out ___692_specular_roughness_to_power_4_out 	%line{250} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:251
+#     float extinction_coeff_denom_in2_tmp = -1.000000;
+	mix		___692_eta_s_out open_pbr_surface_surfaceshader_specular_ior ___692_specular_to_coat_ior_ratio_tir_fix_out open_pbr_surface_surfaceshader_coat_weight 	%line{251} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:252
+#     vector extinction_coeff_denom_out = transmission_color_ln_out * extinction_coeff_denom_in2_tmp;
+	assign		___692_extinction_coeff_denom_in2_tmp $const20 	%line{252} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:253
+#     float if_volume_scattering_value2_tmp = 0.000000;
+	mul		___692_extinction_coeff_denom_out ___692_transmission_color_ln_out ___692_extinction_coeff_denom_in2_tmp 	%line{253} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:254
+#     vector if_volume_scattering_in2_tmp = vector(0.000000, 0.000000, 0.000000);
+	assign		___692_if_volume_scattering_value2_tmp $const5 	%line{254} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:255
+#     vector if_volume_scattering_out = mx_ternary(transmission_depth > if_volume_scattering_value2_tmp, scattering_coeff_out, if_volume_scattering_in2_tmp);
+	assign		___692_if_volume_scattering_in2_tmp $const14 	%line{255} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:256
+#     float coat_ior_to_F0_out = coat_ior_to_F0_sqrt_out * coat_ior_to_F0_sqrt_out;
+	gt		$tmp10 open_pbr_surface_surfaceshader_transmission_depth ___692_if_volume_scattering_value2_tmp 	%line{256} %argrw{"wrr"}
+	functioncall	$const13 147 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp10 145 147 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___692_if_volume_scattering_out ___692_scattering_coeff_out 	%argrw{"wr"}
+	return
+	assign		___692_if_volume_scattering_out ___692_if_volume_scattering_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:257
+#     float min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp = 1.000000;
+	mul		___692_coat_ior_to_F0_out ___692_coat_ior_to_F0_sqrt_out ___692_coat_ior_to_F0_sqrt_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{257} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:258
+#     float min_1_add_coat_and_spec_roughnesses_to_power_4_out = min(min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp, add_coat_and_spec_roughnesses_to_power_4_out);
+	assign		___692_min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp $const6 	%line{258} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:259
+#     float eta_s_minus_one_in2_tmp = 1.000000;
+	min		___692_min_1_add_coat_and_spec_roughnesses_to_power_4_out ___692_min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp ___692_add_coat_and_spec_roughnesses_to_power_4_out 	%line{259} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:260
+#     float eta_s_minus_one_out = eta_s_out - eta_s_minus_one_in2_tmp;
+	assign		___692_eta_s_minus_one_in2_tmp $const6 	%line{260} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:261
+#     float eta_s_plus_one_in2_tmp = 1.000000;
+	sub		___692_eta_s_minus_one_out ___692_eta_s_out ___692_eta_s_minus_one_in2_tmp 	%line{261} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:262
+#     float eta_s_plus_one_out = eta_s_out + eta_s_plus_one_in2_tmp;
+	assign		___692_eta_s_plus_one_in2_tmp $const6 	%line{262} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:263
+#     vector extinction_coeff_out = extinction_coeff_denom_out / transmission_depth_vector_out;
+	add		___692_eta_s_plus_one_out ___692_eta_s_out ___692_eta_s_plus_one_in2_tmp 	%line{263} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:264
+#     float one_minus_coat_F0_in1_tmp = 1.000000;
+	div		___692_extinction_coeff_out ___692_extinction_coeff_denom_out ___692_transmission_depth_vector_out 	%line{264} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:265
+#     float one_minus_coat_F0_out = one_minus_coat_F0_in1_tmp - coat_ior_to_F0_out;
+	assign		___692_one_minus_coat_F0_in1_tmp $const6 	%line{265} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:266
+#     float coat_affected_specular_roughness_in2_tmp = 0.250000;
+	sub		___692_one_minus_coat_F0_out ___692_one_minus_coat_F0_in1_tmp ___692_coat_ior_to_F0_out 	%line{266} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:267
+#     float coat_affected_specular_roughness_out = pow(min_1_add_coat_and_spec_roughnesses_to_power_4_out, coat_affected_specular_roughness_in2_tmp);
+	assign		___692_coat_affected_specular_roughness_in2_tmp $const21 	%line{267} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:268
+#     float sign_eta_s_minus_one_out = sign(eta_s_minus_one_out);
+	pow		___692_coat_affected_specular_roughness_out ___692_min_1_add_coat_and_spec_roughnesses_to_power_4_out ___692_coat_affected_specular_roughness_in2_tmp 	%line{268} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:269
+#     float specular_F0_sqrt_out = eta_s_minus_one_out / eta_s_plus_one_out;
+	sign		___692_sign_eta_s_minus_one_out ___692_eta_s_minus_one_out 	%line{269} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:270
+#     vector absorption_coeff_out = extinction_coeff_out - scattering_coeff_out;
+	div		___692_specular_F0_sqrt_out ___692_eta_s_minus_one_out ___692_eta_s_plus_one_out 	%line{270} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:271
+#     float one_minus_coat_F0_over_eta2_out = one_minus_coat_F0_out / coat_ior_sqr_out;
+	sub		___692_absorption_coeff_out ___692_extinction_coeff_out ___692_scattering_coeff_out 	%line{271} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:272
+#     color one_minus_coat_F0_color_out = color(0.0);
+	div		___692_one_minus_coat_F0_over_eta2_out ___692_one_minus_coat_F0_out ___692_coat_ior_sqr_out 	%line{272} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:273
+#     NG_convert_float_color3(one_minus_coat_F0_out, one_minus_coat_F0_color_out);
+	assign		___692_one_minus_coat_F0_color_out $const22 	%line{273} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:274
+#     float effective_specular_roughness_out = mix(specular_roughness, coat_affected_specular_roughness_out, coat_weight);
+	functioncall	$const23 167 	%line{274} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:82
+#     out = combine_out;
+	color		___675_combine_out ___692_one_minus_coat_F0_out ___692_one_minus_coat_F0_out ___692_one_minus_coat_F0_out 	%line{82} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:83
+# }
+	assign		___692_one_minus_coat_F0_color_out ___675_combine_out 	%line{83} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:275
+#     float specular_F0_out = specular_F0_sqrt_out * specular_F0_sqrt_out;
+	mix		___692_effective_specular_roughness_out open_pbr_surface_surfaceshader_specular_roughness ___692_coat_affected_specular_roughness_out open_pbr_surface_surfaceshader_coat_weight 	%line{275} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:276
+#     int absorption_coeff_x_index_tmp = 0;
+	mul		___692_specular_F0_out ___692_specular_F0_sqrt_out ___692_specular_F0_sqrt_out 	%line{276} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:277
+#     float absorption_coeff_x_out = mx_extract(absorption_coeff_out, absorption_coeff_x_index_tmp);
+	assign		___692_absorption_coeff_x_index_tmp $const1 	%line{277} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:278
+#     int absorption_coeff_y_index_tmp = 1;
+	functioncall	$const17 172 	%line{278} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___692_absorption_coeff_x_out ___692_absorption_coeff_out ___692_absorption_coeff_x_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:279
+#     float absorption_coeff_y_out = mx_extract(absorption_coeff_out, absorption_coeff_y_index_tmp);
+	assign		___692_absorption_coeff_y_index_tmp $const18 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{279} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:280
+#     int absorption_coeff_z_index_tmp = 2;
+	functioncall	$const17 175 	%line{280} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___692_absorption_coeff_y_out ___692_absorption_coeff_out ___692_absorption_coeff_y_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:281
+#     float absorption_coeff_z_out = mx_extract(absorption_coeff_out, absorption_coeff_z_index_tmp);
+	assign		___692_absorption_coeff_z_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{281} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:282
+#     float Kcoat_in1_tmp = 1.000000;
+	functioncall	$const17 178 	%line{282} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___692_absorption_coeff_z_out ___692_absorption_coeff_out ___692_absorption_coeff_z_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:283
+#     float Kcoat_out = Kcoat_in1_tmp - one_minus_coat_F0_over_eta2_out;
+	assign		___692_Kcoat_in1_tmp $const6 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{283} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:284
+#     vector2 main_roughness_out = vector2(0.0, 0.0);
+	sub		___692_Kcoat_out ___692_Kcoat_in1_tmp ___692_one_minus_coat_F0_over_eta2_out 	%line{284} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:285
+#     NG_open_pbr_anisotropy(effective_specular_roughness_out, specular_roughness_anisotropy, main_roughness_out);
+	assign		___692_main_roughness_out.x $const5 	%line{285} %argrw{"wr"}
+	assign		___692_main_roughness_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:286
+#     float scaled_specular_F0_out = specular_weight * specular_F0_out;
+	functioncall	$const8 198 	%line{286} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:20
+#     float aniso_invert_amount_tmp = 1.000000;
+	mul		___669_rough_sq_out ___692_effective_specular_roughness_out ___692_effective_specular_roughness_out 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:21
+#     float aniso_invert_out = aniso_invert_amount_tmp - anisotropy;
+	assign		___669_aniso_invert_amount_tmp $const6 	%line{21} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:22
+#     float aniso_invert_sq_out = aniso_invert_out * aniso_invert_out;
+	sub		___669_aniso_invert_out ___669_aniso_invert_amount_tmp open_pbr_surface_surfaceshader_specular_roughness_anisotropy 	%line{22} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:23
+#     float denom_in2_tmp = 1.000000;
+	mul		___669_aniso_invert_sq_out ___669_aniso_invert_out ___669_aniso_invert_out 	%line{23} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:24
+#     float denom_out = aniso_invert_sq_out + denom_in2_tmp;
+	assign		___669_denom_in2_tmp $const6 	%line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:25
+#     float fraction_in1_tmp = 2.000000;
+	add		___669_denom_out ___669_aniso_invert_sq_out ___669_denom_in2_tmp 	%line{25} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:26
+#     float fraction_out = fraction_in1_tmp / denom_out;
+	assign		___669_fraction_in1_tmp $const9 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:27
+#     float sqrt_out = sqrt(fraction_out);
+	div		___669_fraction_out ___669_fraction_in1_tmp ___669_denom_out 	%line{27} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:28
+#     float alpha_x_out = rough_sq_out * sqrt_out;
+	sqrt		___669_sqrt_out ___669_fraction_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:29
+#     float alpha_y_out = aniso_invert_out * alpha_x_out;
+	mul		___669_alpha_x_out ___669_rough_sq_out ___669_sqrt_out 	%line{29} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:30
+#     vector2 result_out = { alpha_x_out,alpha_y_out };
+	mul		___669_alpha_y_out ___669_aniso_invert_out ___669_alpha_x_out 	%line{30} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:31
+#     out = result_out;
+	assign		___669_result_out.x ___669_alpha_x_out 	%line{31} %argrw{"wr"}
+	assign		___669_result_out.y ___669_alpha_y_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:32
+# }
+	assign		___692_main_roughness_out.x ___669_result_out.x 	%line{32} %argrw{"wr"}
+	assign		___692_main_roughness_out.y ___669_result_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:287
+#     float absorption_coeff_min_x_y_out = min(absorption_coeff_x_out, absorption_coeff_y_out);
+	mul		___692_scaled_specular_F0_out open_pbr_surface_surfaceshader_specular_weight ___692_specular_F0_out 	%line{287} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:288
+#     float one_minus_Kcoat_in1_tmp = 1.000000;
+	min		___692_absorption_coeff_min_x_y_out ___692_absorption_coeff_x_out ___692_absorption_coeff_y_out 	%line{288} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:289
+#     float one_minus_Kcoat_out = one_minus_Kcoat_in1_tmp - Kcoat_out;
+	assign		___692_one_minus_Kcoat_in1_tmp $const6 	%line{289} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:290
+#     color Ebase_Kcoat_out = Ebase_out * Kcoat_out;
+	sub		___692_one_minus_Kcoat_out ___692_one_minus_Kcoat_in1_tmp ___692_Kcoat_out 	%line{290} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:291
+#     float scaled_specular_F0_clamped_low_tmp = 0.000000;
+	mul		___692_Ebase_Kcoat_out ___692_Ebase_out ___692_Kcoat_out 	%line{291} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:292
+#     float scaled_specular_F0_clamped_high_tmp = 0.999990;
+	assign		___692_scaled_specular_F0_clamped_low_tmp $const5 	%line{292} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:293
+#     float scaled_specular_F0_clamped_out = clamp(scaled_specular_F0_out, scaled_specular_F0_clamped_low_tmp, scaled_specular_F0_clamped_high_tmp);
+	assign		___692_scaled_specular_F0_clamped_high_tmp $const24 	%line{293} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:294
+#     float absorption_coeff_min_out = min(absorption_coeff_min_x_y_out, absorption_coeff_z_out);
+	functioncall	$const25 208 	%line{294} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp11 ___692_scaled_specular_F0_out ___692_scaled_specular_F0_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___692_scaled_specular_F0_clamped_out $tmp11 ___692_scaled_specular_F0_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:295
+#     color one_minus_Kcoat_color_out = color(0.0);
+	min		___692_absorption_coeff_min_out ___692_absorption_coeff_min_x_y_out ___692_absorption_coeff_z_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{295} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:296
+#     NG_convert_float_color3(one_minus_Kcoat_out, one_minus_Kcoat_color_out);
+	assign		___692_one_minus_Kcoat_color_out $const22 	%line{296} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:297
+#     color one_minus_Ebase_Kcoat_in1_tmp = color(1.000000, 1.000000, 1.000000);
+	functioncall	$const23 213 	%line{297} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:82
+#     out = combine_out;
+	color		___675_combine_out ___692_one_minus_Kcoat_out ___692_one_minus_Kcoat_out ___692_one_minus_Kcoat_out 	%line{82} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:83
+# }
+	assign		___692_one_minus_Kcoat_color_out ___675_combine_out 	%line{83} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:298
+#     color one_minus_Ebase_Kcoat_out = one_minus_Ebase_Kcoat_in1_tmp - Ebase_Kcoat_out;
+	assign		___692_one_minus_Ebase_Kcoat_in1_tmp $const12 	%line{298} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:299
+#     float sqrt_scaled_specular_F0_out = sqrt(scaled_specular_F0_clamped_out);
+	sub		___692_one_minus_Ebase_Kcoat_out ___692_one_minus_Ebase_Kcoat_in1_tmp ___692_Ebase_Kcoat_out 	%line{299} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:300
+#     vector absorption_coeff_min_vector_out = vector(0.0);
+	sqrt		___692_sqrt_scaled_specular_F0_out ___692_scaled_specular_F0_clamped_out 	%line{300} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:301
+#     NG_convert_float_vector3(absorption_coeff_min_out, absorption_coeff_min_vector_out);
+	assign		___692_absorption_coeff_min_vector_out $const14 	%line{301} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:302
+#     color base_darkening_out = one_minus_Kcoat_color_out / one_minus_Ebase_Kcoat_out;
+	functioncall	$const19 220 	%line{302} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:60
+#     out = combine_out;
+	vector		___672_combine_out ___692_absorption_coeff_min_out ___692_absorption_coeff_min_out ___692_absorption_coeff_min_out 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:61
+# }
+	assign		___692_absorption_coeff_min_vector_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:303
+#     float modulated_eta_s_epsilon_out = sign_eta_s_minus_one_out * sqrt_scaled_specular_F0_out;
+	div		___692_base_darkening_out ___692_one_minus_Kcoat_color_out ___692_one_minus_Ebase_Kcoat_out 	%line{303} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:304
+#     vector absorption_coeff_shifted_out = absorption_coeff_out - absorption_coeff_min_vector_out;
+	mul		___692_modulated_eta_s_epsilon_out ___692_sign_eta_s_minus_one_out ___692_sqrt_scaled_specular_F0_out 	%line{304} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:305
+#     color modulated_base_darkening_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	sub		___692_absorption_coeff_shifted_out ___692_absorption_coeff_out ___692_absorption_coeff_min_vector_out 	%line{305} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:306
+#     color modulated_base_darkening_out = mix(modulated_base_darkening_bg_tmp, base_darkening_out, coat_weight_times_coat_darkening_out);
+	assign		___692_modulated_base_darkening_bg_tmp $const12 	%line{306} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:307
+#     float one_plus_modulated_eta_s_epsilon_in1_tmp = 1.000000;
+	mix		___692_modulated_base_darkening_out ___692_modulated_base_darkening_bg_tmp ___692_base_darkening_out ___692_coat_weight_times_coat_darkening_out 	%line{307} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:308
+#     float one_plus_modulated_eta_s_epsilon_out = one_plus_modulated_eta_s_epsilon_in1_tmp + modulated_eta_s_epsilon_out;
+	assign		___692_one_plus_modulated_eta_s_epsilon_in1_tmp $const6 	%line{308} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:309
+#     float one_minus_modulated_eta_s_epsilon_in1_tmp = 1.000000;
+	add		___692_one_plus_modulated_eta_s_epsilon_out ___692_one_plus_modulated_eta_s_epsilon_in1_tmp ___692_modulated_eta_s_epsilon_out 	%line{309} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:310
+#     float one_minus_modulated_eta_s_epsilon_out = one_minus_modulated_eta_s_epsilon_in1_tmp - modulated_eta_s_epsilon_out;
+	assign		___692_one_minus_modulated_eta_s_epsilon_in1_tmp $const6 	%line{310} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:311
+#     float if_absorption_coeff_shifted_value1_tmp = 0.000000;
+	sub		___692_one_minus_modulated_eta_s_epsilon_out ___692_one_minus_modulated_eta_s_epsilon_in1_tmp ___692_modulated_eta_s_epsilon_out 	%line{311} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:312
+#     vector if_absorption_coeff_shifted_out = mx_ternary(if_absorption_coeff_shifted_value1_tmp > absorption_coeff_min_out, absorption_coeff_shifted_out, absorption_coeff_out);
+	assign		___692_if_absorption_coeff_shifted_value1_tmp $const5 	%line{312} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:313
+#     float modulated_eta_s_out = one_plus_modulated_eta_s_epsilon_out / one_minus_modulated_eta_s_epsilon_out;
+	gt		$tmp12 ___692_if_absorption_coeff_shifted_value1_tmp ___692_absorption_coeff_min_out 	%line{313} %argrw{"wrr"}
+	functioncall	$const13 237 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp12 235 237 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___692_if_absorption_coeff_shifted_out ___692_absorption_coeff_shifted_out 	%argrw{"wr"}
+	return
+	assign		___692_if_absorption_coeff_shifted_out ___692_absorption_coeff_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:314
+#     float if_volume_absorption_value2_tmp = 0.000000;
+	div		___692_modulated_eta_s_out ___692_one_plus_modulated_eta_s_epsilon_out ___692_one_minus_modulated_eta_s_epsilon_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{314} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:315
+#     vector if_volume_absorption_in2_tmp = vector(0.000000, 0.000000, 0.000000);
+	assign		___692_if_volume_absorption_value2_tmp $const5 	%line{315} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:316
+#     vector if_volume_absorption_out = mx_ternary(transmission_depth > if_volume_absorption_value2_tmp, if_absorption_coeff_shifted_out, if_volume_absorption_in2_tmp);
+	assign		___692_if_volume_absorption_in2_tmp $const14 	%line{316} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:317
+#     BSDF fuzz_bsdf_out = fuzz_weight * sheen_bsdf(geometry_normal, fuzz_color, fuzz_roughness);
+	gt		$tmp13 open_pbr_surface_surfaceshader_transmission_depth ___692_if_volume_absorption_value2_tmp 	%line{317} %argrw{"wrr"}
+	functioncall	$const13 247 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp13 245 247 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___692_if_volume_absorption_out ___692_if_absorption_coeff_shifted_out 	%argrw{"wr"}
+	return
+	assign		___692_if_volume_absorption_out ___692_if_volume_absorption_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:318
+#     BSDF coat_bsdf_out = null_closure;
+	closure		$tmp14 $const26 geomprop_Nworld_out1 open_pbr_surface_surfaceshader_fuzz_color open_pbr_surface_surfaceshader_fuzz_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{318} %argrw{"wrrrr"}
+	mul		___692_fuzz_bsdf_out $tmp14 open_pbr_surface_surfaceshader_fuzz_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:319
+#     mx_dielectric_bsdf(coat_weight, color(1.000000, 1.000000, 1.000000), coat_ior, coat_roughness_vector_out, 0.000000, 1.500000, geometry_coat_normal, geometry_coat_tangent, "ggx", "R", coat_bsdf_out);
+	assign		___692_coat_bsdf_out ___692_null_closure 	%line{319} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:320
+#     BSDF metal_bsdf_tf_out = null_closure;
+	functioncall	$const30 261 	%line{320} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:66
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp16 $const29 $const31 	%line{66} %argrw{"wrr"}
+	if		$tmp16 254 255 	%argrw{"r"}
+	assign		___673_reflection_tint $const22 	%argrw{"wr"}
+	assign		___673_reflection_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:67
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp17 $const29 $const29 	%line{67} %argrw{"wrr"}
+	if		$tmp17 258 259 	%argrw{"r"}
+	assign		___673_transmission_tint $const22 	%argrw{"wr"}
+	assign		___673_transmission_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:68
+# }
+	closure		$tmp18 $const34 geomprop_Nworld_out1 geomprop_Tworld_out1 ___673_reflection_tint ___673_transmission_tint ___692_coat_roughness_vector_out.x ___692_coat_roughness_vector_out.y open_pbr_surface_surfaceshader_coat_ior $const28 $const32 $const5 $const33 $const27 	%line{68} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___692_coat_bsdf_out $tmp18 open_pbr_surface_surfaceshader_coat_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:321
+#     mx_generalized_schlick_bsdf(specular_weight, metal_reflectivity_out, metal_edgecolor_out, color(1.000000, 1.000000, 1.000000), 5.000000, main_roughness_out, thin_film_thickness_nm_out, thin_film_ior, geometry_normal, geometry_tangent, "ggx", "R", metal_bsdf_tf_out);
+	assign		___692_metal_bsdf_tf_out ___692_null_closure 	%line{321} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:322
+#     BSDF metal_bsdf_out = null_closure;
+	functioncall	$const36 273 	%line{322} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:174
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp20 $const29 $const31 	%line{174} %argrw{"wrr"}
+	if		$tmp20 266 267 	%argrw{"r"}
+	assign		___689_reflection_tint $const22 	%argrw{"wr"}
+	assign		___689_reflection_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:175
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp21 $const29 $const29 	%line{175} %argrw{"wrr"}
+	if		$tmp21 270 271 	%argrw{"r"}
+	assign		___689_transmission_tint $const22 	%argrw{"wr"}
+	assign		___689_transmission_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:176
+# }
+	closure		$tmp22 $const37 geomprop_Nworld_out1 geomprop_Tworld_out1 ___689_reflection_tint ___689_transmission_tint ___692_main_roughness_out.x ___692_main_roughness_out.y ___692_metal_reflectivity_out $const12 $const35 $const28 $const32 ___692_thin_film_thickness_nm_out $const33 open_pbr_surface_surfaceshader_thin_film_ior 	%line{176} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___692_metal_bsdf_tf_out $tmp22 open_pbr_surface_surfaceshader_specular_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:323
+#     mx_generalized_schlick_bsdf(specular_weight, metal_reflectivity_out, metal_edgecolor_out, color(1.000000, 1.000000, 1.000000), 5.000000, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "R", metal_bsdf_out);
+	assign		___692_metal_bsdf_out ___692_null_closure 	%line{323} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:324
+#     BSDF metal_bsdf_tf_mix_out = mix(metal_bsdf_out, metal_bsdf_tf_out, thin_film_weight);
+	functioncall	$const36 285 	%line{324} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:174
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp24 $const29 $const31 	%line{174} %argrw{"wrr"}
+	if		$tmp24 278 279 	%argrw{"r"}
+	assign		___689_reflection_tint $const22 	%argrw{"wr"}
+	assign		___689_reflection_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:175
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp25 $const29 $const29 	%line{175} %argrw{"wrr"}
+	if		$tmp25 282 283 	%argrw{"r"}
+	assign		___689_transmission_tint $const22 	%argrw{"wr"}
+	assign		___689_transmission_tint $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:176
+# }
+	closure		$tmp26 $const37 geomprop_Nworld_out1 geomprop_Tworld_out1 ___689_reflection_tint ___689_transmission_tint ___692_main_roughness_out.x ___692_main_roughness_out.y ___692_metal_reflectivity_out $const12 $const35 $const28 $const32 $const5 $const33 $const27 	%line{176} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___692_metal_bsdf_out $tmp26 open_pbr_surface_surfaceshader_specular_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:325
+#     BSDF dielectric_reflection_tf_out = null_closure;
+	functioncall	$const38 290 	%line{325} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp27 $const6 open_pbr_surface_surfaceshader_thin_film_weight 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp28 ___692_metal_bsdf_out $tmp27 	%argrw{"wrr"}
+	mul		$tmp29 ___692_metal_bsdf_tf_out open_pbr_surface_surfaceshader_thin_film_weight 	%argrw{"wrr"}
+	add		___692_metal_bsdf_tf_mix_out $tmp28 $tmp29 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:326
+#     mx_dielectric_bsdf(1.000000, specular_color, modulated_eta_s_out, main_roughness_out, thin_film_thickness_nm_out, thin_film_ior, geometry_normal, geometry_tangent, "ggx", "R", dielectric_reflection_tf_out);
+	assign		___692_dielectric_reflection_tf_out ___692_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{326} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:327
+#     BSDF dielectric_reflection_out = null_closure;
+	functioncall	$const30 302 	%line{327} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:66
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp30 $const29 $const31 	%line{66} %argrw{"wrr"}
+	if		$tmp30 295 296 	%argrw{"r"}
+	assign		___673_reflection_tint $const22 	%argrw{"wr"}
+	assign		___673_reflection_tint open_pbr_surface_surfaceshader_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:67
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp31 $const29 $const29 	%line{67} %argrw{"wrr"}
+	if		$tmp31 299 300 	%argrw{"r"}
+	assign		___673_transmission_tint $const22 	%argrw{"wr"}
+	assign		___673_transmission_tint open_pbr_surface_surfaceshader_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:68
+# }
+	closure		$tmp32 $const34 geomprop_Nworld_out1 geomprop_Tworld_out1 ___673_reflection_tint ___673_transmission_tint ___692_main_roughness_out.x ___692_main_roughness_out.y ___692_modulated_eta_s_out $const28 $const32 ___692_thin_film_thickness_nm_out $const33 open_pbr_surface_surfaceshader_thin_film_ior 	%line{68} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___692_dielectric_reflection_tf_out $tmp32 $const6 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:328
+#     mx_dielectric_bsdf(1.000000, specular_color, modulated_eta_s_out, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "R", dielectric_reflection_out);
+	assign		___692_dielectric_reflection_out ___692_null_closure 	%line{328} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:329
+#     BSDF dielectric_reflection_tf_mix_out = mix(dielectric_reflection_out, dielectric_reflection_tf_out, thin_film_weight);
+	functioncall	$const30 314 	%line{329} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:66
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp33 $const29 $const31 	%line{66} %argrw{"wrr"}
+	if		$tmp33 307 308 	%argrw{"r"}
+	assign		___673_reflection_tint $const22 	%argrw{"wr"}
+	assign		___673_reflection_tint open_pbr_surface_surfaceshader_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:67
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp34 $const29 $const29 	%line{67} %argrw{"wrr"}
+	if		$tmp34 311 312 	%argrw{"r"}
+	assign		___673_transmission_tint $const22 	%argrw{"wr"}
+	assign		___673_transmission_tint open_pbr_surface_surfaceshader_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:68
+# }
+	closure		$tmp35 $const34 geomprop_Nworld_out1 geomprop_Tworld_out1 ___673_reflection_tint ___673_transmission_tint ___692_main_roughness_out.x ___692_main_roughness_out.y ___692_modulated_eta_s_out $const28 $const32 $const5 $const33 $const27 	%line{68} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___692_dielectric_reflection_out $tmp35 $const6 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:330
+#     BSDF dielectric_transmission_out = null_closure;
+	functioncall	$const38 319 	%line{330} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp36 $const6 open_pbr_surface_surfaceshader_thin_film_weight 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp37 ___692_dielectric_reflection_out $tmp36 	%argrw{"wrr"}
+	mul		$tmp38 ___692_dielectric_reflection_tf_out open_pbr_surface_surfaceshader_thin_film_weight 	%argrw{"wrr"}
+	add		___692_dielectric_reflection_tf_mix_out $tmp37 $tmp38 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:331
+#     mx_dielectric_bsdf(1.000000, if_transmission_tint_out, modulated_eta_s_out, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "T", dielectric_transmission_out);
+	assign		___692_dielectric_transmission_out ___692_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{331} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:332
+#     VDF dielectric_volume_out = null_closure;
+	functioncall	$const30 331 	%line{332} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:66
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp39 $const31 $const31 	%line{66} %argrw{"wrr"}
+	if		$tmp39 324 325 	%argrw{"r"}
+	assign		___673_reflection_tint $const22 	%argrw{"wr"}
+	assign		___673_reflection_tint ___692_if_transmission_tint_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:67
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp40 $const31 $const29 	%line{67} %argrw{"wrr"}
+	if		$tmp40 328 329 	%argrw{"r"}
+	assign		___673_transmission_tint $const22 	%argrw{"wr"}
+	assign		___673_transmission_tint ___692_if_transmission_tint_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:68
+# }
+	closure		$tmp41 $const34 geomprop_Nworld_out1 geomprop_Tworld_out1 ___673_reflection_tint ___673_transmission_tint ___692_main_roughness_out.x ___692_main_roughness_out.y ___692_modulated_eta_s_out $const28 $const32 $const5 $const33 $const27 	%line{68} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___692_dielectric_transmission_out $tmp41 $const6 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:333
+#     mx_anisotropic_vdf(if_volume_absorption_out, if_volume_scattering_out, transmission_scatter_anisotropy, dielectric_volume_out);
+	assign		___692_dielectric_volume_out ___692_null_closure 	%line{333} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:334
+#     BSDF dielectric_volume_transmission_out = layer(dielectric_transmission_out, dielectric_volume_out);
+	functioncall	$const39 336 	%line{334} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:183
+#     color albedo = scattering / extinction;
+	add		___690_extinction ___692_if_volume_absorption_out ___692_if_volume_scattering_out 	%line{183} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:184
+#     vdf = anisotropic_vdf(albedo, extinction, anisotropy);
+	div		___690_albedo ___692_if_volume_scattering_out ___690_extinction 	%line{184} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:185
+# }
+	closure		___692_dielectric_volume_out $const40 ___690_albedo ___690_extinction open_pbr_surface_surfaceshader_transmission_scatter_anisotropy 	%line{185} %argrw{"wrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:335
+#     float subsurface_thin_walled_reflection_bsdf_weight_tmp = 1.000000;
+	closure		___692_dielectric_volume_transmission_out $const41 ___692_dielectric_transmission_out ___692_dielectric_volume_out 	%line{335} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:336
+#     BSDF subsurface_thin_walled_reflection_bsdf_out = subsurface_thin_walled_reflection_bsdf_weight_tmp * oren_nayar_diffuse_bsdf(geometry_normal, subsurface_color_nonnegative_out, base_diffuse_roughness);
+	assign		___692_subsurface_thin_walled_reflection_bsdf_weight_tmp $const6 	%line{336} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:337
+#     BSDF subsurface_thin_walled_reflection_out = (subsurface_thin_walled_brdf_factor_out * subsurface_thin_walled_reflection_bsdf_out);
+	closure		$tmp42 $const42 geomprop_Nworld_out1 ___692_subsurface_color_nonnegative_out open_pbr_surface_surfaceshader_base_diffuse_roughness 	%line{337} %argrw{"wrrrr"}
+	mul		___692_subsurface_thin_walled_reflection_bsdf_out $tmp42 ___692_subsurface_thin_walled_reflection_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:338
+#     float subsurface_thin_walled_transmission_bsdf_weight_tmp = 1.000000;
+	mul		___692_subsurface_thin_walled_reflection_out ___692_subsurface_thin_walled_reflection_bsdf_out ___692_subsurface_thin_walled_brdf_factor_out 	%line{338} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:339
+#     BSDF subsurface_thin_walled_transmission_bsdf_out = subsurface_thin_walled_transmission_bsdf_weight_tmp * translucent_bsdf(geometry_normal, subsurface_color_nonnegative_out);
+	assign		___692_subsurface_thin_walled_transmission_bsdf_weight_tmp $const6 	%line{339} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:340
+#     BSDF subsurface_thin_walled_transmission_out = (subsurface_thin_walled_btdf_factor_out * subsurface_thin_walled_transmission_bsdf_out);
+	closure		$tmp43 $const43 geomprop_Nworld_out1 ___692_subsurface_color_nonnegative_out 	%line{340} %argrw{"wrrr"}
+	mul		___692_subsurface_thin_walled_transmission_bsdf_out $tmp43 ___692_subsurface_thin_walled_transmission_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:341
+#     float subsurface_thin_walled_mix_tmp = 0.500000;
+	mul		___692_subsurface_thin_walled_transmission_out ___692_subsurface_thin_walled_transmission_bsdf_out ___692_subsurface_thin_walled_btdf_factor_out 	%line{341} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:342
+#     BSDF subsurface_thin_walled_out = mix(subsurface_thin_walled_transmission_out, subsurface_thin_walled_reflection_out, subsurface_thin_walled_mix_tmp);
+	assign		___692_subsurface_thin_walled_mix_tmp $const44 	%line{342} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:343
+#     BSDF subsurface_bsdf_out = null_closure;
+	functioncall	$const38 351 	%line{343} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp44 $const6 ___692_subsurface_thin_walled_mix_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp45 ___692_subsurface_thin_walled_transmission_out $tmp44 	%argrw{"wrr"}
+	mul		$tmp46 ___692_subsurface_thin_walled_reflection_out ___692_subsurface_thin_walled_mix_tmp 	%argrw{"wrr"}
+	add		___692_subsurface_thin_walled_out $tmp45 $tmp46 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:344
+#     mx_subsurface_bsdf(1.000000, subsurface_color_nonnegative_out, subsurface_radius_scaled_out, subsurface_scatter_anisotropy, geometry_normal, subsurface_bsdf_out);
+	assign		___692_subsurface_bsdf_out ___692_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{344} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:345
+#     BSDF selected_subsurface_out = mix(subsurface_bsdf_out, subsurface_thin_walled_out, subsurface_selector_out);
+	functioncall	$const45 355 	%line{345} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:76
+# #endif
+	mul		$tmp47 $const6 ___692_subsurface_color_nonnegative_out 	%line{76} %argrw{"wrr"}
+	closure		___692_subsurface_bsdf_out $const46 geomprop_Nworld_out1 $tmp47 $const6 ___692_subsurface_radius_scaled_out open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:346
+#     BSDF diffuse_bsdf_out = base_weight * oren_nayar_diffuse_bsdf(geometry_normal, base_color_nonnegative_out, base_diffuse_roughness);
+	functioncall	$const38 360 	%line{346} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp48 $const6 ___692_subsurface_selector_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp49 ___692_subsurface_bsdf_out $tmp48 	%argrw{"wrr"}
+	mul		$tmp50 ___692_subsurface_thin_walled_out ___692_subsurface_selector_out 	%argrw{"wrr"}
+	add		___692_selected_subsurface_out $tmp49 $tmp50 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:347
+#     BSDF opaque_base_out = mix(diffuse_bsdf_out, selected_subsurface_out, subsurface_weight);
+	closure		$tmp51 $const42 geomprop_Nworld_out1 ___692_base_color_nonnegative_out open_pbr_surface_surfaceshader_base_diffuse_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{347} %argrw{"wrrrr"}
+	mul		___692_diffuse_bsdf_out $tmp51 open_pbr_surface_surfaceshader_base_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:348
+#     BSDF dielectric_substrate_out = mix(opaque_base_out, dielectric_volume_transmission_out, transmission_weight);
+	functioncall	$const38 367 	%line{348} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp52 $const6 open_pbr_surface_surfaceshader_subsurface_weight 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp53 ___692_diffuse_bsdf_out $tmp52 	%argrw{"wrr"}
+	mul		$tmp54 ___692_selected_subsurface_out open_pbr_surface_surfaceshader_subsurface_weight 	%argrw{"wrr"}
+	add		___692_opaque_base_out $tmp53 $tmp54 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:349
+#     BSDF dielectric_base_out = layer(dielectric_reflection_tf_mix_out, dielectric_substrate_out);
+	functioncall	$const38 372 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{349} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp55 $const6 open_pbr_surface_surfaceshader_transmission_weight 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp56 ___692_opaque_base_out $tmp55 	%argrw{"wrr"}
+	mul		$tmp57 ___692_dielectric_volume_transmission_out open_pbr_surface_surfaceshader_transmission_weight 	%argrw{"wrr"}
+	add		___692_dielectric_substrate_out $tmp56 $tmp57 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:350
+#     BSDF base_substrate_out = mix(dielectric_base_out, metal_bsdf_tf_mix_out, base_metalness);
+	closure		___692_dielectric_base_out $const41 ___692_dielectric_reflection_tf_mix_out ___692_dielectric_substrate_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{350} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:351
+#     BSDF darkened_base_substrate_out = (modulated_base_darkening_out * base_substrate_out);
+	functioncall	$const38 378 	%line{351} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp58 $const6 open_pbr_surface_surfaceshader_base_metalness 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp59 ___692_dielectric_base_out $tmp58 	%argrw{"wrr"}
+	mul		$tmp60 ___692_metal_bsdf_tf_mix_out open_pbr_surface_surfaceshader_base_metalness 	%argrw{"wrr"}
+	add		___692_base_substrate_out $tmp59 $tmp60 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:352
+#     BSDF coat_substrate_attenuated_out = (coat_attenuation_out * darkened_base_substrate_out);
+	mul		___692_darkened_base_substrate_out ___692_base_substrate_out ___692_modulated_base_darkening_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{352} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:353
+#     BSDF coat_layer_out = layer(coat_bsdf_out, coat_substrate_attenuated_out);
+	mul		___692_coat_substrate_attenuated_out ___692_darkened_base_substrate_out ___692_coat_attenuation_out 	%line{353} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:354
+#     BSDF fuzz_layer_out = layer(fuzz_bsdf_out, coat_layer_out);
+	closure		___692_coat_layer_out $const41 ___692_coat_bsdf_out ___692_coat_substrate_attenuated_out 	%line{354} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:355
+#     EDF uncoated_emission_edf_out = uniform_edf(emission_weight_out);
+	closure		___692_fuzz_layer_out $const41 ___692_fuzz_bsdf_out ___692_coat_layer_out 	%line{355} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:356
+#     EDF coat_tinted_emission_edf_out = (coat_color * uncoated_emission_edf_out);
+	closure		___692_uncoated_emission_edf_out $const47 ___692_emission_weight_out 	%line{356} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:357
+#     EDF coated_emission_edf_out = null_closure;
+	mul		___692_coat_tinted_emission_edf_out ___692_uncoated_emission_edf_out open_pbr_surface_surfaceshader_coat_color 	%line{357} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:358
+#     mx_generalized_schlick_edf(one_minus_coat_F0_color_out, color(0.000000, 0.000000, 0.000000), 5.000000, coat_tinted_emission_edf_out, coated_emission_edf_out);
+	assign		___692_coated_emission_edf_out ___692_null_closure 	%line{358} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:359
+#     EDF emission_edf_out = mix(uncoated_emission_edf_out, coated_emission_edf_out, coat_weight);
+	functioncall	$const48 397 	%line{359} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:167
+#     color f = mx_fresnel_schlick(NdotV, color0, color90, exponent);
+	neg		$tmp63 I 	%line{167} %argrw{"wr"}
+	dot		$tmp62 N $tmp63 	%argrw{"wrr"}
+	fabs		___688_NdotV $tmp62 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:168
+#     result = base * f;
+	functioncall	$const49 396 	%line{168} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:161
+#     return mix(f0, f90, pow(x, exponent));
+	sub		$tmp64 $const6 ___688_NdotV 	%line{161} %argrw{"wrr"}
+	functioncall	$const25 394 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp65 $tmp64 $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___687_x $tmp65 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:162
+# }
+	pow		$tmp66 ___687_x $const35 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{162} %argrw{"wrr"}
+	mix		___688_f ___692_one_minus_coat_F0_color_out $const22 $tmp66 	%argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:169
+# }
+	mul		___692_coated_emission_edf_out ___692_coat_tinted_emission_edf_out ___688_f 	%line{169} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:360
+#     surfaceshader shader_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const38 402 	%line{360} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp67 $const6 open_pbr_surface_surfaceshader_coat_weight 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp68 ___692_uncoated_emission_edf_out $tmp67 	%argrw{"wrr"}
+	mul		$tmp69 ___692_coated_emission_edf_out open_pbr_surface_surfaceshader_coat_weight 	%argrw{"wrr"}
+	add		___692_emission_edf_out $tmp68 $tmp69 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:361
+#     mx_surface(fuzz_layer_out, emission_edf_out, geometry_opacity, 0, shader_constructor_out);
+	assign		___692_shader_constructor_out.bsdf ___692_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{361} %argrw{"wr"}
+	assign		___692_shader_constructor_out.edf ___692_null_closure 	%argrw{"wr"}
+	assign		___692_shader_constructor_out.opacity $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:362
+#     out = shader_constructor_out;
+	functioncall	$const50 412 	%line{362} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:190
+#     result.edf     = edf;
+	assign		___692_shader_constructor_out.bsdf ___692_fuzz_layer_out 	%line{190} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:191
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___692_shader_constructor_out.edf ___692_emission_edf_out 	%line{191} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:192
+# }
+	functioncall	$const25 411 	%line{192} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp70 open_pbr_surface_surfaceshader_geometry_opacity $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___692_shader_constructor_out.opacity $tmp70 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:192
+# }
+	assign		___692_shader_constructor_out.opacity ___692_shader_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{192} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:363
+# }
+	assign		open_pbr_surface_surfaceshader_out.bsdf ___692_shader_constructor_out.bsdf 	%line{363} %argrw{"wr"}
+	assign		open_pbr_surface_surfaceshader_out.edf ___692_shader_constructor_out.edf 	%argrw{"wr"}
+	assign		open_pbr_surface_surfaceshader_out.opacity ___692_shader_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:742
+#     out = Velvet_out;
+	functioncall	$const51 425 	%line{742} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:368
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const25 419 	%line{368} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp71 open_pbr_surface_surfaceshader_out.opacity $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___693_opacity_weight $tmp71 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:369
+# }
+	add		$tmp72 open_pbr_surface_surfaceshader_out.bsdf open_pbr_surface_surfaceshader_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl"} %line{369} %argrw{"wrr"}
+	mul		$tmp73 $tmp72 ___693_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp74 $const52 	%argrw{"wr"}
+	sub		$tmp75 $const6 ___693_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp76 $tmp74 $tmp75 	%argrw{"wrr"}
+	add		Velvet_out $tmp73 $tmp76 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\OpenPBR\\open_pbr_velvet\\Velvet.osl:743
+# }
+	assign		out Velvet_out 	%line{743} %argrw{"wr"}
+	end

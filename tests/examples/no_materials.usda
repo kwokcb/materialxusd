@@ -1,0 +1,41 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./examples/no_materials.mtlx, /Users/bernardkwok/work/pymaterialx/source/pymaterialx/usd/data/shaderball.usd, /Users/bernardkwok/work/pymaterialx/source/pymaterialx/usd/data/san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend references = @/Users/bernardkwok/work/pymaterialx/source/pymaterialx/usd/data/shaderball.usd@
+    )
+    {
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @/Users/bernardkwok/work/pymaterialx/source/pymaterialx/usd/data/san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @/Users/bernardkwok/work/pymaterialx/source/pymaterialx/usd/data/camera.usda@
+    )
+    {
+    }
+}
+

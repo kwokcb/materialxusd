@@ -1,0 +1,527 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\Examples\DisneyPrincipled\disney_principled_glass\DisneyPrincipled_Glass.oso
+shader DisneyPrincipled_Glass	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"DisneyPrincipled_Glass"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	color	SR_glass_baseColor	1 1 1		%meta{string,label,"Base Color"} %meta{string,page,"Base"}  %read{21,127} %write{2147483647,-1}
+param	float	SR_glass_metallic	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Metallic"} %meta{string,page,"Base"} %meta{string,widget,"number"}  %read{46,144} %write{2147483647,-1}
+param	float	SR_glass_roughness	0.00999999978		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Roughness"} %meta{string,page,"Base"} %meta{string,widget,"number"}  %read{25,127} %write{2147483647,-1}
+param	float	SR_glass_anisotropic	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Anisotropic"} %meta{string,page,"Specular"} %meta{string,widget,"number"}  %read{29,32} %write{2147483647,-1}
+param	float	SR_glass_specular	0.5		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular"} %meta{string,page,"Specular"} %meta{string,widget,"number"}  %read{19,19} %write{2147483647,-1}
+param	float	SR_glass_specularTint	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Tint"} %meta{string,page,"Specular"} %meta{string,widget,"number"}  %read{21,21} %write{2147483647,-1}
+param	float	SR_glass_sheen	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen"} %meta{string,page,"Sheen"} %meta{string,widget,"number"}  %read{122,122} %write{2147483647,-1}
+param	float	SR_glass_sheenTint	0.5		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen Tint"} %meta{string,page,"Sheen"} %meta{string,widget,"number"}  %read{44,44} %write{2147483647,-1}
+param	float	SR_glass_clearcoat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat"} %meta{string,page,"Clearcoat"} %meta{string,widget,"number"}  %read{15,15} %write{2147483647,-1}
+param	float	SR_glass_clearcoatGloss	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat Gloss"} %meta{string,page,"Clearcoat"} %meta{string,widget,"number"}  %read{17,17} %write{2147483647,-1}
+param	float	SR_glass_specTrans	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Spec Trans"} %meta{string,page,"Transmission"} %meta{string,widget,"number"}  %read{136,138} %write{2147483647,-1}
+param	float	SR_glass_ior	1.51999998		%meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"IOR"} %meta{string,page,"Transmission"} %meta{string,widget,"number"}  %read{118,118} %write{2147483647,-1}
+param	float	SR_glass_subsurface	0		%meta{string,label,"Subsurface"} %meta{string,page,"Subsurface"} %meta{string,widget,"number"}  %read{130,132} %write{2147483647,-1}
+param	color	SR_glass_subsurfaceDistance	1 1 1		%meta{string,label,"Subsurface Distance"} %meta{string,page,"Subsurface"}  %read{126,126} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{170,170}
+global	normal	N	%read{8,10} %write{2147483647,-1}
+local	float	___669_roughness_sqr	%read{36,42} %write{28,28}
+local	float	___670_aspect	%read{36,39} %write{35,35}
+local	color	___673_reflection_tint	%read{118,118} %write{112,113}
+local	color	___673_transmission_tint	%read{118,118} %write{116,117}
+local	float	___674_combine_out.x	%read{52,52} %write{50,50} %mystruct{___674_combine_out} %mystructfield{0}
+local	float	___674_combine_out.y	%read{53,53} %write{51,51} %mystruct{___674_combine_out} %mystructfield{1}
+local	color	___675_reflection_tint	%read{80,104} %write{74,99}
+local	color	___675_transmission_tint	%read{80,104} %write{78,103}
+local	closure color	___680_null_closure	%read{70,152} %write{5,5}
+local	string	___680_geomprop_Nworld_space_tmp	%read{8,8} %write{6,6}
+local	vector	___680_geomprop_Nworld_out1	%read{80,127} %write{8,8}
+local	vector	___680_geomprop_Tworld_out1	%read{80,118} %write{13,13}
+local	float	___680_coat_intensity_in2_tmp	%read{15,15} %write{14,14}
+local	float	___680_coat_intensity_out	%read{81,81} %write{15,15}
+local	float	___680_coat_roughness_amount_tmp	%read{17,17} %write{16,16}
+local	float	___680_coat_roughness_out	%read{50,51} %write{17,17}
+local	float	___680_dielectric_intensity_in2_tmp	%read{19,19} %write{18,18}
+local	float	___680_dielectric_intensity_out	%read{105,105} %write{19,19}
+local	color	___680_dielectric_tint_bg_tmp	%read{21,21} %write{20,20}
+local	color	___680_dielectric_tint_out	%read{104,104} %write{21,21}
+local	float	___680_specular_roughness_out.x	%read{38,104} %write{22,41} %mystruct{___680_specular_roughness_out} %mystructfield{0}
+local	float	___680_specular_roughness_out.y	%read{40,104} %write{23,42} %mystruct{___680_specular_roughness_out} %mystructfield{1}
+local	color	___680_sheen_color_bg_tmp	%read{44,44} %write{43,43}
+local	color	___680_sheen_color_out	%read{121,121} %write{44,44}
+local	float	___680_invert_metalness_amount_tmp	%read{46,46} %write{45,45}
+local	float	___680_invert_metalness_out	%read{128,128} %write{46,46}
+local	float	___680_coat_roughness_vector_out.x	%read{57,57} %write{47,52} %mystruct{___680_coat_roughness_vector_out} %mystructfield{0}
+local	float	___680_coat_roughness_vector_out.y	%read{62,65} %write{48,53} %mystruct{___680_coat_roughness_vector_out} %mystructfield{1}
+local	float	___680_coat_roughness_dual_out.x	%read{61,80} %write{54,61} %mystruct{___680_coat_roughness_dual_out} %mystructfield{0}
+local	float	___680_coat_roughness_dual_out.y	%read{69,80} %write{55,69} %mystruct{___680_coat_roughness_dual_out} %mystructfield{1}
+local	closure color	___680_coat_bsdf_out	%read{146,146} %write{70,81}
+local	closure color	___680_metallic_bsdf_out	%read{144,144} %write{82,93}
+local	closure color	___680_dielectric_bsdf_out	%read{140,140} %write{94,105}
+local	closure color	___680_transmission_bsdf_out	%read{138,138} %write{106,119}
+local	float	___680_sheen_bsdf_roughness_tmp	%read{121,121} %write{120,120}
+local	closure color	___680_sheen_bsdf_out	%read{134,134} %write{122,122}
+local	closure color	___680_subsurface_bsdf_out	%read{132,132} %write{123,126}
+local	closure color	___680_diffuse_bsdf_out	%read{131,131} %write{128,128}
+local	closure color	___680_subsurface_mix_out	%read{134,134} %write{133,133}
+local	closure color	___680_sheen_layer_out	%read{137,137} %write{134,134}
+local	closure color	___680_transmission_mix_out	%read{140,140} %write{139,139}
+local	closure color	___680_dielectric_layer_out	%read{143,143} %write{140,140}
+local	closure color	___680_metallic_mix_out	%read{146,146} %write{145,145}
+local	closure color	___680_coat_layer_out	%read{151,151} %write{146,146}
+local	closure color	___680_surface_constructor_out.bsdf	%read{157,157} %write{147,151} %mystruct{___680_surface_constructor_out} %mystructfield{0}
+local	closure color	___680_surface_constructor_out.edf	%read{158,158} %write{148,152} %mystruct{___680_surface_constructor_out} %mystructfield{1}
+local	float	___680_surface_constructor_out.opacity	%read{156,159} %write{149,156} %mystruct{___680_surface_constructor_out} %mystructfield{2}
+local	float	___681_opacity_weight	%read{165,167} %write{163,163}
+local	closure color	null_closure	%read{1,2} %write{0,0}
+local	closure color	SR_glass_out.bsdf	%read{164,164} %write{1,157} %mystruct{SR_glass_out} %mystructfield{0}
+local	closure color	SR_glass_out.edf	%read{164,164} %write{2,158} %mystruct{SR_glass_out} %mystructfield{1}
+local	float	SR_glass_out.opacity	%read{162,162} %write{3,159} %mystruct{SR_glass_out} %mystructfield{2}
+local	closure color	DisneyPrincipled_Glass_out	%read{170,170} %write{169,169}
+const	int	$const1	0		%read{0,10} %write{2147483647,-1}
+const	float	$const2	1		%read{3,167} %write{2147483647,-1}
+const	string	$const3	"NG_disney_principled"		%read{4,4} %write{2147483647,-1}
+const	string	$const4	"world"		%read{6,6} %write{2147483647,-1}
+const	string	$const5	"transform"		%read{7,7} %write{2147483647,-1}
+const	string	$const6	"common"		%read{8,8} %write{2147483647,-1}
+temp	vector	$tmp1	%read{13,13} %write{12,12}
+const	int	$const7	2		%read{9,9} %write{2147483647,-1}
+temp	float	$tmp2	%read{12,12} %write{9,9}
+const	float	$const8	0		%read{12,163} %write{2147483647,-1}
+temp	float	$tmp3	%read{11,11} %write{10,10}
+temp	float	$tmp4	%read{12,12} %write{11,11}
+const	float	$const9	0.04		%read{14,14} %write{2147483647,-1}
+const	float	$const10	0.08		%read{18,18} %write{2147483647,-1}
+const	color	$const11	1 1 1		%read{20,104} %write{2147483647,-1}
+const	string	$const12	"mx_roughness_anisotropy"		%read{24,24} %write{2147483647,-1}
+temp	float	$tmp5	%read{27,27} %write{25,25}
+const	float	$const13	1e-08		%read{28,68} %write{2147483647,-1}
+const	string	$const14	"clamp"		%read{26,161} %write{2147483647,-1}
+temp	float	$tmp6	%read{28,28} %write{27,27}
+temp	int	$tmp7	%read{30,30} %write{29,29}
+temp	float	$tmp8	%read{34,34} %write{33,33}
+const	float	$const15	0.98		%read{32,32} %write{2147483647,-1}
+temp	float	$tmp9	%read{33,33} %write{32,32}
+temp	float	$tmp10	%read{35,35} %write{34,34}
+temp	float	$tmp11	%read{37,37} %write{36,36}
+const	string	$const16	"NG_convert_float_vector2"		%read{49,49} %write{2147483647,-1}
+const	string	$const17	"mx_roughness_dual"		%read{56,56} %write{2147483647,-1}
+temp	float	$tmp12	%read{59,59} %write{57,57}
+temp	float	$tmp13	%read{60,60} %write{59,59}
+temp	int	$tmp14	%read{63,63} %write{62,62}
+temp	float	$tmp15	%read{67,67} %write{65,65}
+temp	float	$tmp16	%read{68,68} %write{67,67}
+const	float	$const18	5		%read{80,104} %write{2147483647,-1}
+const	float	$const19	1.5		%read{80,118} %write{2147483647,-1}
+const	string	$const20	"ggx"		%read{80,118} %write{2147483647,-1}
+const	string	$const21	"R"		%read{72,114} %write{2147483647,-1}
+const	string	$const22	"mx_generalized_schlick_bsdf"		%read{71,95} %write{2147483647,-1}
+const	string	$const23	"T"		%read{72,114} %write{2147483647,-1}
+temp	int	$tmp20	%read{73,73} %write{72,72}
+const	color	$const24	0 0 0		%read{74,116} %write{2147483647,-1}
+temp	int	$tmp21	%read{77,77} %write{76,76}
+temp	closure color	$tmp22	%read{81,81} %write{80,80}
+const	string	$const25	"thinfilm_thickness"		%read{80,118} %write{2147483647,-1}
+const	string	$const26	"thinfilm_ior"		%read{80,118} %write{2147483647,-1}
+const	string	$const27	"generalized_schlick_bsdf"		%read{80,104} %write{2147483647,-1}
+temp	int	$tmp25	%read{85,85} %write{84,84}
+temp	int	$tmp26	%read{89,89} %write{88,88}
+temp	closure color	$tmp27	%read{93,93} %write{92,92}
+temp	int	$tmp30	%read{97,97} %write{96,96}
+temp	int	$tmp31	%read{101,101} %write{100,100}
+temp	closure color	$tmp32	%read{105,105} %write{104,104}
+temp	float	$tmp33.x	%read{118,118} %write{107,107}
+temp	float	$tmp33.y	%read{118,118} %write{108,108}
+const	string	$const28	"mx_dielectric_bsdf"		%read{109,109} %write{2147483647,-1}
+temp	int	$tmp34	%read{111,111} %write{110,110}
+temp	int	$tmp35	%read{115,115} %write{114,114}
+temp	closure color	$tmp36	%read{119,119} %write{118,118}
+const	string	$const29	"dielectric_bsdf"		%read{118,118} %write{2147483647,-1}
+const	float	$const30	0.3		%read{120,120} %write{2147483647,-1}
+temp	closure color	$tmp37	%read{122,122} %write{121,121}
+const	string	$const31	"sheen_bsdf"		%read{121,121} %write{2147483647,-1}
+const	string	$const32	"mx_subsurface_bsdf"		%read{124,124} %write{2147483647,-1}
+temp	color	$tmp38	%read{126,126} %write{125,125}
+const	string	$const33	"subsurface_bssrdf"		%read{126,126} %write{2147483647,-1}
+temp	closure color	$tmp39	%read{128,128} %write{127,127}
+const	string	$const34	"burley_diffuse_bsdf"		%read{127,127} %write{2147483647,-1}
+const	string	$const35	"mix"		%read{129,141} %write{2147483647,-1}
+temp	float	$tmp40	%read{131,131} %write{130,130}
+temp	closure color	$tmp41	%read{133,133} %write{131,131}
+temp	closure color	$tmp42	%read{133,133} %write{132,132}
+const	string	$const37	"layer"		%read{134,146} %write{2147483647,-1}
+temp	float	$tmp43	%read{137,137} %write{136,136}
+temp	closure color	$tmp44	%read{139,139} %write{137,137}
+temp	closure color	$tmp45	%read{139,139} %write{138,138}
+temp	float	$tmp46	%read{143,143} %write{142,142}
+temp	closure color	$tmp47	%read{145,145} %write{143,143}
+temp	closure color	$tmp48	%read{145,145} %write{144,144}
+const	string	$const38	"mx_surface"		%read{150,150} %write{2147483647,-1}
+temp	float	$tmp49	%read{155,155} %write{154,154}
+const	string	$const39	"mx_surfacematerial"		%read{160,160} %write{2147483647,-1}
+temp	float	$tmp50	%read{163,163} %write{162,162}
+temp	closure color	$tmp51	%read{165,165} %write{164,164}
+temp	closure color	$tmp52	%read{169,169} %write{165,165}
+temp	closure color	$tmp53	%read{168,168} %write{166,166}
+const	string	$const40	"transparent"		%read{166,166} %write{2147483647,-1}
+temp	float	$tmp54	%read{168,168} %write{167,167}
+temp	closure color	$tmp55	%read{169,169} %write{168,168}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:252
+#     surfaceshader SR_glass_out = surfaceshader(null_closure, null_closure, 1.0);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{252} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:253
+#     NG_disney_principled(SR_glass_baseColor, SR_glass_metallic, SR_glass_roughness, SR_glass_anisotropic, SR_glass_specular, SR_glass_specularTint, SR_glass_sheen, SR_glass_sheenTint, SR_glass_clearcoat, SR_glass_clearcoatGloss, SR_glass_specTrans, SR_glass_ior, SR_glass_subsurface, SR_glass_subsurfaceDistance, SR_glass_out);
+	assign		SR_glass_out.bsdf null_closure 	%line{253} %argrw{"wr"}
+	assign		SR_glass_out.edf null_closure 	%argrw{"wr"}
+	assign		SR_glass_out.opacity $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:254
+#     MATERIAL DisneyPrincipled_Glass_out = mx_surfacematerial(SR_glass_out, backsurfaceshader, displacementshader1);
+	functioncall	$const3 160 	%line{254} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:85
+#     string geomprop_Nworld_space_tmp = "world";
+	assign		___680_null_closure $const1 	%line{85} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:86
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space_tmp, N);
+	assign		___680_geomprop_Nworld_space_tmp $const4 	%line{86} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:87
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const5 9 	%line{87} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	___680_geomprop_Nworld_out1 $const6 ___680_geomprop_Nworld_space_tmp N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:88
+#     float coat_intensity_in2_tmp = 0.040000;
+	compref		$tmp2 N $const7 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{88} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const8 $tmp4 	%argrw{"wrrr"}
+	normalize	___680_geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:89
+#     float coat_intensity_out = clearcoat * coat_intensity_in2_tmp;
+	assign		___680_coat_intensity_in2_tmp $const9 	%line{89} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:90
+#     float coat_roughness_amount_tmp = 1.000000;
+	mul		___680_coat_intensity_out SR_glass_clearcoat ___680_coat_intensity_in2_tmp 	%line{90} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:91
+#     float coat_roughness_out = coat_roughness_amount_tmp - clearcoatGloss;
+	assign		___680_coat_roughness_amount_tmp $const2 	%line{91} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:92
+#     float dielectric_intensity_in2_tmp = 0.080000;
+	sub		___680_coat_roughness_out ___680_coat_roughness_amount_tmp SR_glass_clearcoatGloss 	%line{92} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:93
+#     float dielectric_intensity_out = specular * dielectric_intensity_in2_tmp;
+	assign		___680_dielectric_intensity_in2_tmp $const10 	%line{93} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:94
+#     color dielectric_tint_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	mul		___680_dielectric_intensity_out SR_glass_specular ___680_dielectric_intensity_in2_tmp 	%line{94} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:95
+#     color dielectric_tint_out = mix(dielectric_tint_bg_tmp, baseColor, specularTint);
+	assign		___680_dielectric_tint_bg_tmp $const11 	%line{95} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:96
+#     vector2 specular_roughness_out = vector2(0.0, 0.0);
+	mix		___680_dielectric_tint_out ___680_dielectric_tint_bg_tmp SR_glass_baseColor SR_glass_specularTint 	%line{96} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:97
+#     mx_roughness_anisotropy(roughness, anisotropic, specular_roughness_out);
+	assign		___680_specular_roughness_out.x $const8 	%line{97} %argrw{"wr"}
+	assign		___680_specular_roughness_out.y $const8 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:98
+#     color sheen_color_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	functioncall	$const12 43 	%line{98} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:20
+#     if (anisotropy > 0.0)
+	mul		$tmp5 SR_glass_roughness SR_glass_roughness 	%line{20} %argrw{"wrr"}
+	functioncall	$const14 29 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp6 $tmp5 $const2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___669_roughness_sqr $tmp6 $const13 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:21
+#     {
+	gt		$tmp7 SR_glass_anisotropic $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{21} %argrw{"wrr"}
+	if		$tmp7 41 43 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const14 34 	%line{23} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp9 SR_glass_anisotropic $const15 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp8 $tmp9 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp10 $const2 $tmp8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{23} %argrw{"wrr"}
+	sqrt		___670_aspect $tmp10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:24
+#         result.y = roughness_sqr * aspect;
+	div		$tmp11 ___669_roughness_sqr ___670_aspect 	%line{24} %argrw{"wrr"}
+	min		___680_specular_roughness_out.x $tmp11 $const2 	%argrw{"wrr"}
+	assign		___680_specular_roughness_out.x ___680_specular_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:25
+#     }
+	mul		___680_specular_roughness_out.y ___669_roughness_sqr ___670_aspect 	%line{25} %argrw{"wrr"}
+	assign		___680_specular_roughness_out.y ___680_specular_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:29
+#         result.y = roughness_sqr;
+	assign		___680_specular_roughness_out.x ___669_roughness_sqr 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:30
+#     }
+	assign		___680_specular_roughness_out.y ___669_roughness_sqr 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:99
+#     color sheen_color_out = mix(sheen_color_bg_tmp, baseColor, sheenTint);
+	assign		___680_sheen_color_bg_tmp $const11 	%line{99} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:100
+#     float invert_metalness_amount_tmp = 1.000000;
+	mix		___680_sheen_color_out ___680_sheen_color_bg_tmp SR_glass_baseColor SR_glass_sheenTint 	%line{100} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:101
+#     float invert_metalness_out = invert_metalness_amount_tmp - metallic;
+	assign		___680_invert_metalness_amount_tmp $const2 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:102
+#     vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+	sub		___680_invert_metalness_out ___680_invert_metalness_amount_tmp SR_glass_metallic 	%line{102} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:103
+#     NG_convert_float_vector2(coat_roughness_out, coat_roughness_vector_out);
+	assign		___680_coat_roughness_vector_out.x $const8 	%line{103} %argrw{"wr"}
+	assign		___680_coat_roughness_vector_out.y $const8 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:104
+#     vector2 coat_roughness_dual_out = vector2(0.0, 0.0);
+	functioncall	$const16 54 	%line{104} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:52
+#     out = combine_out;
+	assign		___674_combine_out.x ___680_coat_roughness_out 	%line{52} %argrw{"wr"}
+	assign		___674_combine_out.y ___680_coat_roughness_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:53
+# }
+	assign		___680_coat_roughness_vector_out.x ___674_combine_out.x 	%line{53} %argrw{"wr"}
+	assign		___680_coat_roughness_vector_out.y ___674_combine_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:105
+#     mx_roughness_dual(coat_roughness_vector_out, coat_roughness_dual_out);
+	assign		___680_coat_roughness_dual_out.x $const8 	%line{105} %argrw{"wr"}
+	assign		___680_coat_roughness_dual_out.y $const8 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:106
+#     BSDF coat_bsdf_out = null_closure;
+	functioncall	$const17 70 	%line{106} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:65
+#     if (roughness.y < 0.0)
+	mul		$tmp12 ___680_coat_roughness_vector_out.x ___680_coat_roughness_vector_out.x 	%line{65} %argrw{"wrr"}
+	functioncall	$const14 61 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp13 $tmp12 $const2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___680_coat_roughness_dual_out.x $tmp13 $const13 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:65
+#     if (roughness.y < 0.0)
+	assign		___680_coat_roughness_dual_out.x ___680_coat_roughness_dual_out.x 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{65} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:66
+#     {
+	lt		$tmp14 ___680_coat_roughness_vector_out.y $const8 	%line{66} %argrw{"wrr"}
+	if		$tmp14 65 70 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:68
+#     }
+	assign		___680_coat_roughness_dual_out.y ___680_coat_roughness_dual_out.x 	%line{68} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:72
+#     }
+	mul		$tmp15 ___680_coat_roughness_vector_out.y ___680_coat_roughness_vector_out.y 	%line{72} %argrw{"wrr"}
+	functioncall	$const14 69 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp16 $tmp15 $const2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___680_coat_roughness_dual_out.y $tmp16 $const13 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:72
+#     }
+	assign		___680_coat_roughness_dual_out.y ___680_coat_roughness_dual_out.y 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:107
+#     mx_generalized_schlick_bsdf(coat_intensity_out, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, coat_roughness_dual_out, 0.000000, 1.500000, geomprop_Nworld_out1, geomprop_Tworld_out1, "ggx", "R", coat_bsdf_out);
+	assign		___680_coat_bsdf_out ___680_null_closure 	%line{107} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:108
+#     BSDF metallic_bsdf_out = null_closure;
+	functioncall	$const22 82 	%line{108} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:58
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp20 $const21 $const23 	%line{58} %argrw{"wrr"}
+	if		$tmp20 75 76 	%argrw{"r"}
+	assign		___675_reflection_tint $const24 	%argrw{"wr"}
+	assign		___675_reflection_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:59
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp21 $const21 $const21 	%line{59} %argrw{"wrr"}
+	if		$tmp21 79 80 	%argrw{"r"}
+	assign		___675_transmission_tint $const24 	%argrw{"wr"}
+	assign		___675_transmission_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:60
+# }
+	closure		$tmp22 $const27 ___680_geomprop_Nworld_out1 ___680_geomprop_Tworld_out1 ___675_reflection_tint ___675_transmission_tint ___680_coat_roughness_dual_out.x ___680_coat_roughness_dual_out.y $const11 $const11 $const18 $const20 $const25 $const8 $const26 $const19 	%line{60} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___680_coat_bsdf_out $tmp22 ___680_coat_intensity_out 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:109
+#     mx_generalized_schlick_bsdf(1.000000, baseColor, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, specular_roughness_out, 0.000000, 1.500000, geomprop_Nworld_out1, geomprop_Tworld_out1, "ggx", "R", metallic_bsdf_out);
+	assign		___680_metallic_bsdf_out ___680_null_closure 	%line{109} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:110
+#     BSDF dielectric_bsdf_out = null_closure;
+	functioncall	$const22 94 	%line{110} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:58
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp25 $const21 $const23 	%line{58} %argrw{"wrr"}
+	if		$tmp25 87 88 	%argrw{"r"}
+	assign		___675_reflection_tint $const24 	%argrw{"wr"}
+	assign		___675_reflection_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:59
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp26 $const21 $const21 	%line{59} %argrw{"wrr"}
+	if		$tmp26 91 92 	%argrw{"r"}
+	assign		___675_transmission_tint $const24 	%argrw{"wr"}
+	assign		___675_transmission_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:60
+# }
+	closure		$tmp27 $const27 ___680_geomprop_Nworld_out1 ___680_geomprop_Tworld_out1 ___675_reflection_tint ___675_transmission_tint ___680_specular_roughness_out.x ___680_specular_roughness_out.y SR_glass_baseColor $const11 $const18 $const20 $const25 $const8 $const26 $const19 	%line{60} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___680_metallic_bsdf_out $tmp27 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:111
+#     mx_generalized_schlick_bsdf(dielectric_intensity_out, dielectric_tint_out, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, specular_roughness_out, 0.000000, 1.500000, geomprop_Nworld_out1, geomprop_Tworld_out1, "ggx", "R", dielectric_bsdf_out);
+	assign		___680_dielectric_bsdf_out ___680_null_closure 	%line{111} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:112
+#     BSDF transmission_bsdf_out = null_closure;
+	functioncall	$const22 106 	%line{112} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:58
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp30 $const21 $const23 	%line{58} %argrw{"wrr"}
+	if		$tmp30 99 100 	%argrw{"r"}
+	assign		___675_reflection_tint $const24 	%argrw{"wr"}
+	assign		___675_reflection_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:59
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp31 $const21 $const21 	%line{59} %argrw{"wrr"}
+	if		$tmp31 103 104 	%argrw{"r"}
+	assign		___675_transmission_tint $const24 	%argrw{"wr"}
+	assign		___675_transmission_tint $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:60
+# }
+	closure		$tmp32 $const27 ___680_geomprop_Nworld_out1 ___680_geomprop_Tworld_out1 ___675_reflection_tint ___675_transmission_tint ___680_specular_roughness_out.x ___680_specular_roughness_out.y ___680_dielectric_tint_out $const11 $const18 $const20 $const25 $const8 $const26 $const19 	%line{60} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___680_dielectric_bsdf_out $tmp32 ___680_dielectric_intensity_out 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:113
+#     mx_dielectric_bsdf(1.000000, baseColor, ior, vector2(0.000000, 0.000000), 0.000000, 1.500000, geomprop_Nworld_out1, geomprop_Tworld_out1, "ggx", "T", transmission_bsdf_out);
+	assign		___680_transmission_bsdf_out ___680_null_closure 	%line{113} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:114
+#     float sheen_bsdf_roughness_tmp = 0.300000;
+	assign		$tmp33.x $const8 	%line{114} %argrw{"wr"}
+	assign		$tmp33.y $const8 	%argrw{"wr"}
+	functioncall	$const28 120 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:45
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp34 $const23 $const23 	%line{45} %argrw{"wrr"}
+	if		$tmp34 113 114 	%argrw{"r"}
+	assign		___673_reflection_tint $const24 	%argrw{"wr"}
+	assign		___673_reflection_tint SR_glass_baseColor 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:46
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp35 $const23 $const21 	%line{46} %argrw{"wrr"}
+	if		$tmp35 117 118 	%argrw{"r"}
+	assign		___673_transmission_tint $const24 	%argrw{"wr"}
+	assign		___673_transmission_tint SR_glass_baseColor 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:47
+# }
+	closure		$tmp36 $const29 ___680_geomprop_Nworld_out1 ___680_geomprop_Tworld_out1 ___673_reflection_tint ___673_transmission_tint $tmp33.x $tmp33.y SR_glass_ior $const20 $const25 $const8 $const26 $const19 	%line{47} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___680_transmission_bsdf_out $tmp36 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:115
+#     BSDF sheen_bsdf_out = sheen1 * sheen_bsdf(geomprop_Nworld_out1, sheen_color_out, sheen_bsdf_roughness_tmp);
+	assign		___680_sheen_bsdf_roughness_tmp $const30 	%line{115} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:116
+#     BSDF subsurface_bsdf_out = null_closure;
+	closure		$tmp37 $const31 ___680_geomprop_Nworld_out1 ___680_sheen_color_out ___680_sheen_bsdf_roughness_tmp 	%line{116} %argrw{"wrrrr"}
+	mul		___680_sheen_bsdf_out $tmp37 SR_glass_sheen 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:117
+#     mx_subsurface_bsdf(1.000000, baseColor, subsurfaceDistance, 0.000000, geomprop_Nworld_out1, subsurface_bsdf_out);
+	assign		___680_subsurface_bsdf_out ___680_null_closure 	%line{117} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:118
+#     BSDF diffuse_bsdf_out = invert_metalness_out * burley_diffuse_bsdf(geomprop_Nworld_out1, baseColor, roughness);
+	functioncall	$const32 127 	%line{118} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:39
+# #endif
+	mul		$tmp38 $const2 SR_glass_baseColor 	%line{39} %argrw{"wrr"}
+	closure		___680_subsurface_bsdf_out $const33 ___680_geomprop_Nworld_out1 $tmp38 $const2 SR_glass_subsurfaceDistance $const8 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:119
+#     BSDF subsurface_mix_out = mix(diffuse_bsdf_out, subsurface_bsdf_out, subsurface1);
+	closure		$tmp39 $const34 ___680_geomprop_Nworld_out1 SR_glass_baseColor SR_glass_roughness 	%line{119} %argrw{"wrrrr"}
+	mul		___680_diffuse_bsdf_out $tmp39 ___680_invert_metalness_out 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:120
+#     BSDF sheen_layer_out = layer(sheen_bsdf_out, subsurface_mix_out);
+	functioncall	$const35 134 	%line{120} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp40 $const2 SR_glass_subsurface 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp41 ___680_diffuse_bsdf_out $tmp40 	%argrw{"wrr"}
+	mul		$tmp42 ___680_subsurface_bsdf_out SR_glass_subsurface 	%argrw{"wrr"}
+	add		___680_subsurface_mix_out $tmp41 $tmp42 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:121
+#     BSDF transmission_mix_out = mix(sheen_layer_out, transmission_bsdf_out, specTrans);
+	closure		___680_sheen_layer_out $const37 ___680_sheen_bsdf_out ___680_subsurface_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{121} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:122
+#     BSDF dielectric_layer_out = layer(dielectric_bsdf_out, transmission_mix_out);
+	functioncall	$const35 140 	%line{122} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp43 $const2 SR_glass_specTrans 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp44 ___680_sheen_layer_out $tmp43 	%argrw{"wrr"}
+	mul		$tmp45 ___680_transmission_bsdf_out SR_glass_specTrans 	%argrw{"wrr"}
+	add		___680_transmission_mix_out $tmp44 $tmp45 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:123
+#     BSDF metallic_mix_out = mix(dielectric_layer_out, metallic_bsdf_out, metallic);
+	closure		___680_dielectric_layer_out $const37 ___680_dielectric_bsdf_out ___680_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{123} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:124
+#     BSDF coat_layer_out = layer(coat_bsdf_out, metallic_mix_out);
+	functioncall	$const35 146 	%line{124} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp46 $const2 SR_glass_metallic 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp47 ___680_dielectric_layer_out $tmp46 	%argrw{"wrr"}
+	mul		$tmp48 ___680_metallic_bsdf_out SR_glass_metallic 	%argrw{"wrr"}
+	add		___680_metallic_mix_out $tmp47 $tmp48 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:125
+#     surfaceshader surface_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	closure		___680_coat_layer_out $const37 ___680_coat_bsdf_out ___680_metallic_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{125} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:126
+#     mx_surface(coat_layer_out, null_closure, 1.000000, 0, surface_constructor_out);
+	assign		___680_surface_constructor_out.bsdf ___680_null_closure 	%line{126} %argrw{"wr"}
+	assign		___680_surface_constructor_out.edf ___680_null_closure 	%argrw{"wr"}
+	assign		___680_surface_constructor_out.opacity $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:127
+#     out = surface_constructor_out;
+	functioncall	$const38 157 	%line{127} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:78
+#     result.edf     = edf;
+	assign		___680_surface_constructor_out.bsdf ___680_coat_layer_out 	%line{78} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:79
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___680_surface_constructor_out.edf ___680_null_closure 	%line{79} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:80
+# }
+	functioncall	$const14 156 	%line{80} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp49 $const2 $const2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___680_surface_constructor_out.opacity $tmp49 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:80
+# }
+	assign		___680_surface_constructor_out.opacity ___680_surface_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{80} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:128
+# }
+	assign		SR_glass_out.bsdf ___680_surface_constructor_out.bsdf 	%line{128} %argrw{"wr"}
+	assign		SR_glass_out.edf ___680_surface_constructor_out.edf 	%argrw{"wr"}
+	assign		SR_glass_out.opacity ___680_surface_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:255
+#     out = DisneyPrincipled_Glass_out;
+	functioncall	$const39 170 	%line{255} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:133
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const14 164 	%line{133} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp50 SR_glass_out.opacity $const2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___681_opacity_weight $tmp50 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:134
+# }
+	add		$tmp51 SR_glass_out.bsdf SR_glass_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl"} %line{134} %argrw{"wrr"}
+	mul		$tmp52 $tmp51 ___681_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp53 $const40 	%argrw{"wr"}
+	sub		$tmp54 $const2 ___681_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp55 $tmp53 $tmp54 	%argrw{"wrr"}
+	add		DisneyPrincipled_Glass_out $tmp52 $tmp55 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\DisneyPrincipled\\disney_principled_glass\\DisneyPrincipled_Glass.osl:256
+# }
+	assign		out DisneyPrincipled_Glass_out 	%line{256} %argrw{"wr"}
+	end

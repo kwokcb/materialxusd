@@ -1,0 +1,202 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+vector2 mx_transform_uv(vector2 texcoord)
+{
+    return texcoord;
+}
+
+void mx_image_color3(textureresource file, string layer, color default_value, vector2 texcoord, string uaddressmode, string vaddressmode, string filtertype, string framerange, int frameoffset, string frameendaction, output color out)
+{
+    if (file.filename == "" ||
+        (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+        (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+    {
+        out = default_value;
+        return;
+    }
+
+    color missingColor = default_value;
+    vector2 st = mx_transform_uv(texcoord);
+    out = texture(file.filename, st.x, st.y,
+                  "subimage", layer, "interp", filtertype,
+                  "missingcolor", missingColor,
+                  "swrap", uaddressmode, "twrap", vaddressmode,
+                  "colorspace", file.colorspace);
+}
+
+void NG_separate3_color3(color in, output float outr, output float outg, output float outb)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outr = N_extract_0_out;
+    outg = N_extract_1_out;
+    outb = N_extract_2_out;
+}
+
+void NG_srgb_texture_to_lin_rec709_color3(color in, output color out)
+{
+    float bias_in2_tmp = 0.055000;
+    color bias_out = in + bias_in2_tmp;
+    float linSeg_in2_tmp = 12.920000;
+    color linSeg_out = in / linSeg_in2_tmp;
+    float colorSeparate_outr = 0.0;
+    float colorSeparate_outg = 0.0;
+    float colorSeparate_outb = 0.0;
+    NG_separate3_color3(in, colorSeparate_outr, colorSeparate_outg, colorSeparate_outb);
+    float max_in2_tmp = 0.000000;
+    color max_out = max(bias_out, max_in2_tmp);
+    float isAboveR_value2_tmp = 0.040450;
+    float isAboveR_in1_tmp = 1.000000;
+    float isAboveR_in2_tmp = 0.000000;
+    float isAboveR_out = mx_ternary(colorSeparate_outr > isAboveR_value2_tmp, isAboveR_in1_tmp, isAboveR_in2_tmp);
+    float isAboveG_value2_tmp = 0.040450;
+    float isAboveG_in1_tmp = 1.000000;
+    float isAboveG_in2_tmp = 0.000000;
+    float isAboveG_out = mx_ternary(colorSeparate_outg > isAboveG_value2_tmp, isAboveG_in1_tmp, isAboveG_in2_tmp);
+    float isAboveB_value2_tmp = 0.040450;
+    float isAboveB_in1_tmp = 1.000000;
+    float isAboveB_in2_tmp = 0.000000;
+    float isAboveB_out = mx_ternary(colorSeparate_outb > isAboveB_value2_tmp, isAboveB_in1_tmp, isAboveB_in2_tmp);
+    float scale_in2_tmp = 1.055000;
+    color scale_out = max_out / scale_in2_tmp;
+    color isAbove_out = color( isAboveR_out,isAboveG_out,isAboveB_out );
+    float powSeg_in2_tmp = 2.400000;
+    color powSeg_out = pow(scale_out, powSeg_in2_tmp);
+    color mix_out = mix(linSeg_out, powSeg_out, isAbove_out);
+    out = mix_out;
+}
+
+void NG_convert_color3_vector3(color in, output vector out)
+{
+    float separate_outr = 0.0;
+    float separate_outg = 0.0;
+    float separate_outb = 0.0;
+    NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+    vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+    out = combine_out;
+}
+
+void mx_normalmap_vector2(vector value, vector2 normal_scale, vector N, vector T, vector B, output vector result)
+{
+    vector decodedValue;
+    if (value == vector(0.0))
+    {
+        decodedValue = vector(0.0, 0.0, 1.0);
+    }
+    else
+    {
+        decodedValue = value * 2.0 - 1.0;
+    }
+
+    result = normalize(T * decodedValue[0] * normal_scale.x + B * decodedValue[1] * normal_scale.y + N * decodedValue[2]);
+}
+
+void mx_normalmap_float(vector value, float normal_scale, vector N, vector T, vector B, output vector result)
+{
+    mx_normalmap_vector2(value, vector2(normal_scale, normal_scale), N, T, B, result);
+}
+
+shader normalmap_cm_out
+[[
+    string mtlx_category = "output",
+    string mtlx_name = "out"
+]]
+(
+    string geomprop_Nworld_space = "world",
+    string geomprop_Tworld_space = "world",
+    int geomprop_Tworld_index = 0
+    [[
+        string widget = "number"
+    ]],
+    string geomprop_Bworld_space = "world",
+    int geomprop_Bworld_index = 0
+    [[
+        string widget = "number"
+    ]],
+    int geomprop_UV0_index = 0
+    [[
+        string widget = "number"
+    ]],
+    string b_image_file = "D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Images/grid.png"
+    [[
+        string label = "Filename",
+        string widget = "filename"
+    ]],
+    string b_image_file_colorspace = ""
+    [[
+        string widget = "colorspace"
+    ]],
+    string b_image_layer = ""
+    [[
+        string label = "Layer"
+    ]],
+    color b_image_default = color(0.000000, 0.000000, 0.000000)
+    [[
+        string label = "Default Color"
+    ]],
+    string b_image_uaddressmode = "periodic"
+    [[
+        string label = "Address Mode U"
+    ]],
+    string b_image_vaddressmode = "periodic"
+    [[
+        string label = "Address Mode V"
+    ]],
+    string b_image_filtertype = "linear"
+    [[
+        string label = "Filter Type"
+    ]],
+    string b_image_framerange = ""
+    [[
+        string label = "Frame Range"
+    ]],
+    int b_image_frameoffset = 0
+    [[
+        string label = "Frame Offset",
+        string widget = "number"
+    ]],
+    string b_image_frameendaction = "constant"
+    [[
+        string label = "Frame End Action"
+    ]],
+    float impl_normalmap_scale = 1.500000
+    [[
+        string widget = "number"
+    ]],
+    output vector out = vector(0.0)
+)
+{
+    textureresource b_image_file_ = {b_image_file, b_image_file_colorspace};
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+    vector geomprop_Bworld_out1 = normalize(cross(N, vector(N[2], 0, -N[0])));
+    vector2 geomprop_UV0_out1 = vector2(u,v);
+    color b_image_out = color(0.0);
+    mx_image_color3(b_image_file_, b_image_layer, b_image_default, geomprop_UV0_out1, b_image_uaddressmode, b_image_vaddressmode, b_image_filtertype, b_image_framerange, b_image_frameoffset, b_image_frameendaction, b_image_out);
+    color b_image_out_cm_out = color(0.0);
+    NG_srgb_texture_to_lin_rec709_color3(b_image_out, b_image_out_cm_out);
+    vector c3tov3_out = vector(0.0);
+    NG_convert_color3_vector3(b_image_out_cm_out, c3tov3_out);
+    vector impl_normalmap_out = vector(0.0);
+    mx_normalmap_float(c3tov3_out, impl_normalmap_scale, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Bworld_out1, impl_normalmap_out);
+    out = impl_normalmap_out;
+}
+

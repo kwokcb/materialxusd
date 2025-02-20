@@ -1,0 +1,1 @@
+ERROR: Unknown texture optional argument: "colorspace", <string> (D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_look_brass_tiled\\Tiled_Brass.osl:66)

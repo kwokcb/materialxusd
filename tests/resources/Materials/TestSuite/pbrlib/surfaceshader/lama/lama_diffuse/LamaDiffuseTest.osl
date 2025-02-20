@@ -1,0 +1,152 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void NG_separate3_color3(color in, output float outr, output float outg, output float outb)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outr = N_extract_0_out;
+    outg = N_extract_1_out;
+    outb = N_extract_2_out;
+}
+
+void NG_convert_color3_vector3(color in, output vector out)
+{
+    float separate_outr = 0.0;
+    float separate_outg = 0.0;
+    float separate_outb = 0.0;
+    NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+    vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+    out = combine_out;
+}
+
+void NG_separate3_vector3(vector in, output float outx, output float outy, output float outz)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outx = N_extract_0_out;
+    outy = N_extract_1_out;
+    outz = N_extract_2_out;
+}
+
+void NG_convert_vector3_color3(vector in, output color out)
+{
+    float separate_outx = 0.0;
+    float separate_outy = 0.0;
+    float separate_outz = 0.0;
+    NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+    color combine_out = color( separate_outx,separate_outy,separate_outz );
+    out = combine_out;
+}
+
+void NG_acescg_to_lin_rec709_color3(color in, output color out)
+{
+    vector asVec_out = vector(0.0);
+    NG_convert_color3_vector3(in, asVec_out);
+    matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+    vector transform_out = transform(transform_mat_tmp, asVec_out);
+    color asColor_out = color(0.0);
+    NG_convert_vector3_color3(transform_out, asColor_out);
+    out = asColor_out;
+}
+
+void NG_lama_diffuse(color color1, float roughness, vector normal1, float energyCompensation, output BSDF out)
+{
+    closure color null_closure = 0;
+    float roughness_squared_out = roughness * roughness;
+    float half_roughness_squared_in2_tmp = 0.500000;
+    float half_roughness_squared_out = roughness_squared_out * half_roughness_squared_in2_tmp;
+    float oren_nayar_compensated_weight_tmp = 1.000000;
+    BSDF oren_nayar_compensated_out = oren_nayar_compensated_weight_tmp * oren_nayar_diffuse_bsdf(normal1, color1, half_roughness_squared_out);
+    float oren_nayar_uncompensated_weight_tmp = 1.000000;
+    BSDF oren_nayar_uncompensated_out = oren_nayar_uncompensated_weight_tmp * oren_nayar_diffuse_bsdf(normal1, color1, half_roughness_squared_out);
+    BSDF oren_nayar_out = mix(oren_nayar_uncompensated_out, oren_nayar_compensated_out, energyCompensation);
+    out = oren_nayar_out;
+}
+
+void mx_surface(BSDF bsdf, EDF edf, float opacity, int thin_walled, output surfaceshader result)
+{
+    result.bsdf    = bsdf;
+    result.edf     = edf;
+    result.opacity = clamp(opacity, 0.0, 1.0);
+}
+
+MATERIAL mx_surfacematerial(surfaceshader surface, surfaceshader backsurface, displacementshader disp)
+{
+    float opacity_weight = clamp(surface.opacity, 0.0, 1.0);
+    return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+}
+
+shader LamaDiffuseTest
+[[
+    string mtlx_category = "surfacematerial",
+    string mtlx_name = "LamaDiffuseTest"
+]]
+(
+    surfaceshader backsurfaceshader = { 0, 0, 1.0 },
+    displacementshader displacementshader1 = vector(0.0),
+    string geomprop_Nworld_space = "world",
+    color LamaDiffuse_color_cm_in = color(0.180000, 0.180000, 0.180000),
+    float LamaDiffuse_roughness = 0.500000
+    [[
+        string label = "Roughness",
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Micro-facet distribution (Oren-Nayar) roughness.",
+        string widget = "number"
+    ]],
+    float LamaDiffuse_energyCompensation = 1.000000
+    [[
+        string label = "Energy Compensation",
+        string page = "Advanced",
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Indicates how much energy should be added to compensate for the loss inherent to the Oren-Nayar model, ranging from no compensation at all, to the expected energy from multiple scattering between the micro-facets. This prevents overly dark results when roughness is high.",
+        string widget = "number"
+    ]],
+    float LamaDiffuseSurface_opacity = 1.000000
+    [[
+        string help = "Surface cutout opacity",
+        string widget = "number"
+    ]],
+    int LamaDiffuseSurface_thin_walled = 0
+    [[
+        string help = "Option to make the surface thin-walled.",
+        string widget = "checkBox"
+    ]],
+    output MATERIAL out = 0
+)
+{
+    closure color null_closure = 0;
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    color LamaDiffuse_color_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaDiffuse_color_cm_in, LamaDiffuse_color_cm_out);
+    BSDF LamaDiffuse_out = null_closure;
+    NG_lama_diffuse(LamaDiffuse_color_cm_out, LamaDiffuse_roughness, geomprop_Nworld_out1, LamaDiffuse_energyCompensation, LamaDiffuse_out);
+    surfaceshader LamaDiffuseSurface_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(LamaDiffuse_out, null_closure, LamaDiffuseSurface_opacity, LamaDiffuseSurface_thin_walled, LamaDiffuseSurface_out);
+    MATERIAL LamaDiffuseTest_out = mx_surfacematerial(LamaDiffuseSurface_out, backsurfaceshader, displacementshader1);
+    out = LamaDiffuseTest_out;
+}
+

@@ -1,0 +1,130 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\sheen.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "NodeGraphs"
+    {
+        def NodeGraph "ND_sheen_surface"
+        {
+            float inputs:diffuse = 1
+            color3f inputs:diffuse_color = (1, 1, 1)
+            float inputs:sheen = 0
+            color3f inputs:sheen_color = (1, 1, 1)
+            float inputs:sheen_roughness = 0.3
+            token outputs:out
+
+            def Shader "diffuse1"
+            {
+                uniform token info:id = "ND_oren_nayar_diffuse_bsdf"
+                color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse_color>
+                float inputs:roughness = 0
+                float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "sheen1__layer_top"
+            {
+                uniform token info:id = "ND_sheen_bsdf"
+                color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_color>
+                float inputs:roughness.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_roughness>
+                float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "sheen1"
+            {
+                uniform token info:id = "ND_layer_bsdf"
+                token inputs:base (
+                    renderType = "BSDF"
+                )
+                token inputs:base.connect = </MaterialX/NodeGraphs/ND_sheen_surface/diffuse1.outputs:out>
+                token inputs:top (
+                    renderType = "BSDF"
+                )
+                token inputs:top.connect = </MaterialX/NodeGraphs/ND_sheen_surface/sheen1__layer_top.outputs:out>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+        }
+    }
+
+    def "Materials"
+    {
+        def Material "M_sheen" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:diffuse = 1
+            color3f inputs:diffuse_color = (0, 0, 0.95)
+            float inputs:sheen = 1
+            color3f inputs:sheen_color = (0.516, 0.524, 0.778)
+            float inputs:sheen_roughness = 0.3
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/M_sheen/SR_sheen.outputs:surface>
+
+            def Shader "SR_sheen" (
+                prepend references = </MaterialX/Shaders/SR_sheen>
+            )
+            {
+                float inputs:diffuse.connect = </MaterialX/Materials/M_sheen.inputs:diffuse>
+                color3f inputs:diffuse_color.connect = </MaterialX/Materials/M_sheen.inputs:diffuse_color>
+                float inputs:sheen.connect = </MaterialX/Materials/M_sheen.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/M_sheen.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/M_sheen.inputs:sheen_roughness>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "SR_sheen"
+        {
+            uniform token info:id = "ND_sheen_surface"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/M_sheen>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

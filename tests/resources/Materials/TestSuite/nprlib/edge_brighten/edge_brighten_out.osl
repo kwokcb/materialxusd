@@ -1,0 +1,65 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void NG_facingratio_float(vector viewdirection, vector normal1, int faceforward1, int invert, output float out)
+{
+    float N_dotproduct_out = dot(viewdirection, normal1);
+    float N_absval_out = abs(N_dotproduct_out);
+    float N_scale_in2_tmp = -1.000000;
+    float N_scale_out = N_dotproduct_out * N_scale_in2_tmp;
+    int N_facing_value2_tmp = 1;
+    float N_facing_out = mx_ternary(faceforward1 == N_facing_value2_tmp, N_absval_out, N_scale_out);
+    float N_invert_amount_tmp = 1.000000;
+    float N_invert_out = N_invert_amount_tmp - N_facing_out;
+    int N_result_value2_tmp = 1;
+    float N_result_out = mx_ternary(invert == N_result_value2_tmp, N_invert_out, N_facing_out);
+    out = N_result_out;
+}
+
+shader edge_brighten_out
+[[
+    string mtlx_category = "output",
+    string mtlx_name = "out"
+]]
+(
+    string geomprop_Vworld_space = "world",
+    string geomprop_Nworld_space = "world",
+    int facingratio_float_faceforward = 1
+    [[
+        string widget = "checkBox"
+    ]],
+    int facingratio_float_invert = 1
+    [[
+        string widget = "checkBox"
+    ]],
+    float power_float_in2 = 3.000000
+    [[
+        string widget = "number"
+    ]],
+    color mix_color3_fg = color(0.735294, 0.735294, 0.735294),
+    color mix_color3_bg = color(0.000000, 0.098619, 0.186275),
+    output color out = color(0.0)
+)
+{
+    vector geomprop_Vworld_out1 = transform(geomprop_Vworld_space, I);
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    float facingratio_float_out = 0.0;
+    NG_facingratio_float(geomprop_Vworld_out1, geomprop_Nworld_out1, facingratio_float_faceforward, facingratio_float_invert, facingratio_float_out);
+    float power_float_out = pow(facingratio_float_out, power_float_in2);
+    color mix_color3_out = mix(mix_color3_bg, mix_color3_fg, power_float_out);
+    out = mix_color3_out;
+}
+

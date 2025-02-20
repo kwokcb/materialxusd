@@ -1,0 +1,497 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void NG_separate3_color3(color in, output float outr, output float outg, output float outb)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outr = N_extract_0_out;
+    outg = N_extract_1_out;
+    outb = N_extract_2_out;
+}
+
+void NG_convert_color3_vector3(color in, output vector out)
+{
+    float separate_outr = 0.0;
+    float separate_outg = 0.0;
+    float separate_outb = 0.0;
+    NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+    vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+    out = combine_out;
+}
+
+void NG_separate3_vector3(vector in, output float outx, output float outy, output float outz)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outx = N_extract_0_out;
+    outy = N_extract_1_out;
+    outz = N_extract_2_out;
+}
+
+void NG_convert_vector3_color3(vector in, output color out)
+{
+    float separate_outx = 0.0;
+    float separate_outy = 0.0;
+    float separate_outz = 0.0;
+    NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+    color combine_out = color( separate_outx,separate_outy,separate_outz );
+    out = combine_out;
+}
+
+void NG_acescg_to_lin_rec709_color3(color in, output color out)
+{
+    vector asVec_out = vector(0.0);
+    NG_convert_color3_vector3(in, asVec_out);
+    matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+    vector transform_out = transform(transform_mat_tmp, asVec_out);
+    color asColor_out = color(0.0);
+    NG_convert_vector3_color3(transform_out, asColor_out);
+    out = asColor_out;
+}
+
+void mx_artistic_ior(color reflectivity, color edge_color, output vector ior, output vector extinction)
+{
+    // "Artist Friendly Metallic Fresnel", Ole Gulbrandsen, 2014
+    // http://jcgt.org/published/0003/04/03/paper.pdf
+
+    color r = clamp(reflectivity, 0.0, 0.99);
+    color r_sqrt = sqrt(r);
+    color n_min = (1.0 - r) / (1.0 + r);
+    color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+    ior = mix(n_max, n_min, edge_color);
+
+    color np1 = ior + 1.0;
+    color nm1 = ior - 1.0;
+    color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+    k2 = max(k2, 0.0);
+    extinction = sqrt(k2);
+}
+
+void NG_switch_color3I(color in1, color in2, color in3, color in4, color in5, color in6, color in7, color in8, color in9, color in10, int which, output color out)
+{
+    int ifgreater_10_value1_tmp = 10;
+    color ifgreater_10_in2_tmp = color(0.000000, 0.000000, 0.000000);
+    color ifgreater_10_out = mx_ternary(ifgreater_10_value1_tmp > which, in10, ifgreater_10_in2_tmp);
+    int ifgreater_9_value1_tmp = 9;
+    color ifgreater_9_out = mx_ternary(ifgreater_9_value1_tmp > which, in9, ifgreater_10_out);
+    int ifgreater_8_value1_tmp = 8;
+    color ifgreater_8_out = mx_ternary(ifgreater_8_value1_tmp > which, in8, ifgreater_9_out);
+    int ifgreater_7_value1_tmp = 7;
+    color ifgreater_7_out = mx_ternary(ifgreater_7_value1_tmp > which, in7, ifgreater_8_out);
+    int ifgreater_6_value1_tmp = 6;
+    color ifgreater_6_out = mx_ternary(ifgreater_6_value1_tmp > which, in6, ifgreater_7_out);
+    int ifgreater_5_value1_tmp = 5;
+    color ifgreater_5_out = mx_ternary(ifgreater_5_value1_tmp > which, in5, ifgreater_6_out);
+    int ifgreater_4_value1_tmp = 4;
+    color ifgreater_4_out = mx_ternary(ifgreater_4_value1_tmp > which, in4, ifgreater_5_out);
+    int ifgreater_3_value1_tmp = 3;
+    color ifgreater_3_out = mx_ternary(ifgreater_3_value1_tmp > which, in3, ifgreater_4_out);
+    int ifgreater_2_value1_tmp = 2;
+    color ifgreater_2_out = mx_ternary(ifgreater_2_value1_tmp > which, in2, ifgreater_3_out);
+    int ifgreater_1_value1_tmp = 1;
+    color ifgreater_1_out = mx_ternary(ifgreater_1_value1_tmp > which, in1, ifgreater_2_out);
+    out = ifgreater_1_out;
+}
+
+matrix rotationMatrix(vector axis, float angle)
+{
+    vector nAxis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+
+    return matrix(oc * nAxis[0] * nAxis[0] + c,             oc * nAxis[0] * nAxis[1] - nAxis[2] * s,  oc * nAxis[2] * nAxis[0] + nAxis[1] * s,  0.0,
+                  oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+                  oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+                  0.0,                                      0.0,                                      0.0,                                      1.0);
+}
+
+void mx_rotate_vector3(vector _in, float amount, vector axis, output vector result)
+{
+    float rotationRadians = radians(amount);
+    matrix m = rotationMatrix(axis, rotationRadians);
+    vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+    result = vector(trans.x, trans.y, trans.z);
+}
+
+void IMPL_lama_conductor(color tint, int fresnelMode, vector IOR, vector extinction, color reflectivity, color edgeColor, float roughness, vector normal1, float anisotropy, vector anisotropyDirection, float anisotropyRotation, output BSDF out)
+{
+    closure color null_closure = 0;
+    color artistic_ior_ior = color(0.0);
+    color artistic_ior_extinction = color(0.0);
+    mx_artistic_ior(reflectivity, edgeColor, artistic_ior_ior, artistic_ior_extinction);
+    color convert_ior_out = color(0.0);
+    NG_convert_vector3_color3(IOR, convert_ior_out);
+    color convert_extinction_out = color(0.0);
+    NG_convert_vector3_color3(extinction, convert_extinction_out);
+    float roughness_inverse_in1_tmp = 1.000000;
+    float roughness_inverse_out = roughness_inverse_in1_tmp - roughness;
+    float tangent_rotate_degree_in2_tmp = -360.000000;
+    float tangent_rotate_degree_out = anisotropyRotation * tangent_rotate_degree_in2_tmp;
+    color eta_switch_out = color(0.0);
+    NG_switch_color3I(artistic_ior_ior, convert_ior_out, color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), fresnelMode, eta_switch_out);
+    color kappa_switch_out = color(0.0);
+    NG_switch_color3I(artistic_ior_extinction, convert_extinction_out, color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), color(0.000000, 0.000000, 0.000000), fresnelMode, kappa_switch_out);
+    float delta_value2_tmp = 0.000000;
+    float delta_out = mx_ternary(anisotropy >= delta_value2_tmp, roughness_inverse_out, roughness);
+    vector tangent_rotate_out = vector(0.0);
+    mx_rotate_vector3(anisotropyDirection, tangent_rotate_degree_out, normal1, tangent_rotate_out);
+    float roughness_additional_out = anisotropy * delta_out;
+    vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+    float roughness_bitangent_out = roughness + roughness_additional_out;
+    float roughness_bitangent_clamped_low_tmp = 0.000000;
+    float roughness_bitangent_clamped_high_tmp = 1.000000;
+    float roughness_bitangent_clamped_out = clamp(roughness_bitangent_out, roughness_bitangent_clamped_low_tmp, roughness_bitangent_clamped_high_tmp);
+    vector2 roughness_linear_out = { roughness,roughness_bitangent_clamped_out };
+    float roughness_anisotropic_squared_in2_tmp = 2.000000;
+    vector2 roughness_anisotropic_squared_out = pow(roughness_linear_out, roughness_anisotropic_squared_in2_tmp);
+    float roughness_anisotropic_squared_clamped_in2_tmp = 0.000001;
+    vector2 roughness_anisotropic_squared_clamped_out = max(roughness_anisotropic_squared_out, roughness_anisotropic_squared_clamped_in2_tmp);
+    float conductor_bsdf_weight_tmp = 1.000000;
+    string conductor_bsdf_distribution_tmp = "ggx";
+    float conductor_bsdf_thinfilm_thickness_tmp = 0.000000;
+    float conductor_bsdf_thinfilm_ior_tmp = 1.500000;
+    BSDF conductor_bsdf_out = conductor_bsdf_weight_tmp * conductor_bsdf(normal1, tangent_rotate_normalize_out, roughness_anisotropic_squared_clamped_out.x, roughness_anisotropic_squared_clamped_out.y, eta_switch_out, kappa_switch_out, conductor_bsdf_distribution_tmp, "thinfilm_thickness", conductor_bsdf_thinfilm_thickness_tmp, "thinfilm_ior", conductor_bsdf_thinfilm_ior_tmp);
+    BSDF tinted_bsdf_out = (tint * conductor_bsdf_out);
+    out = tinted_bsdf_out;
+}
+
+void NG_convert_float_color3(float in, output color out)
+{
+    color combine_out = color( in,in,in );
+    out = combine_out;
+}
+
+void mx_anisotropic_vdf(color absorption, color scattering, float anisotropy, output VDF vdf)
+{
+    // Convert from absorption and scattering coefficients to
+    // extinction coefficient and single-scattering albedo.
+    color extinction = absorption + scattering;
+    color albedo = scattering / extinction;
+    vdf = anisotropic_vdf(albedo, extinction, anisotropy);
+}
+
+void NG_switch_floatI(float in1, float in2, float in3, float in4, float in5, float in6, float in7, float in8, float in9, float in10, int which, output float out)
+{
+    int ifgreater_10_value1_tmp = 10;
+    float ifgreater_10_in2_tmp = 0.000000;
+    float ifgreater_10_out = mx_ternary(ifgreater_10_value1_tmp > which, in10, ifgreater_10_in2_tmp);
+    int ifgreater_9_value1_tmp = 9;
+    float ifgreater_9_out = mx_ternary(ifgreater_9_value1_tmp > which, in9, ifgreater_10_out);
+    int ifgreater_8_value1_tmp = 8;
+    float ifgreater_8_out = mx_ternary(ifgreater_8_value1_tmp > which, in8, ifgreater_9_out);
+    int ifgreater_7_value1_tmp = 7;
+    float ifgreater_7_out = mx_ternary(ifgreater_7_value1_tmp > which, in7, ifgreater_8_out);
+    int ifgreater_6_value1_tmp = 6;
+    float ifgreater_6_out = mx_ternary(ifgreater_6_value1_tmp > which, in6, ifgreater_7_out);
+    int ifgreater_5_value1_tmp = 5;
+    float ifgreater_5_out = mx_ternary(ifgreater_5_value1_tmp > which, in5, ifgreater_6_out);
+    int ifgreater_4_value1_tmp = 4;
+    float ifgreater_4_out = mx_ternary(ifgreater_4_value1_tmp > which, in4, ifgreater_5_out);
+    int ifgreater_3_value1_tmp = 3;
+    float ifgreater_3_out = mx_ternary(ifgreater_3_value1_tmp > which, in3, ifgreater_4_out);
+    int ifgreater_2_value1_tmp = 2;
+    float ifgreater_2_out = mx_ternary(ifgreater_2_value1_tmp > which, in2, ifgreater_3_out);
+    int ifgreater_1_value1_tmp = 1;
+    float ifgreater_1_out = mx_ternary(ifgreater_1_value1_tmp > which, in1, ifgreater_2_out);
+    out = ifgreater_1_out;
+}
+
+void mx_dielectric_bsdf(float weight, color tint, float ior, vector2 roughness, float thinfilm_thickness, float thinfilm_ior, normal N, vector U, string distribution, string scatter_mode, output BSDF bsdf)
+{
+    color reflection_tint = (scatter_mode == "T") ? color(0.0) : tint;
+    color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+    bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+}
+
+void IMPL_lama_dielectric(color reflectionTint, color transmissionTint, int fresnelMode, float IOR, float reflectivity, float roughness, vector normal1, float anisotropy, vector direction, float rotation, color absorptionColor, float absorptionRadius, color scatterColor, float scatterAnisotropy, output BSDF out)
+{
+    closure color null_closure = 0;
+    color reflectivity_color_out = color(0.0);
+    NG_convert_float_color3(reflectivity, reflectivity_color_out);
+    float roughness_inverse_in1_tmp = 1.000000;
+    float roughness_inverse_out = roughness_inverse_in1_tmp - roughness;
+    float tangent_rotate_degree_in2_tmp = -360.000000;
+    float tangent_rotate_degree_out = rotation * tangent_rotate_degree_in2_tmp;
+    color absorption_out = absorptionColor / absorptionRadius;
+    vector scatter_vector_out = vector(0.0);
+    NG_convert_color3_vector3(scatterColor, scatter_vector_out);
+    color artistic_ior_edge_color_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(color(0.000000, 0.000000, 0.000000), artistic_ior_edge_color_cm_out);
+    float delta_value2_tmp = 0.000000;
+    float delta_out = mx_ternary(anisotropy >= delta_value2_tmp, roughness_inverse_out, roughness);
+    float tangent_rotate_degree_offset_in2_tmp = 0.000000;
+    float tangent_rotate_degree_offset_out = tangent_rotate_degree_out - tangent_rotate_degree_offset_in2_tmp;
+    vector absorption_vector_out = vector(0.0);
+    NG_convert_color3_vector3(absorption_out, absorption_vector_out);
+    color artistic_ior_ior = color(0.0);
+    color artistic_ior_extinction = color(0.0);
+    mx_artistic_ior(reflectivity_color_out, artistic_ior_edge_color_cm_out, artistic_ior_ior, artistic_ior_extinction);
+    float roughness_additional_out = anisotropy * delta_out;
+    vector tangent_rotate_out = vector(0.0);
+    mx_rotate_vector3(direction, tangent_rotate_degree_offset_out, normal1, tangent_rotate_out);
+    int ior_float_index_tmp = 0;
+    float ior_float_out = mx_extract(artistic_ior_ior, ior_float_index_tmp);
+    float roughness_bitangent_out = roughness + roughness_additional_out;
+    vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+    float fresnel_mode_switch_out = 0.0;
+    NG_switch_floatI(ior_float_out, IOR, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, fresnelMode, fresnel_mode_switch_out);
+    float roughness_bitangent_clamped_low_tmp = 0.000000;
+    float roughness_bitangent_clamped_high_tmp = 1.000000;
+    float roughness_bitangent_clamped_out = clamp(roughness_bitangent_out, roughness_bitangent_clamped_low_tmp, roughness_bitangent_clamped_high_tmp);
+    vector2 roughness_linear_out = { roughness,roughness_bitangent_clamped_out };
+    float roughness_anisotropic_squared_in2_tmp = 2.000000;
+    vector2 roughness_anisotropic_squared_out = pow(roughness_linear_out, roughness_anisotropic_squared_in2_tmp);
+    float roughness_anisotropic_squared_clamped_in2_tmp = 0.000001;
+    vector2 roughness_anisotropic_squared_clamped_out = max(roughness_anisotropic_squared_out, roughness_anisotropic_squared_clamped_in2_tmp);
+    BSDF reflection_bsdf_out = null_closure;
+    mx_dielectric_bsdf(1.000000, reflectionTint, fresnel_mode_switch_out, roughness_anisotropic_squared_clamped_out, 0.000000, 1.500000, normal1, tangent_rotate_normalize_out, "ggx", "R", reflection_bsdf_out);
+    BSDF transmission_bsdf_out = null_closure;
+    mx_dielectric_bsdf(1.000000, transmissionTint, fresnel_mode_switch_out, roughness_anisotropic_squared_clamped_out, 0.000000, 1.500000, normal1, tangent_rotate_normalize_out, "ggx", "T", transmission_bsdf_out);
+    VDF interior_vdf_out = null_closure;
+    mx_anisotropic_vdf(absorption_vector_out, scatter_vector_out, scatterAnisotropy, interior_vdf_out);
+    BSDF transmission_layer_out = layer(transmission_bsdf_out, interior_vdf_out);
+    BSDF dielectric_bsdf_out = layer(reflection_bsdf_out, transmission_layer_out);
+    out = dielectric_bsdf_out;
+}
+
+void NG_lama_add_bsdf(BSDF material1, BSDF material2, float weight1, float weight2, output BSDF out)
+{
+    closure color null_closure = 0;
+    BSDF mul1_out = (weight1 * material1);
+    BSDF mul2_out = (weight2 * material2);
+    BSDF add1_out = (mul1_out + mul2_out);
+    out = add1_out;
+}
+
+void mx_surface(BSDF bsdf, EDF edf, float opacity, int thin_walled, output surfaceshader result)
+{
+    result.bsdf    = bsdf;
+    result.edf     = edf;
+    result.opacity = clamp(opacity, 0.0, 1.0);
+}
+
+MATERIAL mx_surfacematerial(surfaceshader surface, surfaceshader backsurface, displacementshader disp)
+{
+    float opacity_weight = clamp(surface.opacity, 0.0, 1.0);
+    return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+}
+
+shader LamaAddBSDFTest
+[[
+    string mtlx_category = "surfacematerial",
+    string mtlx_name = "LamaAddBSDFTest"
+]]
+(
+    surfaceshader backsurfaceshader = { 0, 0, 1.0 },
+    displacementshader displacementshader1 = vector(0.0),
+    string geomprop_Nworld_space = "world",
+    string geomprop_Tworld_space = "world",
+    int geomprop_Tworld_index = 0
+    [[
+        string widget = "number"
+    ]],
+    color LamaConductor_tint_cm_in = color(1.000000, 1.000000, 1.000000),
+    color LamaConductor_reflectivity_cm_in = color(0.945000, 0.777200, 0.373700),
+    color LamaConductor_edgeColor_cm_in = color(0.997900, 0.981300, 0.752300),
+    color LamaDielectric_absorptionColor_cm_in = color(1.000000, 1.000000, 1.000000),
+    color LamaDielectric_reflectionTint_cm_in = color(1.000000, 1.000000, 1.000000),
+    color LamaDielectric_transmissionTint_cm_in = color(1.000000, 1.000000, 1.000000),
+    color LamaDielectric_scatterColor_cm_in = color(0.000000, 0.000000, 0.000000),
+    int LamaConductor_fresnelMode = 0
+    [[
+        string label = "Fresnel Mode",
+        string page = "Main",
+        string help = "Switches the Fresnel between Artistic and Scientific parameters. The Artistic mode offers reflectivity in the normal direction and reflectivity90 at the grazing angle. The Scientific mode provides an index of refraction for each rgb component. Note that IOR is only used to calculate the reflectivity value used by the Schlick approximation. When reflectivity90 is 1, then both modes achieve identical results, as one can be mapped to the other.",
+        string widget = "number"
+    ]],
+    vector LamaConductor_IOR = vector(0.180000, 0.420000, 1.370000)
+    [[
+        string label = "IOR",
+        string page = "Main",
+        string help = "Index of refraction (often denoted by eta), defining the color reflected by the surface in the normal direction."
+    ]],
+    vector LamaConductor_extinction = vector(3.420000, 2.350000, 1.770000)
+    [[
+        string label = "Extinction",
+        string page = "Main",
+        string help = "Extinction coefficient (often denoted by kappa), influencing how the reflected color curve evolves between its value in the normal direction (or 0 degree), and 1 when reaching 90 degrees. A null value does not deviate the curve at all."
+    ]],
+    float LamaConductor_roughness = 0.100000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Roughness",
+        string page = "Main",
+        string help = "Micro-facet distribution roughness.",
+        string widget = "number"
+    ]],
+    float LamaConductor_anisotropy = 0.000000
+    [[
+        float min = -1.000000,
+        float max = 1.000000,
+        string label = "Anisotropy",
+        string page = "Anisotropy",
+        string help = "Defines the amount of anisotropy, changing the co-tangent axis roughness from the original value to 1 (or to 0 with a negative value).",
+        string widget = "number"
+    ]],
+    float LamaConductor_anisotropyRotation = 0.000000
+    [[
+        float slidermin = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Rotation",
+        string page = "Anisotropy",
+        string help = "Rotates the anisotropy direction (possibly overridden by the previous attribute) around the normal, from 0 to 360 degrees.",
+        string widget = "number"
+    ]],
+    int LamaDielectric_fresnelMode = 0
+    [[
+        string label = "Fresnel Mode",
+        string page = "Main",
+        string help = "Switches the Fresnel parameterization between Artistic and Scientific mode. The Artistic mode offers a scalar value defining the reflectivity in the normal direction. The Scientific mode proposes an index of refraction. Both parameterizations can achieve identical results, as one can be mapped to the other.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_IOR = 1.500000
+    [[
+        float min = 1.000000,
+        float max = 3.000000,
+        string label = "IOR",
+        string page = "Main",
+        string help = "Index of refraction (often denoted by eta), defining the amount reflected by the surface in the normal direction, and how the rays are bent by refraction.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_reflectivity = 0.040000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        float slidermin = 0.000000,
+        float slidermax = 0.250000,
+        string label = "Reflectivity",
+        string page = "Main",
+        string help = "Amount reflected by the surface in the normal direction. Also affects how the rays are bent by refraction.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_roughness = 0.100000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Roughness",
+        string page = "Main",
+        string help = "Micro-facet distribution roughness.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_anisotropy = 0.000000
+    [[
+        float min = -1.000000,
+        float max = 1.000000,
+        string label = "Anisotropy",
+        string page = "Anisotropy",
+        string help = "Defines the amount of anisotropy, changing the co-tangent axis roughness from the original value to 1 (or to 0 with a negative value).",
+        string widget = "number"
+    ]],
+    float LamaDielectric_rotation = 0.000000
+    [[
+        float slidermin = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Rotation",
+        string page = "Anisotropy",
+        string help = "Rotates the anisotropy direction (possibly overridden by the previous attribute) around the normal, from 0 to 360 degrees.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_absorptionRadius = 1.000000
+    [[
+        float min = 0.000000,
+        string label = "Absorption Radius",
+        string page = "Interior",
+        string help = "Distance, in world space units, at which the Absorption Color is assumed to be reached. Can be used to control the rate of absorption.",
+        string widget = "number"
+    ]],
+    float LamaDielectric_scatterAnisotropy = 0.000000
+    [[
+        float min = -1.000000,
+        float max = 1.000000,
+        string label = "Scatter Anisotropy",
+        string page = "Interior",
+        string help = "Anisotropy of the medium's phase function, ranging from full backward scattering at -1 to forward scattering at 1. Only takes effect if the Scatter Color is non-null.",
+        string widget = "number"
+    ]],
+    float LamaAddBSDF_weight1 = 0.500000
+    [[
+        string label = "Weight 1",
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Weight of the first material.",
+        string widget = "number"
+    ]],
+    float LamaAddBSDF_weight2 = 0.500000
+    [[
+        string label = "Weight 2",
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Weight of the second material.",
+        string widget = "number"
+    ]],
+    float LamaAddBSDFSurface_opacity = 1.000000
+    [[
+        string help = "Surface cutout opacity",
+        string widget = "number"
+    ]],
+    int LamaAddBSDFSurface_thin_walled = 0
+    [[
+        string help = "Option to make the surface thin-walled.",
+        string widget = "checkBox"
+    ]],
+    output MATERIAL out = 0
+)
+{
+    closure color null_closure = 0;
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+    color LamaConductor_tint_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaConductor_tint_cm_in, LamaConductor_tint_cm_out);
+    color LamaConductor_reflectivity_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaConductor_reflectivity_cm_in, LamaConductor_reflectivity_cm_out);
+    color LamaConductor_edgeColor_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaConductor_edgeColor_cm_in, LamaConductor_edgeColor_cm_out);
+    color LamaDielectric_absorptionColor_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaDielectric_absorptionColor_cm_in, LamaDielectric_absorptionColor_cm_out);
+    color LamaDielectric_reflectionTint_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaDielectric_reflectionTint_cm_in, LamaDielectric_reflectionTint_cm_out);
+    color LamaDielectric_transmissionTint_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaDielectric_transmissionTint_cm_in, LamaDielectric_transmissionTint_cm_out);
+    color LamaDielectric_scatterColor_cm_out = color(0.0);
+    NG_acescg_to_lin_rec709_color3(LamaDielectric_scatterColor_cm_in, LamaDielectric_scatterColor_cm_out);
+    BSDF LamaConductor_out = null_closure;
+    IMPL_lama_conductor(LamaConductor_tint_cm_out, LamaConductor_fresnelMode, LamaConductor_IOR, LamaConductor_extinction, LamaConductor_reflectivity_cm_out, LamaConductor_edgeColor_cm_out, LamaConductor_roughness, geomprop_Nworld_out1, LamaConductor_anisotropy, geomprop_Tworld_out1, LamaConductor_anisotropyRotation, LamaConductor_out);
+    BSDF LamaDielectric_out = null_closure;
+    IMPL_lama_dielectric(LamaDielectric_reflectionTint_cm_out, LamaDielectric_transmissionTint_cm_out, LamaDielectric_fresnelMode, LamaDielectric_IOR, LamaDielectric_reflectivity, LamaDielectric_roughness, geomprop_Nworld_out1, LamaDielectric_anisotropy, geomprop_Tworld_out1, LamaDielectric_rotation, LamaDielectric_absorptionColor_cm_out, LamaDielectric_absorptionRadius, LamaDielectric_scatterColor_cm_out, LamaDielectric_scatterAnisotropy, LamaDielectric_out);
+    BSDF LamaAddBSDF_out = null_closure;
+    NG_lama_add_bsdf(LamaConductor_out, LamaDielectric_out, LamaAddBSDF_weight1, LamaAddBSDF_weight2, LamaAddBSDF_out);
+    surfaceshader LamaAddBSDFSurface_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(LamaAddBSDF_out, null_closure, LamaAddBSDFSurface_opacity, LamaAddBSDFSurface_thin_walled, LamaAddBSDFSurface_out);
+    MATERIAL LamaAddBSDFTest_out = mx_surfacematerial(LamaAddBSDFSurface_out, backsurfaceshader, displacementshader1);
+    out = LamaAddBSDFTest_out;
+}
+

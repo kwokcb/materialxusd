@@ -1,0 +1,13 @@
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:149: warning: Member find_first_camera(self, stage) (function) of class materialxusd.MaterialxUSDConverter is not documented.
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:160: warning: The following parameter of materialxusd.MaterialxUSDConverter.add_camera(self, stage, camera_path, root_path="/TestScene/Camera", geometry_path="/TestScene/Geometry") is not documented:
+  parameter 'geometry_path'
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:140: warning: argument 'shaderball_path' of command @param is not found in the argument list of materialxusd.MaterialxUSDConverter::add_geometry_reference(self, stage, geometry_path, root_path="/TestScene/Geometry")
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:71: warning: The following parameter of materialxusd.MaterialxUSDConverter.find_materials(self, stage, find_first=True) is not documented:
+  parameter 'find_first'
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:223: warning: argument 'material_path' of command @param is not found in the argument list of materialxusd.MaterialxUSDConverter::mtlx_to_usd(self, input_usd_path, shaderball_path, environment_path, material_file_path, camera_path)
+D:/work/materialx/materialxusd/source/materialxusd/materialxusd.py:223: warning: The following parameter of materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, input_usd_path, shaderball_path, environment_path, material_file_path, camera_path) is not documented:
+  parameter 'material_file_path'
+D:/work/materialx/materialxusd/README.md:40: warning: Unsupported xml/html tag <iframe> found
+D:/work/materialx/materialxusd/README.md:40: warning: Unsupported xml/html tag </iframe> found
+D:/work/materialx/materialxusd/README.md:44: warning: Unsupported xml/html tag <iframe> found
+D:/work/materialx/materialxusd/README.md:44: warning: Unsupported xml/html tag </iframe> found

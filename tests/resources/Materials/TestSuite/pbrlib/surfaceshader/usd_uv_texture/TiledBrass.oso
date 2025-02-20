@@ -1,0 +1,2198 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\pbrlib\surfaceshader\usd_uv_texture\TiledBrass.oso
+shader TiledBrass	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"TiledBrass"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_UV0_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	texture_base_color_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Images/brass_color.jpg"		%meta{string,widget,"filename"}  %read{1,1} %write{2147483647,-1}
+param	string	texture_base_color_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{2,2} %write{2147483647,-1}
+param	string	texture_base_color_wrapS	"periodic"		%read{19,56} %write{2147483647,-1}
+param	string	texture_base_color_wrapT	"periodic"		%read{34,56} %write{2147483647,-1}
+param	struct color4	texture_base_color_fallback			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_base_color_fallback.rgb	0 0 0		%read{48,51} %write{2147483647,-1} %mystruct{texture_base_color_fallback} %mystructfield{0}
+param	float	texture_base_color_fallback.a	1		%read{49,52} %write{2147483647,-1} %mystruct{texture_base_color_fallback} %mystructfield{1}
+param	struct color4	texture_base_color_scale			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_base_color_scale.rgb	1 1 1		%read{60,60} %write{2147483647,-1} %mystruct{texture_base_color_scale} %mystructfield{0}
+param	float	texture_base_color_scale.a	1		%read{61,61} %write{2147483647,-1} %mystruct{texture_base_color_scale} %mystructfield{1}
+param	struct color4	texture_base_color_bias			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_base_color_bias.rgb	0 0 0		%read{63,63} %write{2147483647,-1} %mystruct{texture_base_color_bias} %mystructfield{0}
+param	float	texture_base_color_bias.a	0		%read{64,64} %write{2147483647,-1} %mystruct{texture_base_color_bias} %mystructfield{1}
+param	string	texture_roughness_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Images/brass_roughness.jpg"		%meta{string,widget,"filename"}  %read{3,3} %write{2147483647,-1}
+param	string	texture_roughness_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{4,4} %write{2147483647,-1}
+param	string	texture_roughness_wrapS	"periodic"		%read{232,269} %write{2147483647,-1}
+param	string	texture_roughness_wrapT	"periodic"		%read{247,269} %write{2147483647,-1}
+param	struct color4	texture_roughness_fallback			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_roughness_fallback.rgb	0 0 0		%read{261,264} %write{2147483647,-1} %mystruct{texture_roughness_fallback} %mystructfield{0}
+param	float	texture_roughness_fallback.a	1		%read{262,265} %write{2147483647,-1} %mystruct{texture_roughness_fallback} %mystructfield{1}
+param	struct color4	texture_roughness_scale			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_roughness_scale.rgb	1 1 1		%read{273,273} %write{2147483647,-1} %mystruct{texture_roughness_scale} %mystructfield{0}
+param	float	texture_roughness_scale.a	1		%read{274,274} %write{2147483647,-1} %mystruct{texture_roughness_scale} %mystructfield{1}
+param	struct color4	texture_roughness_bias			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	texture_roughness_bias.rgb	0 0 0		%read{276,276} %write{2147483647,-1} %mystruct{texture_roughness_bias} %mystructfield{0}
+param	float	texture_roughness_bias.a	0		%read{277,277} %write{2147483647,-1} %mystruct{texture_roughness_bias} %mystructfield{1}
+param	color	UsdPreviewSurface_emissiveColor	0 0 0		%meta{color,min,0,0,0} %meta{color,slidermax,1,1,1} %meta{string,label,"Emissive Color"}  %read{816,816} %write{2147483647,-1}
+param	int	UsdPreviewSurface_useSpecularWorkflow	0		%meta{int,min,0} %meta{int,max,1} %meta{int,sensitivity,1} %meta{string,label,"Use Specular Workflow"} %meta{string,widget,"number"}  %read{564,564} %write{2147483647,-1}
+param	color	UsdPreviewSurface_specularColor	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"}  %read{761,761} %write{2147483647,-1}
+param	float	UsdPreviewSurface_metallic	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Metallic"} %meta{string,widget,"number"}  %read{563,808} %write{2147483647,-1}
+param	float	UsdPreviewSurface_clearcoat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat"} %meta{string,widget,"number"}  %read{750,750} %write{2147483647,-1}
+param	float	UsdPreviewSurface_clearcoatRoughness	0.00999999978		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat Roughness"} %meta{string,widget,"number"}  %read{512,512} %write{2147483647,-1}
+param	float	UsdPreviewSurface_opacity	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Opacity"} %meta{string,widget,"number"}  %read{573,620} %write{2147483647,-1}
+param	int	UsdPreviewSurface_opacityMode	0		%meta{string,label,"Opacity Mode"} %meta{string,widget,"number"}  %read{653,725} %write{2147483647,-1}
+param	float	UsdPreviewSurface_opacityThreshold	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Opacity Threshold"} %meta{string,widget,"number"}  %read{568,606} %write{2147483647,-1}
+param	float	UsdPreviewSurface_ior	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Index of Refraction"} %meta{string,widget,"number"}  %read{506,778} %write{2147483647,-1}
+param	vector	UsdPreviewSurface_normal	0 0 1		%meta{vector,min,-1,-1,-1} %meta{vector,max,1,1,1} %meta{string,label,"Normal"}  %read{540,540} %write{2147483647,-1}
+param	float	UsdPreviewSurface_displacement	0		%meta{string,label,"Displacement"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	UsdPreviewSurface_occlusion	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Occlusion"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{840,840}
+global	normal	N	%read{500,537} %write{2147483647,-1}
+global	float	u	%read{5,5} %write{2147483647,-1} %derivs
+global	float	v	%read{6,6} %write{2147483647,-1} %derivs
+local	color	___670_missingColor	%read{56,269} %write{51,264}
+local	float	___670_missingAlpha	%read{56,269} %write{52,265}
+local	float	___670_st.x	%read{56,269} %write{54,267} %mystruct{___670_st} %mystructfield{0} %derivs
+local	float	___670_st.y	%read{56,269} %write{55,268} %mystruct{___670_st} %mystructfield{1} %derivs
+local	float	___670_alpha	%read{58,271} %write{56,269}
+local	color	___670_rgb	%read{57,270} %write{56,269}
+local	int	___672_N_extract_0_index_tmp	%read{72,368} %write{70,358}
+local	float	___672_N_extract_0_out	%read{134,422} %write{74,372}
+local	int	___672_N_extract_1_index_tmp	%read{88,384} %write{86,374}
+local	float	___672_N_extract_1_out	%read{135,423} %write{90,388}
+local	int	___672_N_extract_2_index_tmp	%read{104,400} %write{102,390}
+local	float	___672_N_extract_2_out	%read{136,424} %write{106,404}
+local	int	___672_N_extract_3_index_tmp	%read{120,416} %write{118,406}
+local	float	___672_N_extract_3_out	%read{137,425} %write{122,420}
+local	float	___673_separate_outr	%read{213,426} %write{140,422}
+local	float	___673_separate_outg	%read{213,426} %write{141,423}
+local	float	___673_separate_outb	%read{213,426} %write{142,424}
+local	float	___673_separate_outa	%read{2147483647,-1} %write{143,425}
+local	color	___673_combine_out	%read{214,427} %write{213,426}
+local	color	___674_image_reader_out.rgb	%read{60,273} %write{13,270} %mystruct{___674_image_reader_out} %mystructfield{0}
+local	float	___674_image_reader_out.a	%read{61,274} %write{14,271} %mystruct{___674_image_reader_out} %mystructfield{1}
+local	color	___674_image_scale_out.rgb	%read{63,276} %write{60,273} %mystruct{___674_image_scale_out} %mystructfield{0}
+local	float	___674_image_scale_out.a	%read{64,277} %write{61,274} %mystruct{___674_image_scale_out} %mystructfield{1}
+local	color	___674_image_bias_out.rgb	%read{74,418} %write{63,276} %mystruct{___674_image_bias_out} %mystructfield{0}
+local	float	___674_image_bias_out.a	%read{84,420} %write{64,277} %mystruct{___674_image_bias_out} %mystructfield{1}
+local	float	___674_image_bias_separate_outr	%read{215,428} %write{65,347}
+local	float	___674_image_bias_separate_outg	%read{216,429} %write{66,348}
+local	float	___674_image_bias_separate_outb	%read{217,430} %write{67,349}
+local	float	___674_image_bias_separate_outa	%read{218,431} %write{68,350}
+local	color	___674_image_bias_color3_out	%read{219,432} %write{138,427}
+local	int	___675_N_extract_0_index_tmp	%read{445,445} %write{443,443}
+local	float	___675_N_extract_0_out	%read{452,452} %write{445,445}
+local	int	___675_N_extract_1_index_tmp	%read{448,448} %write{446,446}
+local	float	___675_N_extract_1_out	%read{453,453} %write{448,448}
+local	int	___675_N_extract_2_index_tmp	%read{451,451} %write{449,449}
+local	float	___675_N_extract_2_out	%read{454,454} %write{451,451}
+local	float	___676_bias_in2_tmp	%read{436,436} %write{435,435}
+local	color	___676_bias_out	%read{457,457} %write{436,436}
+local	float	___676_linSeg_in2_tmp	%read{438,438} %write{437,437}
+local	color	___676_linSeg_out	%read{493,493} %write{438,438}
+local	float	___676_colorSeparate_outr	%read{461,461} %write{439,452}
+local	float	___676_colorSeparate_outg	%read{471,471} %write{440,453}
+local	float	___676_colorSeparate_outb	%read{481,481} %write{441,454}
+local	float	___676_max_in2_tmp	%read{456,456} %write{455,455}
+local	color	___676_max_out	%read{489,489} %write{457,457}
+local	float	___676_isAboveR_value2_tmp	%read{461,461} %write{458,458}
+local	float	___676_isAboveR_in1_tmp	%read{464,464} %write{459,459}
+local	float	___676_isAboveR_in2_tmp	%read{466,466} %write{460,460}
+local	float	___676_isAboveR_out	%read{490,490} %write{464,466}
+local	float	___676_isAboveG_value2_tmp	%read{471,471} %write{468,468}
+local	float	___676_isAboveG_in1_tmp	%read{474,474} %write{469,469}
+local	float	___676_isAboveG_in2_tmp	%read{476,476} %write{470,470}
+local	float	___676_isAboveG_out	%read{490,490} %write{474,476}
+local	float	___676_isAboveB_value2_tmp	%read{481,481} %write{478,478}
+local	float	___676_isAboveB_in1_tmp	%read{484,484} %write{479,479}
+local	float	___676_isAboveB_in2_tmp	%read{486,486} %write{480,480}
+local	float	___676_isAboveB_out	%read{490,490} %write{484,486}
+local	float	___676_scale_in2_tmp	%read{489,489} %write{488,488}
+local	color	___676_scale_out	%read{492,492} %write{489,489}
+local	color	___676_isAbove_out	%read{493,493} %write{490,490}
+local	float	___676_powSeg_in2_tmp	%read{492,492} %write{491,491}
+local	color	___676_powSeg_out	%read{493,493} %write{492,492}
+local	color	___676_mix_out	%read{494,494} %write{493,493}
+local	float	___677_roughness_sqr	%read{523,561} %write{515,547}
+local	float	___678_aspect	%read{523,558} %write{522,554}
+local	color	___680_r	%read{583,597} %write{582,582}
+local	color	___680_r_sqrt	%read{587,588} %write{583,583}
+local	color	___680_n_min	%read{590,590} %write{586,586}
+local	color	___680_n_max	%read{590,590} %write{589,589}
+local	color	___680_np1	%read{593,593} %write{591,591}
+local	color	___680_nm1	%read{595,595} %write{592,592}
+local	color	___680_k2	%read{600,601} %write{598,600}
+local	vector	___681_decodedValue	%read{638,645} %write{635,637}
+local	int	___685_ifgreater_10_value1_tmp	%read{653,653} %write{651,651}
+local	float	___685_ifgreater_10_in2_tmp	%read{658,658} %write{652,652}
+local	float	___685_ifgreater_10_out	%read{666,666} %write{656,658}
+local	int	___685_ifgreater_9_value1_tmp	%read{661,661} %write{660,660}
+local	float	___685_ifgreater_9_out	%read{674,674} %write{664,666}
+local	int	___685_ifgreater_8_value1_tmp	%read{669,669} %write{668,668}
+local	float	___685_ifgreater_8_out	%read{682,682} %write{672,674}
+local	int	___685_ifgreater_7_value1_tmp	%read{677,677} %write{676,676}
+local	float	___685_ifgreater_7_out	%read{690,690} %write{680,682}
+local	int	___685_ifgreater_6_value1_tmp	%read{685,685} %write{684,684}
+local	float	___685_ifgreater_6_out	%read{698,698} %write{688,690}
+local	int	___685_ifgreater_5_value1_tmp	%read{693,693} %write{692,692}
+local	float	___685_ifgreater_5_out	%read{706,706} %write{696,698}
+local	int	___685_ifgreater_4_value1_tmp	%read{701,701} %write{700,700}
+local	float	___685_ifgreater_4_out	%read{714,714} %write{704,706}
+local	int	___685_ifgreater_3_value1_tmp	%read{709,709} %write{708,708}
+local	float	___685_ifgreater_3_out	%read{722,722} %write{712,714}
+local	int	___685_ifgreater_2_value1_tmp	%read{717,717} %write{716,716}
+local	float	___685_ifgreater_2_out	%read{730,730} %write{720,722}
+local	int	___685_ifgreater_1_value1_tmp	%read{725,725} %write{724,724}
+local	float	___685_ifgreater_1_out	%read{732,732} %write{728,730}
+local	color	___686_combine_out	%read{736,736} %write{735,735}
+local	color	___687_reflection_tint	%read{749,802} %write{743,797}
+local	color	___687_transmission_tint	%read{749,802} %write{747,801}
+local	color	___688_reflection_tint	%read{778,778} %write{772,773}
+local	color	___688_transmission_tint	%read{778,778} %write{776,777}
+local	closure color	___690_null_closure	%read{739,818} %write{499,499}
+local	vector	___690_geomprop_Tworld_out1	%read{639,802} %write{504,504}
+local	float	___690_one_minus_ior_in1_tmp	%read{506,506} %write{505,505}
+local	float	___690_one_minus_ior_out	%read{613,613} %write{506,506}
+local	float	___690_one_plus_ior_in1_tmp	%read{508,508} %write{507,507}
+local	float	___690_one_plus_ior_out	%read{613,613} %write{508,508}
+local	float	___690_coat_roughness_out.x	%read{525,749} %write{509,528} %mystruct{___690_coat_roughness_out} %mystructfield{0}
+local	float	___690_coat_roughness_out.y	%read{527,749} %write{510,529} %mystruct{___690_coat_roughness_out} %mystructfield{1}
+local	string	___690_geomprop_Nworld_space_tmp	%read{532,532} %write{530,530}
+local	vector	___690_geomprop_Nworld_out1	%read{646,646} %write{532,532}
+local	vector	___690_geomprop_Bworld_out1	%read{642,642} %write{538,538}
+local	float	___690_scale_normal_in2_tmp	%read{540,540} %write{539,539}
+local	vector	___690_scale_normal_out	%read{615,615} %write{540,540}
+local	float	___690_specular_roughness_out.x	%read{557,802} %write{541,560} %mystruct{___690_specular_roughness_out} %mystructfield{0}
+local	float	___690_specular_roughness_out.y	%read{559,802} %write{542,561} %mystruct{___690_specular_roughness_out} %mystructfield{1}
+local	float	___690_inverse_metalness_in1_tmp	%read{563,563} %write{562,562}
+local	float	___690_inverse_metalness_out	%read{617,617} %write{563,563}
+local	float	___690_use_specular_workflow_float_out	%read{617,813} %write{565,565}
+local	float	___690_transmission_mix_amount_value2_tmp	%read{568,568} %write{566,566}
+local	float	___690_transmission_mix_amount_in1_tmp	%read{571,571} %write{567,567}
+local	float	___690_transmission_mix_amount_out	%read{781,783} %write{571,573}
+local	color	___690_artistic_ior_ior	%read{591,790} %write{575,590}
+local	color	___690_artistic_ior_extinction	%read{790,790} %write{576,601}
+local	color	___690_specular_color_metallic_bg_tmp	%read{603,603} %write{602,602}
+local	color	___690_specular_color_metallic_out	%read{737,802} %write{603,603}
+local	float	___690_cutout_opacity_in1_tmp	%read{609,609} %write{604,604}
+local	float	___690_cutout_opacity_in2_tmp	%read{611,611} %write{605,605}
+local	float	___690_cutout_opacity_out	%read{625,728} %write{609,611}
+local	float	___690_R_out	%read{627,627} %write{613,613}
+local	float	___690_bias_normal_in2_tmp	%read{615,615} %write{614,614}
+local	vector	___690_bias_normal_out	%read{633,636} %write{615,615}
+local	float	___690_diffuse_bsdf_weight_fg_tmp	%read{617,617} %write{616,616}
+local	float	___690_diffuse_bsdf_weight_out	%read{765,765} %write{617,617}
+local	float	___690_opacity_presence_value2_tmp	%read{620,620} %write{618,618}
+local	float	___690_opacity_presence_in1_tmp	%read{623,623} %write{619,619}
+local	float	___690_opacity_presence_out	%read{720,720} %write{623,625}
+local	float	___690_R_sq_out	%read{735,737} %write{627,627}
+local	vector	___690_surface_normal_out	%read{749,802} %write{628,648}
+local	float	___690_opacity_switch_out	%read{824,824} %write{649,732}
+local	color	___690_coat_F0_out	%read{749,749} %write{733,736}
+local	color	___690_specular_color_metallic_R_sq_out	%read{738,738} %write{737,737}
+local	color	___690_F0_out	%read{802,802} %write{738,738}
+local	closure color	___690_coat_dielectric_bsdf_out	%read{815,815} %write{739,750}
+local	closure color	___690_specular_bsdf1_out	%read{785,785} %write{751,762}
+local	float	___690_diffuse_bsdf_roughness_tmp	%read{764,764} %write{763,763}
+local	closure color	___690_diffuse_bsdf_out	%read{783,783} %write{765,765}
+local	closure color	___690_transmission_bsdf_out	%read{782,782} %write{766,779}
+local	closure color	___690_transmission_mix_out	%read{785,804} %write{784,784}
+local	closure color	___690_specular_workflow_bsdf_out	%read{813,813} %write{785,785}
+local	float	___690_metalness_metal_bsdf_weight_tmp	%read{791,791} %write{786,786}
+local	string	___690_metalness_metal_bsdf_distribution_tmp	%read{790,790} %write{787,787}
+local	float	___690_metalness_metal_bsdf_thinfilm_thickness_tmp	%read{790,790} %write{788,788}
+local	float	___690_metalness_metal_bsdf_thinfilm_ior_tmp	%read{790,790} %write{789,789}
+local	closure color	___690_metalness_metal_bsdf_out	%read{808,808} %write{791,791}
+local	closure color	___690_specular_bsdf2_out	%read{804,804} %write{792,803}
+local	closure color	___690_metalness_specular_bsdf_out	%read{807,807} %write{804,804}
+local	closure color	___690_metalness_workflow_bsdf_out	%read{812,812} %write{809,809}
+local	closure color	___690_workflow_selector_bsdf_out	%read{815,815} %write{814,814}
+local	closure color	___690_coat_bsdf_out	%read{821,821} %write{815,815}
+local	closure color	___690_emission_edf_out	%read{822,822} %write{816,816}
+local	closure color	___690_surface_constructor_out.bsdf	%read{827,827} %write{817,821} %mystruct{___690_surface_constructor_out} %mystructfield{0}
+local	closure color	___690_surface_constructor_out.edf	%read{828,828} %write{818,822} %mystruct{___690_surface_constructor_out} %mystructfield{1}
+local	float	___690_surface_constructor_out.opacity	%read{826,829} %write{819,826} %mystruct{___690_surface_constructor_out} %mystructfield{2}
+local	float	___691_opacity_weight	%read{835,837} %write{833,833}
+local	closure color	null_closure	%read{495,496} %write{0,0}
+local	string	texture_base_color_file_.filename	%read{16,56} %write{1,1} %mystruct{texture_base_color_file_} %mystructfield{0}
+local	string	texture_base_color_file_.colorspace	%read{56,56} %write{2,2} %mystruct{texture_base_color_file_} %mystructfield{1}
+local	string	texture_roughness_file_.filename	%read{229,269} %write{3,3} %mystruct{texture_roughness_file_} %mystructfield{0}
+local	string	texture_roughness_file_.colorspace	%read{269,269} %write{4,4} %mystruct{texture_roughness_file_} %mystructfield{1}
+local	float	geomprop_UV0_out1.x	%read{22,267} %write{5,5} %mystruct{geomprop_UV0_out1} %mystructfield{0} %derivs
+local	float	geomprop_UV0_out1.y	%read{37,268} %write{6,6} %mystruct{geomprop_UV0_out1} %mystructfield{1} %derivs
+local	float	texture_base_color_r	%read{2147483647,-1} %write{7,215}
+local	float	texture_base_color_g	%read{2147483647,-1} %write{8,216}
+local	float	texture_base_color_b	%read{2147483647,-1} %write{9,217}
+local	float	texture_base_color_a	%read{2147483647,-1} %write{10,218}
+local	color	texture_base_color_rgb	%read{436,451} %write{11,219}
+local	float	texture_roughness_r	%read{544,544} %write{220,428}
+local	float	texture_roughness_g	%read{2147483647,-1} %write{221,429}
+local	float	texture_roughness_b	%read{2147483647,-1} %write{222,430}
+local	float	texture_roughness_a	%read{2147483647,-1} %write{223,431}
+local	color	texture_roughness_rgb	%read{2147483647,-1} %write{224,432}
+local	color	texture_base_color_rgb_cm_out	%read{581,764} %write{433,494}
+local	closure color	UsdPreviewSurface_out.bsdf	%read{834,834} %write{495,827} %mystruct{UsdPreviewSurface_out} %mystructfield{0}
+local	closure color	UsdPreviewSurface_out.edf	%read{834,834} %write{496,828} %mystruct{UsdPreviewSurface_out} %mystructfield{1}
+local	float	UsdPreviewSurface_out.opacity	%read{832,832} %write{497,829} %mystruct{UsdPreviewSurface_out} %mystructfield{2}
+local	closure color	TiledBrass_out	%read{840,840} %write{839,839}
+const	int	$const1	0		%read{0,638} %write{2147483647,-1}
+const	float	$const2	0		%read{7,833} %write{2147483647,-1}
+const	color	$const3	0 0 0		%read{11,800} %write{2147483647,-1}
+const	string	$const4	"IMP_UsdUVTexture_23"		%read{12,225} %write{2147483647,-1}
+const	string	$const5	""		%read{16,269} %write{2147483647,-1}
+const	string	$const6	"linear"		%read{56,269} %write{2147483647,-1}
+const	string	$const7	"constant"		%read{19,247} %write{2147483647,-1}
+const	string	$const8	"mx_image_color4"		%read{15,228} %write{2147483647,-1}
+temp	int	$tmp1	%read{17,17} %write{16,16}
+temp	int	$tmp2	%read{18,32} %write{17,31}
+temp	int	$tmp3	%read{20,20} %write{19,19}
+temp	int	$tmp4	%read{21,30} %write{20,29}
+temp	int	$tmp5	%read{23,23} %write{22,22}
+temp	int	$tmp6	%read{24,28} %write{23,27}
+const	float	$const9	1		%read{25,837} %write{2147483647,-1}
+temp	int	$tmp7	%read{26,26} %write{25,25}
+temp	int	$tmp8	%read{27,27} %write{26,26}
+temp	int	$tmp9	%read{29,29} %write{28,28}
+temp	int	$tmp10	%read{31,31} %write{30,30}
+temp	int	$tmp11	%read{33,47} %write{32,46}
+temp	int	$tmp12	%read{35,35} %write{34,34}
+temp	int	$tmp13	%read{36,45} %write{35,44}
+temp	int	$tmp14	%read{38,38} %write{37,37}
+temp	int	$tmp15	%read{39,43} %write{38,42}
+temp	int	$tmp16	%read{41,41} %write{40,40}
+temp	int	$tmp17	%read{42,42} %write{41,41}
+temp	int	$tmp18	%read{44,44} %write{43,43}
+temp	int	$tmp19	%read{46,46} %write{45,45}
+const	string	$const10	"mx_transform_uv"		%read{53,266} %write{2147483647,-1}
+const	string	$const11	"alpha"		%read{56,269} %write{2147483647,-1}
+const	string	$const12	"subimage"		%read{56,269} %write{2147483647,-1}
+const	string	$const13	"interp"		%read{56,269} %write{2147483647,-1}
+const	string	$const14	"missingcolor"		%read{56,269} %write{2147483647,-1}
+const	string	$const15	"missingalpha"		%read{56,269} %write{2147483647,-1}
+const	string	$const16	"swrap"		%read{56,269} %write{2147483647,-1}
+const	string	$const17	"twrap"		%read{56,269} %write{2147483647,-1}
+const	string	$const18	"colorspace"		%read{56,269} %write{2147483647,-1}
+const	string	$const19	"__operator__mul__"		%read{59,272} %write{2147483647,-1}
+const	string	$const20	"__operator__add__"		%read{62,275} %write{2147483647,-1}
+const	string	$const21	"NG_separate4_color4"		%read{69,357} %write{2147483647,-1}
+const	string	$const22	"mx_extract"		%read{71,450} %write{2147483647,-1}
+temp	int	$tmp20	%read{73,73} %write{72,72}
+const	int	$const23	1		%read{76,724} %write{2147483647,-1}
+temp	int	$tmp21	%read{77,77} %write{76,76}
+const	int	$const24	2		%read{80,716} %write{2147483647,-1}
+temp	int	$tmp22	%read{81,81} %write{80,80}
+temp	int	$tmp23	%read{89,89} %write{88,88}
+temp	int	$tmp24	%read{93,93} %write{92,92}
+temp	int	$tmp25	%read{97,97} %write{96,96}
+temp	int	$tmp26	%read{105,105} %write{104,104}
+temp	int	$tmp27	%read{109,109} %write{108,108}
+temp	int	$tmp28	%read{113,113} %write{112,112}
+const	int	$const25	3		%read{118,708} %write{2147483647,-1}
+temp	int	$tmp29	%read{121,121} %write{120,120}
+temp	int	$tmp30	%read{125,125} %write{124,124}
+temp	int	$tmp31	%read{129,129} %write{128,128}
+const	string	$const26	"NG_convert_color4_color3"		%read{139,352} %write{2147483647,-1}
+temp	int	$tmp32	%read{148,148} %write{147,147}
+temp	int	$tmp33	%read{152,152} %write{151,151}
+temp	int	$tmp34	%read{156,156} %write{155,155}
+temp	int	$tmp35	%read{164,164} %write{163,163}
+temp	int	$tmp36	%read{168,168} %write{167,167}
+temp	int	$tmp37	%read{172,172} %write{171,171}
+temp	int	$tmp38	%read{180,180} %write{179,179}
+temp	int	$tmp39	%read{184,184} %write{183,183}
+temp	int	$tmp40	%read{188,188} %write{187,187}
+temp	int	$tmp41	%read{196,196} %write{195,195}
+temp	int	$tmp42	%read{200,200} %write{199,199}
+temp	int	$tmp43	%read{204,204} %write{203,203}
+temp	int	$tmp44	%read{230,230} %write{229,229}
+temp	int	$tmp45	%read{231,245} %write{230,244}
+temp	int	$tmp46	%read{233,233} %write{232,232}
+temp	int	$tmp47	%read{234,243} %write{233,242}
+temp	int	$tmp48	%read{236,236} %write{235,235}
+temp	int	$tmp49	%read{237,241} %write{236,240}
+temp	int	$tmp50	%read{239,239} %write{238,238}
+temp	int	$tmp51	%read{240,240} %write{239,239}
+temp	int	$tmp52	%read{242,242} %write{241,241}
+temp	int	$tmp53	%read{244,244} %write{243,243}
+temp	int	$tmp54	%read{246,260} %write{245,259}
+temp	int	$tmp55	%read{248,248} %write{247,247}
+temp	int	$tmp56	%read{249,258} %write{248,257}
+temp	int	$tmp57	%read{251,251} %write{250,250}
+temp	int	$tmp58	%read{252,256} %write{251,255}
+temp	int	$tmp59	%read{254,254} %write{253,253}
+temp	int	$tmp60	%read{255,255} %write{254,254}
+temp	int	$tmp61	%read{257,257} %write{256,256}
+temp	int	$tmp62	%read{259,259} %write{258,258}
+temp	int	$tmp63	%read{286,286} %write{285,285}
+temp	int	$tmp64	%read{290,290} %write{289,289}
+temp	int	$tmp65	%read{294,294} %write{293,293}
+temp	int	$tmp66	%read{302,302} %write{301,301}
+temp	int	$tmp67	%read{306,306} %write{305,305}
+temp	int	$tmp68	%read{310,310} %write{309,309}
+temp	int	$tmp69	%read{318,318} %write{317,317}
+temp	int	$tmp70	%read{322,322} %write{321,321}
+temp	int	$tmp71	%read{326,326} %write{325,325}
+temp	int	$tmp72	%read{334,334} %write{333,333}
+temp	int	$tmp73	%read{338,338} %write{337,337}
+temp	int	$tmp74	%read{342,342} %write{341,341}
+temp	int	$tmp75	%read{361,361} %write{360,360}
+temp	int	$tmp76	%read{365,365} %write{364,364}
+temp	int	$tmp77	%read{369,369} %write{368,368}
+temp	int	$tmp78	%read{377,377} %write{376,376}
+temp	int	$tmp79	%read{381,381} %write{380,380}
+temp	int	$tmp80	%read{385,385} %write{384,384}
+temp	int	$tmp81	%read{393,393} %write{392,392}
+temp	int	$tmp82	%read{397,397} %write{396,396}
+temp	int	$tmp83	%read{401,401} %write{400,400}
+temp	int	$tmp84	%read{409,409} %write{408,408}
+temp	int	$tmp85	%read{413,413} %write{412,412}
+temp	int	$tmp86	%read{417,417} %write{416,416}
+const	string	$const27	"NG_srgb_texture_to_lin_rec709_color3"		%read{434,434} %write{2147483647,-1}
+const	float	$const28	0.055		%read{435,435} %write{2147483647,-1}
+const	float	$const29	12.92		%read{437,437} %write{2147483647,-1}
+const	string	$const30	"NG_separate3_color3"		%read{442,442} %write{2147483647,-1}
+temp	color	$tmp87	%read{457,457} %write{456,456}
+const	float	$const31	0.04045		%read{458,478} %write{2147483647,-1}
+temp	int	$tmp88	%read{463,463} %write{461,461}
+const	string	$const32	"mx_ternary"		%read{462,726} %write{2147483647,-1}
+temp	int	$tmp89	%read{473,473} %write{471,471}
+temp	int	$tmp90	%read{483,483} %write{481,481}
+const	float	$const33	1.055		%read{488,488} %write{2147483647,-1}
+const	float	$const34	2.4		%read{491,491} %write{2147483647,-1}
+const	string	$const35	"IMP_UsdPreviewSurface_surfaceshader"		%read{498,498} %write{2147483647,-1}
+temp	vector	$tmp91	%read{504,504} %write{503,503}
+temp	float	$tmp92	%read{503,503} %write{500,500}
+temp	float	$tmp93	%read{502,502} %write{501,501}
+temp	float	$tmp94	%read{503,503} %write{502,502}
+const	string	$const36	"mx_roughness_anisotropy"		%read{511,543} %write{2147483647,-1}
+temp	float	$tmp95	%read{514,514} %write{512,512}
+const	float	$const37	1e-08		%read{515,547} %write{2147483647,-1}
+const	string	$const38	"clamp"		%read{513,831} %write{2147483647,-1}
+temp	float	$tmp96	%read{515,515} %write{514,514}
+temp	int	$tmp97	%read{517,517} %write{516,516}
+temp	float	$tmp98	%read{521,521} %write{520,520}
+const	float	$const39	0.98		%read{519,551} %write{2147483647,-1}
+temp	float	$tmp99	%read{520,520} %write{519,519}
+temp	float	$tmp100	%read{522,522} %write{521,521}
+temp	float	$tmp101	%read{524,524} %write{523,523}
+const	string	$const40	"world"		%read{530,530} %write{2147483647,-1}
+const	string	$const41	"transform"		%read{531,531} %write{2147483647,-1}
+const	string	$const42	"common"		%read{532,532} %write{2147483647,-1}
+temp	vector	$tmp102	%read{538,538} %write{537,537}
+temp	vector	$tmp103	%read{537,537} %write{536,536}
+temp	float	$tmp104	%read{536,536} %write{533,533}
+temp	float	$tmp105	%read{535,535} %write{534,534}
+temp	float	$tmp106	%read{536,536} %write{535,535}
+const	float	$const43	0.5		%read{539,614} %write{2147483647,-1}
+temp	float	$tmp107	%read{546,546} %write{544,544}
+temp	float	$tmp108	%read{547,547} %write{546,546}
+temp	int	$tmp109	%read{549,549} %write{548,548}
+temp	float	$tmp110	%read{553,553} %write{552,552}
+temp	float	$tmp111	%read{552,552} %write{551,551}
+temp	float	$tmp112	%read{554,554} %write{553,553}
+temp	float	$tmp113	%read{556,556} %write{555,555}
+temp	float	$tmp114	%read{565,565} %write{564,564}
+temp	int	$tmp115	%read{570,570} %write{568,568}
+const	string	$const44	"mx_artistic_ior"		%read{577,577} %write{2147483647,-1}
+temp	color	$tmp116	%read{582,582} %write{578,578}
+const	float	$const45	0.99		%read{579,579} %write{2147483647,-1}
+temp	color	$tmp117	%read{581,581} %write{579,579}
+temp	color	$tmp118	%read{582,582} %write{581,581}
+temp	color	$tmp119	%read{586,586} %write{584,584}
+temp	color	$tmp120	%read{586,586} %write{585,585}
+temp	color	$tmp121	%read{589,589} %write{587,587}
+temp	color	$tmp122	%read{589,589} %write{588,588}
+temp	color	$tmp123	%read{594,594} %write{593,593}
+temp	color	$tmp124	%read{596,596} %write{594,594}
+temp	color	$tmp125	%read{596,596} %write{595,595}
+temp	color	$tmp126	%read{598,598} %write{596,596}
+temp	color	$tmp127	%read{598,598} %write{597,597}
+temp	color	$tmp128	%read{600,600} %write{599,599}
+const	color	$const46	1 1 1		%read{602,801} %write{2147483647,-1}
+temp	int	$tmp129	%read{608,608} %write{606,606}
+temp	int	$tmp130	%read{622,622} %write{620,620}
+const	vector	$const47	0 0 0		%read{628,633} %write{2147483647,-1}
+const	string	$const48	"mx_normalmap_float"		%read{629,629} %write{2147483647,-1}
+temp	float	$tmp131.x	%read{640,640} %write{630,630}
+temp	float	$tmp131.y	%read{643,643} %write{631,631}
+const	string	$const49	"mx_normalmap_vector2"		%read{632,632} %write{2147483647,-1}
+temp	int	$tmp133	%read{634,634} %write{633,633}
+const	vector	$const50	0 0 1		%read{635,635} %write{2147483647,-1}
+const	float	$const51	2		%read{636,636} %write{2147483647,-1}
+temp	vector	$tmp134	%read{637,637} %write{636,636}
+temp	float	$tmp135	%read{639,639} %write{638,638}
+temp	vector	$tmp136	%read{640,640} %write{639,639}
+temp	vector	$tmp137	%read{644,644} %write{640,640}
+temp	float	$tmp138	%read{642,642} %write{641,641}
+temp	vector	$tmp139	%read{643,643} %write{642,642}
+temp	vector	$tmp140	%read{644,644} %write{643,643}
+temp	vector	$tmp141	%read{647,647} %write{644,644}
+temp	float	$tmp142	%read{646,646} %write{645,645}
+temp	vector	$tmp143	%read{647,647} %write{646,646}
+temp	vector	$tmp144	%read{648,648} %write{647,647}
+const	string	$const52	"NG_switch_floatI"		%read{650,650} %write{2147483647,-1}
+const	int	$const53	10		%read{651,651} %write{2147483647,-1}
+temp	int	$tmp145	%read{655,655} %write{653,653}
+const	int	$const54	9		%read{660,660} %write{2147483647,-1}
+temp	int	$tmp146	%read{663,663} %write{661,661}
+const	int	$const55	8		%read{668,668} %write{2147483647,-1}
+temp	int	$tmp147	%read{671,671} %write{669,669}
+const	int	$const56	7		%read{676,676} %write{2147483647,-1}
+temp	int	$tmp148	%read{679,679} %write{677,677}
+const	int	$const57	6		%read{684,684} %write{2147483647,-1}
+temp	int	$tmp149	%read{687,687} %write{685,685}
+const	int	$const58	5		%read{692,692} %write{2147483647,-1}
+temp	int	$tmp150	%read{695,695} %write{693,693}
+const	int	$const59	4		%read{700,700} %write{2147483647,-1}
+temp	int	$tmp151	%read{703,703} %write{701,701}
+temp	int	$tmp152	%read{711,711} %write{709,709}
+temp	int	$tmp153	%read{719,719} %write{717,717}
+temp	int	$tmp154	%read{727,727} %write{725,725}
+const	string	$const60	"NG_convert_float_color3"		%read{734,734} %write{2147483647,-1}
+const	float	$const61	5		%read{749,802} %write{2147483647,-1}
+const	float	$const62	1.5		%read{749,802} %write{2147483647,-1}
+const	string	$const63	"ggx"		%read{749,802} %write{2147483647,-1}
+const	string	$const64	"R"		%read{741,798} %write{2147483647,-1}
+const	string	$const65	"mx_generalized_schlick_bsdf"		%read{740,793} %write{2147483647,-1}
+const	string	$const66	"T"		%read{741,794} %write{2147483647,-1}
+temp	int	$tmp157	%read{742,742} %write{741,741}
+temp	int	$tmp158	%read{746,746} %write{745,745}
+temp	closure color	$tmp159	%read{750,750} %write{749,749}
+const	string	$const67	"thinfilm_thickness"		%read{749,802} %write{2147483647,-1}
+const	string	$const68	"thinfilm_ior"		%read{749,802} %write{2147483647,-1}
+const	string	$const69	"generalized_schlick_bsdf"		%read{749,802} %write{2147483647,-1}
+temp	int	$tmp162	%read{754,754} %write{753,753}
+temp	int	$tmp163	%read{758,758} %write{757,757}
+temp	closure color	$tmp164	%read{762,762} %write{761,761}
+temp	closure color	$tmp165	%read{765,765} %write{764,764}
+const	string	$const70	"oren_nayar_diffuse_bsdf"		%read{764,764} %write{2147483647,-1}
+temp	float	$tmp167.x	%read{778,778} %write{767,767}
+temp	float	$tmp167.y	%read{778,778} %write{768,768}
+const	string	$const71	"mx_dielectric_bsdf"		%read{769,769} %write{2147483647,-1}
+temp	int	$tmp168	%read{771,771} %write{770,770}
+temp	int	$tmp169	%read{775,775} %write{774,774}
+temp	closure color	$tmp170	%read{779,779} %write{778,778}
+const	string	$const72	"dielectric_bsdf"		%read{778,778} %write{2147483647,-1}
+const	string	$const73	"mix"		%read{780,810} %write{2147483647,-1}
+temp	float	$tmp171	%read{782,782} %write{781,781}
+temp	closure color	$tmp172	%read{784,784} %write{782,782}
+temp	closure color	$tmp173	%read{784,784} %write{783,783}
+const	string	$const74	"layer"		%read{785,815} %write{2147483647,-1}
+temp	closure color	$tmp174	%read{791,791} %write{790,790}
+const	string	$const75	"conductor_bsdf"		%read{790,790} %write{2147483647,-1}
+temp	int	$tmp176	%read{795,795} %write{794,794}
+temp	int	$tmp177	%read{799,799} %write{798,798}
+temp	closure color	$tmp178	%read{803,803} %write{802,802}
+temp	float	$tmp179	%read{807,807} %write{806,806}
+temp	closure color	$tmp180	%read{809,809} %write{807,807}
+temp	closure color	$tmp181	%read{809,809} %write{808,808}
+temp	float	$tmp182	%read{812,812} %write{811,811}
+temp	closure color	$tmp183	%read{814,814} %write{812,812}
+temp	closure color	$tmp184	%read{814,814} %write{813,813}
+const	string	$const76	"uniform_edf"		%read{816,816} %write{2147483647,-1}
+const	string	$const77	"mx_surface"		%read{820,820} %write{2147483647,-1}
+temp	float	$tmp185	%read{825,825} %write{824,824}
+const	string	$const78	"mx_surfacematerial"		%read{830,830} %write{2147483647,-1}
+temp	float	$tmp186	%read{833,833} %write{832,832}
+temp	closure color	$tmp187	%read{835,835} %write{834,834}
+temp	closure color	$tmp188	%read{839,839} %write{835,835}
+temp	closure color	$tmp189	%read{838,838} %write{836,836}
+const	string	$const79	"transparent"		%read{836,836} %write{2147483647,-1}
+temp	float	$tmp190	%read{838,838} %write{837,837}
+temp	closure color	$tmp191	%read{839,839} %write{838,838}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:454
+#     textureresource texture_base_color_file_ = {texture_base_color_file, texture_base_color_file_colorspace};
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{454} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:455
+#     textureresource texture_roughness_file_ = {texture_roughness_file, texture_roughness_file_colorspace};
+	assign		texture_base_color_file_.filename texture_base_color_file 	%line{455} %argrw{"wr"}
+	assign		texture_base_color_file_.colorspace texture_base_color_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:456
+#     vector2 geomprop_UV0_out1 = vector2(u,v);
+	assign		texture_roughness_file_.filename texture_roughness_file 	%line{456} %argrw{"wr"}
+	assign		texture_roughness_file_.colorspace texture_roughness_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:457
+#     float texture_base_color_r = 0.0;
+	assign		geomprop_UV0_out1.x u 	%line{457} %argrw{"wr"}
+	assign		geomprop_UV0_out1.y v 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:458
+#     float texture_base_color_g = 0.0;
+	assign		texture_base_color_r $const2 	%line{458} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:459
+#     float texture_base_color_b = 0.0;
+	assign		texture_base_color_g $const2 	%line{459} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:460
+#     float texture_base_color_a = 0.0;
+	assign		texture_base_color_b $const2 	%line{460} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:461
+#     color texture_base_color_rgb = color(0.0);
+	assign		texture_base_color_a $const2 	%line{461} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:462
+#     IMP_UsdUVTexture_23(texture_base_color_file_, geomprop_UV0_out1, texture_base_color_wrapS, texture_base_color_wrapT, texture_base_color_fallback, texture_base_color_scale, texture_base_color_bias, texture_base_color_r, texture_base_color_g, texture_base_color_b, texture_base_color_a, texture_base_color_rgb);
+	assign		texture_base_color_rgb $const3 	%line{462} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:463
+#     float texture_roughness_r = 0.0;
+	functioncall	$const4 220 	%line{463} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:75
+#     mx_image_color4(file, "", fallback, st, wrapS, wrapT, "linear", "", 0, "constant", image_reader_out);
+	assign		___674_image_reader_out.rgb $const3 	%line{75} %argrw{"wr"}
+	assign		___674_image_reader_out.a $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:76
+#     color4 image_scale_out = image_reader_out * scale;
+	functioncall	$const8 59 	%line{76} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp1 texture_base_color_file_.filename $const5 	%line{25} %argrw{"wrr"}
+	neq		$tmp2 $tmp1 $const1 	%argrw{"wrr"}
+	if		$tmp2 19 32 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp3 texture_base_color_wrapS $const7 	%line{26} %argrw{"wrr"}
+	neq		$tmp4 $tmp3 $const1 	%argrw{"wrr"}
+	if		$tmp4 30 30 	%argrw{"r"}
+	lt		$tmp5 geomprop_UV0_out1.x $const2 	%argrw{"wrr"}
+	neq		$tmp6 $tmp5 $const1 	%argrw{"wrr"}
+	if		$tmp6 25 28 	%argrw{"r"}
+	gt		$tmp7 geomprop_UV0_out1.x $const9 	%argrw{"wrr"}
+	neq		$tmp8 $tmp7 $const1 	%argrw{"wrr"}
+	assign		$tmp6 $tmp8 	%argrw{"wr"}
+	neq		$tmp9 $tmp6 $const1 	%argrw{"wrr"}
+	assign		$tmp4 $tmp9 	%argrw{"wr"}
+	neq		$tmp10 $tmp4 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp2 $tmp10 	%line{25} %argrw{"wr"}
+	neq		$tmp11 $tmp2 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp11 34 47 	%line{26} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:27
+#     {
+	eq		$tmp12 texture_base_color_wrapT $const7 	%line{27} %argrw{"wrr"}
+	neq		$tmp13 $tmp12 $const1 	%argrw{"wrr"}
+	if		$tmp13 45 45 	%argrw{"r"}
+	lt		$tmp14 geomprop_UV0_out1.y $const2 	%argrw{"wrr"}
+	neq		$tmp15 $tmp14 $const1 	%argrw{"wrr"}
+	if		$tmp15 40 43 	%argrw{"r"}
+	gt		$tmp16 geomprop_UV0_out1.y $const9 	%argrw{"wrr"}
+	neq		$tmp17 $tmp16 $const1 	%argrw{"wrr"}
+	assign		$tmp15 $tmp17 	%argrw{"wr"}
+	neq		$tmp18 $tmp15 $const1 	%argrw{"wrr"}
+	assign		$tmp13 $tmp18 	%argrw{"wr"}
+	neq		$tmp19 $tmp13 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp11 $tmp19 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp11 51 51 	%line{25} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:29
+#         return;
+	assign		___674_image_reader_out.rgb texture_base_color_fallback.rgb 	%line{29} %argrw{"wr"}
+	assign		___674_image_reader_out.a texture_base_color_fallback.a 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:30
+#     }
+	return	%line{30}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:33
+#     float missingAlpha = default_value.a;
+	assign		___670_missingColor texture_base_color_fallback.rgb 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:34
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___670_missingAlpha texture_base_color_fallback.a 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:35
+#     float alpha;
+	functioncall	$const10 56 	%line{35} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:20
+# }
+	assign		___670_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___670_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:37
+#                         "subimage", layer, "interp", filtertype,
+	texture		___670_rgb texture_base_color_file_.filename ___670_st.x ___670_st.y $const11 ___670_alpha $const12 $const5 $const13 $const6 $const14 ___670_missingColor $const15 ___670_missingAlpha $const16 texture_base_color_wrapS $const17 texture_base_color_wrapT $const18 texture_base_color_file_.colorspace 	%line{37} %argrw{"wrrrrwrrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:43
+# }
+	assign		___674_image_reader_out.rgb ___670_rgb 	%line{43} %argrw{"wr"}
+	assign		___674_image_reader_out.a ___670_alpha 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:477
+# 
+	functioncall	$const19 62 	%line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h:79
+#     return color4(a.rgb * b.rgb, a.a * b.a);
+	mul		___674_image_scale_out.rgb ___674_image_reader_out.rgb texture_base_color_scale.rgb 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h"} %line{79} %argrw{"wrr"}
+	mul		___674_image_scale_out.a ___674_image_reader_out.a texture_base_color_scale.a 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:477
+# 
+	functioncall	$const20 65 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h:29
+#     return color4(a.rgb + b.rgb, a.a + b.a);
+	add		___674_image_bias_out.rgb ___674_image_scale_out.rgb texture_base_color_bias.rgb 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h"} %line{29} %argrw{"wrr"}
+	add		___674_image_bias_out.a ___674_image_scale_out.a texture_base_color_bias.a 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:79
+#     float image_bias_separate_outg = 0.0;
+	assign		___674_image_bias_separate_outr $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{79} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:80
+#     float image_bias_separate_outb = 0.0;
+	assign		___674_image_bias_separate_outg $const2 	%line{80} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:81
+#     float image_bias_separate_outa = 0.0;
+	assign		___674_image_bias_separate_outb $const2 	%line{81} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:82
+#     NG_separate4_color4(image_bias_out, image_bias_separate_outr, image_bias_separate_outg, image_bias_separate_outb, image_bias_separate_outa);
+	assign		___674_image_bias_separate_outa $const2 	%line{82} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:83
+#     color image_bias_color3_out = color(0.0);
+	functioncall	$const21 138 	%line{83} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:48
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___672_N_extract_0_index_tmp $const1 	%line{48} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:49
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const22 86 	%line{49} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp20 ___672_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp20 76 86 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp21 ___672_N_extract_0_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp21 80 86 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp22 ___672_N_extract_0_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp22 84 86 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_0_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:50
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___672_N_extract_1_index_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:51
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const22 102 	%line{51} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp23 ___672_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp23 92 102 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp24 ___672_N_extract_1_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp24 96 102 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp25 ___672_N_extract_1_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp25 100 102 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_1_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:52
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___672_N_extract_2_index_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:53
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const22 118 	%line{53} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp26 ___672_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp26 108 118 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp27 ___672_N_extract_2_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp27 112 118 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp28 ___672_N_extract_2_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp28 116 118 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_2_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:54
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___672_N_extract_3_index_tmp $const25 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{54} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:55
+#     outr = N_extract_0_out;
+	functioncall	$const22 134 	%line{55} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp29 ___672_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp29 124 134 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp30 ___672_N_extract_3_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp30 128 134 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp31 ___672_N_extract_3_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp31 132 134 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_3_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:56
+#     outg = N_extract_1_out;
+	assign		___674_image_bias_separate_outr ___672_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:57
+#     outb = N_extract_2_out;
+	assign		___674_image_bias_separate_outg ___672_N_extract_1_out 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:58
+#     outa = N_extract_3_out;
+	assign		___674_image_bias_separate_outb ___672_N_extract_2_out 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:59
+# }
+	assign		___674_image_bias_separate_outa ___672_N_extract_3_out 	%line{59} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:84
+#     NG_convert_color4_color3(image_bias_out, image_bias_color3_out);
+	assign		___674_image_bias_color3_out $const3 	%line{84} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:85
+#     r = image_bias_separate_outr;
+	functioncall	$const26 215 	%line{85} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:64
+#     float separate_outg = 0.0;
+	assign		___673_separate_outr $const2 	%line{64} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:65
+#     float separate_outb = 0.0;
+	assign		___673_separate_outg $const2 	%line{65} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:66
+#     float separate_outa = 0.0;
+	assign		___673_separate_outb $const2 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:67
+#     NG_separate4_color4(in, separate_outr, separate_outg, separate_outb, separate_outa);
+	assign		___673_separate_outa $const2 	%line{67} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:68
+#     color combine_out = color( separate_outr,separate_outg,separate_outb );
+	functioncall	$const21 213 	%line{68} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:48
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___672_N_extract_0_index_tmp $const1 	%line{48} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:49
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const22 161 	%line{49} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp32 ___672_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp32 151 161 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp33 ___672_N_extract_0_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp33 155 161 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp34 ___672_N_extract_0_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp34 159 161 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_0_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:50
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___672_N_extract_1_index_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:51
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const22 177 	%line{51} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp35 ___672_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp35 167 177 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp36 ___672_N_extract_1_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp36 171 177 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp37 ___672_N_extract_1_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp37 175 177 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_1_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:52
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___672_N_extract_2_index_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:53
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const22 193 	%line{53} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp38 ___672_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp38 183 193 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp39 ___672_N_extract_2_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp39 187 193 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp40 ___672_N_extract_2_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp40 191 193 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_2_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:54
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___672_N_extract_3_index_tmp $const25 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{54} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:55
+#     outr = N_extract_0_out;
+	functioncall	$const22 209 	%line{55} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp41 ___672_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp41 199 209 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp42 ___672_N_extract_3_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp42 203 209 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp43 ___672_N_extract_3_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp43 207 209 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_3_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:56
+#     outg = N_extract_1_out;
+	assign		___673_separate_outr ___672_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:57
+#     outb = N_extract_2_out;
+	assign		___673_separate_outg ___672_N_extract_1_out 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:58
+#     outa = N_extract_3_out;
+	assign		___673_separate_outb ___672_N_extract_2_out 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:59
+# }
+	assign		___673_separate_outa ___672_N_extract_3_out 	%line{59} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:69
+#     out = combine_out;
+	color		___673_combine_out ___673_separate_outr ___673_separate_outg ___673_separate_outb 	%line{69} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:70
+# }
+	assign		___674_image_bias_color3_out ___673_combine_out 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:86
+#     g = image_bias_separate_outg;
+	assign		texture_base_color_r ___674_image_bias_separate_outr 	%line{86} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:87
+#     b = image_bias_separate_outb;
+	assign		texture_base_color_g ___674_image_bias_separate_outg 	%line{87} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:88
+#     a = image_bias_separate_outa;
+	assign		texture_base_color_b ___674_image_bias_separate_outb 	%line{88} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:89
+#     rgb = image_bias_color3_out;
+	assign		texture_base_color_a ___674_image_bias_separate_outa 	%line{89} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:90
+# }
+	assign		texture_base_color_rgb ___674_image_bias_color3_out 	%line{90} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:464
+#     float texture_roughness_g = 0.0;
+	assign		texture_roughness_r $const2 	%line{464} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:465
+#     float texture_roughness_b = 0.0;
+	assign		texture_roughness_g $const2 	%line{465} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:466
+#     float texture_roughness_a = 0.0;
+	assign		texture_roughness_b $const2 	%line{466} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:467
+#     color texture_roughness_rgb = color(0.0);
+	assign		texture_roughness_a $const2 	%line{467} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:468
+#     IMP_UsdUVTexture_23(texture_roughness_file_, geomprop_UV0_out1, texture_roughness_wrapS, texture_roughness_wrapT, texture_roughness_fallback, texture_roughness_scale, texture_roughness_bias, texture_roughness_r, texture_roughness_g, texture_roughness_b, texture_roughness_a, texture_roughness_rgb);
+	assign		texture_roughness_rgb $const3 	%line{468} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:469
+#     color texture_base_color_rgb_cm_out = color(0.0);
+	functioncall	$const4 433 	%line{469} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:75
+#     mx_image_color4(file, "", fallback, st, wrapS, wrapT, "linear", "", 0, "constant", image_reader_out);
+	assign		___674_image_reader_out.rgb $const3 	%line{75} %argrw{"wr"}
+	assign		___674_image_reader_out.a $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:76
+#     color4 image_scale_out = image_reader_out * scale;
+	functioncall	$const8 272 	%line{76} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp44 texture_roughness_file_.filename $const5 	%line{25} %argrw{"wrr"}
+	neq		$tmp45 $tmp44 $const1 	%argrw{"wrr"}
+	if		$tmp45 232 245 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp46 texture_roughness_wrapS $const7 	%line{26} %argrw{"wrr"}
+	neq		$tmp47 $tmp46 $const1 	%argrw{"wrr"}
+	if		$tmp47 243 243 	%argrw{"r"}
+	lt		$tmp48 geomprop_UV0_out1.x $const2 	%argrw{"wrr"}
+	neq		$tmp49 $tmp48 $const1 	%argrw{"wrr"}
+	if		$tmp49 238 241 	%argrw{"r"}
+	gt		$tmp50 geomprop_UV0_out1.x $const9 	%argrw{"wrr"}
+	neq		$tmp51 $tmp50 $const1 	%argrw{"wrr"}
+	assign		$tmp49 $tmp51 	%argrw{"wr"}
+	neq		$tmp52 $tmp49 $const1 	%argrw{"wrr"}
+	assign		$tmp47 $tmp52 	%argrw{"wr"}
+	neq		$tmp53 $tmp47 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp45 $tmp53 	%line{25} %argrw{"wr"}
+	neq		$tmp54 $tmp45 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp54 247 260 	%line{26} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:27
+#     {
+	eq		$tmp55 texture_roughness_wrapT $const7 	%line{27} %argrw{"wrr"}
+	neq		$tmp56 $tmp55 $const1 	%argrw{"wrr"}
+	if		$tmp56 258 258 	%argrw{"r"}
+	lt		$tmp57 geomprop_UV0_out1.y $const2 	%argrw{"wrr"}
+	neq		$tmp58 $tmp57 $const1 	%argrw{"wrr"}
+	if		$tmp58 253 256 	%argrw{"r"}
+	gt		$tmp59 geomprop_UV0_out1.y $const9 	%argrw{"wrr"}
+	neq		$tmp60 $tmp59 $const1 	%argrw{"wrr"}
+	assign		$tmp58 $tmp60 	%argrw{"wr"}
+	neq		$tmp61 $tmp58 $const1 	%argrw{"wrr"}
+	assign		$tmp56 $tmp61 	%argrw{"wr"}
+	neq		$tmp62 $tmp56 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp54 $tmp62 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp54 264 264 	%line{25} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:29
+#         return;
+	assign		___674_image_reader_out.rgb texture_roughness_fallback.rgb 	%line{29} %argrw{"wr"}
+	assign		___674_image_reader_out.a texture_roughness_fallback.a 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:30
+#     }
+	return	%line{30}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:33
+#     float missingAlpha = default_value.a;
+	assign		___670_missingColor texture_roughness_fallback.rgb 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:34
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___670_missingAlpha texture_roughness_fallback.a 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:35
+#     float alpha;
+	functioncall	$const10 269 	%line{35} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:20
+# }
+	assign		___670_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___670_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:37
+#                         "subimage", layer, "interp", filtertype,
+	texture		___670_rgb texture_roughness_file_.filename ___670_st.x ___670_st.y $const11 ___670_alpha $const12 $const5 $const13 $const6 $const14 ___670_missingColor $const15 ___670_missingAlpha $const16 texture_roughness_wrapS $const17 texture_roughness_wrapT $const18 texture_roughness_file_.colorspace 	%line{37} %argrw{"wrrrrwrrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:43
+# }
+	assign		___674_image_reader_out.rgb ___670_rgb 	%line{43} %argrw{"wr"}
+	assign		___674_image_reader_out.a ___670_alpha 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:477
+# 
+	functioncall	$const19 275 	%line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h:79
+#     return color4(a.rgb * b.rgb, a.a * b.a);
+	mul		___674_image_scale_out.rgb ___674_image_reader_out.rgb texture_roughness_scale.rgb 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h"} %line{79} %argrw{"wrr"}
+	mul		___674_image_scale_out.a ___674_image_reader_out.a texture_roughness_scale.a 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:477
+# 
+	functioncall	$const20 278 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h:29
+#     return color4(a.rgb + b.rgb, a.a + b.a);
+	add		___674_image_bias_out.rgb ___674_image_scale_out.rgb texture_roughness_bias.rgb 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/color4.h"} %line{29} %argrw{"wrr"}
+	add		___674_image_bias_out.a ___674_image_scale_out.a texture_roughness_bias.a 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:79
+#     float image_bias_separate_outg = 0.0;
+	assign		___674_image_bias_separate_outr $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{79} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:80
+#     float image_bias_separate_outb = 0.0;
+	assign		___674_image_bias_separate_outg $const2 	%line{80} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:81
+#     float image_bias_separate_outa = 0.0;
+	assign		___674_image_bias_separate_outb $const2 	%line{81} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:82
+#     NG_separate4_color4(image_bias_out, image_bias_separate_outr, image_bias_separate_outg, image_bias_separate_outb, image_bias_separate_outa);
+	assign		___674_image_bias_separate_outa $const2 	%line{82} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:83
+#     color image_bias_color3_out = color(0.0);
+	functioncall	$const21 351 	%line{83} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:48
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___672_N_extract_0_index_tmp $const1 	%line{48} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:49
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const22 299 	%line{49} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp63 ___672_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp63 289 299 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp64 ___672_N_extract_0_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp64 293 299 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp65 ___672_N_extract_0_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp65 297 299 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_0_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:50
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___672_N_extract_1_index_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:51
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const22 315 	%line{51} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp66 ___672_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp66 305 315 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp67 ___672_N_extract_1_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp67 309 315 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp68 ___672_N_extract_1_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp68 313 315 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_1_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:52
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___672_N_extract_2_index_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:53
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const22 331 	%line{53} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp69 ___672_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp69 321 331 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp70 ___672_N_extract_2_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp70 325 331 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp71 ___672_N_extract_2_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp71 329 331 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_2_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:54
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___672_N_extract_3_index_tmp $const25 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{54} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:55
+#     outr = N_extract_0_out;
+	functioncall	$const22 347 	%line{55} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp72 ___672_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp72 337 347 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp73 ___672_N_extract_3_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp73 341 347 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp74 ___672_N_extract_3_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp74 345 347 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_3_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:56
+#     outg = N_extract_1_out;
+	assign		___674_image_bias_separate_outr ___672_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:57
+#     outb = N_extract_2_out;
+	assign		___674_image_bias_separate_outg ___672_N_extract_1_out 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:58
+#     outa = N_extract_3_out;
+	assign		___674_image_bias_separate_outb ___672_N_extract_2_out 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:59
+# }
+	assign		___674_image_bias_separate_outa ___672_N_extract_3_out 	%line{59} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:84
+#     NG_convert_color4_color3(image_bias_out, image_bias_color3_out);
+	assign		___674_image_bias_color3_out $const3 	%line{84} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:85
+#     r = image_bias_separate_outr;
+	functioncall	$const26 428 	%line{85} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:64
+#     float separate_outg = 0.0;
+	assign		___673_separate_outr $const2 	%line{64} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:65
+#     float separate_outb = 0.0;
+	assign		___673_separate_outg $const2 	%line{65} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:66
+#     float separate_outa = 0.0;
+	assign		___673_separate_outb $const2 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:67
+#     NG_separate4_color4(in, separate_outr, separate_outg, separate_outb, separate_outa);
+	assign		___673_separate_outa $const2 	%line{67} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:68
+#     color combine_out = color( separate_outr,separate_outg,separate_outb );
+	functioncall	$const21 426 	%line{68} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:48
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___672_N_extract_0_index_tmp $const1 	%line{48} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:49
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const22 374 	%line{49} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp75 ___672_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp75 364 374 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp76 ___672_N_extract_0_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp76 368 374 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp77 ___672_N_extract_0_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp77 372 374 	%argrw{"r"}
+	compref		___672_N_extract_0_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_0_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:50
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___672_N_extract_1_index_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:51
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const22 390 	%line{51} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp78 ___672_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp78 380 390 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp79 ___672_N_extract_1_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp79 384 390 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp80 ___672_N_extract_1_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp80 388 390 	%argrw{"r"}
+	compref		___672_N_extract_1_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_1_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:52
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___672_N_extract_2_index_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:53
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const22 406 	%line{53} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp81 ___672_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp81 396 406 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp82 ___672_N_extract_2_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp82 400 406 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp83 ___672_N_extract_2_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp83 404 406 	%argrw{"r"}
+	compref		___672_N_extract_2_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_2_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:54
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___672_N_extract_3_index_tmp $const25 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{54} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:55
+#     outr = N_extract_0_out;
+	functioncall	$const22 422 	%line{55} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp84 ___672_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp84 412 422 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp85 ___672_N_extract_3_index_tmp $const23 	%line{111} %argrw{"wrr"}
+	if		$tmp85 416 422 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const23 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp86 ___672_N_extract_3_index_tmp $const24 	%line{112} %argrw{"wrr"}
+	if		$tmp86 420 422 	%argrw{"r"}
+	compref		___672_N_extract_3_out ___674_image_bias_out.rgb $const24 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___672_N_extract_3_out ___674_image_bias_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:56
+#     outg = N_extract_1_out;
+	assign		___673_separate_outr ___672_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:57
+#     outb = N_extract_2_out;
+	assign		___673_separate_outg ___672_N_extract_1_out 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:58
+#     outa = N_extract_3_out;
+	assign		___673_separate_outb ___672_N_extract_2_out 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:59
+# }
+	assign		___673_separate_outa ___672_N_extract_3_out 	%line{59} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:69
+#     out = combine_out;
+	color		___673_combine_out ___673_separate_outr ___673_separate_outg ___673_separate_outb 	%line{69} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:70
+# }
+	assign		___674_image_bias_color3_out ___673_combine_out 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:86
+#     g = image_bias_separate_outg;
+	assign		texture_roughness_r ___674_image_bias_separate_outr 	%line{86} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:87
+#     b = image_bias_separate_outb;
+	assign		texture_roughness_g ___674_image_bias_separate_outg 	%line{87} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:88
+#     a = image_bias_separate_outa;
+	assign		texture_roughness_b ___674_image_bias_separate_outb 	%line{88} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:89
+#     rgb = image_bias_color3_out;
+	assign		texture_roughness_a ___674_image_bias_separate_outa 	%line{89} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:90
+# }
+	assign		texture_roughness_rgb ___674_image_bias_color3_out 	%line{90} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:470
+#     NG_srgb_texture_to_lin_rec709_color3(texture_base_color_rgb, texture_base_color_rgb_cm_out);
+	assign		texture_base_color_rgb_cm_out $const3 	%line{470} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:471
+#     surfaceshader UsdPreviewSurface_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const27 495 	%line{471} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:108
+#     color bias_out = in + bias_in2_tmp;
+	assign		___676_bias_in2_tmp $const28 	%line{108} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:109
+#     float linSeg_in2_tmp = 12.920000;
+	add		___676_bias_out texture_base_color_rgb ___676_bias_in2_tmp 	%line{109} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:110
+#     color linSeg_out = in / linSeg_in2_tmp;
+	assign		___676_linSeg_in2_tmp $const29 	%line{110} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:111
+#     float colorSeparate_outr = 0.0;
+	div		___676_linSeg_out texture_base_color_rgb ___676_linSeg_in2_tmp 	%line{111} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:112
+#     float colorSeparate_outg = 0.0;
+	assign		___676_colorSeparate_outr $const2 	%line{112} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:113
+#     float colorSeparate_outb = 0.0;
+	assign		___676_colorSeparate_outg $const2 	%line{113} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:114
+#     NG_separate3_color3(in, colorSeparate_outr, colorSeparate_outg, colorSeparate_outb);
+	assign		___676_colorSeparate_outb $const2 	%line{114} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:115
+#     float max_in2_tmp = 0.000000;
+	functioncall	$const30 455 	%line{115} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:95
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___675_N_extract_0_index_tmp $const1 	%line{95} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:96
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const22 446 	%line{96} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___675_N_extract_0_out texture_base_color_rgb ___675_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:97
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___675_N_extract_1_index_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{97} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:98
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const22 449 	%line{98} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___675_N_extract_1_out texture_base_color_rgb ___675_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:99
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___675_N_extract_2_index_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{99} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:100
+#     outr = N_extract_0_out;
+	functioncall	$const22 452 	%line{100} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___675_N_extract_2_out texture_base_color_rgb ___675_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:101
+#     outg = N_extract_1_out;
+	assign		___676_colorSeparate_outr ___675_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:102
+#     outb = N_extract_2_out;
+	assign		___676_colorSeparate_outg ___675_N_extract_1_out 	%line{102} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:103
+# }
+	assign		___676_colorSeparate_outb ___675_N_extract_2_out 	%line{103} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:116
+#     color max_out = max(bias_out, max_in2_tmp);
+	assign		___676_max_in2_tmp $const2 	%line{116} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:117
+#     float isAboveR_value2_tmp = 0.040450;
+	assign		$tmp87 ___676_max_in2_tmp 	%line{117} %argrw{"wr"}
+	max		___676_max_out ___676_bias_out $tmp87 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:118
+#     float isAboveR_in1_tmp = 1.000000;
+	assign		___676_isAboveR_value2_tmp $const31 	%line{118} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:119
+#     float isAboveR_in2_tmp = 0.000000;
+	assign		___676_isAboveR_in1_tmp $const9 	%line{119} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:120
+#     float isAboveR_out = mx_ternary(colorSeparate_outr > isAboveR_value2_tmp, isAboveR_in1_tmp, isAboveR_in2_tmp);
+	assign		___676_isAboveR_in2_tmp $const2 	%line{120} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:121
+#     float isAboveG_value2_tmp = 0.040450;
+	gt		$tmp88 ___676_colorSeparate_outr ___676_isAboveR_value2_tmp 	%line{121} %argrw{"wrr"}
+	functioncall	$const32 468 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp88 466 468 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___676_isAboveR_out ___676_isAboveR_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___676_isAboveR_out ___676_isAboveR_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:122
+#     float isAboveG_in1_tmp = 1.000000;
+	assign		___676_isAboveG_value2_tmp $const31 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{122} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:123
+#     float isAboveG_in2_tmp = 0.000000;
+	assign		___676_isAboveG_in1_tmp $const9 	%line{123} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:124
+#     float isAboveG_out = mx_ternary(colorSeparate_outg > isAboveG_value2_tmp, isAboveG_in1_tmp, isAboveG_in2_tmp);
+	assign		___676_isAboveG_in2_tmp $const2 	%line{124} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:125
+#     float isAboveB_value2_tmp = 0.040450;
+	gt		$tmp89 ___676_colorSeparate_outg ___676_isAboveG_value2_tmp 	%line{125} %argrw{"wrr"}
+	functioncall	$const32 478 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp89 476 478 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___676_isAboveG_out ___676_isAboveG_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___676_isAboveG_out ___676_isAboveG_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:126
+#     float isAboveB_in1_tmp = 1.000000;
+	assign		___676_isAboveB_value2_tmp $const31 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{126} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:127
+#     float isAboveB_in2_tmp = 0.000000;
+	assign		___676_isAboveB_in1_tmp $const9 	%line{127} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:128
+#     float isAboveB_out = mx_ternary(colorSeparate_outb > isAboveB_value2_tmp, isAboveB_in1_tmp, isAboveB_in2_tmp);
+	assign		___676_isAboveB_in2_tmp $const2 	%line{128} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:129
+#     float scale_in2_tmp = 1.055000;
+	gt		$tmp90 ___676_colorSeparate_outb ___676_isAboveB_value2_tmp 	%line{129} %argrw{"wrr"}
+	functioncall	$const32 488 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp90 486 488 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___676_isAboveB_out ___676_isAboveB_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___676_isAboveB_out ___676_isAboveB_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:130
+#     color scale_out = max_out / scale_in2_tmp;
+	assign		___676_scale_in2_tmp $const33 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{130} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:131
+#     color isAbove_out = color( isAboveR_out,isAboveG_out,isAboveB_out );
+	div		___676_scale_out ___676_max_out ___676_scale_in2_tmp 	%line{131} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:132
+#     float powSeg_in2_tmp = 2.400000;
+	color		___676_isAbove_out ___676_isAboveR_out ___676_isAboveG_out ___676_isAboveB_out 	%line{132} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:133
+#     color powSeg_out = pow(scale_out, powSeg_in2_tmp);
+	assign		___676_powSeg_in2_tmp $const34 	%line{133} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:134
+#     color mix_out = mix(linSeg_out, powSeg_out, isAbove_out);
+	pow		___676_powSeg_out ___676_scale_out ___676_powSeg_in2_tmp 	%line{134} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:135
+#     out = mix_out;
+	mix		___676_mix_out ___676_linSeg_out ___676_powSeg_out ___676_isAbove_out 	%line{135} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:136
+# }
+	assign		texture_base_color_rgb_cm_out ___676_mix_out 	%line{136} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:472
+#     IMP_UsdPreviewSurface_surfaceshader(texture_base_color_rgb_cm_out, UsdPreviewSurface_emissiveColor, UsdPreviewSurface_useSpecularWorkflow, UsdPreviewSurface_specularColor, UsdPreviewSurface_metallic, texture_roughness_r, UsdPreviewSurface_clearcoat, UsdPreviewSurface_clearcoatRoughness, UsdPreviewSurface_opacity, UsdPreviewSurface_opacityMode, UsdPreviewSurface_opacityThreshold, UsdPreviewSurface_ior, UsdPreviewSurface_normal, UsdPreviewSurface_displacement, UsdPreviewSurface_occlusion, UsdPreviewSurface_out);
+	assign		UsdPreviewSurface_out.bsdf null_closure 	%line{472} %argrw{"wr"}
+	assign		UsdPreviewSurface_out.edf null_closure 	%argrw{"wr"}
+	assign		UsdPreviewSurface_out.opacity $const9 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:473
+#     MATERIAL TiledBrass_out = mx_surfacematerial(UsdPreviewSurface_out, backsurfaceshader, displacementshader1);
+	functioncall	$const35 830 	%line{473} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:248
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	assign		___690_null_closure $const1 	%line{248} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:249
+#     float one_minus_ior_in1_tmp = 1.000000;
+	compref		$tmp92 N $const24 	%line{249} %argrw{"wrr"}
+	compref		$tmp93 N $const1 	%argrw{"wrr"}
+	neg		$tmp94 $tmp93 	%argrw{"wr"}
+	vector		$tmp91 $tmp92 $const2 $tmp94 	%argrw{"wrrr"}
+	normalize	___690_geomprop_Tworld_out1 $tmp91 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:250
+#     float one_minus_ior_out = one_minus_ior_in1_tmp - ior;
+	assign		___690_one_minus_ior_in1_tmp $const9 	%line{250} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:251
+#     float one_plus_ior_in1_tmp = 1.000000;
+	sub		___690_one_minus_ior_out ___690_one_minus_ior_in1_tmp UsdPreviewSurface_ior 	%line{251} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:252
+#     float one_plus_ior_out = one_plus_ior_in1_tmp + ior;
+	assign		___690_one_plus_ior_in1_tmp $const9 	%line{252} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:253
+#     vector2 coat_roughness_out = vector2(0.0, 0.0);
+	add		___690_one_plus_ior_out ___690_one_plus_ior_in1_tmp UsdPreviewSurface_ior 	%line{253} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:254
+#     mx_roughness_anisotropy(clearcoatRoughness, 0.000000, coat_roughness_out);
+	assign		___690_coat_roughness_out.x $const2 	%line{254} %argrw{"wr"}
+	assign		___690_coat_roughness_out.y $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:255
+#     string geomprop_Nworld_space_tmp = "world";
+	functioncall	$const36 530 	%line{255} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:141
+#     if (anisotropy > 0.0)
+	mul		$tmp95 UsdPreviewSurface_clearcoatRoughness UsdPreviewSurface_clearcoatRoughness 	%line{141} %argrw{"wrr"}
+	functioncall	$const38 516 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp96 $tmp95 $const9 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %argrw{"wrr"}
+	max		___677_roughness_sqr $tmp96 $const37 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:142
+#     {
+	gt		$tmp97 $const2 $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{142} %argrw{"wrr"}
+	if		$tmp97 528 530 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:144
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const38 521 	%line{144} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp99 $const2 $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp98 $tmp99 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:144
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp100 $const9 $tmp98 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{144} %argrw{"wrr"}
+	sqrt		___678_aspect $tmp100 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:145
+#         result.y = roughness_sqr * aspect;
+	div		$tmp101 ___677_roughness_sqr ___678_aspect 	%line{145} %argrw{"wrr"}
+	min		___690_coat_roughness_out.x $tmp101 $const9 	%argrw{"wrr"}
+	assign		___690_coat_roughness_out.x ___690_coat_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:146
+#     }
+	mul		___690_coat_roughness_out.y ___677_roughness_sqr ___678_aspect 	%line{146} %argrw{"wrr"}
+	assign		___690_coat_roughness_out.y ___690_coat_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:150
+#         result.y = roughness_sqr;
+	assign		___690_coat_roughness_out.x ___677_roughness_sqr 	%line{150} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:151
+#     }
+	assign		___690_coat_roughness_out.y ___677_roughness_sqr 	%line{151} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:256
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space_tmp, N);
+	assign		___690_geomprop_Nworld_space_tmp $const40 	%line{256} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:257
+#     vector geomprop_Bworld_out1 = normalize(cross(N, vector(N[2], 0, -N[0])));
+	functioncall	$const41 533 	%line{257} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	___690_geomprop_Nworld_out1 $const42 ___690_geomprop_Nworld_space_tmp N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:258
+#     float scale_normal_in2_tmp = 0.500000;
+	compref		$tmp104 N $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{258} %argrw{"wrr"}
+	compref		$tmp105 N $const1 	%argrw{"wrr"}
+	neg		$tmp106 $tmp105 	%argrw{"wr"}
+	vector		$tmp103 $tmp104 $const2 $tmp106 	%argrw{"wrrr"}
+	cross		$tmp102 N $tmp103 	%argrw{"wrr"}
+	normalize	___690_geomprop_Bworld_out1 $tmp102 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:259
+#     vector scale_normal_out = normal1 * scale_normal_in2_tmp;
+	assign		___690_scale_normal_in2_tmp $const43 	%line{259} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:260
+#     vector2 specular_roughness_out = vector2(0.0, 0.0);
+	mul		___690_scale_normal_out UsdPreviewSurface_normal ___690_scale_normal_in2_tmp 	%line{260} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:261
+#     mx_roughness_anisotropy(roughness, 0.000000, specular_roughness_out);
+	assign		___690_specular_roughness_out.x $const2 	%line{261} %argrw{"wr"}
+	assign		___690_specular_roughness_out.y $const2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:262
+#     float inverse_metalness_in1_tmp = 1.000000;
+	functioncall	$const36 562 	%line{262} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:141
+#     if (anisotropy > 0.0)
+	mul		$tmp107 texture_roughness_r texture_roughness_r 	%line{141} %argrw{"wrr"}
+	functioncall	$const38 548 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp108 $tmp107 $const9 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %argrw{"wrr"}
+	max		___677_roughness_sqr $tmp108 $const37 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:142
+#     {
+	gt		$tmp109 $const2 $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{142} %argrw{"wrr"}
+	if		$tmp109 560 562 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:144
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const38 553 	%line{144} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp111 $const2 $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp110 $tmp111 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:144
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp112 $const9 $tmp110 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{144} %argrw{"wrr"}
+	sqrt		___678_aspect $tmp112 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:145
+#         result.y = roughness_sqr * aspect;
+	div		$tmp113 ___677_roughness_sqr ___678_aspect 	%line{145} %argrw{"wrr"}
+	min		___690_specular_roughness_out.x $tmp113 $const9 	%argrw{"wrr"}
+	assign		___690_specular_roughness_out.x ___690_specular_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:146
+#     }
+	mul		___690_specular_roughness_out.y ___677_roughness_sqr ___678_aspect 	%line{146} %argrw{"wrr"}
+	assign		___690_specular_roughness_out.y ___690_specular_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:150
+#         result.y = roughness_sqr;
+	assign		___690_specular_roughness_out.x ___677_roughness_sqr 	%line{150} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:151
+#     }
+	assign		___690_specular_roughness_out.y ___677_roughness_sqr 	%line{151} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:263
+#     float inverse_metalness_out = inverse_metalness_in1_tmp - metallic;
+	assign		___690_inverse_metalness_in1_tmp $const9 	%line{263} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:264
+#     float use_specular_workflow_float_out = float(useSpecularWorkflow);
+	sub		___690_inverse_metalness_out ___690_inverse_metalness_in1_tmp UsdPreviewSurface_metallic 	%line{264} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:265
+#     float transmission_mix_amount_value2_tmp = 0.000000;
+	assign		$tmp114 UsdPreviewSurface_useSpecularWorkflow 	%line{265} %argrw{"wr"}
+	assign		___690_use_specular_workflow_float_out $tmp114 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:266
+#     float transmission_mix_amount_in1_tmp = 1.000000;
+	assign		___690_transmission_mix_amount_value2_tmp $const2 	%line{266} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:267
+#     float transmission_mix_amount_out = mx_ternary(opacityThreshold > transmission_mix_amount_value2_tmp, transmission_mix_amount_in1_tmp, opacity);
+	assign		___690_transmission_mix_amount_in1_tmp $const9 	%line{267} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:268
+#     color artistic_ior_ior = color(0.0);
+	gt		$tmp115 UsdPreviewSurface_opacityThreshold ___690_transmission_mix_amount_value2_tmp 	%line{268} %argrw{"wrr"}
+	functioncall	$const32 575 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp115 573 575 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___690_transmission_mix_amount_out ___690_transmission_mix_amount_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___690_transmission_mix_amount_out UsdPreviewSurface_opacity 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:269
+#     color artistic_ior_extinction = color(0.0);
+	assign		___690_artistic_ior_ior $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{269} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:270
+#     mx_artistic_ior(diffuseColor, diffuseColor, artistic_ior_ior, artistic_ior_extinction);
+	assign		___690_artistic_ior_extinction $const3 	%line{270} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:271
+#     color specular_color_metallic_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	functioncall	$const44 602 	%line{271} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:160
+#     color r_sqrt = sqrt(r);
+	assign		$tmp116 $const2 	%line{160} %argrw{"wr"}
+	assign		$tmp117 $const45 	%argrw{"wr"}
+	functioncall	$const38 583 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp118 texture_base_color_rgb_cm_out $tmp117 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___680_r $tmp118 $tmp116 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:161
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___680_r_sqrt ___680_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{161} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:162
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp119 $const9 ___680_r 	%line{162} %argrw{"wrr"}
+	add		$tmp120 $const9 ___680_r 	%argrw{"wrr"}
+	div		___680_n_min $tmp119 $tmp120 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:163
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp121 $const9 ___680_r_sqrt 	%line{163} %argrw{"wrr"}
+	sub		$tmp122 $const9 ___680_r_sqrt 	%argrw{"wrr"}
+	div		___680_n_max $tmp121 $tmp122 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:164
+# 
+	mix		___690_artistic_ior_ior ___680_n_max ___680_n_min texture_base_color_rgb_cm_out 	%line{164} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:166
+#     color nm1 = ior - 1.0;
+	add		___680_np1 ___690_artistic_ior_ior $const9 	%line{166} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:167
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___680_nm1 ___690_artistic_ior_ior $const9 	%line{167} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:168
+#     k2 = max(k2, 0.0);
+	mul		$tmp123 ___680_np1 ___680_np1 	%line{168} %argrw{"wrr"}
+	mul		$tmp124 $tmp123 ___680_r 	%argrw{"wrr"}
+	mul		$tmp125 ___680_nm1 ___680_nm1 	%argrw{"wrr"}
+	sub		$tmp126 $tmp124 $tmp125 	%argrw{"wrr"}
+	sub		$tmp127 $const9 ___680_r 	%argrw{"wrr"}
+	div		___680_k2 $tmp126 $tmp127 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:169
+#     extinction = sqrt(k2);
+	assign		$tmp128 $const2 	%line{169} %argrw{"wr"}
+	max		___680_k2 ___680_k2 $tmp128 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:170
+# }
+	sqrt		___690_artistic_ior_extinction ___680_k2 	%line{170} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:272
+#     color specular_color_metallic_out = mix(specular_color_metallic_bg_tmp, diffuseColor, metallic);
+	assign		___690_specular_color_metallic_bg_tmp $const46 	%line{272} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:273
+#     float cutout_opacity_in1_tmp = 1.000000;
+	mix		___690_specular_color_metallic_out ___690_specular_color_metallic_bg_tmp texture_base_color_rgb_cm_out UsdPreviewSurface_metallic 	%line{273} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:274
+#     float cutout_opacity_in2_tmp = 0.000000;
+	assign		___690_cutout_opacity_in1_tmp $const9 	%line{274} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:275
+#     float cutout_opacity_out = mx_ternary(opacity >= opacityThreshold, cutout_opacity_in1_tmp, cutout_opacity_in2_tmp);
+	assign		___690_cutout_opacity_in2_tmp $const2 	%line{275} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:276
+#     float R_out = one_minus_ior_out / one_plus_ior_out;
+	ge		$tmp129 UsdPreviewSurface_opacity UsdPreviewSurface_opacityThreshold 	%line{276} %argrw{"wrr"}
+	functioncall	$const32 613 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp129 611 613 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___690_cutout_opacity_out ___690_cutout_opacity_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___690_cutout_opacity_out ___690_cutout_opacity_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:277
+#     float bias_normal_in2_tmp = 0.500000;
+	div		___690_R_out ___690_one_minus_ior_out ___690_one_plus_ior_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{277} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:278
+#     vector bias_normal_out = scale_normal_out + bias_normal_in2_tmp;
+	assign		___690_bias_normal_in2_tmp $const43 	%line{278} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:279
+#     float diffuse_bsdf_weight_fg_tmp = 1.000000;
+	add		___690_bias_normal_out ___690_scale_normal_out ___690_bias_normal_in2_tmp 	%line{279} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:280
+#     float diffuse_bsdf_weight_out = mix(inverse_metalness_out, diffuse_bsdf_weight_fg_tmp, use_specular_workflow_float_out);
+	assign		___690_diffuse_bsdf_weight_fg_tmp $const9 	%line{280} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:281
+#     float opacity_presence_value2_tmp = 0.000000;
+	mix		___690_diffuse_bsdf_weight_out ___690_inverse_metalness_out ___690_diffuse_bsdf_weight_fg_tmp ___690_use_specular_workflow_float_out 	%line{281} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:282
+#     float opacity_presence_in1_tmp = 0.000000;
+	assign		___690_opacity_presence_value2_tmp $const2 	%line{282} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:283
+#     float opacity_presence_out = mx_ternary(opacity == opacity_presence_value2_tmp, opacity_presence_in1_tmp, cutout_opacity_out);
+	assign		___690_opacity_presence_in1_tmp $const2 	%line{283} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:284
+#     float R_sq_out = R_out * R_out;
+	eq		$tmp130 UsdPreviewSurface_opacity ___690_opacity_presence_value2_tmp 	%line{284} %argrw{"wrr"}
+	functioncall	$const32 627 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp130 625 627 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___690_opacity_presence_out ___690_opacity_presence_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___690_opacity_presence_out ___690_cutout_opacity_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:285
+#     vector surface_normal_out = vector(0.0);
+	mul		___690_R_sq_out ___690_R_out ___690_R_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{285} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:286
+#     mx_normalmap_float(bias_normal_out, 1.000000, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Bworld_out1, surface_normal_out);
+	assign		___690_surface_normal_out $const47 	%line{286} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:287
+#     float opacity_switch_out = 0.0;
+	functioncall	$const48 649 	%line{287} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:190
+# }
+	assign		$tmp131.x $const9 	%line{190} %argrw{"wr"}
+	assign		$tmp131.y $const9 	%argrw{"wr"}
+	functioncall	$const49 649 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:176
+#     {
+	eq		$tmp133 ___690_bias_normal_out $const47 	%line{176} %argrw{"wrr"}
+	if		$tmp133 636 638 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:178
+#     }
+	assign		___681_decodedValue $const50 	%line{178} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:182
+#     }
+	mul		$tmp134 ___690_bias_normal_out $const51 	%line{182} %argrw{"wrr"}
+	sub		___681_decodedValue $tmp134 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:185
+# }
+	compref		$tmp135 ___681_decodedValue $const1 	%line{185} %argrw{"wrr"}
+	mul		$tmp136 ___690_geomprop_Tworld_out1 $tmp135 	%argrw{"wrr"}
+	mul		$tmp137 $tmp136 $tmp131.x 	%argrw{"wrr"}
+	compref		$tmp138 ___681_decodedValue $const23 	%argrw{"wrr"}
+	mul		$tmp139 ___690_geomprop_Bworld_out1 $tmp138 	%argrw{"wrr"}
+	mul		$tmp140 $tmp139 $tmp131.y 	%argrw{"wrr"}
+	add		$tmp141 $tmp137 $tmp140 	%argrw{"wrr"}
+	compref		$tmp142 ___681_decodedValue $const24 	%argrw{"wrr"}
+	mul		$tmp143 ___690_geomprop_Nworld_out1 $tmp142 	%argrw{"wrr"}
+	add		$tmp144 $tmp141 $tmp143 	%argrw{"wrr"}
+	normalize	___690_surface_normal_out $tmp144 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:288
+#     NG_switch_floatI(cutout_opacity_out, opacity_presence_out, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, opacityMode, opacity_switch_out);
+	assign		___690_opacity_switch_out $const2 	%line{288} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:289
+#     color coat_F0_out = color(0.0);
+	functioncall	$const52 733 	%line{289} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:195
+#     float ifgreater_10_in2_tmp = 0.000000;
+	assign		___685_ifgreater_10_value1_tmp $const53 	%line{195} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:196
+#     float ifgreater_10_out = mx_ternary(ifgreater_10_value1_tmp > which, in10, ifgreater_10_in2_tmp);
+	assign		___685_ifgreater_10_in2_tmp $const2 	%line{196} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:197
+#     int ifgreater_9_value1_tmp = 9;
+	gt		$tmp145 ___685_ifgreater_10_value1_tmp UsdPreviewSurface_opacityMode 	%line{197} %argrw{"wrr"}
+	functioncall	$const32 660 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp145 658 660 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_10_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_10_out ___685_ifgreater_10_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:198
+#     float ifgreater_9_out = mx_ternary(ifgreater_9_value1_tmp > which, in9, ifgreater_10_out);
+	assign		___685_ifgreater_9_value1_tmp $const54 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{198} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:199
+#     int ifgreater_8_value1_tmp = 8;
+	gt		$tmp146 ___685_ifgreater_9_value1_tmp UsdPreviewSurface_opacityMode 	%line{199} %argrw{"wrr"}
+	functioncall	$const32 668 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp146 666 668 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_9_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_9_out ___685_ifgreater_10_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:200
+#     float ifgreater_8_out = mx_ternary(ifgreater_8_value1_tmp > which, in8, ifgreater_9_out);
+	assign		___685_ifgreater_8_value1_tmp $const55 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{200} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:201
+#     int ifgreater_7_value1_tmp = 7;
+	gt		$tmp147 ___685_ifgreater_8_value1_tmp UsdPreviewSurface_opacityMode 	%line{201} %argrw{"wrr"}
+	functioncall	$const32 676 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp147 674 676 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_8_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_8_out ___685_ifgreater_9_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:202
+#     float ifgreater_7_out = mx_ternary(ifgreater_7_value1_tmp > which, in7, ifgreater_8_out);
+	assign		___685_ifgreater_7_value1_tmp $const56 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{202} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:203
+#     int ifgreater_6_value1_tmp = 6;
+	gt		$tmp148 ___685_ifgreater_7_value1_tmp UsdPreviewSurface_opacityMode 	%line{203} %argrw{"wrr"}
+	functioncall	$const32 684 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp148 682 684 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_7_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_7_out ___685_ifgreater_8_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:204
+#     float ifgreater_6_out = mx_ternary(ifgreater_6_value1_tmp > which, in6, ifgreater_7_out);
+	assign		___685_ifgreater_6_value1_tmp $const57 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{204} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:205
+#     int ifgreater_5_value1_tmp = 5;
+	gt		$tmp149 ___685_ifgreater_6_value1_tmp UsdPreviewSurface_opacityMode 	%line{205} %argrw{"wrr"}
+	functioncall	$const32 692 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp149 690 692 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_6_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_6_out ___685_ifgreater_7_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:206
+#     float ifgreater_5_out = mx_ternary(ifgreater_5_value1_tmp > which, in5, ifgreater_6_out);
+	assign		___685_ifgreater_5_value1_tmp $const58 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:207
+#     int ifgreater_4_value1_tmp = 4;
+	gt		$tmp150 ___685_ifgreater_5_value1_tmp UsdPreviewSurface_opacityMode 	%line{207} %argrw{"wrr"}
+	functioncall	$const32 700 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp150 698 700 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_5_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_5_out ___685_ifgreater_6_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:208
+#     float ifgreater_4_out = mx_ternary(ifgreater_4_value1_tmp > which, in4, ifgreater_5_out);
+	assign		___685_ifgreater_4_value1_tmp $const59 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{208} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:209
+#     int ifgreater_3_value1_tmp = 3;
+	gt		$tmp151 ___685_ifgreater_4_value1_tmp UsdPreviewSurface_opacityMode 	%line{209} %argrw{"wrr"}
+	functioncall	$const32 708 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp151 706 708 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_4_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_4_out ___685_ifgreater_5_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:210
+#     float ifgreater_3_out = mx_ternary(ifgreater_3_value1_tmp > which, in3, ifgreater_4_out);
+	assign		___685_ifgreater_3_value1_tmp $const25 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{210} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:211
+#     int ifgreater_2_value1_tmp = 2;
+	gt		$tmp152 ___685_ifgreater_3_value1_tmp UsdPreviewSurface_opacityMode 	%line{211} %argrw{"wrr"}
+	functioncall	$const32 716 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp152 714 716 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_3_out $const2 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_3_out ___685_ifgreater_4_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:212
+#     float ifgreater_2_out = mx_ternary(ifgreater_2_value1_tmp > which, in2, ifgreater_3_out);
+	assign		___685_ifgreater_2_value1_tmp $const24 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{212} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:213
+#     int ifgreater_1_value1_tmp = 1;
+	gt		$tmp153 ___685_ifgreater_2_value1_tmp UsdPreviewSurface_opacityMode 	%line{213} %argrw{"wrr"}
+	functioncall	$const32 724 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp153 722 724 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_2_out ___690_opacity_presence_out 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_2_out ___685_ifgreater_3_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:214
+#     float ifgreater_1_out = mx_ternary(ifgreater_1_value1_tmp > which, in1, ifgreater_2_out);
+	assign		___685_ifgreater_1_value1_tmp $const23 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{214} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:215
+#     out = ifgreater_1_out;
+	gt		$tmp154 ___685_ifgreater_1_value1_tmp UsdPreviewSurface_opacityMode 	%line{215} %argrw{"wrr"}
+	functioncall	$const32 732 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp154 730 732 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___685_ifgreater_1_out ___690_cutout_opacity_out 	%argrw{"wr"}
+	return
+	assign		___685_ifgreater_1_out ___685_ifgreater_2_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:216
+# }
+	assign		___690_opacity_switch_out ___685_ifgreater_1_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{216} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:290
+#     NG_convert_float_color3(R_sq_out, coat_F0_out);
+	assign		___690_coat_F0_out $const3 	%line{290} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:291
+#     color specular_color_metallic_R_sq_out = specular_color_metallic_out * R_sq_out;
+	functioncall	$const60 737 	%line{291} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:221
+#     out = combine_out;
+	color		___686_combine_out ___690_R_sq_out ___690_R_sq_out ___690_R_sq_out 	%line{221} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:222
+# }
+	assign		___690_coat_F0_out ___686_combine_out 	%line{222} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:292
+#     color F0_out = mix(specular_color_metallic_R_sq_out, specular_color_metallic_out, metallic);
+	mul		___690_specular_color_metallic_R_sq_out ___690_specular_color_metallic_out ___690_R_sq_out 	%line{292} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:293
+#     BSDF coat_dielectric_bsdf_out = null_closure;
+	mix		___690_F0_out ___690_specular_color_metallic_R_sq_out ___690_specular_color_metallic_out UsdPreviewSurface_metallic 	%line{293} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:294
+#     mx_generalized_schlick_bsdf(clearcoat, coat_F0_out, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, coat_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", coat_dielectric_bsdf_out);
+	assign		___690_coat_dielectric_bsdf_out ___690_null_closure 	%line{294} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:295
+#     BSDF specular_bsdf1_out = null_closure;
+	functioncall	$const65 751 	%line{295} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:227
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp157 $const64 $const66 	%line{227} %argrw{"wrr"}
+	if		$tmp157 744 745 	%argrw{"r"}
+	assign		___687_reflection_tint $const3 	%argrw{"wr"}
+	assign		___687_reflection_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:228
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp158 $const64 $const64 	%line{228} %argrw{"wrr"}
+	if		$tmp158 748 749 	%argrw{"r"}
+	assign		___687_transmission_tint $const3 	%argrw{"wr"}
+	assign		___687_transmission_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:229
+# }
+	closure		$tmp159 $const69 ___690_surface_normal_out ___690_geomprop_Tworld_out1 ___687_reflection_tint ___687_transmission_tint ___690_coat_roughness_out.x ___690_coat_roughness_out.y ___690_coat_F0_out $const46 $const61 $const63 $const67 $const2 $const68 $const62 	%line{229} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___690_coat_dielectric_bsdf_out $tmp159 UsdPreviewSurface_clearcoat 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:296
+#     mx_generalized_schlick_bsdf(1.000000, specularColor, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, specular_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", specular_bsdf1_out);
+	assign		___690_specular_bsdf1_out ___690_null_closure 	%line{296} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:297
+#     float diffuse_bsdf_roughness_tmp = 0.000000;
+	functioncall	$const65 763 	%line{297} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:227
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp162 $const64 $const66 	%line{227} %argrw{"wrr"}
+	if		$tmp162 756 757 	%argrw{"r"}
+	assign		___687_reflection_tint $const3 	%argrw{"wr"}
+	assign		___687_reflection_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:228
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp163 $const64 $const64 	%line{228} %argrw{"wrr"}
+	if		$tmp163 760 761 	%argrw{"r"}
+	assign		___687_transmission_tint $const3 	%argrw{"wr"}
+	assign		___687_transmission_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:229
+# }
+	closure		$tmp164 $const69 ___690_surface_normal_out ___690_geomprop_Tworld_out1 ___687_reflection_tint ___687_transmission_tint ___690_specular_roughness_out.x ___690_specular_roughness_out.y UsdPreviewSurface_specularColor $const46 $const61 $const63 $const67 $const2 $const68 $const62 	%line{229} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___690_specular_bsdf1_out $tmp164 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:298
+#     BSDF diffuse_bsdf_out = diffuse_bsdf_weight_out * oren_nayar_diffuse_bsdf(surface_normal_out, diffuseColor, diffuse_bsdf_roughness_tmp);
+	assign		___690_diffuse_bsdf_roughness_tmp $const2 	%line{298} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:299
+#     BSDF transmission_bsdf_out = null_closure;
+	closure		$tmp165 $const70 ___690_surface_normal_out texture_base_color_rgb_cm_out ___690_diffuse_bsdf_roughness_tmp 	%line{299} %argrw{"wrrrr"}
+	mul		___690_diffuse_bsdf_out $tmp165 ___690_diffuse_bsdf_weight_out 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:300
+#     mx_dielectric_bsdf(1.000000, color(1.000000, 1.000000, 1.000000), ior, vector2(0.000000, 0.000000), 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "T", transmission_bsdf_out);
+	assign		___690_transmission_bsdf_out ___690_null_closure 	%line{300} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:301
+#     BSDF transmission_mix_out = mix(transmission_bsdf_out, diffuse_bsdf_out, transmission_mix_amount_out);
+	assign		$tmp167.x $const2 	%line{301} %argrw{"wr"}
+	assign		$tmp167.y $const2 	%argrw{"wr"}
+	functioncall	$const71 780 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:234
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp168 $const66 $const66 	%line{234} %argrw{"wrr"}
+	if		$tmp168 773 774 	%argrw{"r"}
+	assign		___688_reflection_tint $const3 	%argrw{"wr"}
+	assign		___688_reflection_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:235
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp169 $const66 $const64 	%line{235} %argrw{"wrr"}
+	if		$tmp169 777 778 	%argrw{"r"}
+	assign		___688_transmission_tint $const3 	%argrw{"wr"}
+	assign		___688_transmission_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:236
+# }
+	closure		$tmp170 $const72 ___690_surface_normal_out ___690_geomprop_Tworld_out1 ___688_reflection_tint ___688_transmission_tint $tmp167.x $tmp167.y UsdPreviewSurface_ior $const63 $const67 $const2 $const68 $const62 	%line{236} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___690_transmission_bsdf_out $tmp170 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:302
+#     BSDF specular_workflow_bsdf_out = layer(specular_bsdf1_out, transmission_mix_out);
+	functioncall	$const73 785 	%line{302} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp171 $const9 ___690_transmission_mix_amount_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp172 ___690_transmission_bsdf_out $tmp171 	%argrw{"wrr"}
+	mul		$tmp173 ___690_diffuse_bsdf_out ___690_transmission_mix_amount_out 	%argrw{"wrr"}
+	add		___690_transmission_mix_out $tmp172 $tmp173 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:303
+#     float metalness_metal_bsdf_weight_tmp = 1.000000;
+	closure		___690_specular_workflow_bsdf_out $const74 ___690_specular_bsdf1_out ___690_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{303} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:304
+#     string metalness_metal_bsdf_distribution_tmp = "ggx";
+	assign		___690_metalness_metal_bsdf_weight_tmp $const9 	%line{304} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:305
+#     float metalness_metal_bsdf_thinfilm_thickness_tmp = 0.000000;
+	assign		___690_metalness_metal_bsdf_distribution_tmp $const63 	%line{305} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:306
+#     float metalness_metal_bsdf_thinfilm_ior_tmp = 1.500000;
+	assign		___690_metalness_metal_bsdf_thinfilm_thickness_tmp $const2 	%line{306} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:307
+#     BSDF metalness_metal_bsdf_out = metalness_metal_bsdf_weight_tmp * conductor_bsdf(surface_normal_out, geomprop_Tworld_out1, specular_roughness_out.x, specular_roughness_out.y, artistic_ior_ior, artistic_ior_extinction, metalness_metal_bsdf_distribution_tmp, "thinfilm_thickness", metalness_metal_bsdf_thinfilm_thickness_tmp, "thinfilm_ior", metalness_metal_bsdf_thinfilm_ior_tmp);
+	assign		___690_metalness_metal_bsdf_thinfilm_ior_tmp $const62 	%line{307} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:308
+#     BSDF specular_bsdf2_out = null_closure;
+	closure		$tmp174 $const75 ___690_surface_normal_out ___690_geomprop_Tworld_out1 ___690_specular_roughness_out.x ___690_specular_roughness_out.y ___690_artistic_ior_ior ___690_artistic_ior_extinction ___690_metalness_metal_bsdf_distribution_tmp $const67 ___690_metalness_metal_bsdf_thinfilm_thickness_tmp $const68 ___690_metalness_metal_bsdf_thinfilm_ior_tmp 	%line{308} %argrw{"wrrrrrrrrrrrr"}
+	mul		___690_metalness_metal_bsdf_out $tmp174 ___690_metalness_metal_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:309
+#     mx_generalized_schlick_bsdf(1.000000, F0_out, color(1.000000, 1.000000, 1.000000), specular_color_metallic_out, 5.000000, specular_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", specular_bsdf2_out);
+	assign		___690_specular_bsdf2_out ___690_null_closure 	%line{309} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:310
+#     BSDF metalness_specular_bsdf_out = layer(specular_bsdf2_out, transmission_mix_out);
+	functioncall	$const65 804 	%line{310} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:227
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp176 $const64 $const66 	%line{227} %argrw{"wrr"}
+	if		$tmp176 797 798 	%argrw{"r"}
+	assign		___687_reflection_tint $const3 	%argrw{"wr"}
+	assign		___687_reflection_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:228
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp177 $const64 $const64 	%line{228} %argrw{"wrr"}
+	if		$tmp177 801 802 	%argrw{"r"}
+	assign		___687_transmission_tint $const3 	%argrw{"wr"}
+	assign		___687_transmission_tint $const46 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:229
+# }
+	closure		$tmp178 $const69 ___690_surface_normal_out ___690_geomprop_Tworld_out1 ___687_reflection_tint ___687_transmission_tint ___690_specular_roughness_out.x ___690_specular_roughness_out.y ___690_F0_out ___690_specular_color_metallic_out $const61 $const63 $const67 $const2 $const68 $const62 	%line{229} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___690_specular_bsdf2_out $tmp178 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:311
+#     BSDF metalness_workflow_bsdf_out = mix(metalness_specular_bsdf_out, metalness_metal_bsdf_out, metallic);
+	closure		___690_metalness_specular_bsdf_out $const74 ___690_specular_bsdf2_out ___690_transmission_mix_out 	%line{311} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:312
+#     BSDF workflow_selector_bsdf_out = mix(metalness_workflow_bsdf_out, specular_workflow_bsdf_out, use_specular_workflow_float_out);
+	functioncall	$const73 810 	%line{312} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp179 $const9 UsdPreviewSurface_metallic 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp180 ___690_metalness_specular_bsdf_out $tmp179 	%argrw{"wrr"}
+	mul		$tmp181 ___690_metalness_metal_bsdf_out UsdPreviewSurface_metallic 	%argrw{"wrr"}
+	add		___690_metalness_workflow_bsdf_out $tmp180 $tmp181 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:313
+#     BSDF coat_bsdf_out = layer(coat_dielectric_bsdf_out, workflow_selector_bsdf_out);
+	functioncall	$const73 815 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{313} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp182 $const9 ___690_use_specular_workflow_float_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp183 ___690_metalness_workflow_bsdf_out $tmp182 	%argrw{"wrr"}
+	mul		$tmp184 ___690_specular_workflow_bsdf_out ___690_use_specular_workflow_float_out 	%argrw{"wrr"}
+	add		___690_workflow_selector_bsdf_out $tmp183 $tmp184 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:314
+#     EDF emission_edf_out = uniform_edf(emissiveColor);
+	closure		___690_coat_bsdf_out $const74 ___690_coat_dielectric_bsdf_out ___690_workflow_selector_bsdf_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{314} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:315
+#     surfaceshader surface_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	closure		___690_emission_edf_out $const76 UsdPreviewSurface_emissiveColor 	%line{315} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:316
+#     mx_surface(coat_bsdf_out, emission_edf_out, opacity_switch_out, 0, surface_constructor_out);
+	assign		___690_surface_constructor_out.bsdf ___690_null_closure 	%line{316} %argrw{"wr"}
+	assign		___690_surface_constructor_out.edf ___690_null_closure 	%argrw{"wr"}
+	assign		___690_surface_constructor_out.opacity $const9 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:317
+#     out = surface_constructor_out;
+	functioncall	$const77 827 	%line{317} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:241
+#     result.edf     = edf;
+	assign		___690_surface_constructor_out.bsdf ___690_coat_bsdf_out 	%line{241} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:242
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___690_surface_constructor_out.edf ___690_emission_edf_out 	%line{242} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:243
+# }
+	functioncall	$const38 826 	%line{243} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp185 ___690_opacity_switch_out $const9 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___690_surface_constructor_out.opacity $tmp185 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:243
+# }
+	assign		___690_surface_constructor_out.opacity ___690_surface_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{243} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:318
+# }
+	assign		UsdPreviewSurface_out.bsdf ___690_surface_constructor_out.bsdf 	%line{318} %argrw{"wr"}
+	assign		UsdPreviewSurface_out.edf ___690_surface_constructor_out.edf 	%argrw{"wr"}
+	assign		UsdPreviewSurface_out.opacity ___690_surface_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:474
+#     out = TiledBrass_out;
+	functioncall	$const78 840 	%line{474} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:323
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const38 834 	%line{323} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp186 UsdPreviewSurface_out.opacity $const9 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___691_opacity_weight $tmp186 $const2 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:324
+# }
+	add		$tmp187 UsdPreviewSurface_out.bsdf UsdPreviewSurface_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl"} %line{324} %argrw{"wrr"}
+	mul		$tmp188 $tmp187 ___691_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp189 $const79 	%argrw{"wr"}
+	sub		$tmp190 $const9 ___691_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp191 $tmp189 $tmp190 	%argrw{"wrr"}
+	add		TiledBrass_out $tmp188 $tmp191 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\usd_uv_texture\\TiledBrass.osl:475
+# }
+	assign		out TiledBrass_out 	%line{475} %argrw{"wr"}
+	end

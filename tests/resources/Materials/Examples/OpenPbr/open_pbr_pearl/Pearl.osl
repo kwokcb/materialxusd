@@ -1,0 +1,744 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void NG_open_pbr_anisotropy(float roughness, float anisotropy, output vector2 out)
+{
+    float rough_sq_out = roughness * roughness;
+    float aniso_invert_amount_tmp = 1.000000;
+    float aniso_invert_out = aniso_invert_amount_tmp - anisotropy;
+    float aniso_invert_sq_out = aniso_invert_out * aniso_invert_out;
+    float denom_in2_tmp = 1.000000;
+    float denom_out = aniso_invert_sq_out + denom_in2_tmp;
+    float fraction_in1_tmp = 2.000000;
+    float fraction_out = fraction_in1_tmp / denom_out;
+    float sqrt_out = sqrt(fraction_out);
+    float alpha_x_out = rough_sq_out * sqrt_out;
+    float alpha_y_out = aniso_invert_out * alpha_x_out;
+    vector2 result_out = { alpha_x_out,alpha_y_out };
+    out = result_out;
+}
+
+void NG_separate3_color3(color in, output float outr, output float outg, output float outb)
+{
+    int N_extract_0_index_tmp = 0;
+    float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+    int N_extract_1_index_tmp = 1;
+    float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+    int N_extract_2_index_tmp = 2;
+    float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+    outr = N_extract_0_out;
+    outg = N_extract_1_out;
+    outb = N_extract_2_out;
+}
+
+void NG_convert_color3_vector3(color in, output vector out)
+{
+    float separate_outr = 0.0;
+    float separate_outg = 0.0;
+    float separate_outb = 0.0;
+    NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+    vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+    out = combine_out;
+}
+
+void NG_convert_float_vector3(float in, output vector out)
+{
+    vector combine_out = vector( in,in,in );
+    out = combine_out;
+}
+
+void mx_dielectric_bsdf(float weight, color tint, float ior, vector2 roughness, float thinfilm_thickness, float thinfilm_ior, normal N, vector U, string distribution, string scatter_mode, output BSDF bsdf)
+{
+    color reflection_tint = (scatter_mode == "T") ? color(0.0) : tint;
+    color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+    bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+}
+
+void mx_subsurface_bsdf(float weight, color albedo, color radius, float anisotropy, normal N, output BSDF bsdf)
+{
+#if OSL_VERSION_MAJOR >= 1 && OSL_VERSION_MINOR >= 14
+    bsdf = subsurface_bssrdf(N, weight * albedo, radius, anisotropy);
+#else
+    bsdf = subsurface_bssrdf(N, weight * albedo, 1.0, radius, anisotropy);
+#endif
+}
+
+void NG_convert_float_color3(float in, output color out)
+{
+    color combine_out = color( in,in,in );
+    out = combine_out;
+}
+
+float mx_square(float x)
+{
+    return x*x;
+}
+
+vector2 mx_square(vector2 x)
+{
+    return x*x;
+}
+
+vector mx_square(vector x)
+{
+    return x*x;
+}
+
+vector4 mx_square(vector4 x)
+{
+    return x*x;
+}
+
+float mx_pow5(float x)
+{
+    return mx_square(mx_square(x)) * x;
+}
+
+color mx_fresnel_conductor(float cosTheta, vector n, vector k)
+{
+   float c2 = cosTheta*cosTheta;
+   vector n2_k2 = n*n + k*k;
+   vector nc2 = 2.0 * n * cosTheta;
+
+   vector rs_a = n2_k2 + c2;
+   vector rp_a = n2_k2 * c2 + 1.0;
+   vector rs = (rs_a - nc2) / (rs_a + nc2);
+   vector rp = (rp_a - nc2) / (rp_a + nc2);
+
+   return 0.5 * (rs + rp);
+}
+
+// Standard Schlick Fresnel
+float mx_fresnel_schlick(float cosTheta, float F0)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    float x5 = mx_pow5(x);
+    return F0 + (1.0 - F0) * x5;
+}
+color mx_fresnel_schlick(float cosTheta, color F0)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    float x5 = mx_pow5(x);
+    return F0 + (1.0 - F0) * x5;
+}
+
+// Generalized Schlick Fresnel
+float mx_fresnel_schlick(float cosTheta, float F0, float F90)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    float x5 = mx_pow5(x);
+    return mix(F0, F90, x5);
+}
+color mx_fresnel_schlick(float cosTheta, color F0, color F90)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    float x5 = mx_pow5(x);
+    return mix(F0, F90, x5);
+}
+
+// Generalized Schlick Fresnel with a variable exponent
+color mx_fresnel_schlick(float cosTheta, float f0, float f90, float exponent)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    return mix(f0, f90, pow(x, exponent));
+}
+color mx_fresnel_schlick(float cosTheta, color f0, color f90, float exponent)
+{
+    float x = clamp(1.0 - cosTheta, 0.0, 1.0);
+    return mix(f0, f90, pow(x, exponent));
+}
+
+void mx_generalized_schlick_edf(color color0, color color90, float exponent, EDF base, output EDF result)
+{
+    float NdotV = fabs(dot(N,-I));
+    color f = mx_fresnel_schlick(NdotV, color0, color90, exponent);
+    result = base * f;
+}
+
+void mx_generalized_schlick_bsdf(float weight, color color0, color color82, color color90, float exponent, vector2 roughness, float thinfilm_thickness, float thinfilm_ior, normal N, vector U, string distribution, string scatter_mode, output BSDF bsdf)
+{
+    color reflection_tint = (scatter_mode == "T") ? color(0.0) : color(1.0);
+    color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+    bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+}
+
+void mx_anisotropic_vdf(color absorption, color scattering, float anisotropy, output VDF vdf)
+{
+    // Convert from absorption and scattering coefficients to
+    // extinction coefficient and single-scattering albedo.
+    color extinction = absorption + scattering;
+    color albedo = scattering / extinction;
+    vdf = anisotropic_vdf(albedo, extinction, anisotropy);
+}
+
+void mx_surface(BSDF bsdf, EDF edf, float opacity, int thin_walled, output surfaceshader result)
+{
+    result.bsdf    = bsdf;
+    result.edf     = edf;
+    result.opacity = clamp(opacity, 0.0, 1.0);
+}
+
+void NG_open_pbr_surface_surfaceshader(float base_weight, color base_color, float base_diffuse_roughness, float base_metalness, float specular_weight, color specular_color, float specular_roughness, float specular_ior, float specular_roughness_anisotropy, float transmission_weight, color transmission_color, float transmission_depth, color transmission_scatter, float transmission_scatter_anisotropy, float transmission_dispersion_scale, float transmission_dispersion_abbe_number, float subsurface_weight, color subsurface_color, float subsurface_radius, color subsurface_radius_scale, float subsurface_scatter_anisotropy, float fuzz_weight, color fuzz_color, float fuzz_roughness, float coat_weight, color coat_color, float coat_roughness, float coat_roughness_anisotropy, float coat_ior, float coat_darkening, float thin_film_weight, float thin_film_thickness, float thin_film_ior, float emission_luminance, color emission_color, float geometry_opacity, int geometry_thin_walled, vector geometry_normal, vector geometry_coat_normal, vector geometry_tangent, vector geometry_coat_tangent, output surfaceshader out)
+{
+    closure color null_closure = 0;
+    vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+    NG_open_pbr_anisotropy(coat_roughness, coat_roughness_anisotropy, coat_roughness_vector_out);
+    color metal_reflectivity_out = base_color * base_weight;
+    color metal_edgecolor_out = specular_color * specular_weight;
+    float coat_roughness_to_power_4_in2_tmp = 4.000000;
+    float coat_roughness_to_power_4_out = pow(coat_roughness, coat_roughness_to_power_4_in2_tmp);
+    float specular_roughness_to_power_4_in2_tmp = 4.000000;
+    float specular_roughness_to_power_4_out = pow(specular_roughness, specular_roughness_to_power_4_in2_tmp);
+    float thin_film_thickness_nm_in2_tmp = 1000.000000;
+    float thin_film_thickness_nm_out = thin_film_thickness * thin_film_thickness_nm_in2_tmp;
+    float specular_to_coat_ior_ratio_out = specular_ior / coat_ior;
+    float coat_to_specular_ior_ratio_out = coat_ior / specular_ior;
+    float if_transmission_tint_value2_tmp = 0.000000;
+    color if_transmission_tint_in1_tmp = color(1.000000, 1.000000, 1.000000);
+    color if_transmission_tint_out = mx_ternary(transmission_depth > if_transmission_tint_value2_tmp, if_transmission_tint_in1_tmp, transmission_color);
+    vector transmission_color_vector_out = vector(0.0);
+    NG_convert_color3_vector3(transmission_color, transmission_color_vector_out);
+    vector transmission_depth_vector_out = vector(0.0);
+    NG_convert_float_vector3(transmission_depth, transmission_depth_vector_out);
+    vector transmission_scatter_vector_out = vector(0.0);
+    NG_convert_color3_vector3(transmission_scatter, transmission_scatter_vector_out);
+    float subsurface_color_nonnegative_in2_tmp = 0.000000;
+    color subsurface_color_nonnegative_out = max(subsurface_color, subsurface_color_nonnegative_in2_tmp);
+    float one_minus_subsurface_scatter_anisotropy_in1_tmp = 1.000000;
+    float one_minus_subsurface_scatter_anisotropy_out = one_minus_subsurface_scatter_anisotropy_in1_tmp - subsurface_scatter_anisotropy;
+    float one_plus_subsurface_scatter_anisotropy_in1_tmp = 1.000000;
+    float one_plus_subsurface_scatter_anisotropy_out = one_plus_subsurface_scatter_anisotropy_in1_tmp + subsurface_scatter_anisotropy;
+    color subsurface_radius_scaled_out = subsurface_radius_scale * subsurface_radius;
+    float subsurface_selector_out = float(geometry_thin_walled);
+    float base_color_nonnegative_in2_tmp = 0.000000;
+    color base_color_nonnegative_out = max(base_color, base_color_nonnegative_in2_tmp);
+    float coat_ior_minus_one_in2_tmp = 1.000000;
+    float coat_ior_minus_one_out = coat_ior - coat_ior_minus_one_in2_tmp;
+    float coat_ior_plus_one_in1_tmp = 1.000000;
+    float coat_ior_plus_one_out = coat_ior_plus_one_in1_tmp + coat_ior;
+    float coat_ior_sqr_out = coat_ior * coat_ior;
+    color Emetal_out = base_color * specular_weight;
+    color Edielectric_out = mix(base_color, subsurface_color, subsurface_weight);
+    float coat_weight_times_coat_darkening_out = coat_weight * coat_darkening;
+    color coat_attenuation_bg_tmp = color(1.000000, 1.000000, 1.000000);
+    color coat_attenuation_out = mix(coat_attenuation_bg_tmp, coat_color, coat_weight);
+    color emission_weight_out = emission_color * emission_luminance;
+    float two_times_coat_roughness_to_power_4_in2_tmp = 2.000000;
+    float two_times_coat_roughness_to_power_4_out = coat_roughness_to_power_4_out * two_times_coat_roughness_to_power_4_in2_tmp;
+    float specular_to_coat_ior_ratio_tir_fix_value2_tmp = 1.000000;
+    float specular_to_coat_ior_ratio_tir_fix_out = mx_ternary(specular_to_coat_ior_ratio_out > specular_to_coat_ior_ratio_tir_fix_value2_tmp, specular_to_coat_ior_ratio_out, coat_to_specular_ior_ratio_out);
+    vector transmission_color_ln_out = log(transmission_color_vector_out);
+    vector scattering_coeff_out = transmission_scatter_vector_out / transmission_depth_vector_out;
+    color subsurface_thin_walled_brdf_factor_out = subsurface_color * one_minus_subsurface_scatter_anisotropy_out;
+    color subsurface_thin_walled_btdf_factor_out = subsurface_color * one_plus_subsurface_scatter_anisotropy_out;
+    float coat_ior_to_F0_sqrt_out = coat_ior_minus_one_out / coat_ior_plus_one_out;
+    color Ebase_out = mix(Edielectric_out, Emetal_out, base_metalness);
+    float add_coat_and_spec_roughnesses_to_power_4_out = two_times_coat_roughness_to_power_4_out + specular_roughness_to_power_4_out;
+    float eta_s_out = mix(specular_ior, specular_to_coat_ior_ratio_tir_fix_out, coat_weight);
+    float extinction_coeff_denom_in2_tmp = -1.000000;
+    vector extinction_coeff_denom_out = transmission_color_ln_out * extinction_coeff_denom_in2_tmp;
+    float if_volume_scattering_value2_tmp = 0.000000;
+    vector if_volume_scattering_in2_tmp = vector(0.000000, 0.000000, 0.000000);
+    vector if_volume_scattering_out = mx_ternary(transmission_depth > if_volume_scattering_value2_tmp, scattering_coeff_out, if_volume_scattering_in2_tmp);
+    float coat_ior_to_F0_out = coat_ior_to_F0_sqrt_out * coat_ior_to_F0_sqrt_out;
+    float min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp = 1.000000;
+    float min_1_add_coat_and_spec_roughnesses_to_power_4_out = min(min_1_add_coat_and_spec_roughnesses_to_power_4_in1_tmp, add_coat_and_spec_roughnesses_to_power_4_out);
+    float eta_s_minus_one_in2_tmp = 1.000000;
+    float eta_s_minus_one_out = eta_s_out - eta_s_minus_one_in2_tmp;
+    float eta_s_plus_one_in2_tmp = 1.000000;
+    float eta_s_plus_one_out = eta_s_out + eta_s_plus_one_in2_tmp;
+    vector extinction_coeff_out = extinction_coeff_denom_out / transmission_depth_vector_out;
+    float one_minus_coat_F0_in1_tmp = 1.000000;
+    float one_minus_coat_F0_out = one_minus_coat_F0_in1_tmp - coat_ior_to_F0_out;
+    float coat_affected_specular_roughness_in2_tmp = 0.250000;
+    float coat_affected_specular_roughness_out = pow(min_1_add_coat_and_spec_roughnesses_to_power_4_out, coat_affected_specular_roughness_in2_tmp);
+    float sign_eta_s_minus_one_out = sign(eta_s_minus_one_out);
+    float specular_F0_sqrt_out = eta_s_minus_one_out / eta_s_plus_one_out;
+    vector absorption_coeff_out = extinction_coeff_out - scattering_coeff_out;
+    float one_minus_coat_F0_over_eta2_out = one_minus_coat_F0_out / coat_ior_sqr_out;
+    color one_minus_coat_F0_color_out = color(0.0);
+    NG_convert_float_color3(one_minus_coat_F0_out, one_minus_coat_F0_color_out);
+    float effective_specular_roughness_out = mix(specular_roughness, coat_affected_specular_roughness_out, coat_weight);
+    float specular_F0_out = specular_F0_sqrt_out * specular_F0_sqrt_out;
+    int absorption_coeff_x_index_tmp = 0;
+    float absorption_coeff_x_out = mx_extract(absorption_coeff_out, absorption_coeff_x_index_tmp);
+    int absorption_coeff_y_index_tmp = 1;
+    float absorption_coeff_y_out = mx_extract(absorption_coeff_out, absorption_coeff_y_index_tmp);
+    int absorption_coeff_z_index_tmp = 2;
+    float absorption_coeff_z_out = mx_extract(absorption_coeff_out, absorption_coeff_z_index_tmp);
+    float Kcoat_in1_tmp = 1.000000;
+    float Kcoat_out = Kcoat_in1_tmp - one_minus_coat_F0_over_eta2_out;
+    vector2 main_roughness_out = vector2(0.0, 0.0);
+    NG_open_pbr_anisotropy(effective_specular_roughness_out, specular_roughness_anisotropy, main_roughness_out);
+    float scaled_specular_F0_out = specular_weight * specular_F0_out;
+    float absorption_coeff_min_x_y_out = min(absorption_coeff_x_out, absorption_coeff_y_out);
+    float one_minus_Kcoat_in1_tmp = 1.000000;
+    float one_minus_Kcoat_out = one_minus_Kcoat_in1_tmp - Kcoat_out;
+    color Ebase_Kcoat_out = Ebase_out * Kcoat_out;
+    float scaled_specular_F0_clamped_low_tmp = 0.000000;
+    float scaled_specular_F0_clamped_high_tmp = 0.999990;
+    float scaled_specular_F0_clamped_out = clamp(scaled_specular_F0_out, scaled_specular_F0_clamped_low_tmp, scaled_specular_F0_clamped_high_tmp);
+    float absorption_coeff_min_out = min(absorption_coeff_min_x_y_out, absorption_coeff_z_out);
+    color one_minus_Kcoat_color_out = color(0.0);
+    NG_convert_float_color3(one_minus_Kcoat_out, one_minus_Kcoat_color_out);
+    color one_minus_Ebase_Kcoat_in1_tmp = color(1.000000, 1.000000, 1.000000);
+    color one_minus_Ebase_Kcoat_out = one_minus_Ebase_Kcoat_in1_tmp - Ebase_Kcoat_out;
+    float sqrt_scaled_specular_F0_out = sqrt(scaled_specular_F0_clamped_out);
+    vector absorption_coeff_min_vector_out = vector(0.0);
+    NG_convert_float_vector3(absorption_coeff_min_out, absorption_coeff_min_vector_out);
+    color base_darkening_out = one_minus_Kcoat_color_out / one_minus_Ebase_Kcoat_out;
+    float modulated_eta_s_epsilon_out = sign_eta_s_minus_one_out * sqrt_scaled_specular_F0_out;
+    vector absorption_coeff_shifted_out = absorption_coeff_out - absorption_coeff_min_vector_out;
+    color modulated_base_darkening_bg_tmp = color(1.000000, 1.000000, 1.000000);
+    color modulated_base_darkening_out = mix(modulated_base_darkening_bg_tmp, base_darkening_out, coat_weight_times_coat_darkening_out);
+    float one_plus_modulated_eta_s_epsilon_in1_tmp = 1.000000;
+    float one_plus_modulated_eta_s_epsilon_out = one_plus_modulated_eta_s_epsilon_in1_tmp + modulated_eta_s_epsilon_out;
+    float one_minus_modulated_eta_s_epsilon_in1_tmp = 1.000000;
+    float one_minus_modulated_eta_s_epsilon_out = one_minus_modulated_eta_s_epsilon_in1_tmp - modulated_eta_s_epsilon_out;
+    float if_absorption_coeff_shifted_value1_tmp = 0.000000;
+    vector if_absorption_coeff_shifted_out = mx_ternary(if_absorption_coeff_shifted_value1_tmp > absorption_coeff_min_out, absorption_coeff_shifted_out, absorption_coeff_out);
+    float modulated_eta_s_out = one_plus_modulated_eta_s_epsilon_out / one_minus_modulated_eta_s_epsilon_out;
+    float if_volume_absorption_value2_tmp = 0.000000;
+    vector if_volume_absorption_in2_tmp = vector(0.000000, 0.000000, 0.000000);
+    vector if_volume_absorption_out = mx_ternary(transmission_depth > if_volume_absorption_value2_tmp, if_absorption_coeff_shifted_out, if_volume_absorption_in2_tmp);
+    BSDF fuzz_bsdf_out = fuzz_weight * sheen_bsdf(geometry_normal, fuzz_color, fuzz_roughness);
+    BSDF coat_bsdf_out = null_closure;
+    mx_dielectric_bsdf(coat_weight, color(1.000000, 1.000000, 1.000000), coat_ior, coat_roughness_vector_out, 0.000000, 1.500000, geometry_coat_normal, geometry_coat_tangent, "ggx", "R", coat_bsdf_out);
+    BSDF metal_bsdf_tf_out = null_closure;
+    mx_generalized_schlick_bsdf(specular_weight, metal_reflectivity_out, metal_edgecolor_out, color(1.000000, 1.000000, 1.000000), 5.000000, main_roughness_out, thin_film_thickness_nm_out, thin_film_ior, geometry_normal, geometry_tangent, "ggx", "R", metal_bsdf_tf_out);
+    BSDF metal_bsdf_out = null_closure;
+    mx_generalized_schlick_bsdf(specular_weight, metal_reflectivity_out, metal_edgecolor_out, color(1.000000, 1.000000, 1.000000), 5.000000, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "R", metal_bsdf_out);
+    BSDF metal_bsdf_tf_mix_out = mix(metal_bsdf_out, metal_bsdf_tf_out, thin_film_weight);
+    BSDF dielectric_reflection_tf_out = null_closure;
+    mx_dielectric_bsdf(1.000000, specular_color, modulated_eta_s_out, main_roughness_out, thin_film_thickness_nm_out, thin_film_ior, geometry_normal, geometry_tangent, "ggx", "R", dielectric_reflection_tf_out);
+    BSDF dielectric_reflection_out = null_closure;
+    mx_dielectric_bsdf(1.000000, specular_color, modulated_eta_s_out, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "R", dielectric_reflection_out);
+    BSDF dielectric_reflection_tf_mix_out = mix(dielectric_reflection_out, dielectric_reflection_tf_out, thin_film_weight);
+    BSDF dielectric_transmission_out = null_closure;
+    mx_dielectric_bsdf(1.000000, if_transmission_tint_out, modulated_eta_s_out, main_roughness_out, 0.000000, 1.500000, geometry_normal, geometry_tangent, "ggx", "T", dielectric_transmission_out);
+    VDF dielectric_volume_out = null_closure;
+    mx_anisotropic_vdf(if_volume_absorption_out, if_volume_scattering_out, transmission_scatter_anisotropy, dielectric_volume_out);
+    BSDF dielectric_volume_transmission_out = layer(dielectric_transmission_out, dielectric_volume_out);
+    float subsurface_thin_walled_reflection_bsdf_weight_tmp = 1.000000;
+    BSDF subsurface_thin_walled_reflection_bsdf_out = subsurface_thin_walled_reflection_bsdf_weight_tmp * oren_nayar_diffuse_bsdf(geometry_normal, subsurface_color_nonnegative_out, base_diffuse_roughness);
+    BSDF subsurface_thin_walled_reflection_out = (subsurface_thin_walled_brdf_factor_out * subsurface_thin_walled_reflection_bsdf_out);
+    float subsurface_thin_walled_transmission_bsdf_weight_tmp = 1.000000;
+    BSDF subsurface_thin_walled_transmission_bsdf_out = subsurface_thin_walled_transmission_bsdf_weight_tmp * translucent_bsdf(geometry_normal, subsurface_color_nonnegative_out);
+    BSDF subsurface_thin_walled_transmission_out = (subsurface_thin_walled_btdf_factor_out * subsurface_thin_walled_transmission_bsdf_out);
+    float subsurface_thin_walled_mix_tmp = 0.500000;
+    BSDF subsurface_thin_walled_out = mix(subsurface_thin_walled_transmission_out, subsurface_thin_walled_reflection_out, subsurface_thin_walled_mix_tmp);
+    BSDF subsurface_bsdf_out = null_closure;
+    mx_subsurface_bsdf(1.000000, subsurface_color_nonnegative_out, subsurface_radius_scaled_out, subsurface_scatter_anisotropy, geometry_normal, subsurface_bsdf_out);
+    BSDF selected_subsurface_out = mix(subsurface_bsdf_out, subsurface_thin_walled_out, subsurface_selector_out);
+    BSDF diffuse_bsdf_out = base_weight * oren_nayar_diffuse_bsdf(geometry_normal, base_color_nonnegative_out, base_diffuse_roughness);
+    BSDF opaque_base_out = mix(diffuse_bsdf_out, selected_subsurface_out, subsurface_weight);
+    BSDF dielectric_substrate_out = mix(opaque_base_out, dielectric_volume_transmission_out, transmission_weight);
+    BSDF dielectric_base_out = layer(dielectric_reflection_tf_mix_out, dielectric_substrate_out);
+    BSDF base_substrate_out = mix(dielectric_base_out, metal_bsdf_tf_mix_out, base_metalness);
+    BSDF darkened_base_substrate_out = (modulated_base_darkening_out * base_substrate_out);
+    BSDF coat_substrate_attenuated_out = (coat_attenuation_out * darkened_base_substrate_out);
+    BSDF coat_layer_out = layer(coat_bsdf_out, coat_substrate_attenuated_out);
+    BSDF fuzz_layer_out = layer(fuzz_bsdf_out, coat_layer_out);
+    EDF uncoated_emission_edf_out = uniform_edf(emission_weight_out);
+    EDF coat_tinted_emission_edf_out = (coat_color * uncoated_emission_edf_out);
+    EDF coated_emission_edf_out = null_closure;
+    mx_generalized_schlick_edf(one_minus_coat_F0_color_out, color(0.000000, 0.000000, 0.000000), 5.000000, coat_tinted_emission_edf_out, coated_emission_edf_out);
+    EDF emission_edf_out = mix(uncoated_emission_edf_out, coated_emission_edf_out, coat_weight);
+    surfaceshader shader_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(fuzz_layer_out, emission_edf_out, geometry_opacity, 0, shader_constructor_out);
+    out = shader_constructor_out;
+}
+
+MATERIAL mx_surfacematerial(surfaceshader surface, surfaceshader backsurface, displacementshader disp)
+{
+    float opacity_weight = clamp(surface.opacity, 0.0, 1.0);
+    return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+}
+
+shader Pearl
+[[
+    string mtlx_category = "surfacematerial",
+    string mtlx_name = "Pearl"
+]]
+(
+    surfaceshader backsurfaceshader = { 0, 0, 1.0 },
+    displacementshader displacementshader1 = vector(0.0),
+    string geomprop_Nworld_space = "world",
+    string geomprop_Tworld_space = "world",
+    int geomprop_Tworld_index = 0
+    [[
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_base_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Base Weight",
+        string page = "Base",
+        string help = "Multiplier on the intensity of the reflection from the diffuse and metallic base.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_base_color = color(0.800000, 0.750000, 0.700000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Base Color",
+        string page = "Base",
+        string help = "Color of the reflection from the diffuse and metallic base."
+    ]],
+    float open_pbr_surface_surfaceshader_base_diffuse_roughness = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Base Diffuse Roughness",
+        string page = "Base",
+        int uiadvanced = 1,
+        string help = "Roughness of the diffuse reflection. Higher values cause the surface to appear flatter.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_base_metalness = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Base Metalness",
+        string page = "Base",
+        string help = "Specifies how metallic the base material appears (dials the base from pure dielectric to pure metal).",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_specular_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Specular Weight",
+        string page = "Specular",
+        string help = "Multiplies the specular reflectivity.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_specular_color = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Specular Color",
+        string page = "Specular",
+        string help = "Color of the specular reflection (controls the physical edge-tint for metals, and a non-physical overall tint for dielectrics)."
+    ]],
+    float open_pbr_surface_surfaceshader_specular_roughness = 0.350000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Specular Roughness",
+        string page = "Specular",
+        string help = "The roughness of the specular reflection. Lower numbers produce sharper reflections, higher numbers produce blurrier reflections.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_specular_ior = 1.500000
+    [[
+        float min = 0.000000,
+        float slidermin = 1.000000,
+        float slidermax = 3.000000,
+        string label = "Specular Index of Refraction",
+        string page = "Specular",
+        string help = "Index of refraction of the dielectric base.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_specular_roughness_anisotropy = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Specular Anisotropy",
+        string page = "Specular",
+        int uiadvanced = 1,
+        string help = "The directional bias of the roughness of the metal/dielectric base, resulting in increasingly stretched highlights along the tangent direction.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_transmission_weight = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Transmission Weight",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Mixture weight between the transparent and opaque dielectric base. The greater the value the more transparent the material.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_transmission_color = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Transmission Color",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Controls color of the transparent base due to Beer's law volumetric absorption under the surface (reverts to a non-physical tint when transmission_depth is zero)."
+    ]],
+    float open_pbr_surface_surfaceshader_transmission_depth = 0.000000
+    [[
+        float min = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Transmission Depth",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Specifies the distance light travels inside the transparent base before it becomes exactly the transmission_color according to Beer's law.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_transmission_scatter = color(0.000000, 0.000000, 0.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Transmission Scatter",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Controls the color of light volumetrically scattered inside the transparent base. Suitable for materials with visually significant scattering such as honey, fruit juice, murky water, opalescent glass, or milky glass."
+    ]],
+    float open_pbr_surface_surfaceshader_transmission_scatter_anisotropy = 0.000000
+    [[
+        float min = -1.000000,
+        float max = 1.000000,
+        string label = "Transmission Anisotropy",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "The amount of directional bias, or anisotropy, of the volumetric scattering in the transparent base.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_transmission_dispersion_scale = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Transmission Dispersion Scale",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Linearly scales the amount of dispersion.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_transmission_dispersion_abbe_number = 20.000000
+    [[
+        float min = 0.000000,
+        float slidermin = 9.000000,
+        float slidermax = 91.000000,
+        string label = "Transmission Dispersion Abbe Number",
+        string page = "Transmission",
+        int uiadvanced = 1,
+        string help = "Physical Abbe number of the dielectric medium, describing how much the dielectric index of refraction varies across wavelengths.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_subsurface_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Subsurface Weight",
+        string page = "Subsurface",
+        int uiadvanced = 1,
+        string help = "Mixture weight which dials the opaque dielectric base between diffuse reflection and subsurface scattering. A value of 1.0 indicates full subsurface scattering and a value 0 for diffuse reflection only.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_subsurface_color = color(0.800000, 0.750000, 0.700000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Subsurface Color",
+        string page = "Subsurface",
+        int uiadvanced = 1,
+        string help = "The observed reflection color of the subsurface scattering medium."
+    ]],
+    float open_pbr_surface_surfaceshader_subsurface_radius = 1.000000
+    [[
+        float min = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Subsurface Radius",
+        string page = "Subsurface",
+        int uiadvanced = 1,
+        string help = "Length scale of the subsurface scattering mean free path.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_subsurface_radius_scale = color(0.300000, 0.500000, 0.300000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Subsurface Radius Scale",
+        string page = "Subsurface",
+        int uiadvanced = 1,
+        string help = "RGB multiplier to subsurface_radius, giving the per-channel scattering mean-free-paths."
+    ]],
+    float open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy = 0.000000
+    [[
+        float min = -1.000000,
+        float max = 1.000000,
+        string label = "Subsurface Anisotropy",
+        string page = "Subsurface",
+        int uiadvanced = 1,
+        string help = "Controls the phase-function of subsurface scattering, where zero scatters light evenly, positive values scatter forwards, and negative values scatter backwards.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_fuzz_weight = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Fuzz Weight",
+        string page = "Fuzz",
+        int uiadvanced = 1,
+        string help = "The presence weight of a fuzz layer that can be used to approximate microfibers, for fabrics such as velvet and satin as well as dust grains.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_fuzz_color = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Fuzz Color",
+        string page = "Fuzz",
+        int uiadvanced = 1,
+        string help = "The color of the fuzz layer."
+    ]],
+    float open_pbr_surface_surfaceshader_fuzz_roughness = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Fuzz Roughness",
+        string page = "Fuzz",
+        int uiadvanced = 1,
+        string help = "The roughness of the fuzz layer.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_coat_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Coat Weight",
+        string page = "Coat",
+        string help = "The presence weight of a reflective clear-coat layer on top of the material. Use for materials such as car paint or an oily layer.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_coat_color = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Coat Color",
+        string page = "Coat",
+        string help = "The color of the clear-coat layer's transparency, due to absorption in the coat."
+    ]],
+    float open_pbr_surface_surfaceshader_coat_roughness = 0.150000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Coat Roughness",
+        string page = "Coat",
+        string help = "The roughness of the clear-coat reflections. The lower the value, the sharper the reflection.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_coat_roughness_anisotropy = 0.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Coat Anisotropy",
+        string page = "Coat",
+        int uiadvanced = 1,
+        string help = "The directional bias of the roughness of the clear-coat layer, resulting in increasingly stretched highlights along the coat tangent direction.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_coat_ior = 1.680000
+    [[
+        float min = 0.000000,
+        float slidermin = 1.000000,
+        float slidermax = 3.000000,
+        string label = "Coat Index of Refraction",
+        string page = "Coat",
+        string help = "The index of refraction of the clear-coat layer.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_coat_darkening = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Coat Darkening",
+        string page = "Coat",
+        string help = "Modulates the physical coat darkening effect.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_thin_film_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Thin Film Weight",
+        string page = "Thin Film",
+        int uiadvanced = 1,
+        string help = "Coverage weight of the thin-film. Use for materials such as multi-tone car paint or soap bubbles.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_thin_film_thickness = 0.420000
+    [[
+        float min = 0.000000,
+        float slidermax = 1.000000,
+        string label = "Thin Film Thickness",
+        string page = "Thin Film",
+        int uiadvanced = 1,
+        string help = "The thickness of the thin-film layer on the base (in micrometers).",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_thin_film_ior = 2.000000
+    [[
+        float min = 0.000000,
+        float slidermin = 1.000000,
+        float slidermax = 3.000000,
+        string label = "Thin Film Index of Refraction",
+        string page = "Thin Film",
+        int uiadvanced = 1,
+        string help = "The index of refraction of the thin-film.",
+        string widget = "number"
+    ]],
+    float open_pbr_surface_surfaceshader_emission_luminance = 0.000000
+    [[
+        float min = 0.000000,
+        float slidermax = 1000.000000,
+        string label = "Emission Luminance",
+        string page = "Emission",
+        string help = "The amount of emitted light, as a luminance in nits.",
+        string widget = "number"
+    ]],
+    color open_pbr_surface_surfaceshader_emission_color = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000),
+        string label = "Emission Color",
+        string page = "Emission",
+        string help = "The color of the emitted light."
+    ]],
+    float open_pbr_surface_surfaceshader_geometry_opacity = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string label = "Opacity",
+        string page = "Geometry",
+        string help = "The opacity of the entire material.",
+        string widget = "number"
+    ]],
+    int open_pbr_surface_surfaceshader_geometry_thin_walled = 0
+    [[
+        string label = "Thin Walled",
+        string page = "Geometry",
+        int uiadvanced = 1,
+        string help = "If true the surface is double-sided and represents an infinitesimally thin shell. Suitable for extremely geometrically thin objects such as leaves or paper.",
+        string widget = "checkBox"
+    ]],
+    output MATERIAL out = 0
+)
+{
+    closure color null_closure = 0;
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+    surfaceshader open_pbr_surface_surfaceshader_out = surfaceshader(null_closure, null_closure, 1.0);
+    NG_open_pbr_surface_surfaceshader(open_pbr_surface_surfaceshader_base_weight, open_pbr_surface_surfaceshader_base_color, open_pbr_surface_surfaceshader_base_diffuse_roughness, open_pbr_surface_surfaceshader_base_metalness, open_pbr_surface_surfaceshader_specular_weight, open_pbr_surface_surfaceshader_specular_color, open_pbr_surface_surfaceshader_specular_roughness, open_pbr_surface_surfaceshader_specular_ior, open_pbr_surface_surfaceshader_specular_roughness_anisotropy, open_pbr_surface_surfaceshader_transmission_weight, open_pbr_surface_surfaceshader_transmission_color, open_pbr_surface_surfaceshader_transmission_depth, open_pbr_surface_surfaceshader_transmission_scatter, open_pbr_surface_surfaceshader_transmission_scatter_anisotropy, open_pbr_surface_surfaceshader_transmission_dispersion_scale, open_pbr_surface_surfaceshader_transmission_dispersion_abbe_number, open_pbr_surface_surfaceshader_subsurface_weight, open_pbr_surface_surfaceshader_subsurface_color, open_pbr_surface_surfaceshader_subsurface_radius, open_pbr_surface_surfaceshader_subsurface_radius_scale, open_pbr_surface_surfaceshader_subsurface_scatter_anisotropy, open_pbr_surface_surfaceshader_fuzz_weight, open_pbr_surface_surfaceshader_fuzz_color, open_pbr_surface_surfaceshader_fuzz_roughness, open_pbr_surface_surfaceshader_coat_weight, open_pbr_surface_surfaceshader_coat_color, open_pbr_surface_surfaceshader_coat_roughness, open_pbr_surface_surfaceshader_coat_roughness_anisotropy, open_pbr_surface_surfaceshader_coat_ior, open_pbr_surface_surfaceshader_coat_darkening, open_pbr_surface_surfaceshader_thin_film_weight, open_pbr_surface_surfaceshader_thin_film_thickness, open_pbr_surface_surfaceshader_thin_film_ior, open_pbr_surface_surfaceshader_emission_luminance, open_pbr_surface_surfaceshader_emission_color, open_pbr_surface_surfaceshader_geometry_opacity, open_pbr_surface_surfaceshader_geometry_thin_walled, geomprop_Nworld_out1, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Tworld_out1, open_pbr_surface_surfaceshader_out);
+    MATERIAL Pearl_out = mx_surfacematerial(open_pbr_surface_surfaceshader_out, backsurfaceshader, displacementshader1);
+    out = Pearl_out;
+}
+

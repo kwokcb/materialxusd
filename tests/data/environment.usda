@@ -1,0 +1,21 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "root" 
+{
+    float3 xformOp:rotateXYZ = (-90, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+
+    def DomeLight "EnvironmentLight"
+    {
+        float inputs:intensity = 1
+        asset inputs:texture:file = @san_giuseppe_bridge.hdr@
+        float3 xformOp:rotateXYZ = (90, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+    }
+}
+

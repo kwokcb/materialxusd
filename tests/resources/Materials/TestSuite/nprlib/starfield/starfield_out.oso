@@ -1,0 +1,100 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\nprlib\starfield\starfield_out.oso
+shader starfield_out	%meta{string,mtlx_category,"output"} %meta{string,mtlx_name,"out"} 
+param	string	viewDir_space	"world"		%read{1,1} %write{2147483647,-1}
+param	float	multiply_vector3FA_in2	260		%meta{string,widget,"number"}  %read{2,2} %write{2147483647,-1}
+param	float	noise3d_float_amplitude	1		%meta{string,widget,"number"}  %read{6,6} %write{2147483647,-1}
+param	float	noise3d_float_pivot	0		%meta{string,widget,"number"}  %read{7,7} %write{2147483647,-1}
+param	float	contrast_float_amount	5		%meta{string,widget,"number"}  %read{11,11} %write{2147483647,-1}
+param	float	contrast_float_pivot	0.800000012		%meta{string,widget,"number"}  %read{10,12} %write{2147483647,-1}
+param	float	clamp_float_low	0		%meta{string,widget,"number"}  %read{16,16} %write{2147483647,-1}
+param	float	clamp_float_high	1		%meta{string,widget,"number"}  %read{15,15} %write{2147483647,-1}
+oparam	color	out	0 0 0		%read{2147483647,-1} %write{21,21}
+global	vector	I	%read{1,1} %write{2147483647,-1}
+local	float	___669_value	%read{6,6} %write{5,5}
+local	float	___670_N_sub_float_out	%read{11,11} %write{10,10}
+local	float	___670_N_mul_float_out	%read{12,12} %write{11,11}
+local	float	___670_N_add_float_out	%read{13,13} %write{12,12}
+local	color	___671_combine_out	%read{20,20} %write{19,19}
+local	vector	viewDir_out	%read{2,2} %write{1,1}
+local	vector	multiply_vector3FA_out	%read{5,5} %write{2,2}
+local	float	noise3d_float_out	%read{10,10} %write{3,7}
+local	float	contrast_float_out	%read{15,15} %write{8,13}
+local	float	clamp_float_out	%read{19,19} %write{16,16}
+local	color	convert_float_color3_out	%read{21,21} %write{17,20}
+const	string	$const1	"transform"		%read{0,0} %write{2147483647,-1}
+const	string	$const2	"common"		%read{1,1} %write{2147483647,-1}
+const	float	$const3	0		%read{3,8} %write{2147483647,-1}
+const	string	$const4	"mx_noise3d_float"		%read{4,4} %write{2147483647,-1}
+const	string	$const5	"snoise"		%read{5,5} %write{2147483647,-1}
+temp	float	$tmp1	%read{7,7} %write{6,6}
+const	string	$const6	"NG_contrast_float"		%read{9,9} %write{2147483647,-1}
+const	string	$const7	"clamp"		%read{14,14} %write{2147483647,-1}
+temp	float	$tmp2	%read{16,16} %write{15,15}
+const	color	$const8	0 0 0		%read{17,17} %write{2147483647,-1}
+const	string	$const9	"NG_convert_float_color3"		%read{18,18} %write{2147483647,-1}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:76
+#     vector multiply_vector3FA_out = viewDir_out * multiply_vector3FA_in2;
+	functioncall	$const1 2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl"} %line{76} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:262
+# vector transform (string to, vector p) { return transform("common",to,p); }
+	transformv	viewDir_out $const2 viewDir_space I 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{262} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:77
+#     float noise3d_float_out = 0.0;
+	mul		multiply_vector3FA_out viewDir_out multiply_vector3FA_in2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl"} %line{77} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:78
+#     mx_noise3d_float(noise3d_float_amplitude, noise3d_float_pivot, multiply_vector3FA_out, noise3d_float_out);
+	assign		noise3d_float_out $const3 	%line{78} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:79
+#     float contrast_float_out = 0.0;
+	functioncall	$const4 8 	%line{79} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:20
+#     result = value * amplitude + pivot;
+	noise		___669_value $const5 multiply_vector3FA_out 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:21
+# }
+	mul		$tmp1 ___669_value noise3d_float_amplitude 	%line{21} %argrw{"wrr"}
+	add		noise3d_float_out $tmp1 noise3d_float_pivot 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:80
+#     NG_contrast_float(noise3d_float_out, contrast_float_amount, contrast_float_pivot, contrast_float_out);
+	assign		contrast_float_out $const3 	%line{80} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:81
+#     float clamp_float_out = clamp(contrast_float_out, clamp_float_low, clamp_float_high);
+	functioncall	$const6 14 	%line{81} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:26
+#     float N_mul_float_out = N_sub_float_out * amount;
+	sub		___670_N_sub_float_out noise3d_float_out contrast_float_pivot 	%line{26} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:27
+#     float N_add_float_out = N_mul_float_out + pivot;
+	mul		___670_N_mul_float_out ___670_N_sub_float_out contrast_float_amount 	%line{27} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:28
+#     out = N_add_float_out;
+	add		___670_N_add_float_out ___670_N_mul_float_out contrast_float_pivot 	%line{28} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:29
+# }
+	assign		contrast_float_out ___670_N_add_float_out 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:82
+#     color convert_float_color3_out = color(0.0);
+	functioncall	$const7 17 	%line{82} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp2 contrast_float_out clamp_float_high 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		clamp_float_out $tmp2 clamp_float_low 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:83
+#     NG_convert_float_color3(clamp_float_out, convert_float_color3_out);
+	assign		convert_float_color3_out $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl"} %line{83} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:84
+#     out = convert_float_color3_out;
+	functioncall	$const9 21 	%line{84} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:34
+#     out = combine_out;
+	color		___671_combine_out clamp_float_out clamp_float_out clamp_float_out 	%line{34} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:35
+# }
+	assign		convert_float_color3_out ___671_combine_out 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\nprlib\\starfield\\starfield_out.osl:85
+# }
+	assign		out convert_float_color3_out 	%line{85} %argrw{"wr"}
+	end

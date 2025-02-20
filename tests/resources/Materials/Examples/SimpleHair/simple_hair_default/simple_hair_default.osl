@@ -1,0 +1,150 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void mx_chiang_hair_roughness(float longitudinal, float azimuthal, float scale_TT, float scale_TRT, output vector2 roughness_R, output vector2 roughness_TT, output vector2 roughness_TRT)
+{
+    // TODO: Write OSL implementation of this node.
+    roughness_R = vector2(0.0, 0.0);
+    roughness_TT = vector2(0.0, 0.0);
+    roughness_TRT = vector2(0.0, 0.0);
+}
+
+void mx_chiang_hair_bsdf(color tint_R, color tint_TT, color tint_TRT, float ior,
+                         vector2 roughness_R, vector2 roughness_TT, vector2 roughness_TRT,
+                         float cuticle_angle, vector absorption_coefficient, normal N, vector U, output BSDF bsdf)
+{
+#if OSL_VERSION_MAJOR >= 1 && OSL_VERSION_MINOR >= 14
+    bsdf = chiang_hair_bsdf(N, U, tint_R, tint_TT, tint_TRT, ior,
+                            roughness_R.x, roughness_TT.x, roughness_TRT.x, roughness_R.y, roughness_TT.y, roughness_TRT.y,
+                            cuticle_angle, absorption_coefficient);
+#else
+    bsdf = dielectric_bsdf(N, U, color(1), color(0), 0.1, 0.1, ior, "ggx");
+#endif
+}
+
+void mx_surface(BSDF bsdf, EDF edf, float opacity, int thin_walled, output surfaceshader result)
+{
+    result.bsdf    = bsdf;
+    result.edf     = edf;
+    result.opacity = clamp(opacity, 0.0, 1.0);
+}
+
+void NG_simple_hair_shader(float melaninConcentration, float melaninRedness, float melaninMix, color baseColor, float longitudinalRoughness, float azimuthalRoughness, float cuticleAngle, color tint_R, color tint_TT, color tint_TRT, float ior, output surfaceshader out)
+{
+    closure color null_closure = 0;
+    string geomprop_Nworld_space_tmp = "world";
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space_tmp, N);
+    vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+    vector2 spec_roughness_roughness_R = vector2(0.0, 0.0);
+    vector2 spec_roughness_roughness_TT = vector2(0.0, 0.0);
+    vector2 spec_roughness_roughness_TRT = vector2(0.0, 0.0);
+    mx_chiang_hair_roughness(longitudinalRoughness, azimuthalRoughness, 0.500000, 2.000000, spec_roughness_roughness_R, spec_roughness_roughness_TT, spec_roughness_roughness_TRT);
+    vector absorption_from_melanin_absorption = vector(1.0);
+    vector absorption_from_color_absorption = vector(1.0);
+    vector mix_melanin_basecolor_out = mix(absorption_from_color_absorption, absorption_from_melanin_absorption, melaninMix);
+    BSDF chiang_bsdf_out = null_closure;
+    mx_chiang_hair_bsdf(tint_R, tint_TT, tint_TRT, ior, spec_roughness_roughness_R, spec_roughness_roughness_TT, spec_roughness_roughness_TRT, cuticleAngle, mix_melanin_basecolor_out, geomprop_Nworld_out1, geomprop_Tworld_out1, chiang_bsdf_out);
+    surfaceshader surface_shader_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(chiang_bsdf_out, null_closure, 1.000000, 0, surface_shader_out);
+    out = surface_shader_out;
+}
+
+MATERIAL mx_surfacematerial(surfaceshader surface, surfaceshader backsurface, displacementshader disp)
+{
+    float opacity_weight = clamp(surface.opacity, 0.0, 1.0);
+    return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+}
+
+shader simple_hair_default
+[[
+    string mtlx_category = "surfacematerial",
+    string mtlx_name = "simple_hair_default"
+]]
+(
+    surfaceshader backsurfaceshader = { 0, 0, 1.0 },
+    displacementshader displacementshader1 = vector(0.0),
+    float SR_default_melaninConcentration = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    float SR_default_melaninRedness = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    float SR_default_melaninMix = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    color SR_default_baseColor = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000)
+    ]],
+    float SR_default_longitudinalRoughness = 0.100000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    float SR_default_azimuthalRoughness = 0.100000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    float SR_default_cuticleAngle = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    color SR_default_tint_R = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000)
+    ]],
+    color SR_default_tint_TT = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000)
+    ]],
+    color SR_default_tint_TRT = color(1.000000, 1.000000, 1.000000)
+    [[
+        color min = color(0.000000, 0.000000, 0.000000),
+        color max = color(1.000000, 1.000000, 1.000000)
+    ]],
+    float SR_default_ior = 1.550000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    output MATERIAL out = 0
+)
+{
+    closure color null_closure = 0;
+    surfaceshader SR_default_out = surfaceshader(null_closure, null_closure, 1.0);
+    NG_simple_hair_shader(SR_default_melaninConcentration, SR_default_melaninRedness, SR_default_melaninMix, SR_default_baseColor, SR_default_longitudinalRoughness, SR_default_azimuthalRoughness, SR_default_cuticleAngle, SR_default_tint_R, SR_default_tint_TT, SR_default_tint_TRT, SR_default_ior, SR_default_out);
+    MATERIAL simple_hair_default_out = mx_surfacematerial(SR_default_out, backsurfaceshader, displacementshader1);
+    out = simple_hair_default_out;
+}
+

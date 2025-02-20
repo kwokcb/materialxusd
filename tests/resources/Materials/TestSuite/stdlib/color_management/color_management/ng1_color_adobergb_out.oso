@@ -1,0 +1,2090 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\stdlib\color_management\color_management\ng1_color_adobergb_out.oso
+surface ng1_color_adobergb_out	%meta{string,mtlx_category,"output"} %meta{string,mtlx_name,"color_adobergb_out"} 
+param	struct color4	color_adobergb_value_cm_in			%read{2147483647,-1} %write{2147483647,-1} %struct{"color4"} %structfields{rgb,a} %structfieldtypes{"cf"} %structnfields{2}
+param	color	color_adobergb_value_cm_in.rgb	0.5 0 0		%read{15,93} %write{2147483647,-1} %mystruct{color_adobergb_value_cm_in} %mystructfield{0}
+param	float	color_adobergb_value_cm_in.a	1		%read{25,95} %write{2147483647,-1} %mystruct{color_adobergb_value_cm_in} %mystructfield{1}
+param	string	geomprop_Nworld_space	"world"		%read{160,160} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_base	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base"} %meta{string,page,"Base"} %meta{string,help,"Multiplier on the intensity of the diffuse reflection."} %meta{string,widget,"number"}  %read{271,706} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_diffuse_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Diffuse Roughness"} %meta{string,page,"Base"} %meta{int,uiadvanced,1} %meta{string,help,"Roughness of the diffuse reflection. Higher values cause the surface to appear flatter and darker."} %meta{string,widget,"number"}  %read{705,705} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_metalness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Metalness"} %meta{string,page,"Base"} %meta{string,help,"Specifies how metallic the material appears. At its maximum, the surface behaves like a metal, using fully specular reflection and complex fresnel."} %meta{string,widget,"number"}  %read{720,722} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_specular	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular"} %meta{string,page,"Specular"} %meta{string,help,"Multiplier on the intensity of the specular reflection."} %meta{string,widget,"number"}  %read{272,678} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_specular_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"} %meta{string,page,"Specular"} %meta{string,help,"Color tint on the specular reflection."}  %read{272,676} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_specular_roughness	0.200000003		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Roughness"} %meta{string,page,"Specular"} %meta{string,help,"The roughness of the specular reflection. Lower numbers produce sharper reflections, higher numbers produce blurrier reflections."} %meta{string,widget,"number"}  %read{276,578} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_specular_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Index of Refraction"} %meta{string,page,"Specular"} %meta{string,help,"Index of refraction for specular reflection."} %meta{string,widget,"number"}  %read{677,689} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_specular_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Anisotropy"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"The directional bias of reflected and transmitted light resulting in materials appearing rougher or glossier in certain directions."} %meta{string,widget,"number"}  %read{600,632} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_specular_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Rotation"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"Rotation of the axis of specular anisotropy around the surface normal."} %meta{string,widget,"number"}  %read{275,275} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_transmission	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Transmission of light through the surface for materials such as glass or water. The greater the value the more transparent the material."} %meta{string,widget,"number"}  %read{714,716} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_transmission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Color"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Color tint on the transmitted light."}  %read{684,688} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_transmission_depth	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Depth"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Specifies the distance light travels inside the material before its becomes exactly the transmission color according to Beer's law."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_transmission_scatter	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Scatter"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Scattering coefficient of the interior medium. Suitable for a large body of liquid or one that is fairly thick, such as an ocean, honey, ice, or frosted glass."}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_transmission_scatter_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission Anisotropy"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the scattering."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_transmission_dispersion	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Dispersion"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Dispersion amount, describing how much the index of refraction varies across wavelengths."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_transmission_extra_roughness	0		%meta{float,min,-1} %meta{float,slidermin,0} %meta{float,max,1} %meta{string,label,"Transmission Roughness"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Additional roughness on top of specular roughness. Positive values blur refractions more than reflections, and negative values blur refractions less."} %meta{string,widget,"number"}  %read{276,276} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_subsurface	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Subsurface"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The blend between diffuse reflection and subsurface scattering. A value of 1.0 indicates full subsurface scattering and a value 0 for diffuse reflection only."} %meta{string,widget,"number"}  %read{708,710} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_subsurface_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Color"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the subsurface scattering effect."}  %read{279,279} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_subsurface_radius	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Radius"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The mean free path. The distance which light can travel before being scattered inside the surface."}  %read{285,285} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_subsurface_scale	1		%meta{float,min,0} %meta{float,slidermax,10} %meta{string,label,"Subsurface Scale"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Scalar weight for the subsurface radius value."} %meta{string,widget,"number"}  %read{285,285} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_subsurface_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Subsurface Anisotropy"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The direction of subsurface scattering. 0 scatters light evenly, positive values scatter forward and negative values scatter backward."} %meta{string,widget,"number"}  %read{699,699} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_sheen	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The weight of a sheen layer that can be used to approximate microfibers or fabrics such as velvet and satin."} %meta{string,widget,"number"}  %read{692,692} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_sheen_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Sheen Color"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the sheen layer."}  %read{691,691} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_sheen_roughness	0.300000012		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen Roughness"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The roughness of the sheen layer."} %meta{string,widget,"number"}  %read{691,691} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat"} %meta{string,page,"Coat"} %meta{string,help,"The weight of a reflective clear-coat layer on top of the material. Use for materials such as car paint or an oily layer."} %meta{string,widget,"number"}  %read{273,744} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_coat_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Coat Color"} %meta{string,page,"Coat"} %meta{string,help,"The color of the clear-coat layer's transparency."}  %read{292,727} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_roughness	0.100000001		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Roughness"} %meta{string,page,"Coat"} %meta{string,help,"The roughness of the clear-coat reflections. The lower the value, the sharper the reflection."} %meta{string,widget,"number"}  %read{251,447} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Anisotropy"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the clear-coat layer."} %meta{string,widget,"number"}  %read{255,586} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Rotation"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The rotation of the anisotropic effect of the clear-coat layer."} %meta{string,widget,"number"}  %read{270,270} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Coat Index of Refraction"} %meta{string,page,"Coat"} %meta{string,help,"The index of refraction of the clear-coat layer."} %meta{string,widget,"number"}  %read{294,661} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_affect_color	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Color"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the saturation of diffuse reflection and subsurface scattering below the clear-coat."} %meta{string,widget,"number"}  %read{571,571} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_coat_affect_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Roughness"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the roughness of the specular reflection in the layers below the clear-coat."} %meta{string,widget,"number"}  %read{273,273} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_thin_film_thickness	0		%meta{float,min,0} %meta{float,slidermax,2000} %meta{string,label,"Thin Film Thickness"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The thickness of the thin film layer on a surface. Use for materials such as multitone car paint or soap bubbles (in nanometers)."} %meta{string,widget,"number"}  %read{665,677} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_thin_film_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Thin Film Index of Refraction"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The index of refraction of the medium surrounding the material."} %meta{string,widget,"number"}  %read{665,677} %write{2147483647,-1}
+param	float	color_adobergb_standard_surface7_emission	0		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Emission"} %meta{string,page,"Emission"} %meta{string,help,"The amount of emitted incandescent light."} %meta{string,widget,"number"}  %read{297,297} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_emission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Emission Color"} %meta{string,page,"Emission"} %meta{string,help,"The color of the emitted light."}  %read{297,297} %write{2147483647,-1}
+param	color	color_adobergb_standard_surface7_opacity	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Opacity"} %meta{string,page,"Geometry"} %meta{string,help,"The opacity of the entire material."}  %read{300,300} %write{2147483647,-1}
+param	int	color_adobergb_standard_surface7_thin_walled	0		%meta{string,label,"Thin Walled"} %meta{string,page,"Geometry"} %meta{int,uiadvanced,1} %meta{string,help,"If true the surface is double-sided and represents an infinitely thin shell. Suitable for thin objects such as tree leaves or paper."} %meta{string,widget,"checkBox"}  %read{286,286} %write{2147483647,-1}
+oparam	closure color	color_adobergb_out			%read{2147483647,-1} %write{767,767}
+global	vector	I	%read{730,730} %write{2147483647,-1}
+global	normal	N	%read{160,731} %write{2147483647,-1}
+local	int	___669_N_extract_0_index_tmp	%read{13,183} %write{11,173}
+local	float	___669_N_extract_0_out	%read{75,237} %write{15,187}
+local	int	___669_N_extract_1_index_tmp	%read{29,199} %write{27,189}
+local	float	___669_N_extract_1_out	%read{76,238} %write{31,203}
+local	int	___669_N_extract_2_index_tmp	%read{45,215} %write{43,205}
+local	float	___669_N_extract_2_out	%read{77,239} %write{47,219}
+local	int	___669_N_extract_3_index_tmp	%read{61,231} %write{59,221}
+local	float	___669_N_extract_3_out	%read{78,240} %write{63,235}
+local	float	___670_separate_outr	%read{79,241} %write{6,237}
+local	float	___670_separate_outg	%read{79,241} %write{7,238}
+local	float	___670_separate_outb	%read{79,241} %write{8,239}
+local	float	___670_separate_outa	%read{2147483647,-1} %write{9,240}
+local	color	___670_combine_out	%read{80,242} %write{79,241}
+local	int	___671_N_extract_0_index_tmp	%read{116,116} %write{114,114}
+local	float	___671_N_extract_0_out	%read{123,123} %write{116,116}
+local	int	___671_N_extract_1_index_tmp	%read{119,119} %write{117,117}
+local	float	___671_N_extract_1_out	%read{124,124} %write{119,119}
+local	int	___671_N_extract_2_index_tmp	%read{122,122} %write{120,120}
+local	float	___671_N_extract_2_out	%read{125,125} %write{122,122}
+local	float	___672_separate_outr	%read{126,126} %write{110,123}
+local	float	___672_separate_outg	%read{126,126} %write{111,124}
+local	float	___672_separate_outb	%read{126,126} %write{112,125}
+local	vector	___672_combine_out	%read{127,127} %write{126,126}
+local	int	___673_N_extract_0_index_tmp	%read{138,138} %write{136,136}
+local	float	___673_N_extract_0_out	%read{145,145} %write{138,138}
+local	int	___673_N_extract_1_index_tmp	%read{141,141} %write{139,139}
+local	float	___673_N_extract_1_out	%read{146,146} %write{141,141}
+local	int	___673_N_extract_2_index_tmp	%read{144,144} %write{142,142}
+local	float	___673_N_extract_2_out	%read{147,147} %write{144,144}
+local	float	___674_separate_outx	%read{148,148} %write{132,145}
+local	float	___674_separate_outy	%read{148,148} %write{133,146}
+local	float	___674_separate_outz	%read{148,148} %write{134,147}
+local	color	___674_combine_out	%read{149,149} %write{148,148}
+local	vector	___675_asVec_out	%read{129,129} %write{108,127}
+local	matrix	___675_transform_mat_tmp	%read{129,129} %write{128,128}
+local	vector	___675_transform_out	%read{138,144} %write{129,129}
+local	color	___675_asColor_out	%read{150,150} %write{130,149}
+local	float	___676_max_in2_tmp	%read{100,100} %write{99,99}
+local	color	___676_max_out	%read{105,105} %write{101,101}
+local	float	___676_constant_in1_tmp	%read{104,104} %write{102,102}
+local	float	___676_constant_in2_tmp	%read{104,104} %write{103,103}
+local	float	___676_constant_out	%read{105,105} %write{104,104}
+local	color	___676_gamma_out	%read{116,122} %write{105,105}
+local	color	___676_rec709_out	%read{151,151} %write{106,150}
+local	color	___677_asColor3_out	%read{101,101} %write{4,80}
+local	int	___677_alpha_index_tmp	%read{83,91} %write{81,81}
+local	float	___677_alpha_out	%read{156,156} %write{85,95}
+local	color	___677_transform_out	%read{152,154} %write{97,151}
+local	color	___677_asColor4_out.rgb	%read{157,157} %write{155,155} %mystruct{___677_asColor4_out} %mystructfield{0}
+local	float	___677_asColor4_out.a	%read{158,158} %write{156,156} %mystruct{___677_asColor4_out} %mystructfield{1}
+local	float	___678_roughness_sqr	%read{262,642} %write{254,628}
+local	float	___679_aspect	%read{262,639} %write{261,635}
+local	vector	___682_nAxis	%read{312,512} %write{308,454}
+local	float	___682_s	%read{322,508} %write{309,455}
+local	float	___682_c	%read{311,514} %write{310,456}
+local	float	___682_oc	%read{313,511} %write{311,457}
+local	float	___683_rotationRadians	%read{309,456} %write{306,452}
+local	matrix	___683_m	%read{375,562} %write{369,515}
+local	float	___683_trans.x	%read{419,565} %write{385,531} %mystruct{___683_trans} %mystructfield{0}
+local	float	___683_trans.y	%read{419,565} %write{396,542} %mystruct{___683_trans} %mystructfield{1}
+local	float	___683_trans.z	%read{419,565} %write{407,553} %mystruct{___683_trans} %mystructfield{2}
+local	float	___683_trans.w	%read{2147483647,-1} %write{418,564} %mystruct{___683_trans} %mystructfield{3}
+local	color	___684_r	%read{428,442} %write{427,427}
+local	color	___684_r_sqrt	%read{432,433} %write{428,428}
+local	color	___684_n_min	%read{435,435} %write{431,431}
+local	color	___684_n_max	%read{435,435} %write{434,434}
+local	color	___684_np1	%read{438,438} %write{436,436}
+local	color	___684_nm1	%read{440,440} %write{437,437}
+local	color	___684_k2	%read{445,446} %write{443,445}
+local	color	___685_reflection_tint	%read{661,689} %write{655,684}
+local	color	___685_transmission_tint	%read{661,689} %write{659,688}
+local	color	___687_combine_out	%read{650,650} %write{649,649}
+local	float	___699_x	%read{738,738} %write{737,737}
+local	float	___700_NdotV	%read{734,734} %write{732,732}
+local	color	___700_f	%read{740,740} %write{739,739}
+local	closure color	___702_null_closure	%read{651,747} %write{247,247}
+local	float	___702_coat_roughness_vector_out.x	%read{264,661} %write{248,267} %mystruct{___702_coat_roughness_vector_out} %mystructfield{0}
+local	float	___702_coat_roughness_vector_out.y	%read{266,661} %write{249,268} %mystruct{___702_coat_roughness_vector_out} %mystructfield{1}
+local	float	___702_coat_tangent_rotate_degree_in2_tmp	%read{270,270} %write{269,269}
+local	float	___702_coat_tangent_rotate_degree_out	%read{306,306} %write{270,270}
+local	color	___702_metal_reflectivity_out	%read{426,426} %write{271,271}
+local	color	___702_metal_edgecolor_out	%read{435,435} %write{272,272}
+local	float	___702_coat_affect_roughness_multiply1_out	%read{447,447} %write{273,273}
+local	float	___702_tangent_rotate_degree_in2_tmp	%read{275,275} %write{274,274}
+local	float	___702_tangent_rotate_degree_out	%read{452,452} %write{275,275}
+local	float	___702_transmission_roughness_add_out	%read{569,569} %write{276,276}
+local	float	___702_subsurface_color_nonnegative_in2_tmp	%read{278,278} %write{277,277}
+local	color	___702_subsurface_color_nonnegative_out	%read{643,643} %write{279,279}
+local	float	___702_coat_clamped_low_tmp	%read{284,284} %write{280,280}
+local	float	___702_coat_clamped_high_tmp	%read{283,283} %write{281,281}
+local	float	___702_coat_clamped_out	%read{571,571} %write{284,284}
+local	color	___702_subsurface_radius_scaled_out	%read{699,699} %write{285,285}
+local	float	___702_subsurface_selector_out	%read{701,703} %write{287,287}
+local	float	___702_base_color_nonnegative_in2_tmp	%read{289,289} %write{288,288}
+local	color	___702_base_color_nonnegative_out	%read{644,644} %write{290,290}
+local	color	___702_coat_attenuation_bg_tmp	%read{292,292} %write{291,291}
+local	color	___702_coat_attenuation_out	%read{724,724} %write{292,292}
+local	float	___702_one_minus_coat_ior_in1_tmp	%read{294,294} %write{293,293}
+local	float	___702_one_minus_coat_ior_out	%read{572,572} %write{294,294}
+local	float	___702_one_plus_coat_ior_in1_tmp	%read{296,296} %write{295,295}
+local	float	___702_one_plus_coat_ior_out	%read{572,572} %write{296,296}
+local	color	___702_emission_weight_out	%read{726,726} %write{297,297}
+local	color	___702_opacity_luminance_out	%read{575,575} %write{298,301}
+local	vector	___702_coat_tangent_rotate_out	%read{576,576} %write{302,419}
+local	color	___702_artistic_ior_ior	%read{436,665} %write{420,435}
+local	color	___702_artistic_ior_extinction	%read{665,665} %write{421,446}
+local	float	___702_coat_affect_roughness_multiply2_out	%read{578,581} %write{447,447}
+local	vector	___702_tangent_rotate_out	%read{579,579} %write{448,565}
+local	float	___702_transmission_roughness_clamped_low_tmp	%read{570,570} %write{566,566}
+local	float	___702_transmission_roughness_clamped_high_tmp	%read{569,569} %write{567,567}
+local	float	___702_transmission_roughness_clamped_out	%read{581,581} %write{570,570}
+local	float	___702_coat_gamma_multiply_out	%read{583,583} %write{571,571}
+local	float	___702_coat_ior_to_F0_sqrt_out	%read{584,584} %write{572,572}
+local	int	___702_opacity_luminance_float_index_tmp	%read{575,575} %write{573,573}
+local	float	___702_opacity_luminance_float_out	%read{753,753} %write{575,575}
+local	vector	___702_coat_tangent_rotate_normalize_out	%read{589,589} %write{576,576}
+local	float	___702_coat_affected_roughness_fg_tmp	%read{578,578} %write{577,577}
+local	float	___702_coat_affected_roughness_out	%read{596,596} %write{578,578}
+local	vector	___702_tangent_rotate_normalize_out	%read{618,618} %write{579,579}
+local	float	___702_coat_affected_transmission_roughness_fg_tmp	%read{581,581} %write{580,580}
+local	float	___702_coat_affected_transmission_roughness_out	%read{625,625} %write{581,581}
+local	float	___702_coat_gamma_in2_tmp	%read{583,583} %write{582,582}
+local	float	___702_coat_gamma_out	%read{643,644} %write{583,583}
+local	float	___702_coat_ior_to_F0_out	%read{646,646} %write{584,584}
+local	float	___702_coat_tangent_value2_tmp	%read{586,586} %write{585,585}
+local	vector	___702_coat_tangent_out	%read{661,661} %write{589,591}
+local	float	___702_main_roughness_out.x	%read{609,677} %write{593,612} %mystruct{___702_main_roughness_out} %mystructfield{0}
+local	float	___702_main_roughness_out.y	%read{611,677} %write{594,613} %mystruct{___702_main_roughness_out} %mystructfield{1}
+local	float	___702_main_tangent_value2_tmp	%read{615,615} %write{614,614}
+local	vector	___702_main_tangent_out	%read{665,689} %write{618,620}
+local	float	___702_transmission_roughness_out.x	%read{638,689} %write{622,641} %mystruct{___702_transmission_roughness_out} %mystructfield{0}
+local	float	___702_transmission_roughness_out.y	%read{640,689} %write{623,642} %mystruct{___702_transmission_roughness_out} %mystructfield{1}
+local	color	___702_coat_affected_subsurface_color_out	%read{694,698} %write{643,643}
+local	color	___702_coat_affected_diffuse_color_out	%read{705,705} %write{644,644}
+local	float	___702_one_minus_coat_ior_to_F0_in1_tmp	%read{646,646} %write{645,645}
+local	float	___702_one_minus_coat_ior_to_F0_out	%read{649,649} %write{646,646}
+local	color	___702_emission_color0_out	%read{739,739} %write{647,650}
+local	closure color	___702_coat_bsdf_out	%read{725,725} %write{651,662}
+local	float	___702_metal_bsdf_weight_tmp	%read{666,666} %write{663,663}
+local	string	___702_metal_bsdf_distribution_tmp	%read{665,665} %write{664,664}
+local	closure color	___702_metal_bsdf_out	%read{722,722} %write{666,666}
+local	closure color	___702_specular_bsdf_out	%read{718,718} %write{667,678}
+local	closure color	___702_transmission_bsdf_out	%read{716,716} %write{679,690}
+local	closure color	___702_sheen_bsdf_out	%read{712,712} %write{692,692}
+local	float	___702_translucent_bsdf_weight_tmp	%read{695,695} %write{693,693}
+local	closure color	___702_translucent_bsdf_out	%read{703,703} %write{695,695}
+local	closure color	___702_subsurface_bsdf_out	%read{702,702} %write{696,699}
+local	closure color	___702_selected_subsurface_bsdf_out	%read{710,710} %write{704,704}
+local	closure color	___702_diffuse_bsdf_out	%read{709,709} %write{706,706}
+local	closure color	___702_subsurface_mix_out	%read{712,712} %write{711,711}
+local	closure color	___702_sheen_layer_out	%read{715,715} %write{712,712}
+local	closure color	___702_transmission_mix_out	%read{718,718} %write{717,717}
+local	closure color	___702_specular_layer_out	%read{721,721} %write{718,718}
+local	closure color	___702_metalness_mix_out	%read{724,724} %write{723,723}
+local	closure color	___702_thin_film_layer_attenuated_out	%read{725,725} %write{724,724}
+local	closure color	___702_coat_layer_out	%read{750,750} %write{725,725}
+local	closure color	___702_emission_edf_out	%read{727,743} %write{726,726}
+local	closure color	___702_coat_tinted_emission_edf_out	%read{740,740} %write{727,727}
+local	closure color	___702_coat_emission_edf_out	%read{744,744} %write{728,740}
+local	closure color	___702_blended_coat_emission_edf_out	%read{751,751} %write{745,745}
+local	closure color	___702_shader_constructor_out.bsdf	%read{756,756} %write{746,750} %mystruct{___702_shader_constructor_out} %mystructfield{0}
+local	closure color	___702_shader_constructor_out.edf	%read{757,757} %write{747,751} %mystruct{___702_shader_constructor_out} %mystructfield{1}
+local	float	___702_shader_constructor_out.opacity	%read{755,758} %write{748,755} %mystruct{___702_shader_constructor_out} %mystructfield{2}
+local	closure color	null_closure	%read{243,244} %write{0,0}
+local	color	color_adobergb_value_cm_out.rgb	%read{177,233} %write{1,157} %mystruct{color_adobergb_value_cm_out} %mystructfield{0}
+local	float	color_adobergb_value_cm_out.a	%read{187,235} %write{2,158} %mystruct{color_adobergb_value_cm_out} %mystructfield{1}
+local	vector	geomprop_Nworld_out1	%read{308,705} %write{160,160}
+local	vector	geomprop_Tworld_out1	%read{370,620} %write{165,165}
+local	color	color_adobergb_color3_out	%read{271,290} %write{166,242}
+local	closure color	color_adobergb_standard_surface7_out.bsdf	%read{762,762} %write{243,756} %mystruct{color_adobergb_standard_surface7_out} %mystructfield{0}
+local	closure color	color_adobergb_standard_surface7_out.edf	%read{762,762} %write{244,757} %mystruct{color_adobergb_standard_surface7_out} %mystructfield{1}
+local	float	color_adobergb_standard_surface7_out.opacity	%read{760,760} %write{245,758} %mystruct{color_adobergb_standard_surface7_out} %mystructfield{2}
+local	float	___703_opacity_weight	%read{763,765} %write{761,761}
+const	int	$const1	0		%read{0,573} %write{2147483647,-1}
+const	color	$const2	0 0 0		%read{1,739} %write{2147483647,-1}
+const	float	$const3	0		%read{2,761} %write{2147483647,-1}
+const	string	$const4	"NG_adobergb_to_lin_rec709_color4"		%read{3,3} %write{2147483647,-1}
+const	string	$const5	"NG_convert_color4_color3"		%read{5,167} %write{2147483647,-1}
+const	string	$const6	"NG_separate4_color4"		%read{10,172} %write{2147483647,-1}
+const	string	$const7	"mx_extract"		%read{12,574} %write{2147483647,-1}
+temp	int	$tmp1	%read{14,14} %write{13,13}
+const	int	$const8	1		%read{17,556} %write{2147483647,-1}
+temp	int	$tmp2	%read{18,18} %write{17,17}
+const	int	$const9	2		%read{21,559} %write{2147483647,-1}
+temp	int	$tmp3	%read{22,22} %write{21,21}
+temp	int	$tmp4	%read{30,30} %write{29,29}
+temp	int	$tmp5	%read{34,34} %write{33,33}
+temp	int	$tmp6	%read{38,38} %write{37,37}
+temp	int	$tmp7	%read{46,46} %write{45,45}
+temp	int	$tmp8	%read{50,50} %write{49,49}
+temp	int	$tmp9	%read{54,54} %write{53,53}
+const	int	$const10	3		%read{59,562} %write{2147483647,-1}
+temp	int	$tmp10	%read{62,62} %write{61,61}
+temp	int	$tmp11	%read{66,66} %write{65,65}
+temp	int	$tmp12	%read{70,70} %write{69,69}
+temp	int	$tmp13	%read{84,84} %write{83,83}
+temp	int	$tmp14	%read{88,88} %write{87,87}
+temp	int	$tmp15	%read{92,92} %write{91,91}
+const	string	$const11	"NG_adobergb_to_lin_rec709_color3"		%read{98,98} %write{2147483647,-1}
+temp	color	$tmp16	%read{101,101} %write{100,100}
+const	float	$const12	563		%read{102,102} %write{2147483647,-1}
+const	float	$const13	256		%read{103,103} %write{2147483647,-1}
+const	string	$const14	"NG_lin_adobergb_to_lin_rec709_color3"		%read{107,107} %write{2147483647,-1}
+const	vector	$const15	0 0 0		%read{108,448} %write{2147483647,-1}
+const	string	$const16	"NG_convert_color3_vector3"		%read{109,109} %write{2147483647,-1}
+const	string	$const17	"NG_separate3_color3"		%read{113,113} %write{2147483647,-1}
+const	float	$const18	1.398356		%read{128,128} %write{2147483647,-1}
+const	float	$const19	-0.398356		%read{128,128} %write{2147483647,-1}
+const	float	$const20	1		%read{128,765} %write{2147483647,-1}
+const	float	$const21	-0.042929		%read{128,128} %write{2147483647,-1}
+const	float	$const22	1.042929		%read{128,128} %write{2147483647,-1}
+const	string	$const23	"NG_convert_vector3_color3"		%read{131,131} %write{2147483647,-1}
+const	string	$const24	"NG_separate3_vector3"		%read{135,135} %write{2147483647,-1}
+temp	float	$tmp17	%read{155,155} %write{152,152}
+temp	float	$tmp18	%read{155,155} %write{153,153}
+temp	float	$tmp19	%read{155,155} %write{154,154}
+const	string	$const25	"transform"		%read{159,520} %write{2147483647,-1}
+const	string	$const26	"common"		%read{160,160} %write{2147483647,-1}
+temp	vector	$tmp20	%read{165,165} %write{164,164}
+temp	float	$tmp21	%read{164,164} %write{161,161}
+temp	float	$tmp22	%read{163,163} %write{162,162}
+temp	float	$tmp23	%read{164,164} %write{163,163}
+temp	int	$tmp24	%read{176,176} %write{175,175}
+temp	int	$tmp25	%read{180,180} %write{179,179}
+temp	int	$tmp26	%read{184,184} %write{183,183}
+temp	int	$tmp27	%read{192,192} %write{191,191}
+temp	int	$tmp28	%read{196,196} %write{195,195}
+temp	int	$tmp29	%read{200,200} %write{199,199}
+temp	int	$tmp30	%read{208,208} %write{207,207}
+temp	int	$tmp31	%read{212,212} %write{211,211}
+temp	int	$tmp32	%read{216,216} %write{215,215}
+temp	int	$tmp33	%read{224,224} %write{223,223}
+temp	int	$tmp34	%read{228,228} %write{227,227}
+temp	int	$tmp35	%read{232,232} %write{231,231}
+const	string	$const27	"NG_standard_surface_surfaceshader_100"		%read{246,246} %write{2147483647,-1}
+const	string	$const28	"mx_roughness_anisotropy"		%read{250,624} %write{2147483647,-1}
+temp	float	$tmp36	%read{253,253} %write{251,251}
+const	float	$const29	1e-08		%read{254,628} %write{2147483647,-1}
+const	string	$const30	"clamp"		%read{252,759} %write{2147483647,-1}
+temp	float	$tmp37	%read{254,254} %write{253,253}
+temp	int	$tmp38	%read{256,256} %write{255,255}
+temp	float	$tmp39	%read{260,260} %write{259,259}
+const	float	$const31	0.98		%read{258,632} %write{2147483647,-1}
+temp	float	$tmp40	%read{259,259} %write{258,258}
+temp	float	$tmp41	%read{261,261} %write{260,260}
+temp	float	$tmp42	%read{263,263} %write{262,262}
+const	float	$const32	360		%read{269,274} %write{2147483647,-1}
+temp	color	$tmp43	%read{279,279} %write{278,278}
+temp	float	$tmp44	%read{284,284} %write{283,283}
+temp	float	$tmp45	%read{287,287} %write{286,286}
+temp	color	$tmp46	%read{290,290} %write{289,289}
+const	color	$const33	1 1 1		%read{291,660} %write{2147483647,-1}
+const	color	$const34	0.272229 0.674082 0.053689		%read{300,300} %write{2147483647,-1}
+const	string	$const35	"mx_luminance_color3"		%read{299,299} %write{2147483647,-1}
+temp	float	$tmp48	%read{301,301} %write{300,300}
+const	string	$const36	"mx_rotate_vector3"		%read{303,449} %write{2147483647,-1}
+const	string	$const37	"radians"		%read{304,450} %write{2147483647,-1}
+const	float	$const38	3.1415927		%read{305,451} %write{2147483647,-1}
+const	float	$const39	180		%read{305,451} %write{2147483647,-1}
+temp	float	$tmp49	%read{306,306} %write{305,305}
+const	string	$const40	"rotationMatrix"		%read{307,453} %write{2147483647,-1}
+temp	float	$tmp50	%read{313,313} %write{312,312}
+temp	float	$tmp51	%read{315,315} %write{313,313}
+temp	float	$tmp52	%read{315,315} %write{314,314}
+temp	float	$tmp53	%read{316,316} %write{315,315}
+temp	float	$tmp54	%read{369,369} %write{316,316}
+temp	float	$tmp55	%read{318,318} %write{317,317}
+temp	float	$tmp56	%read{320,320} %write{318,318}
+temp	float	$tmp57	%read{320,320} %write{319,319}
+temp	float	$tmp58	%read{323,323} %write{320,320}
+temp	float	$tmp59	%read{322,322} %write{321,321}
+temp	float	$tmp60	%read{323,323} %write{322,322}
+temp	float	$tmp61	%read{369,369} %write{323,323}
+temp	float	$tmp62	%read{325,325} %write{324,324}
+temp	float	$tmp63	%read{327,327} %write{325,325}
+temp	float	$tmp64	%read{327,327} %write{326,326}
+temp	float	$tmp65	%read{330,330} %write{327,327}
+temp	float	$tmp66	%read{329,329} %write{328,328}
+temp	float	$tmp67	%read{330,330} %write{329,329}
+temp	float	$tmp68	%read{369,369} %write{330,330}
+temp	float	$tmp69	%read{332,332} %write{331,331}
+temp	float	$tmp70	%read{334,334} %write{332,332}
+temp	float	$tmp71	%read{334,334} %write{333,333}
+temp	float	$tmp72	%read{337,337} %write{334,334}
+temp	float	$tmp73	%read{336,336} %write{335,335}
+temp	float	$tmp74	%read{337,337} %write{336,336}
+temp	float	$tmp75	%read{369,369} %write{337,337}
+temp	float	$tmp76	%read{339,339} %write{338,338}
+temp	float	$tmp77	%read{341,341} %write{339,339}
+temp	float	$tmp78	%read{341,341} %write{340,340}
+temp	float	$tmp79	%read{342,342} %write{341,341}
+temp	float	$tmp80	%read{369,369} %write{342,342}
+temp	float	$tmp81	%read{344,344} %write{343,343}
+temp	float	$tmp82	%read{346,346} %write{344,344}
+temp	float	$tmp83	%read{346,346} %write{345,345}
+temp	float	$tmp84	%read{349,349} %write{346,346}
+temp	float	$tmp85	%read{348,348} %write{347,347}
+temp	float	$tmp86	%read{349,349} %write{348,348}
+temp	float	$tmp87	%read{369,369} %write{349,349}
+temp	float	$tmp88	%read{351,351} %write{350,350}
+temp	float	$tmp89	%read{353,353} %write{351,351}
+temp	float	$tmp90	%read{353,353} %write{352,352}
+temp	float	$tmp91	%read{356,356} %write{353,353}
+temp	float	$tmp92	%read{355,355} %write{354,354}
+temp	float	$tmp93	%read{356,356} %write{355,355}
+temp	float	$tmp94	%read{369,369} %write{356,356}
+temp	float	$tmp95	%read{358,358} %write{357,357}
+temp	float	$tmp96	%read{360,360} %write{358,358}
+temp	float	$tmp97	%read{360,360} %write{359,359}
+temp	float	$tmp98	%read{363,363} %write{360,360}
+temp	float	$tmp99	%read{362,362} %write{361,361}
+temp	float	$tmp100	%read{363,363} %write{362,362}
+temp	float	$tmp101	%read{369,369} %write{363,363}
+temp	float	$tmp102	%read{365,365} %write{364,364}
+temp	float	$tmp103	%read{367,367} %write{365,365}
+temp	float	$tmp104	%read{367,367} %write{366,366}
+temp	float	$tmp105	%read{368,368} %write{367,367}
+temp	float	$tmp106	%read{369,369} %write{368,368}
+temp	float	$tmp107.x	%read{376,409} %write{370,370}
+temp	float	$tmp107.y	%read{378,411} %write{371,371}
+temp	float	$tmp107.z	%read{381,414} %write{372,372}
+temp	float	$tmp107.w	%read{384,417} %write{373,373}
+temp	float	$tmp108	%read{376,376} %write{375,375}
+temp	float	$tmp109	%read{379,379} %write{376,376}
+temp	float	$tmp110	%read{378,378} %write{377,377}
+temp	float	$tmp111	%read{379,379} %write{378,378}
+temp	float	$tmp112	%read{382,382} %write{379,379}
+temp	float	$tmp113	%read{381,381} %write{380,380}
+temp	float	$tmp114	%read{382,382} %write{381,381}
+temp	float	$tmp115	%read{385,385} %write{382,382}
+temp	float	$tmp116	%read{384,384} %write{383,383}
+temp	float	$tmp117	%read{385,385} %write{384,384}
+temp	float	$tmp118	%read{387,387} %write{386,386}
+temp	float	$tmp119	%read{390,390} %write{387,387}
+temp	float	$tmp120	%read{389,389} %write{388,388}
+temp	float	$tmp121	%read{390,390} %write{389,389}
+temp	float	$tmp122	%read{393,393} %write{390,390}
+temp	float	$tmp123	%read{392,392} %write{391,391}
+temp	float	$tmp124	%read{393,393} %write{392,392}
+temp	float	$tmp125	%read{396,396} %write{393,393}
+temp	float	$tmp126	%read{395,395} %write{394,394}
+temp	float	$tmp127	%read{396,396} %write{395,395}
+temp	float	$tmp128	%read{398,398} %write{397,397}
+temp	float	$tmp129	%read{401,401} %write{398,398}
+temp	float	$tmp130	%read{400,400} %write{399,399}
+temp	float	$tmp131	%read{401,401} %write{400,400}
+temp	float	$tmp132	%read{404,404} %write{401,401}
+temp	float	$tmp133	%read{403,403} %write{402,402}
+temp	float	$tmp134	%read{404,404} %write{403,403}
+temp	float	$tmp135	%read{407,407} %write{404,404}
+temp	float	$tmp136	%read{406,406} %write{405,405}
+temp	float	$tmp137	%read{407,407} %write{406,406}
+temp	float	$tmp138	%read{409,409} %write{408,408}
+temp	float	$tmp139	%read{412,412} %write{409,409}
+temp	float	$tmp140	%read{411,411} %write{410,410}
+temp	float	$tmp141	%read{412,412} %write{411,411}
+temp	float	$tmp142	%read{415,415} %write{412,412}
+temp	float	$tmp143	%read{414,414} %write{413,413}
+temp	float	$tmp144	%read{415,415} %write{414,414}
+temp	float	$tmp145	%read{418,418} %write{415,415}
+temp	float	$tmp146	%read{417,417} %write{416,416}
+temp	float	$tmp147	%read{418,418} %write{417,417}
+const	string	$const41	"mx_artistic_ior"		%read{422,422} %write{2147483647,-1}
+temp	color	$tmp148	%read{427,427} %write{423,423}
+const	float	$const42	0.99		%read{424,424} %write{2147483647,-1}
+temp	color	$tmp149	%read{426,426} %write{424,424}
+temp	color	$tmp150	%read{427,427} %write{426,426}
+temp	color	$tmp151	%read{431,431} %write{429,429}
+temp	color	$tmp152	%read{431,431} %write{430,430}
+temp	color	$tmp153	%read{434,434} %write{432,432}
+temp	color	$tmp154	%read{434,434} %write{433,433}
+temp	color	$tmp155	%read{439,439} %write{438,438}
+temp	color	$tmp156	%read{441,441} %write{439,439}
+temp	color	$tmp157	%read{441,441} %write{440,440}
+temp	color	$tmp158	%read{443,443} %write{441,441}
+temp	color	$tmp159	%read{443,443} %write{442,442}
+temp	color	$tmp160	%read{445,445} %write{444,444}
+temp	float	$tmp161	%read{452,452} %write{451,451}
+temp	float	$tmp162	%read{459,459} %write{458,458}
+temp	float	$tmp163	%read{461,461} %write{459,459}
+temp	float	$tmp164	%read{461,461} %write{460,460}
+temp	float	$tmp165	%read{462,462} %write{461,461}
+temp	float	$tmp166	%read{515,515} %write{462,462}
+temp	float	$tmp167	%read{464,464} %write{463,463}
+temp	float	$tmp168	%read{466,466} %write{464,464}
+temp	float	$tmp169	%read{466,466} %write{465,465}
+temp	float	$tmp170	%read{469,469} %write{466,466}
+temp	float	$tmp171	%read{468,468} %write{467,467}
+temp	float	$tmp172	%read{469,469} %write{468,468}
+temp	float	$tmp173	%read{515,515} %write{469,469}
+temp	float	$tmp174	%read{471,471} %write{470,470}
+temp	float	$tmp175	%read{473,473} %write{471,471}
+temp	float	$tmp176	%read{473,473} %write{472,472}
+temp	float	$tmp177	%read{476,476} %write{473,473}
+temp	float	$tmp178	%read{475,475} %write{474,474}
+temp	float	$tmp179	%read{476,476} %write{475,475}
+temp	float	$tmp180	%read{515,515} %write{476,476}
+temp	float	$tmp181	%read{478,478} %write{477,477}
+temp	float	$tmp182	%read{480,480} %write{478,478}
+temp	float	$tmp183	%read{480,480} %write{479,479}
+temp	float	$tmp184	%read{483,483} %write{480,480}
+temp	float	$tmp185	%read{482,482} %write{481,481}
+temp	float	$tmp186	%read{483,483} %write{482,482}
+temp	float	$tmp187	%read{515,515} %write{483,483}
+temp	float	$tmp188	%read{485,485} %write{484,484}
+temp	float	$tmp189	%read{487,487} %write{485,485}
+temp	float	$tmp190	%read{487,487} %write{486,486}
+temp	float	$tmp191	%read{488,488} %write{487,487}
+temp	float	$tmp192	%read{515,515} %write{488,488}
+temp	float	$tmp193	%read{490,490} %write{489,489}
+temp	float	$tmp194	%read{492,492} %write{490,490}
+temp	float	$tmp195	%read{492,492} %write{491,491}
+temp	float	$tmp196	%read{495,495} %write{492,492}
+temp	float	$tmp197	%read{494,494} %write{493,493}
+temp	float	$tmp198	%read{495,495} %write{494,494}
+temp	float	$tmp199	%read{515,515} %write{495,495}
+temp	float	$tmp200	%read{497,497} %write{496,496}
+temp	float	$tmp201	%read{499,499} %write{497,497}
+temp	float	$tmp202	%read{499,499} %write{498,498}
+temp	float	$tmp203	%read{502,502} %write{499,499}
+temp	float	$tmp204	%read{501,501} %write{500,500}
+temp	float	$tmp205	%read{502,502} %write{501,501}
+temp	float	$tmp206	%read{515,515} %write{502,502}
+temp	float	$tmp207	%read{504,504} %write{503,503}
+temp	float	$tmp208	%read{506,506} %write{504,504}
+temp	float	$tmp209	%read{506,506} %write{505,505}
+temp	float	$tmp210	%read{509,509} %write{506,506}
+temp	float	$tmp211	%read{508,508} %write{507,507}
+temp	float	$tmp212	%read{509,509} %write{508,508}
+temp	float	$tmp213	%read{515,515} %write{509,509}
+temp	float	$tmp214	%read{511,511} %write{510,510}
+temp	float	$tmp215	%read{513,513} %write{511,511}
+temp	float	$tmp216	%read{513,513} %write{512,512}
+temp	float	$tmp217	%read{514,514} %write{513,513}
+temp	float	$tmp218	%read{515,515} %write{514,514}
+temp	float	$tmp219.x	%read{522,555} %write{516,516}
+temp	float	$tmp219.y	%read{524,557} %write{517,517}
+temp	float	$tmp219.z	%read{527,560} %write{518,518}
+temp	float	$tmp219.w	%read{530,563} %write{519,519}
+temp	float	$tmp220	%read{522,522} %write{521,521}
+temp	float	$tmp221	%read{525,525} %write{522,522}
+temp	float	$tmp222	%read{524,524} %write{523,523}
+temp	float	$tmp223	%read{525,525} %write{524,524}
+temp	float	$tmp224	%read{528,528} %write{525,525}
+temp	float	$tmp225	%read{527,527} %write{526,526}
+temp	float	$tmp226	%read{528,528} %write{527,527}
+temp	float	$tmp227	%read{531,531} %write{528,528}
+temp	float	$tmp228	%read{530,530} %write{529,529}
+temp	float	$tmp229	%read{531,531} %write{530,530}
+temp	float	$tmp230	%read{533,533} %write{532,532}
+temp	float	$tmp231	%read{536,536} %write{533,533}
+temp	float	$tmp232	%read{535,535} %write{534,534}
+temp	float	$tmp233	%read{536,536} %write{535,535}
+temp	float	$tmp234	%read{539,539} %write{536,536}
+temp	float	$tmp235	%read{538,538} %write{537,537}
+temp	float	$tmp236	%read{539,539} %write{538,538}
+temp	float	$tmp237	%read{542,542} %write{539,539}
+temp	float	$tmp238	%read{541,541} %write{540,540}
+temp	float	$tmp239	%read{542,542} %write{541,541}
+temp	float	$tmp240	%read{544,544} %write{543,543}
+temp	float	$tmp241	%read{547,547} %write{544,544}
+temp	float	$tmp242	%read{546,546} %write{545,545}
+temp	float	$tmp243	%read{547,547} %write{546,546}
+temp	float	$tmp244	%read{550,550} %write{547,547}
+temp	float	$tmp245	%read{549,549} %write{548,548}
+temp	float	$tmp246	%read{550,550} %write{549,549}
+temp	float	$tmp247	%read{553,553} %write{550,550}
+temp	float	$tmp248	%read{552,552} %write{551,551}
+temp	float	$tmp249	%read{553,553} %write{552,552}
+temp	float	$tmp250	%read{555,555} %write{554,554}
+temp	float	$tmp251	%read{558,558} %write{555,555}
+temp	float	$tmp252	%read{557,557} %write{556,556}
+temp	float	$tmp253	%read{558,558} %write{557,557}
+temp	float	$tmp254	%read{561,561} %write{558,558}
+temp	float	$tmp255	%read{560,560} %write{559,559}
+temp	float	$tmp256	%read{561,561} %write{560,560}
+temp	float	$tmp257	%read{564,564} %write{561,561}
+temp	float	$tmp258	%read{563,563} %write{562,562}
+temp	float	$tmp259	%read{564,564} %write{563,563}
+temp	float	$tmp260	%read{570,570} %write{569,569}
+temp	int	$tmp261	%read{588,588} %write{586,586}
+const	string	$const43	"mx_ternary"		%read{587,616} %write{2147483647,-1}
+temp	float	$tmp262	%read{598,598} %write{596,596}
+temp	float	$tmp263	%read{599,599} %write{598,598}
+temp	int	$tmp264	%read{601,601} %write{600,600}
+temp	float	$tmp265	%read{605,605} %write{604,604}
+temp	float	$tmp266	%read{604,604} %write{603,603}
+temp	float	$tmp267	%read{606,606} %write{605,605}
+temp	float	$tmp268	%read{608,608} %write{607,607}
+temp	int	$tmp269	%read{617,617} %write{615,615}
+temp	float	$tmp270	%read{627,627} %write{625,625}
+temp	float	$tmp271	%read{628,628} %write{627,627}
+temp	int	$tmp272	%read{630,630} %write{629,629}
+temp	float	$tmp273	%read{634,634} %write{633,633}
+temp	float	$tmp274	%read{633,633} %write{632,632}
+temp	float	$tmp275	%read{635,635} %write{634,634}
+temp	float	$tmp276	%read{637,637} %write{636,636}
+const	string	$const44	"NG_convert_float_color3"		%read{648,648} %write{2147483647,-1}
+const	float	$const45	1.5		%read{661,689} %write{2147483647,-1}
+const	string	$const46	"ggx"		%read{661,689} %write{2147483647,-1}
+const	string	$const47	"R"		%read{653,685} %write{2147483647,-1}
+const	string	$const48	"mx_dielectric_bsdf"		%read{652,680} %write{2147483647,-1}
+const	string	$const49	"T"		%read{653,685} %write{2147483647,-1}
+temp	int	$tmp278	%read{654,654} %write{653,653}
+temp	int	$tmp279	%read{658,658} %write{657,657}
+temp	closure color	$tmp280	%read{662,662} %write{661,661}
+const	string	$const50	"thinfilm_thickness"		%read{661,689} %write{2147483647,-1}
+const	string	$const51	"thinfilm_ior"		%read{661,689} %write{2147483647,-1}
+const	string	$const52	"dielectric_bsdf"		%read{661,689} %write{2147483647,-1}
+temp	closure color	$tmp281	%read{666,666} %write{665,665}
+const	string	$const53	"conductor_bsdf"		%read{665,665} %write{2147483647,-1}
+temp	int	$tmp282	%read{670,670} %write{669,669}
+temp	int	$tmp283	%read{674,674} %write{673,673}
+temp	closure color	$tmp284	%read{678,678} %write{677,677}
+temp	int	$tmp285	%read{682,682} %write{681,681}
+temp	int	$tmp286	%read{686,686} %write{685,685}
+temp	closure color	$tmp287	%read{690,690} %write{689,689}
+temp	closure color	$tmp288	%read{692,692} %write{691,691}
+const	string	$const54	"sheen_bsdf"		%read{691,691} %write{2147483647,-1}
+temp	closure color	$tmp289	%read{695,695} %write{694,694}
+const	string	$const55	"translucent_bsdf"		%read{694,694} %write{2147483647,-1}
+const	string	$const56	"mx_subsurface_bsdf"		%read{697,697} %write{2147483647,-1}
+temp	color	$tmp290	%read{699,699} %write{698,698}
+const	string	$const57	"subsurface_bssrdf"		%read{699,699} %write{2147483647,-1}
+const	string	$const58	"mix"		%read{700,741} %write{2147483647,-1}
+temp	float	$tmp291	%read{702,702} %write{701,701}
+temp	closure color	$tmp292	%read{704,704} %write{702,702}
+temp	closure color	$tmp293	%read{704,704} %write{703,703}
+temp	closure color	$tmp294	%read{706,706} %write{705,705}
+const	string	$const59	"oren_nayar_diffuse_bsdf"		%read{705,705} %write{2147483647,-1}
+temp	float	$tmp295	%read{709,709} %write{708,708}
+temp	closure color	$tmp296	%read{711,711} %write{709,709}
+temp	closure color	$tmp297	%read{711,711} %write{710,710}
+const	string	$const60	"layer"		%read{712,725} %write{2147483647,-1}
+temp	float	$tmp298	%read{715,715} %write{714,714}
+temp	closure color	$tmp299	%read{717,717} %write{715,715}
+temp	closure color	$tmp300	%read{717,717} %write{716,716}
+temp	float	$tmp301	%read{721,721} %write{720,720}
+temp	closure color	$tmp302	%read{723,723} %write{721,721}
+temp	closure color	$tmp303	%read{723,723} %write{722,722}
+const	string	$const61	"uniform_edf"		%read{726,726} %write{2147483647,-1}
+const	float	$const62	5		%read{738,738} %write{2147483647,-1}
+const	string	$const63	"mx_generalized_schlick_edf"		%read{729,729} %write{2147483647,-1}
+temp	float	$tmp305	%read{732,732} %write{731,731}
+temp	vector	$tmp306	%read{731,731} %write{730,730}
+const	string	$const64	"mx_fresnel_schlick"		%read{733,733} %write{2147483647,-1}
+temp	float	$tmp307	%read{736,736} %write{734,734}
+temp	float	$tmp308	%read{737,737} %write{736,736}
+temp	float	$tmp309	%read{739,739} %write{738,738}
+temp	float	$tmp310	%read{743,743} %write{742,742}
+temp	closure color	$tmp311	%read{745,745} %write{743,743}
+temp	closure color	$tmp312	%read{745,745} %write{744,744}
+const	string	$const65	"mx_surface"		%read{749,749} %write{2147483647,-1}
+temp	float	$tmp313	%read{754,754} %write{753,753}
+temp	float	$tmp314	%read{761,761} %write{760,760}
+temp	closure color	$tmp315	%read{763,763} %write{762,762}
+temp	closure color	$tmp316	%read{767,767} %write{763,763}
+temp	closure color	$tmp317	%read{766,766} %write{764,764}
+const	string	$const66	"transparent"		%read{764,764} %write{2147483647,-1}
+temp	float	$tmp318	%read{766,766} %write{765,765}
+temp	closure color	$tmp319	%read{767,767} %write{766,766}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:780
+#     color4 color_adobergb_value_cm_out = color4(color(0.0), 0.0);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{780} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:781
+#     NG_adobergb_to_lin_rec709_color4(color_adobergb_value_cm_in, color_adobergb_value_cm_out);
+	assign		color_adobergb_value_cm_out.rgb $const2 	%line{781} %argrw{"wr"}
+	assign		color_adobergb_value_cm_out.a $const3 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:782
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	functioncall	$const4 159 	%line{782} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:117
+#     NG_convert_color4_color3(in, asColor3_out);
+	assign		___677_asColor3_out $const2 	%line{117} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:118
+#     int alpha_index_tmp = 3;
+	functioncall	$const5 81 	%line{118} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:36
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const3 	%line{36} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:37
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const3 	%line{37} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:38
+#     float separate_outa = 0.0;
+	assign		___670_separate_outb $const3 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:39
+#     NG_separate4_color4(in, separate_outr, separate_outg, separate_outb, separate_outa);
+	assign		___670_separate_outa $const3 	%line{39} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:40
+#     color combine_out = color( separate_outr,separate_outg,separate_outb );
+	functioncall	$const6 79 	%line{40} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const7 27 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp1 ___669_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp1 17 27 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_in.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp2 ___669_N_extract_0_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp2 21 27 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_in.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp3 ___669_N_extract_0_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp3 25 27 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_in.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_0_out color_adobergb_value_cm_in.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const7 43 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp4 ___669_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp4 33 43 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_in.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp5 ___669_N_extract_1_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp5 37 43 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_in.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp6 ___669_N_extract_1_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp6 41 43 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_in.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_1_out color_adobergb_value_cm_in.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const9 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:25
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const7 59 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp7 ___669_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp7 49 59 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_in.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp8 ___669_N_extract_2_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp8 53 59 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_in.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp9 ___669_N_extract_2_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp9 57 59 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_in.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_2_out color_adobergb_value_cm_in.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:26
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___669_N_extract_3_index_tmp $const10 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:27
+#     outr = N_extract_0_out;
+	functioncall	$const7 75 	%line{27} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp10 ___669_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp10 65 75 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_in.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp11 ___669_N_extract_3_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp11 69 75 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_in.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp12 ___669_N_extract_3_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp12 73 75 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_in.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_3_out color_adobergb_value_cm_in.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:28
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:29
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:30
+#     outa = N_extract_3_out;
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:31
+# }
+	assign		___670_separate_outa ___669_N_extract_3_out 	%line{31} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:41
+#     out = combine_out;
+	color		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{41} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:42
+# }
+	assign		___677_asColor3_out ___670_combine_out 	%line{42} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:119
+#     float alpha_out = mx_extract(in, alpha_index_tmp);
+	assign		___677_alpha_index_tmp $const10 	%line{119} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:120
+#     color transform_out = color(0.0);
+	functioncall	$const7 97 	%line{120} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp13 ___677_alpha_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp13 87 97 	%argrw{"r"}
+	compref		___677_alpha_out color_adobergb_value_cm_in.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp14 ___677_alpha_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp14 91 97 	%argrw{"r"}
+	compref		___677_alpha_out color_adobergb_value_cm_in.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp15 ___677_alpha_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp15 95 97 	%argrw{"r"}
+	compref		___677_alpha_out color_adobergb_value_cm_in.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___677_alpha_out color_adobergb_value_cm_in.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:121
+#     NG_adobergb_to_lin_rec709_color3(asColor3_out, transform_out);
+	assign		___677_transform_out $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{121} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:122
+#     color4 asColor4_out = { color(transform_out[0],transform_out[1],transform_out[2]),alpha_out };
+	functioncall	$const11 152 	%line{122} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:104
+#     color max_out = max(in, max_in2_tmp);
+	assign		___676_max_in2_tmp $const3 	%line{104} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:105
+#     float constant_in1_tmp = 563.000000;
+	assign		$tmp16 ___676_max_in2_tmp 	%line{105} %argrw{"wr"}
+	max		___676_max_out ___677_asColor3_out $tmp16 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:106
+#     float constant_in2_tmp = 256.000000;
+	assign		___676_constant_in1_tmp $const12 	%line{106} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:107
+#     float constant_out = constant_in1_tmp / constant_in2_tmp;
+	assign		___676_constant_in2_tmp $const13 	%line{107} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:108
+#     color gamma_out = pow(max_out, constant_out);
+	div		___676_constant_out ___676_constant_in1_tmp ___676_constant_in2_tmp 	%line{108} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:109
+#     color rec709_out = color(0.0);
+	pow		___676_gamma_out ___676_max_out ___676_constant_out 	%line{109} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:110
+#     NG_lin_adobergb_to_lin_rec709_color3(gamma_out, rec709_out);
+	assign		___676_rec709_out $const2 	%line{110} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:111
+#     out = rec709_out;
+	functioncall	$const14 151 	%line{111} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:93
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___675_asVec_out $const15 	%line{93} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:94
+#     matrix transform_mat_tmp = matrix(1.398356,  -0.000000,  0.000000, 0.000,  -0.398356,  1.000000,  -0.042929, 0.000,  0.000000,  0.000000,  1.042929, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const16 128 	%line{94} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:60
+#     float separate_outg = 0.0;
+	assign		___672_separate_outr $const3 	%line{60} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:61
+#     float separate_outb = 0.0;
+	assign		___672_separate_outg $const3 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:62
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___672_separate_outb $const3 	%line{62} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:63
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const17 126 	%line{63} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:47
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:48
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const7 117 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___671_N_extract_0_out ___676_gamma_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:49
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:50
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const7 120 	%line{50} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___671_N_extract_1_out ___676_gamma_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:51
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const9 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:52
+#     outr = N_extract_0_out;
+	functioncall	$const7 123 	%line{52} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___671_N_extract_2_out ___676_gamma_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:53
+#     outg = N_extract_1_out;
+	assign		___672_separate_outr ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{53} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:54
+#     outb = N_extract_2_out;
+	assign		___672_separate_outg ___671_N_extract_1_out 	%line{54} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:55
+# }
+	assign		___672_separate_outb ___671_N_extract_2_out 	%line{55} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:64
+#     out = combine_out;
+	vector		___672_combine_out ___672_separate_outr ___672_separate_outg ___672_separate_outb 	%line{64} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:65
+# }
+	assign		___675_asVec_out ___672_combine_out 	%line{65} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:95
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___675_transform_mat_tmp $const18 $const3 $const3 $const3 $const19 $const20 $const21 $const3 $const3 $const3 $const22 $const3 $const3 $const3 $const3 $const20 	%line{95} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:96
+#     color asColor_out = color(0.0);
+	transformv	___675_transform_out ___675_transform_mat_tmp ___675_asVec_out 	%line{96} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:97
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___675_asColor_out $const2 	%line{97} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:98
+#     out = asColor_out;
+	functioncall	$const23 150 	%line{98} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:83
+#     float separate_outy = 0.0;
+	assign		___674_separate_outx $const3 	%line{83} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:84
+#     float separate_outz = 0.0;
+	assign		___674_separate_outy $const3 	%line{84} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:85
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___674_separate_outz $const3 	%line{85} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:86
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 148 	%line{86} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:70
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___673_N_extract_0_index_tmp $const1 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:71
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const7 139 	%line{71} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___673_N_extract_0_out ___675_transform_out ___673_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:72
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___673_N_extract_1_index_tmp $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:73
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const7 142 	%line{73} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___673_N_extract_1_out ___675_transform_out ___673_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:74
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___673_N_extract_2_index_tmp $const9 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{74} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:75
+#     outx = N_extract_0_out;
+	functioncall	$const7 145 	%line{75} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___673_N_extract_2_out ___675_transform_out ___673_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:76
+#     outy = N_extract_1_out;
+	assign		___674_separate_outx ___673_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{76} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:77
+#     outz = N_extract_2_out;
+	assign		___674_separate_outy ___673_N_extract_1_out 	%line{77} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:78
+# }
+	assign		___674_separate_outz ___673_N_extract_2_out 	%line{78} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:87
+#     out = combine_out;
+	color		___674_combine_out ___674_separate_outx ___674_separate_outy ___674_separate_outz 	%line{87} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:88
+# }
+	assign		___675_asColor_out ___674_combine_out 	%line{88} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:99
+# }
+	assign		___676_rec709_out ___675_asColor_out 	%line{99} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:112
+# }
+	assign		___677_transform_out ___676_rec709_out 	%line{112} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:123
+#     out = asColor4_out;
+	compref		$tmp17 ___677_transform_out $const1 	%line{123} %argrw{"wrr"}
+	compref		$tmp18 ___677_transform_out $const8 	%argrw{"wrr"}
+	compref		$tmp19 ___677_transform_out $const9 	%argrw{"wrr"}
+	color		___677_asColor4_out.rgb $tmp17 $tmp18 $tmp19 	%argrw{"wrrr"}
+	assign		___677_asColor4_out.a ___677_alpha_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:124
+# }
+	assign		color_adobergb_value_cm_out.rgb ___677_asColor4_out.rgb 	%line{124} %argrw{"wr"}
+	assign		color_adobergb_value_cm_out.a ___677_asColor4_out.a 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:783
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const25 161 	%line{783} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const26 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:784
+#     color color_adobergb_color3_out = color(0.0);
+	compref		$tmp21 N $const9 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{784} %argrw{"wrr"}
+	compref		$tmp22 N $const1 	%argrw{"wrr"}
+	neg		$tmp23 $tmp22 	%argrw{"wr"}
+	vector		$tmp20 $tmp21 $const3 $tmp23 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp20 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:785
+#     NG_convert_color4_color3(color_adobergb_value_cm_out, color_adobergb_color3_out);
+	assign		color_adobergb_color3_out $const2 	%line{785} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:786
+#     surfaceshader color_adobergb_standard_surface7_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const5 243 	%line{786} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:36
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const3 	%line{36} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:37
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const3 	%line{37} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:38
+#     float separate_outa = 0.0;
+	assign		___670_separate_outb $const3 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:39
+#     NG_separate4_color4(in, separate_outr, separate_outg, separate_outb, separate_outa);
+	assign		___670_separate_outa $const3 	%line{39} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:40
+#     color combine_out = color( separate_outr,separate_outg,separate_outb );
+	functioncall	$const6 241 	%line{40} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const7 189 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp24 ___669_N_extract_0_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp24 179 189 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp25 ___669_N_extract_0_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp25 183 189 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_out.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp26 ___669_N_extract_0_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp26 187 189 	%argrw{"r"}
+	compref		___669_N_extract_0_out color_adobergb_value_cm_out.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_0_out color_adobergb_value_cm_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const7 205 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp27 ___669_N_extract_1_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp27 195 205 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp28 ___669_N_extract_1_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp28 199 205 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_out.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp29 ___669_N_extract_1_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp29 203 205 	%argrw{"r"}
+	compref		___669_N_extract_1_out color_adobergb_value_cm_out.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_1_out color_adobergb_value_cm_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const9 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:25
+#     int N_extract_3_index_tmp = 3;
+	functioncall	$const7 221 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp30 ___669_N_extract_2_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp30 211 221 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp31 ___669_N_extract_2_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp31 215 221 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_out.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp32 ___669_N_extract_2_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp32 219 221 	%argrw{"r"}
+	compref		___669_N_extract_2_out color_adobergb_value_cm_out.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_2_out color_adobergb_value_cm_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:26
+#     float N_extract_3_out = mx_extract(in, N_extract_3_index_tmp);
+	assign		___669_N_extract_3_index_tmp $const10 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:27
+#     outr = N_extract_0_out;
+	functioncall	$const7 237 	%line{27} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:110
+#     if (index == 0) return in.rgb.r;
+	eq		$tmp33 ___669_N_extract_3_index_tmp $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{110} %argrw{"wrr"}
+	if		$tmp33 227 237 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_out.rgb $const1 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:111
+#     else if (index == 1) return in.rgb.g;
+	eq		$tmp34 ___669_N_extract_3_index_tmp $const8 	%line{111} %argrw{"wrr"}
+	if		$tmp34 231 237 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_out.rgb $const8 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:112
+#     else if (index == 2) return in.rgb.b;
+	eq		$tmp35 ___669_N_extract_3_index_tmp $const9 	%line{112} %argrw{"wrr"}
+	if		$tmp35 235 237 	%argrw{"r"}
+	compref		___669_N_extract_3_out color_adobergb_value_cm_out.rgb $const9 	%argrw{"wrr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:113
+#     else return in.a;
+	assign		___669_N_extract_3_out color_adobergb_value_cm_out.a 	%line{113} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:28
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:29
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:30
+#     outa = N_extract_3_out;
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:31
+# }
+	assign		___670_separate_outa ___669_N_extract_3_out 	%line{31} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:41
+#     out = combine_out;
+	color		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{41} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:42
+# }
+	assign		color_adobergb_color3_out ___670_combine_out 	%line{42} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:787
+#     NG_standard_surface_surfaceshader_100(color_adobergb_standard_surface7_base, color_adobergb_color3_out, color_adobergb_standard_surface7_diffuse_roughness, color_adobergb_standard_surface7_metalness, color_adobergb_standard_surface7_specular, color_adobergb_standard_surface7_specular_color, color_adobergb_standard_surface7_specular_roughness, color_adobergb_standard_surface7_specular_IOR, color_adobergb_standard_surface7_specular_anisotropy, color_adobergb_standard_surface7_specular_rotation, color_adobergb_standard_surface7_transmission, color_adobergb_standard_surface7_transmission_color, color_adobergb_standard_surface7_transmission_depth, color_adobergb_standard_surface7_transmission_scatter, color_adobergb_standard_surface7_transmission_scatter_anisotropy, color_adobergb_standard_surface7_transmission_dispersion, color_adobergb_standard_surface7_transmission_extra_roughness, color_adobergb_standard_surface7_subsurface, color_adobergb_standard_surface7_subsurface_color, color_adobergb_standard_surface7_subsurface_radius, color_adobergb_standard_surface7_subsurface_scale, color_adobergb_standard_surface7_subsurface_anisotropy, color_adobergb_standard_surface7_sheen, color_adobergb_standard_surface7_sheen_color, color_adobergb_standard_surface7_sheen_roughness, color_adobergb_standard_surface7_coat, color_adobergb_standard_surface7_coat_color, color_adobergb_standard_surface7_coat_roughness, color_adobergb_standard_surface7_coat_anisotropy, color_adobergb_standard_surface7_coat_rotation, color_adobergb_standard_surface7_coat_IOR, geomprop_Nworld_out1, color_adobergb_standard_surface7_coat_affect_color, color_adobergb_standard_surface7_coat_affect_roughness, color_adobergb_standard_surface7_thin_film_thickness, color_adobergb_standard_surface7_thin_film_IOR, color_adobergb_standard_surface7_emission, color_adobergb_standard_surface7_emission_color, color_adobergb_standard_surface7_opacity, color_adobergb_standard_surface7_thin_walled, geomprop_Nworld_out1, geomprop_Tworld_out1, color_adobergb_standard_surface7_out);
+	assign		color_adobergb_standard_surface7_out.bsdf null_closure 	%line{787} %argrw{"wr"}
+	assign		color_adobergb_standard_surface7_out.edf null_closure 	%argrw{"wr"}
+	assign		color_adobergb_standard_surface7_out.opacity $const20 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:788
+#     {
+	functioncall	$const27 759 	%line{788} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:304
+#     vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+	assign		___702_null_closure $const1 	%line{304} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:305
+#     mx_roughness_anisotropy(coat_roughness, coat_anisotropy, coat_roughness_vector_out);
+	assign		___702_coat_roughness_vector_out.x $const3 	%line{305} %argrw{"wr"}
+	assign		___702_coat_roughness_vector_out.y $const3 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:306
+#     float coat_tangent_rotate_degree_in2_tmp = 360.000000;
+	functioncall	$const28 269 	%line{306} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:129
+#     if (anisotropy > 0.0)
+	mul		$tmp36 color_adobergb_standard_surface7_coat_roughness color_adobergb_standard_surface7_coat_roughness 	%line{129} %argrw{"wrr"}
+	functioncall	$const30 255 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp37 $tmp36 $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___678_roughness_sqr $tmp37 $const29 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:130
+#     {
+	gt		$tmp38 color_adobergb_standard_surface7_coat_anisotropy $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{130} %argrw{"wrr"}
+	if		$tmp38 267 269 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const30 260 	%line{132} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp40 color_adobergb_standard_surface7_coat_anisotropy $const31 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp39 $tmp40 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp41 $const20 $tmp39 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{132} %argrw{"wrr"}
+	sqrt		___679_aspect $tmp41 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:133
+#         result.y = roughness_sqr * aspect;
+	div		$tmp42 ___678_roughness_sqr ___679_aspect 	%line{133} %argrw{"wrr"}
+	min		___702_coat_roughness_vector_out.x $tmp42 $const20 	%argrw{"wrr"}
+	assign		___702_coat_roughness_vector_out.x ___702_coat_roughness_vector_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:134
+#     }
+	mul		___702_coat_roughness_vector_out.y ___678_roughness_sqr ___679_aspect 	%line{134} %argrw{"wrr"}
+	assign		___702_coat_roughness_vector_out.y ___702_coat_roughness_vector_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:138
+#         result.y = roughness_sqr;
+	assign		___702_coat_roughness_vector_out.x ___678_roughness_sqr 	%line{138} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:139
+#     }
+	assign		___702_coat_roughness_vector_out.y ___678_roughness_sqr 	%line{139} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:307
+#     float coat_tangent_rotate_degree_out = coat_rotation * coat_tangent_rotate_degree_in2_tmp;
+	assign		___702_coat_tangent_rotate_degree_in2_tmp $const32 	%line{307} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:308
+#     color metal_reflectivity_out = base_color * base;
+	mul		___702_coat_tangent_rotate_degree_out color_adobergb_standard_surface7_coat_rotation ___702_coat_tangent_rotate_degree_in2_tmp 	%line{308} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:309
+#     color metal_edgecolor_out = specular_color * specular;
+	mul		___702_metal_reflectivity_out color_adobergb_color3_out color_adobergb_standard_surface7_base 	%line{309} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:310
+#     float coat_affect_roughness_multiply1_out = coat_affect_roughness * coat;
+	mul		___702_metal_edgecolor_out color_adobergb_standard_surface7_specular_color color_adobergb_standard_surface7_specular 	%line{310} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:311
+#     float tangent_rotate_degree_in2_tmp = 360.000000;
+	mul		___702_coat_affect_roughness_multiply1_out color_adobergb_standard_surface7_coat_affect_roughness color_adobergb_standard_surface7_coat 	%line{311} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:312
+#     float tangent_rotate_degree_out = specular_rotation * tangent_rotate_degree_in2_tmp;
+	assign		___702_tangent_rotate_degree_in2_tmp $const32 	%line{312} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:313
+#     float transmission_roughness_add_out = specular_roughness + transmission_extra_roughness;
+	mul		___702_tangent_rotate_degree_out color_adobergb_standard_surface7_specular_rotation ___702_tangent_rotate_degree_in2_tmp 	%line{313} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:314
+#     float subsurface_color_nonnegative_in2_tmp = 0.000000;
+	add		___702_transmission_roughness_add_out color_adobergb_standard_surface7_specular_roughness color_adobergb_standard_surface7_transmission_extra_roughness 	%line{314} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:315
+#     color subsurface_color_nonnegative_out = max(subsurface_color, subsurface_color_nonnegative_in2_tmp);
+	assign		___702_subsurface_color_nonnegative_in2_tmp $const3 	%line{315} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:316
+#     float coat_clamped_low_tmp = 0.000000;
+	assign		$tmp43 ___702_subsurface_color_nonnegative_in2_tmp 	%line{316} %argrw{"wr"}
+	max		___702_subsurface_color_nonnegative_out color_adobergb_standard_surface7_subsurface_color $tmp43 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:317
+#     float coat_clamped_high_tmp = 1.000000;
+	assign		___702_coat_clamped_low_tmp $const3 	%line{317} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:318
+#     float coat_clamped_out = clamp(coat, coat_clamped_low_tmp, coat_clamped_high_tmp);
+	assign		___702_coat_clamped_high_tmp $const20 	%line{318} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:319
+#     color subsurface_radius_scaled_out = subsurface_radius * subsurface_scale;
+	functioncall	$const30 285 	%line{319} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp44 color_adobergb_standard_surface7_coat ___702_coat_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___702_coat_clamped_out $tmp44 ___702_coat_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:320
+#     float subsurface_selector_out = float(thin_walled);
+	mul		___702_subsurface_radius_scaled_out color_adobergb_standard_surface7_subsurface_radius color_adobergb_standard_surface7_subsurface_scale 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{320} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:321
+#     float base_color_nonnegative_in2_tmp = 0.000000;
+	assign		$tmp45 color_adobergb_standard_surface7_thin_walled 	%line{321} %argrw{"wr"}
+	assign		___702_subsurface_selector_out $tmp45 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:322
+#     color base_color_nonnegative_out = max(base_color, base_color_nonnegative_in2_tmp);
+	assign		___702_base_color_nonnegative_in2_tmp $const3 	%line{322} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:323
+#     color coat_attenuation_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	assign		$tmp46 ___702_base_color_nonnegative_in2_tmp 	%line{323} %argrw{"wr"}
+	max		___702_base_color_nonnegative_out color_adobergb_color3_out $tmp46 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:324
+#     color coat_attenuation_out = mix(coat_attenuation_bg_tmp, coat_color, coat);
+	assign		___702_coat_attenuation_bg_tmp $const33 	%line{324} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:325
+#     float one_minus_coat_ior_in1_tmp = 1.000000;
+	mix		___702_coat_attenuation_out ___702_coat_attenuation_bg_tmp color_adobergb_standard_surface7_coat_color color_adobergb_standard_surface7_coat 	%line{325} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:326
+#     float one_minus_coat_ior_out = one_minus_coat_ior_in1_tmp - coat_IOR;
+	assign		___702_one_minus_coat_ior_in1_tmp $const20 	%line{326} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:327
+#     float one_plus_coat_ior_in1_tmp = 1.000000;
+	sub		___702_one_minus_coat_ior_out ___702_one_minus_coat_ior_in1_tmp color_adobergb_standard_surface7_coat_IOR 	%line{327} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:328
+#     float one_plus_coat_ior_out = one_plus_coat_ior_in1_tmp + coat_IOR;
+	assign		___702_one_plus_coat_ior_in1_tmp $const20 	%line{328} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:329
+#     color emission_weight_out = emission_color * emission1;
+	add		___702_one_plus_coat_ior_out ___702_one_plus_coat_ior_in1_tmp color_adobergb_standard_surface7_coat_IOR 	%line{329} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:330
+#     color opacity_luminance_out = color(0.0);
+	mul		___702_emission_weight_out color_adobergb_standard_surface7_emission_color color_adobergb_standard_surface7_emission 	%line{330} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:331
+#     mx_luminance_color3(opacity, color(0.272229, 0.674082, 0.053689), opacity_luminance_out);
+	assign		___702_opacity_luminance_out $const2 	%line{331} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:332
+#     vector coat_tangent_rotate_out = vector(0.0);
+	functioncall	$const35 302 	%line{332} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:145
+# }
+	dot		$tmp48 color_adobergb_standard_surface7_opacity $const34 	%line{145} %argrw{"wrr"}
+	assign		___702_opacity_luminance_out $tmp48 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:333
+#     mx_rotate_vector3(tangent, coat_tangent_rotate_degree_out, coat_normal, coat_tangent_rotate_out);
+	assign		___702_coat_tangent_rotate_out $const15 	%line{333} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:334
+#     color artistic_ior_ior = color(0.0);
+	functioncall	$const36 420 	%line{334} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:163
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const37 307 	%line{163} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp49 $const38 $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___683_rotationRadians ___702_coat_tangent_rotate_degree_out $tmp49 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:164
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const40 370 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{164} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:150
+#     float s = sin(angle);
+	normalize	___682_nAxis geomprop_Nworld_out1 	%line{150} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:151
+#     float c = cos(angle);
+	sin		___682_s ___683_rotationRadians 	%line{151} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:152
+#     float oc = 1.0 - c;
+	cos		___682_c ___683_rotationRadians 	%line{152} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:153
+# 
+	sub		___682_oc $const20 ___682_c 	%line{153} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:155
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp50 ___682_nAxis $const1 	%line{155} %argrw{"wrr"}
+	mul		$tmp51 ___682_oc $tmp50 	%argrw{"wrr"}
+	compref		$tmp52 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp53 $tmp51 $tmp52 	%argrw{"wrr"}
+	add		$tmp54 $tmp53 ___682_c 	%argrw{"wrr"}
+	compref		$tmp55 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp56 ___682_oc $tmp55 	%argrw{"wrr"}
+	compref		$tmp57 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp58 $tmp56 $tmp57 	%argrw{"wrr"}
+	compref		$tmp59 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp60 $tmp59 ___682_s 	%argrw{"wrr"}
+	sub		$tmp61 $tmp58 $tmp60 	%argrw{"wrr"}
+	compref		$tmp62 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp63 ___682_oc $tmp62 	%argrw{"wrr"}
+	compref		$tmp64 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp65 $tmp63 $tmp64 	%argrw{"wrr"}
+	compref		$tmp66 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp67 $tmp66 ___682_s 	%argrw{"wrr"}
+	add		$tmp68 $tmp65 $tmp67 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:156
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp69 ___682_nAxis $const1 	%line{156} %argrw{"wrr"}
+	mul		$tmp70 ___682_oc $tmp69 	%argrw{"wrr"}
+	compref		$tmp71 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp72 $tmp70 $tmp71 	%argrw{"wrr"}
+	compref		$tmp73 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp74 $tmp73 ___682_s 	%argrw{"wrr"}
+	add		$tmp75 $tmp72 $tmp74 	%argrw{"wrr"}
+	compref		$tmp76 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp77 ___682_oc $tmp76 	%argrw{"wrr"}
+	compref		$tmp78 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp79 $tmp77 $tmp78 	%argrw{"wrr"}
+	add		$tmp80 $tmp79 ___682_c 	%argrw{"wrr"}
+	compref		$tmp81 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp82 ___682_oc $tmp81 	%argrw{"wrr"}
+	compref		$tmp83 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp84 $tmp82 $tmp83 	%argrw{"wrr"}
+	compref		$tmp85 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp86 $tmp85 ___682_s 	%argrw{"wrr"}
+	sub		$tmp87 $tmp84 $tmp86 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:157
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp88 ___682_nAxis $const9 	%line{157} %argrw{"wrr"}
+	mul		$tmp89 ___682_oc $tmp88 	%argrw{"wrr"}
+	compref		$tmp90 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp91 $tmp89 $tmp90 	%argrw{"wrr"}
+	compref		$tmp92 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp93 $tmp92 ___682_s 	%argrw{"wrr"}
+	sub		$tmp94 $tmp91 $tmp93 	%argrw{"wrr"}
+	compref		$tmp95 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp96 ___682_oc $tmp95 	%argrw{"wrr"}
+	compref		$tmp97 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp98 $tmp96 $tmp97 	%argrw{"wrr"}
+	compref		$tmp99 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp100 $tmp99 ___682_s 	%argrw{"wrr"}
+	add		$tmp101 $tmp98 $tmp100 	%argrw{"wrr"}
+	compref		$tmp102 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp103 ___682_oc $tmp102 	%argrw{"wrr"}
+	compref		$tmp104 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp105 $tmp103 $tmp104 	%argrw{"wrr"}
+	add		$tmp106 $tmp105 ___682_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:155
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___683_m $tmp54 $tmp61 $tmp68 $const3 $tmp75 $tmp80 $tmp87 $const3 $tmp94 $tmp101 $tmp106 $const3 $const3 $const3 $const3 $const20 	%line{155} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:165
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp107.x geomprop_Tworld_out1 $const1 	%line{165} %argrw{"wrr"}
+	compref		$tmp107.y geomprop_Tworld_out1 $const8 	%argrw{"wrr"}
+	compref		$tmp107.z geomprop_Tworld_out1 $const9 	%argrw{"wrr"}
+	assign		$tmp107.w $const20 	%argrw{"wr"}
+	functioncall	$const25 419 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp108 ___683_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp109 $tmp108 $tmp107.x 	%argrw{"wrr"}
+	mxcompref	$tmp110 ___683_m $const8 $const1 	%argrw{"wrrr"}
+	mul		$tmp111 $tmp110 $tmp107.y 	%argrw{"wrr"}
+	add		$tmp112 $tmp109 $tmp111 	%argrw{"wrr"}
+	mxcompref	$tmp113 ___683_m $const9 $const1 	%argrw{"wrrr"}
+	mul		$tmp114 $tmp113 $tmp107.z 	%argrw{"wrr"}
+	add		$tmp115 $tmp112 $tmp114 	%argrw{"wrr"}
+	mxcompref	$tmp116 ___683_m $const10 $const1 	%argrw{"wrrr"}
+	mul		$tmp117 $tmp116 $tmp107.w 	%argrw{"wrr"}
+	add		___683_trans.x $tmp115 $tmp117 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp118 ___683_m $const1 $const8 	%line{416} %argrw{"wrrr"}
+	mul		$tmp119 $tmp118 $tmp107.x 	%argrw{"wrr"}
+	mxcompref	$tmp120 ___683_m $const8 $const8 	%argrw{"wrrr"}
+	mul		$tmp121 $tmp120 $tmp107.y 	%argrw{"wrr"}
+	add		$tmp122 $tmp119 $tmp121 	%argrw{"wrr"}
+	mxcompref	$tmp123 ___683_m $const9 $const8 	%argrw{"wrrr"}
+	mul		$tmp124 $tmp123 $tmp107.z 	%argrw{"wrr"}
+	add		$tmp125 $tmp122 $tmp124 	%argrw{"wrr"}
+	mxcompref	$tmp126 ___683_m $const10 $const8 	%argrw{"wrrr"}
+	mul		$tmp127 $tmp126 $tmp107.w 	%argrw{"wrr"}
+	add		___683_trans.y $tmp125 $tmp127 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp128 ___683_m $const1 $const9 	%line{417} %argrw{"wrrr"}
+	mul		$tmp129 $tmp128 $tmp107.x 	%argrw{"wrr"}
+	mxcompref	$tmp130 ___683_m $const8 $const9 	%argrw{"wrrr"}
+	mul		$tmp131 $tmp130 $tmp107.y 	%argrw{"wrr"}
+	add		$tmp132 $tmp129 $tmp131 	%argrw{"wrr"}
+	mxcompref	$tmp133 ___683_m $const9 $const9 	%argrw{"wrrr"}
+	mul		$tmp134 $tmp133 $tmp107.z 	%argrw{"wrr"}
+	add		$tmp135 $tmp132 $tmp134 	%argrw{"wrr"}
+	mxcompref	$tmp136 ___683_m $const10 $const9 	%argrw{"wrrr"}
+	mul		$tmp137 $tmp136 $tmp107.w 	%argrw{"wrr"}
+	add		___683_trans.z $tmp135 $tmp137 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp138 ___683_m $const1 $const10 	%line{418} %argrw{"wrrr"}
+	mul		$tmp139 $tmp138 $tmp107.x 	%argrw{"wrr"}
+	mxcompref	$tmp140 ___683_m $const8 $const10 	%argrw{"wrrr"}
+	mul		$tmp141 $tmp140 $tmp107.y 	%argrw{"wrr"}
+	add		$tmp142 $tmp139 $tmp141 	%argrw{"wrr"}
+	mxcompref	$tmp143 ___683_m $const9 $const10 	%argrw{"wrrr"}
+	mul		$tmp144 $tmp143 $tmp107.z 	%argrw{"wrr"}
+	add		$tmp145 $tmp142 $tmp144 	%argrw{"wrr"}
+	mxcompref	$tmp146 ___683_m $const10 $const10 	%argrw{"wrrr"}
+	mul		$tmp147 $tmp146 $tmp107.w 	%argrw{"wrr"}
+	add		___683_trans.w $tmp145 $tmp147 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:166
+# }
+	vector		___702_coat_tangent_rotate_out ___683_trans.x ___683_trans.y ___683_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{166} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:335
+#     color artistic_ior_extinction = color(0.0);
+	assign		___702_artistic_ior_ior $const2 	%line{335} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:336
+#     mx_artistic_ior(metal_reflectivity_out, metal_edgecolor_out, artistic_ior_ior, artistic_ior_extinction);
+	assign		___702_artistic_ior_extinction $const2 	%line{336} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:337
+#     float coat_affect_roughness_multiply2_out = coat_affect_roughness_multiply1_out * coat_roughness;
+	functioncall	$const41 447 	%line{337} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:174
+#     color r_sqrt = sqrt(r);
+	assign		$tmp148 $const3 	%line{174} %argrw{"wr"}
+	assign		$tmp149 $const42 	%argrw{"wr"}
+	functioncall	$const30 428 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp150 ___702_metal_reflectivity_out $tmp149 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___684_r $tmp150 $tmp148 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:175
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___684_r_sqrt ___684_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{175} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:176
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp151 $const20 ___684_r 	%line{176} %argrw{"wrr"}
+	add		$tmp152 $const20 ___684_r 	%argrw{"wrr"}
+	div		___684_n_min $tmp151 $tmp152 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:177
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp153 $const20 ___684_r_sqrt 	%line{177} %argrw{"wrr"}
+	sub		$tmp154 $const20 ___684_r_sqrt 	%argrw{"wrr"}
+	div		___684_n_max $tmp153 $tmp154 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:178
+# 
+	mix		___702_artistic_ior_ior ___684_n_max ___684_n_min ___702_metal_edgecolor_out 	%line{178} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:180
+#     color nm1 = ior - 1.0;
+	add		___684_np1 ___702_artistic_ior_ior $const20 	%line{180} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:181
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___684_nm1 ___702_artistic_ior_ior $const20 	%line{181} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:182
+#     k2 = max(k2, 0.0);
+	mul		$tmp155 ___684_np1 ___684_np1 	%line{182} %argrw{"wrr"}
+	mul		$tmp156 $tmp155 ___684_r 	%argrw{"wrr"}
+	mul		$tmp157 ___684_nm1 ___684_nm1 	%argrw{"wrr"}
+	sub		$tmp158 $tmp156 $tmp157 	%argrw{"wrr"}
+	sub		$tmp159 $const20 ___684_r 	%argrw{"wrr"}
+	div		___684_k2 $tmp158 $tmp159 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:183
+#     extinction = sqrt(k2);
+	assign		$tmp160 $const3 	%line{183} %argrw{"wr"}
+	max		___684_k2 ___684_k2 $tmp160 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:184
+# }
+	sqrt		___702_artistic_ior_extinction ___684_k2 	%line{184} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:338
+#     vector tangent_rotate_out = vector(0.0);
+	mul		___702_coat_affect_roughness_multiply2_out ___702_coat_affect_roughness_multiply1_out color_adobergb_standard_surface7_coat_roughness 	%line{338} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:339
+#     mx_rotate_vector3(tangent, tangent_rotate_degree_out, normal1, tangent_rotate_out);
+	assign		___702_tangent_rotate_out $const15 	%line{339} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:340
+#     float transmission_roughness_clamped_low_tmp = 0.000000;
+	functioncall	$const36 566 	%line{340} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:163
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const37 453 	%line{163} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp161 $const38 $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___683_rotationRadians ___702_tangent_rotate_degree_out $tmp161 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:164
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const40 516 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{164} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:150
+#     float s = sin(angle);
+	normalize	___682_nAxis geomprop_Nworld_out1 	%line{150} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:151
+#     float c = cos(angle);
+	sin		___682_s ___683_rotationRadians 	%line{151} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:152
+#     float oc = 1.0 - c;
+	cos		___682_c ___683_rotationRadians 	%line{152} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:153
+# 
+	sub		___682_oc $const20 ___682_c 	%line{153} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:155
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp162 ___682_nAxis $const1 	%line{155} %argrw{"wrr"}
+	mul		$tmp163 ___682_oc $tmp162 	%argrw{"wrr"}
+	compref		$tmp164 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp165 $tmp163 $tmp164 	%argrw{"wrr"}
+	add		$tmp166 $tmp165 ___682_c 	%argrw{"wrr"}
+	compref		$tmp167 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp168 ___682_oc $tmp167 	%argrw{"wrr"}
+	compref		$tmp169 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp170 $tmp168 $tmp169 	%argrw{"wrr"}
+	compref		$tmp171 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp172 $tmp171 ___682_s 	%argrw{"wrr"}
+	sub		$tmp173 $tmp170 $tmp172 	%argrw{"wrr"}
+	compref		$tmp174 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp175 ___682_oc $tmp174 	%argrw{"wrr"}
+	compref		$tmp176 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp177 $tmp175 $tmp176 	%argrw{"wrr"}
+	compref		$tmp178 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp179 $tmp178 ___682_s 	%argrw{"wrr"}
+	add		$tmp180 $tmp177 $tmp179 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:156
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp181 ___682_nAxis $const1 	%line{156} %argrw{"wrr"}
+	mul		$tmp182 ___682_oc $tmp181 	%argrw{"wrr"}
+	compref		$tmp183 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp184 $tmp182 $tmp183 	%argrw{"wrr"}
+	compref		$tmp185 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp186 $tmp185 ___682_s 	%argrw{"wrr"}
+	add		$tmp187 $tmp184 $tmp186 	%argrw{"wrr"}
+	compref		$tmp188 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp189 ___682_oc $tmp188 	%argrw{"wrr"}
+	compref		$tmp190 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp191 $tmp189 $tmp190 	%argrw{"wrr"}
+	add		$tmp192 $tmp191 ___682_c 	%argrw{"wrr"}
+	compref		$tmp193 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp194 ___682_oc $tmp193 	%argrw{"wrr"}
+	compref		$tmp195 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp196 $tmp194 $tmp195 	%argrw{"wrr"}
+	compref		$tmp197 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp198 $tmp197 ___682_s 	%argrw{"wrr"}
+	sub		$tmp199 $tmp196 $tmp198 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:157
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp200 ___682_nAxis $const9 	%line{157} %argrw{"wrr"}
+	mul		$tmp201 ___682_oc $tmp200 	%argrw{"wrr"}
+	compref		$tmp202 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp203 $tmp201 $tmp202 	%argrw{"wrr"}
+	compref		$tmp204 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp205 $tmp204 ___682_s 	%argrw{"wrr"}
+	sub		$tmp206 $tmp203 $tmp205 	%argrw{"wrr"}
+	compref		$tmp207 ___682_nAxis $const8 	%argrw{"wrr"}
+	mul		$tmp208 ___682_oc $tmp207 	%argrw{"wrr"}
+	compref		$tmp209 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp210 $tmp208 $tmp209 	%argrw{"wrr"}
+	compref		$tmp211 ___682_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp212 $tmp211 ___682_s 	%argrw{"wrr"}
+	add		$tmp213 $tmp210 $tmp212 	%argrw{"wrr"}
+	compref		$tmp214 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp215 ___682_oc $tmp214 	%argrw{"wrr"}
+	compref		$tmp216 ___682_nAxis $const9 	%argrw{"wrr"}
+	mul		$tmp217 $tmp215 $tmp216 	%argrw{"wrr"}
+	add		$tmp218 $tmp217 ___682_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:155
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___683_m $tmp166 $tmp173 $tmp180 $const3 $tmp187 $tmp192 $tmp199 $const3 $tmp206 $tmp213 $tmp218 $const3 $const3 $const3 $const3 $const20 	%line{155} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:165
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp219.x geomprop_Tworld_out1 $const1 	%line{165} %argrw{"wrr"}
+	compref		$tmp219.y geomprop_Tworld_out1 $const8 	%argrw{"wrr"}
+	compref		$tmp219.z geomprop_Tworld_out1 $const9 	%argrw{"wrr"}
+	assign		$tmp219.w $const20 	%argrw{"wr"}
+	functioncall	$const25 565 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp220 ___683_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp221 $tmp220 $tmp219.x 	%argrw{"wrr"}
+	mxcompref	$tmp222 ___683_m $const8 $const1 	%argrw{"wrrr"}
+	mul		$tmp223 $tmp222 $tmp219.y 	%argrw{"wrr"}
+	add		$tmp224 $tmp221 $tmp223 	%argrw{"wrr"}
+	mxcompref	$tmp225 ___683_m $const9 $const1 	%argrw{"wrrr"}
+	mul		$tmp226 $tmp225 $tmp219.z 	%argrw{"wrr"}
+	add		$tmp227 $tmp224 $tmp226 	%argrw{"wrr"}
+	mxcompref	$tmp228 ___683_m $const10 $const1 	%argrw{"wrrr"}
+	mul		$tmp229 $tmp228 $tmp219.w 	%argrw{"wrr"}
+	add		___683_trans.x $tmp227 $tmp229 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp230 ___683_m $const1 $const8 	%line{416} %argrw{"wrrr"}
+	mul		$tmp231 $tmp230 $tmp219.x 	%argrw{"wrr"}
+	mxcompref	$tmp232 ___683_m $const8 $const8 	%argrw{"wrrr"}
+	mul		$tmp233 $tmp232 $tmp219.y 	%argrw{"wrr"}
+	add		$tmp234 $tmp231 $tmp233 	%argrw{"wrr"}
+	mxcompref	$tmp235 ___683_m $const9 $const8 	%argrw{"wrrr"}
+	mul		$tmp236 $tmp235 $tmp219.z 	%argrw{"wrr"}
+	add		$tmp237 $tmp234 $tmp236 	%argrw{"wrr"}
+	mxcompref	$tmp238 ___683_m $const10 $const8 	%argrw{"wrrr"}
+	mul		$tmp239 $tmp238 $tmp219.w 	%argrw{"wrr"}
+	add		___683_trans.y $tmp237 $tmp239 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp240 ___683_m $const1 $const9 	%line{417} %argrw{"wrrr"}
+	mul		$tmp241 $tmp240 $tmp219.x 	%argrw{"wrr"}
+	mxcompref	$tmp242 ___683_m $const8 $const9 	%argrw{"wrrr"}
+	mul		$tmp243 $tmp242 $tmp219.y 	%argrw{"wrr"}
+	add		$tmp244 $tmp241 $tmp243 	%argrw{"wrr"}
+	mxcompref	$tmp245 ___683_m $const9 $const9 	%argrw{"wrrr"}
+	mul		$tmp246 $tmp245 $tmp219.z 	%argrw{"wrr"}
+	add		$tmp247 $tmp244 $tmp246 	%argrw{"wrr"}
+	mxcompref	$tmp248 ___683_m $const10 $const9 	%argrw{"wrrr"}
+	mul		$tmp249 $tmp248 $tmp219.w 	%argrw{"wrr"}
+	add		___683_trans.z $tmp247 $tmp249 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp250 ___683_m $const1 $const10 	%line{418} %argrw{"wrrr"}
+	mul		$tmp251 $tmp250 $tmp219.x 	%argrw{"wrr"}
+	mxcompref	$tmp252 ___683_m $const8 $const10 	%argrw{"wrrr"}
+	mul		$tmp253 $tmp252 $tmp219.y 	%argrw{"wrr"}
+	add		$tmp254 $tmp251 $tmp253 	%argrw{"wrr"}
+	mxcompref	$tmp255 ___683_m $const9 $const10 	%argrw{"wrrr"}
+	mul		$tmp256 $tmp255 $tmp219.z 	%argrw{"wrr"}
+	add		$tmp257 $tmp254 $tmp256 	%argrw{"wrr"}
+	mxcompref	$tmp258 ___683_m $const10 $const10 	%argrw{"wrrr"}
+	mul		$tmp259 $tmp258 $tmp219.w 	%argrw{"wrr"}
+	add		___683_trans.w $tmp257 $tmp259 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:166
+# }
+	vector		___702_tangent_rotate_out ___683_trans.x ___683_trans.y ___683_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{166} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:341
+#     float transmission_roughness_clamped_high_tmp = 1.000000;
+	assign		___702_transmission_roughness_clamped_low_tmp $const3 	%line{341} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:342
+#     float transmission_roughness_clamped_out = clamp(transmission_roughness_add_out, transmission_roughness_clamped_low_tmp, transmission_roughness_clamped_high_tmp);
+	assign		___702_transmission_roughness_clamped_high_tmp $const20 	%line{342} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:343
+#     float coat_gamma_multiply_out = coat_clamped_out * coat_affect_color;
+	functioncall	$const30 571 	%line{343} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp260 ___702_transmission_roughness_add_out ___702_transmission_roughness_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___702_transmission_roughness_clamped_out $tmp260 ___702_transmission_roughness_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:344
+#     float coat_ior_to_F0_sqrt_out = one_minus_coat_ior_out / one_plus_coat_ior_out;
+	mul		___702_coat_gamma_multiply_out ___702_coat_clamped_out color_adobergb_standard_surface7_coat_affect_color 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{344} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:345
+#     int opacity_luminance_float_index_tmp = 0;
+	div		___702_coat_ior_to_F0_sqrt_out ___702_one_minus_coat_ior_out ___702_one_plus_coat_ior_out 	%line{345} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:346
+#     float opacity_luminance_float_out = mx_extract(opacity_luminance_out, opacity_luminance_float_index_tmp);
+	assign		___702_opacity_luminance_float_index_tmp $const1 	%line{346} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:347
+#     vector coat_tangent_rotate_normalize_out = normalize(coat_tangent_rotate_out);
+	functioncall	$const7 576 	%line{347} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___702_opacity_luminance_float_out ___702_opacity_luminance_out ___702_opacity_luminance_float_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:348
+#     float coat_affected_roughness_fg_tmp = 1.000000;
+	normalize	___702_coat_tangent_rotate_normalize_out ___702_coat_tangent_rotate_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{348} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:349
+#     float coat_affected_roughness_out = mix(specular_roughness, coat_affected_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___702_coat_affected_roughness_fg_tmp $const20 	%line{349} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:350
+#     vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+	mix		___702_coat_affected_roughness_out color_adobergb_standard_surface7_specular_roughness ___702_coat_affected_roughness_fg_tmp ___702_coat_affect_roughness_multiply2_out 	%line{350} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:351
+#     float coat_affected_transmission_roughness_fg_tmp = 1.000000;
+	normalize	___702_tangent_rotate_normalize_out ___702_tangent_rotate_out 	%line{351} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:352
+#     float coat_affected_transmission_roughness_out = mix(transmission_roughness_clamped_out, coat_affected_transmission_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___702_coat_affected_transmission_roughness_fg_tmp $const20 	%line{352} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:353
+#     float coat_gamma_in2_tmp = 1.000000;
+	mix		___702_coat_affected_transmission_roughness_out ___702_transmission_roughness_clamped_out ___702_coat_affected_transmission_roughness_fg_tmp ___702_coat_affect_roughness_multiply2_out 	%line{353} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:354
+#     float coat_gamma_out = coat_gamma_multiply_out + coat_gamma_in2_tmp;
+	assign		___702_coat_gamma_in2_tmp $const20 	%line{354} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:355
+#     float coat_ior_to_F0_out = coat_ior_to_F0_sqrt_out * coat_ior_to_F0_sqrt_out;
+	add		___702_coat_gamma_out ___702_coat_gamma_multiply_out ___702_coat_gamma_in2_tmp 	%line{355} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:356
+#     float coat_tangent_value2_tmp = 0.000000;
+	mul		___702_coat_ior_to_F0_out ___702_coat_ior_to_F0_sqrt_out ___702_coat_ior_to_F0_sqrt_out 	%line{356} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:357
+#     vector coat_tangent_out = mx_ternary(coat_anisotropy > coat_tangent_value2_tmp, coat_tangent_rotate_normalize_out, tangent);
+	assign		___702_coat_tangent_value2_tmp $const3 	%line{357} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:358
+#     vector2 main_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp261 color_adobergb_standard_surface7_coat_anisotropy ___702_coat_tangent_value2_tmp 	%line{358} %argrw{"wrr"}
+	functioncall	$const43 593 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp261 591 593 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___702_coat_tangent_out ___702_coat_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___702_coat_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:359
+#     mx_roughness_anisotropy(coat_affected_roughness_out, specular_anisotropy, main_roughness_out);
+	assign		___702_main_roughness_out.x $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{359} %argrw{"wr"}
+	assign		___702_main_roughness_out.y $const3 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:360
+#     float main_tangent_value2_tmp = 0.000000;
+	functioncall	$const28 614 	%line{360} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:129
+#     if (anisotropy > 0.0)
+	mul		$tmp262 ___702_coat_affected_roughness_out ___702_coat_affected_roughness_out 	%line{129} %argrw{"wrr"}
+	functioncall	$const30 600 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp263 $tmp262 $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___678_roughness_sqr $tmp263 $const29 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:130
+#     {
+	gt		$tmp264 color_adobergb_standard_surface7_specular_anisotropy $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{130} %argrw{"wrr"}
+	if		$tmp264 612 614 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const30 605 	%line{132} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp266 color_adobergb_standard_surface7_specular_anisotropy $const31 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp265 $tmp266 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp267 $const20 $tmp265 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{132} %argrw{"wrr"}
+	sqrt		___679_aspect $tmp267 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:133
+#         result.y = roughness_sqr * aspect;
+	div		$tmp268 ___678_roughness_sqr ___679_aspect 	%line{133} %argrw{"wrr"}
+	min		___702_main_roughness_out.x $tmp268 $const20 	%argrw{"wrr"}
+	assign		___702_main_roughness_out.x ___702_main_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:134
+#     }
+	mul		___702_main_roughness_out.y ___678_roughness_sqr ___679_aspect 	%line{134} %argrw{"wrr"}
+	assign		___702_main_roughness_out.y ___702_main_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:138
+#         result.y = roughness_sqr;
+	assign		___702_main_roughness_out.x ___678_roughness_sqr 	%line{138} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:139
+#     }
+	assign		___702_main_roughness_out.y ___678_roughness_sqr 	%line{139} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:361
+#     vector main_tangent_out = mx_ternary(specular_anisotropy > main_tangent_value2_tmp, tangent_rotate_normalize_out, tangent);
+	assign		___702_main_tangent_value2_tmp $const3 	%line{361} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:362
+#     vector2 transmission_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp269 color_adobergb_standard_surface7_specular_anisotropy ___702_main_tangent_value2_tmp 	%line{362} %argrw{"wrr"}
+	functioncall	$const43 622 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp269 620 622 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___702_main_tangent_out ___702_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___702_main_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:363
+#     mx_roughness_anisotropy(coat_affected_transmission_roughness_out, specular_anisotropy, transmission_roughness_out);
+	assign		___702_transmission_roughness_out.x $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{363} %argrw{"wr"}
+	assign		___702_transmission_roughness_out.y $const3 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:364
+#     color coat_affected_subsurface_color_out = pow(subsurface_color_nonnegative_out, coat_gamma_out);
+	functioncall	$const28 643 	%line{364} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:129
+#     if (anisotropy > 0.0)
+	mul		$tmp270 ___702_coat_affected_transmission_roughness_out ___702_coat_affected_transmission_roughness_out 	%line{129} %argrw{"wrr"}
+	functioncall	$const30 629 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp271 $tmp270 $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___678_roughness_sqr $tmp271 $const29 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:130
+#     {
+	gt		$tmp272 color_adobergb_standard_surface7_specular_anisotropy $const3 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{130} %argrw{"wrr"}
+	if		$tmp272 641 643 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const30 634 	%line{132} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp274 color_adobergb_standard_surface7_specular_anisotropy $const31 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp273 $tmp274 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:132
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp275 $const20 $tmp273 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{132} %argrw{"wrr"}
+	sqrt		___679_aspect $tmp275 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:133
+#         result.y = roughness_sqr * aspect;
+	div		$tmp276 ___678_roughness_sqr ___679_aspect 	%line{133} %argrw{"wrr"}
+	min		___702_transmission_roughness_out.x $tmp276 $const20 	%argrw{"wrr"}
+	assign		___702_transmission_roughness_out.x ___702_transmission_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:134
+#     }
+	mul		___702_transmission_roughness_out.y ___678_roughness_sqr ___679_aspect 	%line{134} %argrw{"wrr"}
+	assign		___702_transmission_roughness_out.y ___702_transmission_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:138
+#         result.y = roughness_sqr;
+	assign		___702_transmission_roughness_out.x ___678_roughness_sqr 	%line{138} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:139
+#     }
+	assign		___702_transmission_roughness_out.y ___678_roughness_sqr 	%line{139} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:365
+#     color coat_affected_diffuse_color_out = pow(base_color_nonnegative_out, coat_gamma_out);
+	pow		___702_coat_affected_subsurface_color_out ___702_subsurface_color_nonnegative_out ___702_coat_gamma_out 	%line{365} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:366
+#     float one_minus_coat_ior_to_F0_in1_tmp = 1.000000;
+	pow		___702_coat_affected_diffuse_color_out ___702_base_color_nonnegative_out ___702_coat_gamma_out 	%line{366} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:367
+#     float one_minus_coat_ior_to_F0_out = one_minus_coat_ior_to_F0_in1_tmp - coat_ior_to_F0_out;
+	assign		___702_one_minus_coat_ior_to_F0_in1_tmp $const20 	%line{367} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:368
+#     color emission_color0_out = color(0.0);
+	sub		___702_one_minus_coat_ior_to_F0_out ___702_one_minus_coat_ior_to_F0_in1_tmp ___702_coat_ior_to_F0_out 	%line{368} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:369
+#     NG_convert_float_color3(one_minus_coat_ior_to_F0_out, emission_color0_out);
+	assign		___702_emission_color0_out $const2 	%line{369} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:370
+#     BSDF coat_bsdf_out = null_closure;
+	functioncall	$const44 651 	%line{370} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:205
+#     out = combine_out;
+	color		___687_combine_out ___702_one_minus_coat_ior_to_F0_out ___702_one_minus_coat_ior_to_F0_out ___702_one_minus_coat_ior_to_F0_out 	%line{205} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:206
+# }
+	assign		___702_emission_color0_out ___687_combine_out 	%line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:371
+#     mx_dielectric_bsdf(coat, color(1.000000, 1.000000, 1.000000), coat_IOR, coat_roughness_vector_out, 0.000000, 1.500000, coat_normal, coat_tangent_out, "ggx", "R", coat_bsdf_out);
+	assign		___702_coat_bsdf_out ___702_null_closure 	%line{371} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:372
+#     float metal_bsdf_weight_tmp = 1.000000;
+	functioncall	$const48 663 	%line{372} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:189
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp278 $const47 $const49 	%line{189} %argrw{"wrr"}
+	if		$tmp278 656 657 	%argrw{"r"}
+	assign		___685_reflection_tint $const2 	%argrw{"wr"}
+	assign		___685_reflection_tint $const33 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:190
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp279 $const47 $const47 	%line{190} %argrw{"wrr"}
+	if		$tmp279 660 661 	%argrw{"r"}
+	assign		___685_transmission_tint $const2 	%argrw{"wr"}
+	assign		___685_transmission_tint $const33 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:191
+# }
+	closure		$tmp280 $const52 geomprop_Nworld_out1 ___702_coat_tangent_out ___685_reflection_tint ___685_transmission_tint ___702_coat_roughness_vector_out.x ___702_coat_roughness_vector_out.y color_adobergb_standard_surface7_coat_IOR $const46 $const50 $const3 $const51 $const45 	%line{191} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___702_coat_bsdf_out $tmp280 color_adobergb_standard_surface7_coat 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:373
+#     string metal_bsdf_distribution_tmp = "ggx";
+	assign		___702_metal_bsdf_weight_tmp $const20 	%line{373} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:374
+#     BSDF metal_bsdf_out = metal_bsdf_weight_tmp * conductor_bsdf(normal1, main_tangent_out, main_roughness_out.x, main_roughness_out.y, artistic_ior_ior, artistic_ior_extinction, metal_bsdf_distribution_tmp, "thinfilm_thickness", thin_film_thickness, "thinfilm_ior", thin_film_IOR);
+	assign		___702_metal_bsdf_distribution_tmp $const46 	%line{374} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:375
+#     BSDF specular_bsdf_out = null_closure;
+	closure		$tmp281 $const53 geomprop_Nworld_out1 ___702_main_tangent_out ___702_main_roughness_out.x ___702_main_roughness_out.y ___702_artistic_ior_ior ___702_artistic_ior_extinction ___702_metal_bsdf_distribution_tmp $const50 color_adobergb_standard_surface7_thin_film_thickness $const51 color_adobergb_standard_surface7_thin_film_IOR 	%line{375} %argrw{"wrrrrrrrrrrrr"}
+	mul		___702_metal_bsdf_out $tmp281 ___702_metal_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:376
+#     mx_dielectric_bsdf(specular, specular_color, specular_IOR, main_roughness_out, thin_film_thickness, thin_film_IOR, normal1, main_tangent_out, "ggx", "R", specular_bsdf_out);
+	assign		___702_specular_bsdf_out ___702_null_closure 	%line{376} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:377
+#     BSDF transmission_bsdf_out = null_closure;
+	functioncall	$const48 679 	%line{377} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:189
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp282 $const47 $const49 	%line{189} %argrw{"wrr"}
+	if		$tmp282 672 673 	%argrw{"r"}
+	assign		___685_reflection_tint $const2 	%argrw{"wr"}
+	assign		___685_reflection_tint color_adobergb_standard_surface7_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:190
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp283 $const47 $const47 	%line{190} %argrw{"wrr"}
+	if		$tmp283 676 677 	%argrw{"r"}
+	assign		___685_transmission_tint $const2 	%argrw{"wr"}
+	assign		___685_transmission_tint color_adobergb_standard_surface7_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:191
+# }
+	closure		$tmp284 $const52 geomprop_Nworld_out1 ___702_main_tangent_out ___685_reflection_tint ___685_transmission_tint ___702_main_roughness_out.x ___702_main_roughness_out.y color_adobergb_standard_surface7_specular_IOR $const46 $const50 color_adobergb_standard_surface7_thin_film_thickness $const51 color_adobergb_standard_surface7_thin_film_IOR 	%line{191} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___702_specular_bsdf_out $tmp284 color_adobergb_standard_surface7_specular 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:378
+#     mx_dielectric_bsdf(1.000000, transmission_color, specular_IOR, transmission_roughness_out, 0.000000, 1.500000, normal1, main_tangent_out, "ggx", "T", transmission_bsdf_out);
+	assign		___702_transmission_bsdf_out ___702_null_closure 	%line{378} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:379
+#     BSDF sheen_bsdf_out = sheen1 * sheen_bsdf(normal1, sheen_color, sheen_roughness);
+	functioncall	$const48 691 	%line{379} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:189
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp285 $const49 $const49 	%line{189} %argrw{"wrr"}
+	if		$tmp285 684 685 	%argrw{"r"}
+	assign		___685_reflection_tint $const2 	%argrw{"wr"}
+	assign		___685_reflection_tint color_adobergb_standard_surface7_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:190
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp286 $const49 $const47 	%line{190} %argrw{"wrr"}
+	if		$tmp286 688 689 	%argrw{"r"}
+	assign		___685_transmission_tint $const2 	%argrw{"wr"}
+	assign		___685_transmission_tint color_adobergb_standard_surface7_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:191
+# }
+	closure		$tmp287 $const52 geomprop_Nworld_out1 ___702_main_tangent_out ___685_reflection_tint ___685_transmission_tint ___702_transmission_roughness_out.x ___702_transmission_roughness_out.y color_adobergb_standard_surface7_specular_IOR $const46 $const50 $const3 $const51 $const45 	%line{191} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___702_transmission_bsdf_out $tmp287 $const20 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:380
+#     float translucent_bsdf_weight_tmp = 1.000000;
+	closure		$tmp288 $const54 geomprop_Nworld_out1 color_adobergb_standard_surface7_sheen_color color_adobergb_standard_surface7_sheen_roughness 	%line{380} %argrw{"wrrrr"}
+	mul		___702_sheen_bsdf_out $tmp288 color_adobergb_standard_surface7_sheen 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:381
+#     BSDF translucent_bsdf_out = translucent_bsdf_weight_tmp * translucent_bsdf(normal1, coat_affected_subsurface_color_out);
+	assign		___702_translucent_bsdf_weight_tmp $const20 	%line{381} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:382
+#     BSDF subsurface_bsdf_out = null_closure;
+	closure		$tmp289 $const55 geomprop_Nworld_out1 ___702_coat_affected_subsurface_color_out 	%line{382} %argrw{"wrrr"}
+	mul		___702_translucent_bsdf_out $tmp289 ___702_translucent_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:383
+#     mx_subsurface_bsdf(1.000000, coat_affected_subsurface_color_out, subsurface_radius_scaled_out, subsurface_anisotropy, normal1, subsurface_bsdf_out);
+	assign		___702_subsurface_bsdf_out ___702_null_closure 	%line{383} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:384
+#     BSDF selected_subsurface_bsdf_out = mix(subsurface_bsdf_out, translucent_bsdf_out, subsurface_selector_out);
+	functioncall	$const56 700 	%line{384} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:199
+# #endif
+	mul		$tmp290 $const20 ___702_coat_affected_subsurface_color_out 	%line{199} %argrw{"wrr"}
+	closure		___702_subsurface_bsdf_out $const57 geomprop_Nworld_out1 $tmp290 $const20 ___702_subsurface_radius_scaled_out color_adobergb_standard_surface7_subsurface_anisotropy 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:385
+#     BSDF diffuse_bsdf_out = base * oren_nayar_diffuse_bsdf(normal1, coat_affected_diffuse_color_out, diffuse_roughness);
+	functioncall	$const58 705 	%line{385} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp291 $const20 ___702_subsurface_selector_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp292 ___702_subsurface_bsdf_out $tmp291 	%argrw{"wrr"}
+	mul		$tmp293 ___702_translucent_bsdf_out ___702_subsurface_selector_out 	%argrw{"wrr"}
+	add		___702_selected_subsurface_bsdf_out $tmp292 $tmp293 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:386
+#     BSDF subsurface_mix_out = mix(diffuse_bsdf_out, selected_subsurface_bsdf_out, subsurface1);
+	closure		$tmp294 $const59 geomprop_Nworld_out1 ___702_coat_affected_diffuse_color_out color_adobergb_standard_surface7_diffuse_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{386} %argrw{"wrrrr"}
+	mul		___702_diffuse_bsdf_out $tmp294 color_adobergb_standard_surface7_base 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:387
+#     BSDF sheen_layer_out = layer(sheen_bsdf_out, subsurface_mix_out);
+	functioncall	$const58 712 	%line{387} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp295 $const20 color_adobergb_standard_surface7_subsurface 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp296 ___702_diffuse_bsdf_out $tmp295 	%argrw{"wrr"}
+	mul		$tmp297 ___702_selected_subsurface_bsdf_out color_adobergb_standard_surface7_subsurface 	%argrw{"wrr"}
+	add		___702_subsurface_mix_out $tmp296 $tmp297 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:388
+#     BSDF transmission_mix_out = mix(sheen_layer_out, transmission_bsdf_out, transmission);
+	closure		___702_sheen_layer_out $const60 ___702_sheen_bsdf_out ___702_subsurface_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{388} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:389
+#     BSDF specular_layer_out = layer(specular_bsdf_out, transmission_mix_out);
+	functioncall	$const58 718 	%line{389} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp298 $const20 color_adobergb_standard_surface7_transmission 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp299 ___702_sheen_layer_out $tmp298 	%argrw{"wrr"}
+	mul		$tmp300 ___702_transmission_bsdf_out color_adobergb_standard_surface7_transmission 	%argrw{"wrr"}
+	add		___702_transmission_mix_out $tmp299 $tmp300 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:390
+#     BSDF metalness_mix_out = mix(specular_layer_out, metal_bsdf_out, metalness);
+	closure		___702_specular_layer_out $const60 ___702_specular_bsdf_out ___702_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{390} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:391
+#     BSDF thin_film_layer_attenuated_out = (coat_attenuation_out * metalness_mix_out);
+	functioncall	$const58 724 	%line{391} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp301 $const20 color_adobergb_standard_surface7_metalness 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp302 ___702_specular_layer_out $tmp301 	%argrw{"wrr"}
+	mul		$tmp303 ___702_metal_bsdf_out color_adobergb_standard_surface7_metalness 	%argrw{"wrr"}
+	add		___702_metalness_mix_out $tmp302 $tmp303 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:392
+#     BSDF coat_layer_out = layer(coat_bsdf_out, thin_film_layer_attenuated_out);
+	mul		___702_thin_film_layer_attenuated_out ___702_metalness_mix_out ___702_coat_attenuation_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{392} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:393
+#     EDF emission_edf_out = uniform_edf(emission_weight_out);
+	closure		___702_coat_layer_out $const60 ___702_coat_bsdf_out ___702_thin_film_layer_attenuated_out 	%line{393} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:394
+#     EDF coat_tinted_emission_edf_out = (coat_color * emission_edf_out);
+	closure		___702_emission_edf_out $const61 ___702_emission_weight_out 	%line{394} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:395
+#     EDF coat_emission_edf_out = null_closure;
+	mul		___702_coat_tinted_emission_edf_out ___702_emission_edf_out color_adobergb_standard_surface7_coat_color 	%line{395} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:396
+#     mx_generalized_schlick_edf(emission_color0_out, color(0.000000, 0.000000, 0.000000), 5.000000, coat_tinted_emission_edf_out, coat_emission_edf_out);
+	assign		___702_coat_emission_edf_out ___702_null_closure 	%line{396} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:397
+#     EDF blended_coat_emission_edf_out = mix(emission_edf_out, coat_emission_edf_out, coat);
+	functioncall	$const63 741 	%line{397} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:290
+#     color f = mx_fresnel_schlick(NdotV, color0, color90, exponent);
+	neg		$tmp306 I 	%line{290} %argrw{"wr"}
+	dot		$tmp305 N $tmp306 	%argrw{"wrr"}
+	fabs		___700_NdotV $tmp305 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:291
+#     result = base * f;
+	functioncall	$const64 740 	%line{291} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:284
+#     return mix(f0, f90, pow(x, exponent));
+	sub		$tmp307 $const20 ___700_NdotV 	%line{284} %argrw{"wrr"}
+	functioncall	$const30 738 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp308 $tmp307 $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___699_x $tmp308 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:285
+# }
+	pow		$tmp309 ___699_x $const62 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{285} %argrw{"wrr"}
+	mix		___700_f ___702_emission_color0_out $const2 $tmp309 	%argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:292
+# }
+	mul		___702_coat_emission_edf_out ___702_coat_tinted_emission_edf_out ___700_f 	%line{292} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:398
+#     surfaceshader shader_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const58 746 	%line{398} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp310 $const20 color_adobergb_standard_surface7_coat 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp311 ___702_emission_edf_out $tmp310 	%argrw{"wrr"}
+	mul		$tmp312 ___702_coat_emission_edf_out color_adobergb_standard_surface7_coat 	%argrw{"wrr"}
+	add		___702_blended_coat_emission_edf_out $tmp311 $tmp312 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:399
+#     mx_surface(coat_layer_out, blended_coat_emission_edf_out, opacity_luminance_float_out, 0, shader_constructor_out);
+	assign		___702_shader_constructor_out.bsdf ___702_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{399} %argrw{"wr"}
+	assign		___702_shader_constructor_out.edf ___702_null_closure 	%argrw{"wr"}
+	assign		___702_shader_constructor_out.opacity $const20 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:400
+#     out = shader_constructor_out;
+	functioncall	$const65 756 	%line{400} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:297
+#     result.edf     = edf;
+	assign		___702_shader_constructor_out.bsdf ___702_coat_layer_out 	%line{297} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:298
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___702_shader_constructor_out.edf ___702_blended_coat_emission_edf_out 	%line{298} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:299
+# }
+	functioncall	$const30 755 	%line{299} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp313 ___702_opacity_luminance_float_out $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___702_shader_constructor_out.opacity $tmp313 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:299
+# }
+	assign		___702_shader_constructor_out.opacity ___702_shader_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{299} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:401
+# }
+	assign		color_adobergb_standard_surface7_out.bsdf ___702_shader_constructor_out.bsdf 	%line{401} %argrw{"wr"}
+	assign		color_adobergb_standard_surface7_out.edf ___702_shader_constructor_out.edf 	%argrw{"wr"}
+	assign		color_adobergb_standard_surface7_out.opacity ___702_shader_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:790
+#         color_adobergb_out = (color_adobergb_standard_surface7_out.bsdf + color_adobergb_standard_surface7_out.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const30 762 	%line{790} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp314 color_adobergb_standard_surface7_out.opacity $const20 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___703_opacity_weight $tmp314 $const3 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl:791
+#     }
+	add		$tmp315 color_adobergb_standard_surface7_out.bsdf color_adobergb_standard_surface7_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_color_adobergb_out.osl"} %line{791} %argrw{"wrr"}
+	mul		$tmp316 $tmp315 ___703_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp317 $const66 	%argrw{"wr"}
+	sub		$tmp318 $const20 ___703_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp319 $tmp317 $tmp318 	%argrw{"wrr"}
+	add		color_adobergb_out $tmp316 $tmp319 	%argrw{"wrr"}
+	end

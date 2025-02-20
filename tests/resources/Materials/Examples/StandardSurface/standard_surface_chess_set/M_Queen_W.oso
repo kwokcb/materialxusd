@@ -1,0 +1,2331 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\Examples\StandardSurface\standard_surface_chess_set\M_Queen_W.oso
+shader M_Queen_W	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"M_Queen_W"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Nworld_space	"world"		%read{12,12} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_UV0_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Bworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Bworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	diffuse1_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Materials/Examples/StandardSurface/chess_set/queen_white_base_color.jpg"		%meta{string,label,"Filename"} %meta{string,widget,"filename"}  %read{1,1} %write{2147483647,-1}
+param	string	diffuse1_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{2,2} %write{2147483647,-1}
+param	string	diffuse1_layer	""		%meta{string,label,"Layer"}  %read{66,66} %write{2147483647,-1}
+param	color	diffuse1_default	0 0 0		%meta{string,label,"Default Color"}  %read{60,62} %write{2147483647,-1}
+param	string	diffuse1_uaddressmode	"periodic"		%meta{string,label,"Address Mode U"}  %read{31,66} %write{2147483647,-1}
+param	string	diffuse1_vaddressmode	"periodic"		%meta{string,label,"Address Mode V"}  %read{46,66} %write{2147483647,-1}
+param	string	diffuse1_filtertype	"linear"		%meta{string,label,"Filter Type"}  %read{66,66} %write{2147483647,-1}
+param	string	diffuse1_framerange	""		%meta{string,label,"Frame Range"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	diffuse1_frameoffset	0		%meta{string,label,"Frame Offset"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	diffuse1_frameendaction	"constant"		%meta{string,label,"Frame End Action"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	metallic1_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Materials/Examples/StandardSurface/chess_set/queen_shared_metallic.jpg"		%meta{string,label,"Filename"} %meta{string,widget,"filename"}  %read{3,3} %write{2147483647,-1}
+param	string	metallic1_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{4,4} %write{2147483647,-1}
+param	string	metallic1_layer	""		%meta{string,label,"Layer"}  %read{107,107} %write{2147483647,-1}
+param	float	metallic1_default	0		%meta{string,label,"Default Color"} %meta{string,widget,"number"}  %read{101,103} %write{2147483647,-1}
+param	string	metallic1_uaddressmode	"periodic"		%meta{string,label,"Address Mode U"}  %read{72,107} %write{2147483647,-1}
+param	string	metallic1_vaddressmode	"periodic"		%meta{string,label,"Address Mode V"}  %read{87,107} %write{2147483647,-1}
+param	string	metallic1_filtertype	"linear"		%meta{string,label,"Filter Type"}  %read{107,107} %write{2147483647,-1}
+param	string	metallic1_framerange	""		%meta{string,label,"Frame Range"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	metallic1_frameoffset	0		%meta{string,label,"Frame Offset"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	metallic1_frameendaction	"constant"		%meta{string,label,"Frame End Action"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	roughness1_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Materials/Examples/StandardSurface/chess_set/queen_white_roughness.jpg"		%meta{string,label,"Filename"} %meta{string,widget,"filename"}  %read{5,5} %write{2147483647,-1}
+param	string	roughness1_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{6,6} %write{2147483647,-1}
+param	string	roughness1_layer	""		%meta{string,label,"Layer"}  %read{149,149} %write{2147483647,-1}
+param	float	roughness1_default	0		%meta{string,label,"Default Color"} %meta{string,widget,"number"}  %read{143,145} %write{2147483647,-1}
+param	string	roughness1_uaddressmode	"periodic"		%meta{string,label,"Address Mode U"}  %read{114,149} %write{2147483647,-1}
+param	string	roughness1_vaddressmode	"periodic"		%meta{string,label,"Address Mode V"}  %read{129,149} %write{2147483647,-1}
+param	string	roughness1_filtertype	"linear"		%meta{string,label,"Filter Type"}  %read{149,149} %write{2147483647,-1}
+param	string	roughness1_framerange	""		%meta{string,label,"Frame Range"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	roughness1_frameoffset	0		%meta{string,label,"Frame Offset"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	roughness1_frameendaction	"constant"		%meta{string,label,"Frame End Action"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	sss1_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Materials/Examples/StandardSurface/chess_set/queen_shared_scattering.jpg"		%meta{string,label,"Filename"} %meta{string,widget,"filename"}  %read{7,7} %write{2147483647,-1}
+param	string	sss1_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{8,8} %write{2147483647,-1}
+param	string	sss1_layer	""		%meta{string,label,"Layer"}  %read{191,191} %write{2147483647,-1}
+param	float	sss1_default	0		%meta{string,label,"Default Color"} %meta{string,widget,"number"}  %read{185,187} %write{2147483647,-1}
+param	string	sss1_uaddressmode	"periodic"		%meta{string,label,"Address Mode U"}  %read{156,191} %write{2147483647,-1}
+param	string	sss1_vaddressmode	"periodic"		%meta{string,label,"Address Mode V"}  %read{171,191} %write{2147483647,-1}
+param	string	sss1_filtertype	"linear"		%meta{string,label,"Filter Type"}  %read{191,191} %write{2147483647,-1}
+param	string	sss1_framerange	""		%meta{string,label,"Frame Range"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	sss1_frameoffset	0		%meta{string,label,"Frame Offset"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	sss1_frameendaction	"constant"		%meta{string,label,"Frame End Action"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	normal1_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Materials/Examples/StandardSurface/chess_set/queen_white_normal.jpg"		%meta{string,label,"Filename"} %meta{string,widget,"filename"}  %read{9,9} %write{2147483647,-1}
+param	string	normal1_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{10,10} %write{2147483647,-1}
+param	string	normal1_layer	""		%meta{string,label,"Layer"}  %read{233,233} %write{2147483647,-1}
+param	vector	normal1_default	0 0 0		%meta{string,label,"Default Color"}  %read{227,229} %write{2147483647,-1}
+param	string	normal1_uaddressmode	"periodic"		%meta{string,label,"Address Mode U"}  %read{198,233} %write{2147483647,-1}
+param	string	normal1_vaddressmode	"periodic"		%meta{string,label,"Address Mode V"}  %read{213,233} %write{2147483647,-1}
+param	string	normal1_filtertype	"linear"		%meta{string,label,"Filter Type"}  %read{233,233} %write{2147483647,-1}
+param	string	normal1_framerange	""		%meta{string,label,"Frame Range"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	normal1_frameoffset	0		%meta{string,label,"Frame Offset"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	normal1_frameendaction	"constant"		%meta{string,label,"Frame End Action"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	mtlxnormalmap3_scale	1		%meta{string,widget,"number"}  %read{298,299} %write{2147483647,-1}
+param	float	Queen_W_base	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base"} %meta{string,page,"Base"} %meta{string,help,"Multiplier on the intensity of the diffuse reflection."} %meta{string,widget,"number"}  %read{345,780} %write{2147483647,-1}
+param	float	Queen_W_diffuse_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Diffuse Roughness"} %meta{string,page,"Base"} %meta{int,uiadvanced,1} %meta{string,help,"Roughness of the diffuse reflection. Higher values cause the surface to appear flatter and darker."} %meta{string,widget,"number"}  %read{779,779} %write{2147483647,-1}
+param	float	Queen_W_specular	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular"} %meta{string,page,"Specular"} %meta{string,help,"Multiplier on the intensity of the specular reflection."} %meta{string,widget,"number"}  %read{346,752} %write{2147483647,-1}
+param	color	Queen_W_specular_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"} %meta{string,page,"Specular"} %meta{string,help,"Color tint on the specular reflection."}  %read{346,750} %write{2147483647,-1}
+param	float	Queen_W_specular_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Index of Refraction"} %meta{string,page,"Specular"} %meta{string,help,"Index of refraction for specular reflection."} %meta{string,widget,"number"}  %read{751,763} %write{2147483647,-1}
+param	float	Queen_W_specular_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Anisotropy"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"The directional bias of reflected and transmitted light resulting in materials appearing rougher or glossier in certain directions."} %meta{string,widget,"number"}  %read{674,706} %write{2147483647,-1}
+param	float	Queen_W_specular_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Rotation"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"Rotation of the axis of specular anisotropy around the surface normal."} %meta{string,widget,"number"}  %read{349,349} %write{2147483647,-1}
+param	float	Queen_W_transmission	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Transmission of light through the surface for materials such as glass or water. The greater the value the more transparent the material."} %meta{string,widget,"number"}  %read{788,790} %write{2147483647,-1}
+param	color	Queen_W_transmission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Color"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Color tint on the transmitted light."}  %read{758,762} %write{2147483647,-1}
+param	float	Queen_W_transmission_depth	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Depth"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Specifies the distance light travels inside the material before its becomes exactly the transmission color according to Beer's law."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	color	Queen_W_transmission_scatter	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Scatter"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Scattering coefficient of the interior medium. Suitable for a large body of liquid or one that is fairly thick, such as an ocean, honey, ice, or frosted glass."}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	Queen_W_transmission_scatter_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission Anisotropy"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the scattering."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	Queen_W_transmission_dispersion	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Dispersion"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Dispersion amount, describing how much the index of refraction varies across wavelengths."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	Queen_W_transmission_extra_roughness	0		%meta{float,min,-1} %meta{float,slidermin,0} %meta{float,max,1} %meta{string,label,"Transmission Roughness"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Additional roughness on top of specular roughness. Positive values blur refractions more than reflections, and negative values blur refractions less."} %meta{string,widget,"number"}  %read{350,350} %write{2147483647,-1}
+param	float	Queen_W_subsurface_scale	0.00100000005		%meta{float,min,0} %meta{float,slidermax,10} %meta{string,label,"Subsurface Scale"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Scalar weight for the subsurface radius value."} %meta{string,widget,"number"}  %read{359,359} %write{2147483647,-1}
+param	float	Queen_W_subsurface_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Subsurface Anisotropy"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The direction of subsurface scattering. 0 scatters light evenly, positive values scatter forward and negative values scatter backward."} %meta{string,widget,"number"}  %read{773,773} %write{2147483647,-1}
+param	float	Queen_W_sheen	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The weight of a sheen layer that can be used to approximate microfibers or fabrics such as velvet and satin."} %meta{string,widget,"number"}  %read{766,766} %write{2147483647,-1}
+param	color	Queen_W_sheen_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Sheen Color"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the sheen layer."}  %read{765,765} %write{2147483647,-1}
+param	float	Queen_W_sheen_roughness	0.300000012		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen Roughness"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The roughness of the sheen layer."} %meta{string,widget,"number"}  %read{765,765} %write{2147483647,-1}
+param	float	Queen_W_coat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat"} %meta{string,page,"Coat"} %meta{string,help,"The weight of a reflective clear-coat layer on top of the material. Use for materials such as car paint or an oily layer."} %meta{string,widget,"number"}  %read{347,818} %write{2147483647,-1}
+param	color	Queen_W_coat_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Coat Color"} %meta{string,page,"Coat"} %meta{string,help,"The color of the clear-coat layer's transparency."}  %read{366,801} %write{2147483647,-1}
+param	float	Queen_W_coat_roughness	0.100000001		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Roughness"} %meta{string,page,"Coat"} %meta{string,help,"The roughness of the clear-coat reflections. The lower the value, the sharper the reflection."} %meta{string,widget,"number"}  %read{325,521} %write{2147483647,-1}
+param	float	Queen_W_coat_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Anisotropy"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the clear-coat layer."} %meta{string,widget,"number"}  %read{329,660} %write{2147483647,-1}
+param	float	Queen_W_coat_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Rotation"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The rotation of the anisotropic effect of the clear-coat layer."} %meta{string,widget,"number"}  %read{344,344} %write{2147483647,-1}
+param	float	Queen_W_coat_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Coat Index of Refraction"} %meta{string,page,"Coat"} %meta{string,help,"The index of refraction of the clear-coat layer."} %meta{string,widget,"number"}  %read{368,735} %write{2147483647,-1}
+param	float	Queen_W_coat_affect_color	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Color"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the saturation of diffuse reflection and subsurface scattering below the clear-coat."} %meta{string,widget,"number"}  %read{645,645} %write{2147483647,-1}
+param	float	Queen_W_coat_affect_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Roughness"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the roughness of the specular reflection in the layers below the clear-coat."} %meta{string,widget,"number"}  %read{347,347} %write{2147483647,-1}
+param	float	Queen_W_thin_film_thickness	0		%meta{float,min,0} %meta{float,slidermax,2000} %meta{string,label,"Thin Film Thickness"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The thickness of the thin film layer on a surface. Use for materials such as multitone car paint or soap bubbles (in nanometers)."} %meta{string,widget,"number"}  %read{739,751} %write{2147483647,-1}
+param	float	Queen_W_thin_film_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Thin Film Index of Refraction"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The index of refraction of the medium surrounding the material."} %meta{string,widget,"number"}  %read{739,751} %write{2147483647,-1}
+param	float	Queen_W_emission	0		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Emission"} %meta{string,page,"Emission"} %meta{string,help,"The amount of emitted incandescent light."} %meta{string,widget,"number"}  %read{371,371} %write{2147483647,-1}
+param	color	Queen_W_emission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Emission Color"} %meta{string,page,"Emission"} %meta{string,help,"The color of the emitted light."}  %read{371,371} %write{2147483647,-1}
+param	color	Queen_W_opacity	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Opacity"} %meta{string,page,"Geometry"} %meta{string,help,"The opacity of the entire material."}  %read{374,374} %write{2147483647,-1}
+param	int	Queen_W_thin_walled	0		%meta{string,label,"Thin Walled"} %meta{string,page,"Geometry"} %meta{int,uiadvanced,1} %meta{string,help,"If true the surface is double-sided and represents an infinitely thin shell. Suitable for thin objects such as tree leaves or paper."} %meta{string,widget,"checkBox"}  %read{360,360} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{843,843}
+global	vector	I	%read{804,804} %write{2147483647,-1}
+global	normal	N	%read{12,805} %write{2147483647,-1}
+global	float	u	%read{18,18} %write{2147483647,-1} %derivs
+global	float	v	%read{19,19} %write{2147483647,-1} %derivs
+local	color	___670_missingColor	%read{66,66} %write{62,62}
+local	float	___670_st.x	%read{66,66} %write{64,64} %mystruct{___670_st} %mystructfield{0} %derivs
+local	float	___670_st.y	%read{66,66} %write{65,65} %mystruct{___670_st} %mystructfield{1} %derivs
+local	color	___672_missingColor	%read{107,191} %write{103,187}
+local	float	___672_st.x	%read{107,191} %write{105,189} %mystruct{___672_st} %mystructfield{0} %derivs
+local	float	___672_st.y	%read{107,191} %write{106,190} %mystruct{___672_st} %mystructfield{1} %derivs
+local	color	___672_rgb	%read{108,192} %write{107,191}
+local	color	___674_missingColor	%read{233,233} %write{229,229}
+local	float	___674_st.x	%read{233,233} %write{231,231} %mystruct{___674_st} %mystructfield{0} %derivs
+local	float	___674_st.y	%read{233,233} %write{232,232} %mystruct{___674_st} %mystructfield{1} %derivs
+local	int	___676_N_extract_0_index_tmp	%read{246,246} %write{244,244}
+local	float	___676_N_extract_0_out	%read{253,253} %write{246,246}
+local	int	___676_N_extract_1_index_tmp	%read{249,249} %write{247,247}
+local	float	___676_N_extract_1_out	%read{254,254} %write{249,249}
+local	int	___676_N_extract_2_index_tmp	%read{252,252} %write{250,250}
+local	float	___676_N_extract_2_out	%read{255,255} %write{252,252}
+local	float	___677_bias_in2_tmp	%read{237,237} %write{236,236}
+local	color	___677_bias_out	%read{258,258} %write{237,237}
+local	float	___677_linSeg_in2_tmp	%read{239,239} %write{238,238}
+local	color	___677_linSeg_out	%read{294,294} %write{239,239}
+local	float	___677_colorSeparate_outr	%read{262,262} %write{240,253}
+local	float	___677_colorSeparate_outg	%read{272,272} %write{241,254}
+local	float	___677_colorSeparate_outb	%read{282,282} %write{242,255}
+local	float	___677_max_in2_tmp	%read{257,257} %write{256,256}
+local	color	___677_max_out	%read{290,290} %write{258,258}
+local	float	___677_isAboveR_value2_tmp	%read{262,262} %write{259,259}
+local	float	___677_isAboveR_in1_tmp	%read{265,265} %write{260,260}
+local	float	___677_isAboveR_in2_tmp	%read{267,267} %write{261,261}
+local	float	___677_isAboveR_out	%read{291,291} %write{265,267}
+local	float	___677_isAboveG_value2_tmp	%read{272,272} %write{269,269}
+local	float	___677_isAboveG_in1_tmp	%read{275,275} %write{270,270}
+local	float	___677_isAboveG_in2_tmp	%read{277,277} %write{271,271}
+local	float	___677_isAboveG_out	%read{291,291} %write{275,277}
+local	float	___677_isAboveB_value2_tmp	%read{282,282} %write{279,279}
+local	float	___677_isAboveB_in1_tmp	%read{285,285} %write{280,280}
+local	float	___677_isAboveB_in2_tmp	%read{287,287} %write{281,281}
+local	float	___677_isAboveB_out	%read{291,291} %write{285,287}
+local	float	___677_scale_in2_tmp	%read{290,290} %write{289,289}
+local	color	___677_scale_out	%read{293,293} %write{290,290}
+local	color	___677_isAbove_out	%read{294,294} %write{291,291}
+local	float	___677_powSeg_in2_tmp	%read{293,293} %write{292,292}
+local	color	___677_powSeg_out	%read{294,294} %write{293,293}
+local	color	___677_mix_out	%read{295,295} %write{294,294}
+local	vector	___678_decodedValue	%read{306,313} %write{303,305}
+local	float	___682_roughness_sqr	%read{336,716} %write{328,702}
+local	float	___683_aspect	%read{336,713} %write{335,709}
+local	vector	___686_nAxis	%read{386,586} %write{382,528}
+local	float	___686_s	%read{396,582} %write{383,529}
+local	float	___686_c	%read{385,588} %write{384,530}
+local	float	___686_oc	%read{387,585} %write{385,531}
+local	float	___687_rotationRadians	%read{383,530} %write{380,526}
+local	matrix	___687_m	%read{449,636} %write{443,589}
+local	float	___687_trans.x	%read{493,639} %write{459,605} %mystruct{___687_trans} %mystructfield{0}
+local	float	___687_trans.y	%read{493,639} %write{470,616} %mystruct{___687_trans} %mystructfield{1}
+local	float	___687_trans.z	%read{493,639} %write{481,627} %mystruct{___687_trans} %mystructfield{2}
+local	float	___687_trans.w	%read{2147483647,-1} %write{492,638} %mystruct{___687_trans} %mystructfield{3}
+local	color	___688_r	%read{502,516} %write{501,501}
+local	color	___688_r_sqrt	%read{506,507} %write{502,502}
+local	color	___688_n_min	%read{509,509} %write{505,505}
+local	color	___688_n_max	%read{509,509} %write{508,508}
+local	color	___688_np1	%read{512,512} %write{510,510}
+local	color	___688_nm1	%read{514,514} %write{511,511}
+local	color	___688_k2	%read{519,520} %write{517,519}
+local	color	___689_reflection_tint	%read{735,763} %write{729,758}
+local	color	___689_transmission_tint	%read{735,763} %write{733,762}
+local	color	___691_combine_out	%read{724,724} %write{723,723}
+local	float	___703_x	%read{812,812} %write{811,811}
+local	float	___704_NdotV	%read{808,808} %write{806,806}
+local	color	___704_f	%read{814,814} %write{813,813}
+local	closure color	___706_null_closure	%read{725,821} %write{321,321}
+local	float	___706_coat_roughness_vector_out.x	%read{338,735} %write{322,341} %mystruct{___706_coat_roughness_vector_out} %mystructfield{0}
+local	float	___706_coat_roughness_vector_out.y	%read{340,735} %write{323,342} %mystruct{___706_coat_roughness_vector_out} %mystructfield{1}
+local	float	___706_coat_tangent_rotate_degree_in2_tmp	%read{344,344} %write{343,343}
+local	float	___706_coat_tangent_rotate_degree_out	%read{380,380} %write{344,344}
+local	color	___706_metal_reflectivity_out	%read{500,500} %write{345,345}
+local	color	___706_metal_edgecolor_out	%read{509,509} %write{346,346}
+local	float	___706_coat_affect_roughness_multiply1_out	%read{521,521} %write{347,347}
+local	float	___706_tangent_rotate_degree_in2_tmp	%read{349,349} %write{348,348}
+local	float	___706_tangent_rotate_degree_out	%read{526,526} %write{349,349}
+local	float	___706_transmission_roughness_add_out	%read{643,643} %write{350,350}
+local	float	___706_subsurface_color_nonnegative_in2_tmp	%read{352,352} %write{351,351}
+local	color	___706_subsurface_color_nonnegative_out	%read{717,717} %write{353,353}
+local	float	___706_coat_clamped_low_tmp	%read{358,358} %write{354,354}
+local	float	___706_coat_clamped_high_tmp	%read{357,357} %write{355,355}
+local	float	___706_coat_clamped_out	%read{645,645} %write{358,358}
+local	color	___706_subsurface_radius_scaled_out	%read{773,773} %write{359,359}
+local	float	___706_subsurface_selector_out	%read{775,777} %write{361,361}
+local	float	___706_base_color_nonnegative_in2_tmp	%read{363,363} %write{362,362}
+local	color	___706_base_color_nonnegative_out	%read{718,718} %write{364,364}
+local	color	___706_coat_attenuation_bg_tmp	%read{366,366} %write{365,365}
+local	color	___706_coat_attenuation_out	%read{798,798} %write{366,366}
+local	float	___706_one_minus_coat_ior_in1_tmp	%read{368,368} %write{367,367}
+local	float	___706_one_minus_coat_ior_out	%read{646,646} %write{368,368}
+local	float	___706_one_plus_coat_ior_in1_tmp	%read{370,370} %write{369,369}
+local	float	___706_one_plus_coat_ior_out	%read{646,646} %write{370,370}
+local	color	___706_emission_weight_out	%read{800,800} %write{371,371}
+local	color	___706_opacity_luminance_out	%read{649,649} %write{372,375}
+local	vector	___706_coat_tangent_rotate_out	%read{650,650} %write{376,493}
+local	color	___706_artistic_ior_ior	%read{510,739} %write{494,509}
+local	color	___706_artistic_ior_extinction	%read{739,739} %write{495,520}
+local	float	___706_coat_affect_roughness_multiply2_out	%read{652,655} %write{521,521}
+local	vector	___706_tangent_rotate_out	%read{653,653} %write{522,639}
+local	float	___706_transmission_roughness_clamped_low_tmp	%read{644,644} %write{640,640}
+local	float	___706_transmission_roughness_clamped_high_tmp	%read{643,643} %write{641,641}
+local	float	___706_transmission_roughness_clamped_out	%read{655,655} %write{644,644}
+local	float	___706_coat_gamma_multiply_out	%read{657,657} %write{645,645}
+local	float	___706_coat_ior_to_F0_sqrt_out	%read{658,658} %write{646,646}
+local	int	___706_opacity_luminance_float_index_tmp	%read{649,649} %write{647,647}
+local	float	___706_opacity_luminance_float_out	%read{827,827} %write{649,649}
+local	vector	___706_coat_tangent_rotate_normalize_out	%read{663,663} %write{650,650}
+local	float	___706_coat_affected_roughness_fg_tmp	%read{652,652} %write{651,651}
+local	float	___706_coat_affected_roughness_out	%read{670,670} %write{652,652}
+local	vector	___706_tangent_rotate_normalize_out	%read{692,692} %write{653,653}
+local	float	___706_coat_affected_transmission_roughness_fg_tmp	%read{655,655} %write{654,654}
+local	float	___706_coat_affected_transmission_roughness_out	%read{699,699} %write{655,655}
+local	float	___706_coat_gamma_in2_tmp	%read{657,657} %write{656,656}
+local	float	___706_coat_gamma_out	%read{717,718} %write{657,657}
+local	float	___706_coat_ior_to_F0_out	%read{720,720} %write{658,658}
+local	float	___706_coat_tangent_value2_tmp	%read{660,660} %write{659,659}
+local	vector	___706_coat_tangent_out	%read{735,735} %write{663,665}
+local	float	___706_main_roughness_out.x	%read{683,751} %write{667,686} %mystruct{___706_main_roughness_out} %mystructfield{0}
+local	float	___706_main_roughness_out.y	%read{685,751} %write{668,687} %mystruct{___706_main_roughness_out} %mystructfield{1}
+local	float	___706_main_tangent_value2_tmp	%read{689,689} %write{688,688}
+local	vector	___706_main_tangent_out	%read{739,763} %write{692,694}
+local	float	___706_transmission_roughness_out.x	%read{712,763} %write{696,715} %mystruct{___706_transmission_roughness_out} %mystructfield{0}
+local	float	___706_transmission_roughness_out.y	%read{714,763} %write{697,716} %mystruct{___706_transmission_roughness_out} %mystructfield{1}
+local	color	___706_coat_affected_subsurface_color_out	%read{768,772} %write{717,717}
+local	color	___706_coat_affected_diffuse_color_out	%read{779,779} %write{718,718}
+local	float	___706_one_minus_coat_ior_to_F0_in1_tmp	%read{720,720} %write{719,719}
+local	float	___706_one_minus_coat_ior_to_F0_out	%read{723,723} %write{720,720}
+local	color	___706_emission_color0_out	%read{813,813} %write{721,724}
+local	closure color	___706_coat_bsdf_out	%read{799,799} %write{725,736}
+local	float	___706_metal_bsdf_weight_tmp	%read{740,740} %write{737,737}
+local	string	___706_metal_bsdf_distribution_tmp	%read{739,739} %write{738,738}
+local	closure color	___706_metal_bsdf_out	%read{796,796} %write{740,740}
+local	closure color	___706_specular_bsdf_out	%read{792,792} %write{741,752}
+local	closure color	___706_transmission_bsdf_out	%read{790,790} %write{753,764}
+local	closure color	___706_sheen_bsdf_out	%read{786,786} %write{766,766}
+local	float	___706_translucent_bsdf_weight_tmp	%read{769,769} %write{767,767}
+local	closure color	___706_translucent_bsdf_out	%read{777,777} %write{769,769}
+local	closure color	___706_subsurface_bsdf_out	%read{776,776} %write{770,773}
+local	closure color	___706_selected_subsurface_bsdf_out	%read{784,784} %write{778,778}
+local	closure color	___706_diffuse_bsdf_out	%read{783,783} %write{780,780}
+local	closure color	___706_subsurface_mix_out	%read{786,786} %write{785,785}
+local	closure color	___706_sheen_layer_out	%read{789,789} %write{786,786}
+local	closure color	___706_transmission_mix_out	%read{792,792} %write{791,791}
+local	closure color	___706_specular_layer_out	%read{795,795} %write{792,792}
+local	closure color	___706_metalness_mix_out	%read{798,798} %write{797,797}
+local	closure color	___706_thin_film_layer_attenuated_out	%read{799,799} %write{798,798}
+local	closure color	___706_coat_layer_out	%read{824,824} %write{799,799}
+local	closure color	___706_emission_edf_out	%read{801,817} %write{800,800}
+local	closure color	___706_coat_tinted_emission_edf_out	%read{814,814} %write{801,801}
+local	closure color	___706_coat_emission_edf_out	%read{818,818} %write{802,814}
+local	closure color	___706_blended_coat_emission_edf_out	%read{825,825} %write{819,819}
+local	closure color	___706_shader_constructor_out.bsdf	%read{830,830} %write{820,824} %mystruct{___706_shader_constructor_out} %mystructfield{0}
+local	closure color	___706_shader_constructor_out.edf	%read{831,831} %write{821,825} %mystruct{___706_shader_constructor_out} %mystructfield{1}
+local	float	___706_shader_constructor_out.opacity	%read{829,832} %write{822,829} %mystruct{___706_shader_constructor_out} %mystructfield{2}
+local	float	___707_opacity_weight	%read{838,840} %write{836,836}
+local	closure color	null_closure	%read{317,318} %write{0,0}
+local	string	diffuse1_file_.filename	%read{28,66} %write{1,1} %mystruct{diffuse1_file_} %mystructfield{0}
+local	string	diffuse1_file_.colorspace	%read{66,66} %write{2,2} %mystruct{diffuse1_file_} %mystructfield{1}
+local	string	metallic1_file_.filename	%read{69,107} %write{3,3} %mystruct{metallic1_file_} %mystructfield{0}
+local	string	metallic1_file_.colorspace	%read{2147483647,-1} %write{4,4} %mystruct{metallic1_file_} %mystructfield{1}
+local	string	roughness1_file_.filename	%read{111,149} %write{5,5} %mystruct{roughness1_file_} %mystructfield{0}
+local	string	roughness1_file_.colorspace	%read{2147483647,-1} %write{6,6} %mystruct{roughness1_file_} %mystructfield{1}
+local	string	sss1_file_.filename	%read{153,191} %write{7,7} %mystruct{sss1_file_} %mystructfield{0}
+local	string	sss1_file_.colorspace	%read{2147483647,-1} %write{8,8} %mystruct{sss1_file_} %mystructfield{1}
+local	string	normal1_file_.filename	%read{195,233} %write{9,9} %mystruct{normal1_file_} %mystructfield{0}
+local	string	normal1_file_.colorspace	%read{2147483647,-1} %write{10,10} %mystruct{normal1_file_} %mystructfield{1}
+local	vector	geomprop_Nworld_out1	%read{314,735} %write{12,12}
+local	vector	geomprop_Tworld_out1	%read{307,694} %write{17,17}
+local	float	geomprop_UV0_out1.x	%read{34,231} %write{18,18} %mystruct{geomprop_UV0_out1} %mystructfield{0} %derivs
+local	float	geomprop_UV0_out1.y	%read{49,232} %write{19,19} %mystruct{geomprop_UV0_out1} %mystructfield{1} %derivs
+local	vector	geomprop_Bworld_out1	%read{310,310} %write{25,25}
+local	color	diffuse1_out	%read{237,252} %write{26,66}
+local	float	metallic1_out	%read{794,796} %write{67,108}
+local	float	roughness1_out	%read{350,652} %write{109,150}
+local	float	sss1_out	%read{782,784} %write{151,192}
+local	vector	normal1_out	%read{301,304} %write{193,233}
+local	color	diffuse1_out_cm_out	%read{345,364} %write{234,295}
+local	vector	mtlxnormalmap3_out	%read{528,779} %write{296,316}
+local	closure color	Queen_W_out.bsdf	%read{837,837} %write{317,830} %mystruct{Queen_W_out} %mystructfield{0}
+local	closure color	Queen_W_out.edf	%read{837,837} %write{318,831} %mystruct{Queen_W_out} %mystructfield{1}
+local	float	Queen_W_out.opacity	%read{835,835} %write{319,832} %mystruct{Queen_W_out} %mystructfield{2}
+local	closure color	M_Queen_W_out	%read{843,843} %write{842,842}
+const	int	$const1	0		%read{0,647} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{11,594} %write{2147483647,-1}
+const	string	$const3	"common"		%read{12,12} %write{2147483647,-1}
+temp	vector	$tmp1	%read{17,17} %write{16,16}
+const	int	$const4	2		%read{13,633} %write{2147483647,-1}
+temp	float	$tmp2	%read{16,16} %write{13,13}
+const	float	$const5	0		%read{16,836} %write{2147483647,-1}
+temp	float	$tmp3	%read{15,15} %write{14,14}
+temp	float	$tmp4	%read{16,16} %write{15,15}
+temp	vector	$tmp5	%read{25,25} %write{24,24}
+temp	vector	$tmp6	%read{24,24} %write{23,23}
+temp	float	$tmp7	%read{23,23} %write{20,20}
+temp	float	$tmp8	%read{22,22} %write{21,21}
+temp	float	$tmp9	%read{23,23} %write{22,22}
+const	color	$const6	0 0 0		%read{26,813} %write{2147483647,-1}
+const	string	$const7	"mx_image_color3"		%read{27,27} %write{2147483647,-1}
+const	string	$const8	""		%read{28,195} %write{2147483647,-1}
+temp	int	$tmp10	%read{29,29} %write{28,28}
+temp	int	$tmp11	%read{30,44} %write{29,43}
+const	string	$const9	"constant"		%read{31,213} %write{2147483647,-1}
+temp	int	$tmp12	%read{32,32} %write{31,31}
+temp	int	$tmp13	%read{33,42} %write{32,41}
+temp	int	$tmp14	%read{35,35} %write{34,34}
+temp	int	$tmp15	%read{36,40} %write{35,39}
+const	float	$const10	1		%read{37,840} %write{2147483647,-1}
+temp	int	$tmp16	%read{38,38} %write{37,37}
+temp	int	$tmp17	%read{39,39} %write{38,38}
+temp	int	$tmp18	%read{41,41} %write{40,40}
+temp	int	$tmp19	%read{43,43} %write{42,42}
+temp	int	$tmp20	%read{45,59} %write{44,58}
+temp	int	$tmp21	%read{47,47} %write{46,46}
+temp	int	$tmp22	%read{48,57} %write{47,56}
+temp	int	$tmp23	%read{50,50} %write{49,49}
+temp	int	$tmp24	%read{51,55} %write{50,54}
+temp	int	$tmp25	%read{53,53} %write{52,52}
+temp	int	$tmp26	%read{54,54} %write{53,53}
+temp	int	$tmp27	%read{56,56} %write{55,55}
+temp	int	$tmp28	%read{58,58} %write{57,57}
+const	string	$const11	"mx_transform_uv"		%read{63,230} %write{2147483647,-1}
+const	string	$const12	"subimage"		%read{66,233} %write{2147483647,-1}
+const	string	$const13	"interp"		%read{66,233} %write{2147483647,-1}
+const	string	$const14	"missingcolor"		%read{66,233} %write{2147483647,-1}
+const	string	$const15	"swrap"		%read{66,233} %write{2147483647,-1}
+const	string	$const16	"twrap"		%read{66,233} %write{2147483647,-1}
+const	string	$const17	"colorspace"		%read{66,66} %write{2147483647,-1}
+const	string	$const18	"mx_image_float"		%read{68,152} %write{2147483647,-1}
+temp	int	$tmp29	%read{70,70} %write{69,69}
+temp	int	$tmp30	%read{71,85} %write{70,84}
+temp	int	$tmp31	%read{73,73} %write{72,72}
+temp	int	$tmp32	%read{74,83} %write{73,82}
+temp	int	$tmp33	%read{76,76} %write{75,75}
+temp	int	$tmp34	%read{77,81} %write{76,80}
+temp	int	$tmp35	%read{79,79} %write{78,78}
+temp	int	$tmp36	%read{80,80} %write{79,79}
+temp	int	$tmp37	%read{82,82} %write{81,81}
+temp	int	$tmp38	%read{84,84} %write{83,83}
+temp	int	$tmp39	%read{86,100} %write{85,99}
+temp	int	$tmp40	%read{88,88} %write{87,87}
+temp	int	$tmp41	%read{89,98} %write{88,97}
+temp	int	$tmp42	%read{91,91} %write{90,90}
+temp	int	$tmp43	%read{92,96} %write{91,95}
+temp	int	$tmp44	%read{94,94} %write{93,93}
+temp	int	$tmp45	%read{95,95} %write{94,94}
+temp	int	$tmp46	%read{97,97} %write{96,96}
+temp	int	$tmp47	%read{99,99} %write{98,98}
+temp	int	$tmp48	%read{112,112} %write{111,111}
+temp	int	$tmp49	%read{113,127} %write{112,126}
+temp	int	$tmp50	%read{115,115} %write{114,114}
+temp	int	$tmp51	%read{116,125} %write{115,124}
+temp	int	$tmp52	%read{118,118} %write{117,117}
+temp	int	$tmp53	%read{119,123} %write{118,122}
+temp	int	$tmp54	%read{121,121} %write{120,120}
+temp	int	$tmp55	%read{122,122} %write{121,121}
+temp	int	$tmp56	%read{124,124} %write{123,123}
+temp	int	$tmp57	%read{126,126} %write{125,125}
+temp	int	$tmp58	%read{128,142} %write{127,141}
+temp	int	$tmp59	%read{130,130} %write{129,129}
+temp	int	$tmp60	%read{131,140} %write{130,139}
+temp	int	$tmp61	%read{133,133} %write{132,132}
+temp	int	$tmp62	%read{134,138} %write{133,137}
+temp	int	$tmp63	%read{136,136} %write{135,135}
+temp	int	$tmp64	%read{137,137} %write{136,136}
+temp	int	$tmp65	%read{139,139} %write{138,138}
+temp	int	$tmp66	%read{141,141} %write{140,140}
+temp	int	$tmp67	%read{154,154} %write{153,153}
+temp	int	$tmp68	%read{155,169} %write{154,168}
+temp	int	$tmp69	%read{157,157} %write{156,156}
+temp	int	$tmp70	%read{158,167} %write{157,166}
+temp	int	$tmp71	%read{160,160} %write{159,159}
+temp	int	$tmp72	%read{161,165} %write{160,164}
+temp	int	$tmp73	%read{163,163} %write{162,162}
+temp	int	$tmp74	%read{164,164} %write{163,163}
+temp	int	$tmp75	%read{166,166} %write{165,165}
+temp	int	$tmp76	%read{168,168} %write{167,167}
+temp	int	$tmp77	%read{170,184} %write{169,183}
+temp	int	$tmp78	%read{172,172} %write{171,171}
+temp	int	$tmp79	%read{173,182} %write{172,181}
+temp	int	$tmp80	%read{175,175} %write{174,174}
+temp	int	$tmp81	%read{176,180} %write{175,179}
+temp	int	$tmp82	%read{178,178} %write{177,177}
+temp	int	$tmp83	%read{179,179} %write{178,178}
+temp	int	$tmp84	%read{181,181} %write{180,180}
+temp	int	$tmp85	%read{183,183} %write{182,182}
+const	vector	$const19	0 0 0		%read{193,522} %write{2147483647,-1}
+const	string	$const20	"mx_image_vector3"		%read{194,194} %write{2147483647,-1}
+temp	int	$tmp86	%read{196,196} %write{195,195}
+temp	int	$tmp87	%read{197,211} %write{196,210}
+temp	int	$tmp88	%read{199,199} %write{198,198}
+temp	int	$tmp89	%read{200,209} %write{199,208}
+temp	int	$tmp90	%read{202,202} %write{201,201}
+temp	int	$tmp91	%read{203,207} %write{202,206}
+temp	int	$tmp92	%read{205,205} %write{204,204}
+temp	int	$tmp93	%read{206,206} %write{205,205}
+temp	int	$tmp94	%read{208,208} %write{207,207}
+temp	int	$tmp95	%read{210,210} %write{209,209}
+temp	int	$tmp96	%read{212,226} %write{211,225}
+temp	int	$tmp97	%read{214,214} %write{213,213}
+temp	int	$tmp98	%read{215,224} %write{214,223}
+temp	int	$tmp99	%read{217,217} %write{216,216}
+temp	int	$tmp100	%read{218,222} %write{217,221}
+temp	int	$tmp101	%read{220,220} %write{219,219}
+temp	int	$tmp102	%read{221,221} %write{220,220}
+temp	int	$tmp103	%read{223,223} %write{222,222}
+temp	int	$tmp104	%read{225,225} %write{224,224}
+const	string	$const21	"NG_srgb_texture_to_lin_rec709_color3"		%read{235,235} %write{2147483647,-1}
+const	float	$const22	0.055		%read{236,236} %write{2147483647,-1}
+const	float	$const23	12.92		%read{238,238} %write{2147483647,-1}
+const	string	$const24	"NG_separate3_color3"		%read{243,243} %write{2147483647,-1}
+const	string	$const25	"mx_extract"		%read{245,648} %write{2147483647,-1}
+const	int	$const26	1		%read{247,630} %write{2147483647,-1}
+temp	color	$tmp105	%read{258,258} %write{257,257}
+const	float	$const27	0.04045		%read{259,279} %write{2147483647,-1}
+temp	int	$tmp106	%read{264,264} %write{262,262}
+const	string	$const28	"mx_ternary"		%read{263,690} %write{2147483647,-1}
+temp	int	$tmp107	%read{274,274} %write{272,272}
+temp	int	$tmp108	%read{284,284} %write{282,282}
+const	float	$const29	1.055		%read{289,289} %write{2147483647,-1}
+const	float	$const30	2.4		%read{292,292} %write{2147483647,-1}
+const	string	$const31	"mx_normalmap_float"		%read{297,297} %write{2147483647,-1}
+temp	float	$tmp109.x	%read{308,308} %write{298,298}
+temp	float	$tmp109.y	%read{311,311} %write{299,299}
+const	string	$const32	"mx_normalmap_vector2"		%read{300,300} %write{2147483647,-1}
+temp	int	$tmp111	%read{302,302} %write{301,301}
+const	vector	$const33	0 0 1		%read{303,303} %write{2147483647,-1}
+const	float	$const34	2		%read{304,304} %write{2147483647,-1}
+temp	vector	$tmp112	%read{305,305} %write{304,304}
+temp	float	$tmp113	%read{307,307} %write{306,306}
+temp	vector	$tmp114	%read{308,308} %write{307,307}
+temp	vector	$tmp115	%read{312,312} %write{308,308}
+temp	float	$tmp116	%read{310,310} %write{309,309}
+temp	vector	$tmp117	%read{311,311} %write{310,310}
+temp	vector	$tmp118	%read{312,312} %write{311,311}
+temp	vector	$tmp119	%read{315,315} %write{312,312}
+temp	float	$tmp120	%read{314,314} %write{313,313}
+temp	vector	$tmp121	%read{315,315} %write{314,314}
+temp	vector	$tmp122	%read{316,316} %write{315,315}
+const	string	$const35	"NG_standard_surface_surfaceshader_100"		%read{320,320} %write{2147483647,-1}
+const	string	$const36	"mx_roughness_anisotropy"		%read{324,698} %write{2147483647,-1}
+temp	float	$tmp123	%read{327,327} %write{325,325}
+const	float	$const37	1e-08		%read{328,702} %write{2147483647,-1}
+const	string	$const38	"clamp"		%read{326,834} %write{2147483647,-1}
+temp	float	$tmp124	%read{328,328} %write{327,327}
+temp	int	$tmp125	%read{330,330} %write{329,329}
+temp	float	$tmp126	%read{334,334} %write{333,333}
+const	float	$const39	0.98		%read{332,706} %write{2147483647,-1}
+temp	float	$tmp127	%read{333,333} %write{332,332}
+temp	float	$tmp128	%read{335,335} %write{334,334}
+temp	float	$tmp129	%read{337,337} %write{336,336}
+const	float	$const40	360		%read{343,348} %write{2147483647,-1}
+temp	color	$tmp130	%read{353,353} %write{352,352}
+temp	float	$tmp131	%read{358,358} %write{357,357}
+temp	float	$tmp132	%read{361,361} %write{360,360}
+temp	color	$tmp133	%read{364,364} %write{363,363}
+const	color	$const41	1 1 1		%read{365,734} %write{2147483647,-1}
+const	color	$const42	0.272229 0.674082 0.053689		%read{374,374} %write{2147483647,-1}
+const	string	$const43	"mx_luminance_color3"		%read{373,373} %write{2147483647,-1}
+temp	float	$tmp135	%read{375,375} %write{374,374}
+const	string	$const44	"mx_rotate_vector3"		%read{377,523} %write{2147483647,-1}
+const	string	$const45	"radians"		%read{378,524} %write{2147483647,-1}
+const	float	$const46	3.1415927		%read{379,525} %write{2147483647,-1}
+const	float	$const47	180		%read{379,525} %write{2147483647,-1}
+temp	float	$tmp136	%read{380,380} %write{379,379}
+const	string	$const48	"rotationMatrix"		%read{381,527} %write{2147483647,-1}
+temp	float	$tmp137	%read{387,387} %write{386,386}
+temp	float	$tmp138	%read{389,389} %write{387,387}
+temp	float	$tmp139	%read{389,389} %write{388,388}
+temp	float	$tmp140	%read{390,390} %write{389,389}
+temp	float	$tmp141	%read{443,443} %write{390,390}
+temp	float	$tmp142	%read{392,392} %write{391,391}
+temp	float	$tmp143	%read{394,394} %write{392,392}
+temp	float	$tmp144	%read{394,394} %write{393,393}
+temp	float	$tmp145	%read{397,397} %write{394,394}
+temp	float	$tmp146	%read{396,396} %write{395,395}
+temp	float	$tmp147	%read{397,397} %write{396,396}
+temp	float	$tmp148	%read{443,443} %write{397,397}
+temp	float	$tmp149	%read{399,399} %write{398,398}
+temp	float	$tmp150	%read{401,401} %write{399,399}
+temp	float	$tmp151	%read{401,401} %write{400,400}
+temp	float	$tmp152	%read{404,404} %write{401,401}
+temp	float	$tmp153	%read{403,403} %write{402,402}
+temp	float	$tmp154	%read{404,404} %write{403,403}
+temp	float	$tmp155	%read{443,443} %write{404,404}
+temp	float	$tmp156	%read{406,406} %write{405,405}
+temp	float	$tmp157	%read{408,408} %write{406,406}
+temp	float	$tmp158	%read{408,408} %write{407,407}
+temp	float	$tmp159	%read{411,411} %write{408,408}
+temp	float	$tmp160	%read{410,410} %write{409,409}
+temp	float	$tmp161	%read{411,411} %write{410,410}
+temp	float	$tmp162	%read{443,443} %write{411,411}
+temp	float	$tmp163	%read{413,413} %write{412,412}
+temp	float	$tmp164	%read{415,415} %write{413,413}
+temp	float	$tmp165	%read{415,415} %write{414,414}
+temp	float	$tmp166	%read{416,416} %write{415,415}
+temp	float	$tmp167	%read{443,443} %write{416,416}
+temp	float	$tmp168	%read{418,418} %write{417,417}
+temp	float	$tmp169	%read{420,420} %write{418,418}
+temp	float	$tmp170	%read{420,420} %write{419,419}
+temp	float	$tmp171	%read{423,423} %write{420,420}
+temp	float	$tmp172	%read{422,422} %write{421,421}
+temp	float	$tmp173	%read{423,423} %write{422,422}
+temp	float	$tmp174	%read{443,443} %write{423,423}
+temp	float	$tmp175	%read{425,425} %write{424,424}
+temp	float	$tmp176	%read{427,427} %write{425,425}
+temp	float	$tmp177	%read{427,427} %write{426,426}
+temp	float	$tmp178	%read{430,430} %write{427,427}
+temp	float	$tmp179	%read{429,429} %write{428,428}
+temp	float	$tmp180	%read{430,430} %write{429,429}
+temp	float	$tmp181	%read{443,443} %write{430,430}
+temp	float	$tmp182	%read{432,432} %write{431,431}
+temp	float	$tmp183	%read{434,434} %write{432,432}
+temp	float	$tmp184	%read{434,434} %write{433,433}
+temp	float	$tmp185	%read{437,437} %write{434,434}
+temp	float	$tmp186	%read{436,436} %write{435,435}
+temp	float	$tmp187	%read{437,437} %write{436,436}
+temp	float	$tmp188	%read{443,443} %write{437,437}
+temp	float	$tmp189	%read{439,439} %write{438,438}
+temp	float	$tmp190	%read{441,441} %write{439,439}
+temp	float	$tmp191	%read{441,441} %write{440,440}
+temp	float	$tmp192	%read{442,442} %write{441,441}
+temp	float	$tmp193	%read{443,443} %write{442,442}
+temp	float	$tmp194.x	%read{450,483} %write{444,444}
+temp	float	$tmp194.y	%read{452,485} %write{445,445}
+temp	float	$tmp194.z	%read{455,488} %write{446,446}
+temp	float	$tmp194.w	%read{458,491} %write{447,447}
+temp	float	$tmp195	%read{450,450} %write{449,449}
+temp	float	$tmp196	%read{453,453} %write{450,450}
+temp	float	$tmp197	%read{452,452} %write{451,451}
+temp	float	$tmp198	%read{453,453} %write{452,452}
+temp	float	$tmp199	%read{456,456} %write{453,453}
+temp	float	$tmp200	%read{455,455} %write{454,454}
+temp	float	$tmp201	%read{456,456} %write{455,455}
+temp	float	$tmp202	%read{459,459} %write{456,456}
+const	int	$const49	3		%read{457,636} %write{2147483647,-1}
+temp	float	$tmp203	%read{458,458} %write{457,457}
+temp	float	$tmp204	%read{459,459} %write{458,458}
+temp	float	$tmp205	%read{461,461} %write{460,460}
+temp	float	$tmp206	%read{464,464} %write{461,461}
+temp	float	$tmp207	%read{463,463} %write{462,462}
+temp	float	$tmp208	%read{464,464} %write{463,463}
+temp	float	$tmp209	%read{467,467} %write{464,464}
+temp	float	$tmp210	%read{466,466} %write{465,465}
+temp	float	$tmp211	%read{467,467} %write{466,466}
+temp	float	$tmp212	%read{470,470} %write{467,467}
+temp	float	$tmp213	%read{469,469} %write{468,468}
+temp	float	$tmp214	%read{470,470} %write{469,469}
+temp	float	$tmp215	%read{472,472} %write{471,471}
+temp	float	$tmp216	%read{475,475} %write{472,472}
+temp	float	$tmp217	%read{474,474} %write{473,473}
+temp	float	$tmp218	%read{475,475} %write{474,474}
+temp	float	$tmp219	%read{478,478} %write{475,475}
+temp	float	$tmp220	%read{477,477} %write{476,476}
+temp	float	$tmp221	%read{478,478} %write{477,477}
+temp	float	$tmp222	%read{481,481} %write{478,478}
+temp	float	$tmp223	%read{480,480} %write{479,479}
+temp	float	$tmp224	%read{481,481} %write{480,480}
+temp	float	$tmp225	%read{483,483} %write{482,482}
+temp	float	$tmp226	%read{486,486} %write{483,483}
+temp	float	$tmp227	%read{485,485} %write{484,484}
+temp	float	$tmp228	%read{486,486} %write{485,485}
+temp	float	$tmp229	%read{489,489} %write{486,486}
+temp	float	$tmp230	%read{488,488} %write{487,487}
+temp	float	$tmp231	%read{489,489} %write{488,488}
+temp	float	$tmp232	%read{492,492} %write{489,489}
+temp	float	$tmp233	%read{491,491} %write{490,490}
+temp	float	$tmp234	%read{492,492} %write{491,491}
+const	string	$const50	"mx_artistic_ior"		%read{496,496} %write{2147483647,-1}
+temp	color	$tmp235	%read{501,501} %write{497,497}
+const	float	$const51	0.99		%read{498,498} %write{2147483647,-1}
+temp	color	$tmp236	%read{500,500} %write{498,498}
+temp	color	$tmp237	%read{501,501} %write{500,500}
+temp	color	$tmp238	%read{505,505} %write{503,503}
+temp	color	$tmp239	%read{505,505} %write{504,504}
+temp	color	$tmp240	%read{508,508} %write{506,506}
+temp	color	$tmp241	%read{508,508} %write{507,507}
+temp	color	$tmp242	%read{513,513} %write{512,512}
+temp	color	$tmp243	%read{515,515} %write{513,513}
+temp	color	$tmp244	%read{515,515} %write{514,514}
+temp	color	$tmp245	%read{517,517} %write{515,515}
+temp	color	$tmp246	%read{517,517} %write{516,516}
+temp	color	$tmp247	%read{519,519} %write{518,518}
+temp	float	$tmp248	%read{526,526} %write{525,525}
+temp	float	$tmp249	%read{533,533} %write{532,532}
+temp	float	$tmp250	%read{535,535} %write{533,533}
+temp	float	$tmp251	%read{535,535} %write{534,534}
+temp	float	$tmp252	%read{536,536} %write{535,535}
+temp	float	$tmp253	%read{589,589} %write{536,536}
+temp	float	$tmp254	%read{538,538} %write{537,537}
+temp	float	$tmp255	%read{540,540} %write{538,538}
+temp	float	$tmp256	%read{540,540} %write{539,539}
+temp	float	$tmp257	%read{543,543} %write{540,540}
+temp	float	$tmp258	%read{542,542} %write{541,541}
+temp	float	$tmp259	%read{543,543} %write{542,542}
+temp	float	$tmp260	%read{589,589} %write{543,543}
+temp	float	$tmp261	%read{545,545} %write{544,544}
+temp	float	$tmp262	%read{547,547} %write{545,545}
+temp	float	$tmp263	%read{547,547} %write{546,546}
+temp	float	$tmp264	%read{550,550} %write{547,547}
+temp	float	$tmp265	%read{549,549} %write{548,548}
+temp	float	$tmp266	%read{550,550} %write{549,549}
+temp	float	$tmp267	%read{589,589} %write{550,550}
+temp	float	$tmp268	%read{552,552} %write{551,551}
+temp	float	$tmp269	%read{554,554} %write{552,552}
+temp	float	$tmp270	%read{554,554} %write{553,553}
+temp	float	$tmp271	%read{557,557} %write{554,554}
+temp	float	$tmp272	%read{556,556} %write{555,555}
+temp	float	$tmp273	%read{557,557} %write{556,556}
+temp	float	$tmp274	%read{589,589} %write{557,557}
+temp	float	$tmp275	%read{559,559} %write{558,558}
+temp	float	$tmp276	%read{561,561} %write{559,559}
+temp	float	$tmp277	%read{561,561} %write{560,560}
+temp	float	$tmp278	%read{562,562} %write{561,561}
+temp	float	$tmp279	%read{589,589} %write{562,562}
+temp	float	$tmp280	%read{564,564} %write{563,563}
+temp	float	$tmp281	%read{566,566} %write{564,564}
+temp	float	$tmp282	%read{566,566} %write{565,565}
+temp	float	$tmp283	%read{569,569} %write{566,566}
+temp	float	$tmp284	%read{568,568} %write{567,567}
+temp	float	$tmp285	%read{569,569} %write{568,568}
+temp	float	$tmp286	%read{589,589} %write{569,569}
+temp	float	$tmp287	%read{571,571} %write{570,570}
+temp	float	$tmp288	%read{573,573} %write{571,571}
+temp	float	$tmp289	%read{573,573} %write{572,572}
+temp	float	$tmp290	%read{576,576} %write{573,573}
+temp	float	$tmp291	%read{575,575} %write{574,574}
+temp	float	$tmp292	%read{576,576} %write{575,575}
+temp	float	$tmp293	%read{589,589} %write{576,576}
+temp	float	$tmp294	%read{578,578} %write{577,577}
+temp	float	$tmp295	%read{580,580} %write{578,578}
+temp	float	$tmp296	%read{580,580} %write{579,579}
+temp	float	$tmp297	%read{583,583} %write{580,580}
+temp	float	$tmp298	%read{582,582} %write{581,581}
+temp	float	$tmp299	%read{583,583} %write{582,582}
+temp	float	$tmp300	%read{589,589} %write{583,583}
+temp	float	$tmp301	%read{585,585} %write{584,584}
+temp	float	$tmp302	%read{587,587} %write{585,585}
+temp	float	$tmp303	%read{587,587} %write{586,586}
+temp	float	$tmp304	%read{588,588} %write{587,587}
+temp	float	$tmp305	%read{589,589} %write{588,588}
+temp	float	$tmp306.x	%read{596,629} %write{590,590}
+temp	float	$tmp306.y	%read{598,631} %write{591,591}
+temp	float	$tmp306.z	%read{601,634} %write{592,592}
+temp	float	$tmp306.w	%read{604,637} %write{593,593}
+temp	float	$tmp307	%read{596,596} %write{595,595}
+temp	float	$tmp308	%read{599,599} %write{596,596}
+temp	float	$tmp309	%read{598,598} %write{597,597}
+temp	float	$tmp310	%read{599,599} %write{598,598}
+temp	float	$tmp311	%read{602,602} %write{599,599}
+temp	float	$tmp312	%read{601,601} %write{600,600}
+temp	float	$tmp313	%read{602,602} %write{601,601}
+temp	float	$tmp314	%read{605,605} %write{602,602}
+temp	float	$tmp315	%read{604,604} %write{603,603}
+temp	float	$tmp316	%read{605,605} %write{604,604}
+temp	float	$tmp317	%read{607,607} %write{606,606}
+temp	float	$tmp318	%read{610,610} %write{607,607}
+temp	float	$tmp319	%read{609,609} %write{608,608}
+temp	float	$tmp320	%read{610,610} %write{609,609}
+temp	float	$tmp321	%read{613,613} %write{610,610}
+temp	float	$tmp322	%read{612,612} %write{611,611}
+temp	float	$tmp323	%read{613,613} %write{612,612}
+temp	float	$tmp324	%read{616,616} %write{613,613}
+temp	float	$tmp325	%read{615,615} %write{614,614}
+temp	float	$tmp326	%read{616,616} %write{615,615}
+temp	float	$tmp327	%read{618,618} %write{617,617}
+temp	float	$tmp328	%read{621,621} %write{618,618}
+temp	float	$tmp329	%read{620,620} %write{619,619}
+temp	float	$tmp330	%read{621,621} %write{620,620}
+temp	float	$tmp331	%read{624,624} %write{621,621}
+temp	float	$tmp332	%read{623,623} %write{622,622}
+temp	float	$tmp333	%read{624,624} %write{623,623}
+temp	float	$tmp334	%read{627,627} %write{624,624}
+temp	float	$tmp335	%read{626,626} %write{625,625}
+temp	float	$tmp336	%read{627,627} %write{626,626}
+temp	float	$tmp337	%read{629,629} %write{628,628}
+temp	float	$tmp338	%read{632,632} %write{629,629}
+temp	float	$tmp339	%read{631,631} %write{630,630}
+temp	float	$tmp340	%read{632,632} %write{631,631}
+temp	float	$tmp341	%read{635,635} %write{632,632}
+temp	float	$tmp342	%read{634,634} %write{633,633}
+temp	float	$tmp343	%read{635,635} %write{634,634}
+temp	float	$tmp344	%read{638,638} %write{635,635}
+temp	float	$tmp345	%read{637,637} %write{636,636}
+temp	float	$tmp346	%read{638,638} %write{637,637}
+temp	float	$tmp347	%read{644,644} %write{643,643}
+temp	int	$tmp348	%read{662,662} %write{660,660}
+temp	float	$tmp349	%read{672,672} %write{670,670}
+temp	float	$tmp350	%read{673,673} %write{672,672}
+temp	int	$tmp351	%read{675,675} %write{674,674}
+temp	float	$tmp352	%read{679,679} %write{678,678}
+temp	float	$tmp353	%read{678,678} %write{677,677}
+temp	float	$tmp354	%read{680,680} %write{679,679}
+temp	float	$tmp355	%read{682,682} %write{681,681}
+temp	int	$tmp356	%read{691,691} %write{689,689}
+temp	float	$tmp357	%read{701,701} %write{699,699}
+temp	float	$tmp358	%read{702,702} %write{701,701}
+temp	int	$tmp359	%read{704,704} %write{703,703}
+temp	float	$tmp360	%read{708,708} %write{707,707}
+temp	float	$tmp361	%read{707,707} %write{706,706}
+temp	float	$tmp362	%read{709,709} %write{708,708}
+temp	float	$tmp363	%read{711,711} %write{710,710}
+const	string	$const52	"NG_convert_float_color3"		%read{722,722} %write{2147483647,-1}
+const	float	$const53	1.5		%read{735,763} %write{2147483647,-1}
+const	string	$const54	"ggx"		%read{735,763} %write{2147483647,-1}
+const	string	$const55	"R"		%read{727,759} %write{2147483647,-1}
+const	string	$const56	"mx_dielectric_bsdf"		%read{726,754} %write{2147483647,-1}
+const	string	$const57	"T"		%read{727,759} %write{2147483647,-1}
+temp	int	$tmp365	%read{728,728} %write{727,727}
+temp	int	$tmp366	%read{732,732} %write{731,731}
+temp	closure color	$tmp367	%read{736,736} %write{735,735}
+const	string	$const58	"thinfilm_thickness"		%read{735,763} %write{2147483647,-1}
+const	string	$const59	"thinfilm_ior"		%read{735,763} %write{2147483647,-1}
+const	string	$const60	"dielectric_bsdf"		%read{735,763} %write{2147483647,-1}
+temp	closure color	$tmp368	%read{740,740} %write{739,739}
+const	string	$const61	"conductor_bsdf"		%read{739,739} %write{2147483647,-1}
+temp	int	$tmp369	%read{744,744} %write{743,743}
+temp	int	$tmp370	%read{748,748} %write{747,747}
+temp	closure color	$tmp371	%read{752,752} %write{751,751}
+temp	int	$tmp372	%read{756,756} %write{755,755}
+temp	int	$tmp373	%read{760,760} %write{759,759}
+temp	closure color	$tmp374	%read{764,764} %write{763,763}
+temp	closure color	$tmp375	%read{766,766} %write{765,765}
+const	string	$const62	"sheen_bsdf"		%read{765,765} %write{2147483647,-1}
+temp	closure color	$tmp376	%read{769,769} %write{768,768}
+const	string	$const63	"translucent_bsdf"		%read{768,768} %write{2147483647,-1}
+const	string	$const64	"mx_subsurface_bsdf"		%read{771,771} %write{2147483647,-1}
+temp	color	$tmp377	%read{773,773} %write{772,772}
+const	string	$const65	"subsurface_bssrdf"		%read{773,773} %write{2147483647,-1}
+const	string	$const66	"mix"		%read{774,815} %write{2147483647,-1}
+temp	float	$tmp378	%read{776,776} %write{775,775}
+temp	closure color	$tmp379	%read{778,778} %write{776,776}
+temp	closure color	$tmp380	%read{778,778} %write{777,777}
+temp	closure color	$tmp381	%read{780,780} %write{779,779}
+const	string	$const67	"oren_nayar_diffuse_bsdf"		%read{779,779} %write{2147483647,-1}
+temp	float	$tmp382	%read{783,783} %write{782,782}
+temp	closure color	$tmp383	%read{785,785} %write{783,783}
+temp	closure color	$tmp384	%read{785,785} %write{784,784}
+const	string	$const68	"layer"		%read{786,799} %write{2147483647,-1}
+temp	float	$tmp385	%read{789,789} %write{788,788}
+temp	closure color	$tmp386	%read{791,791} %write{789,789}
+temp	closure color	$tmp387	%read{791,791} %write{790,790}
+temp	float	$tmp388	%read{795,795} %write{794,794}
+temp	closure color	$tmp389	%read{797,797} %write{795,795}
+temp	closure color	$tmp390	%read{797,797} %write{796,796}
+const	string	$const69	"uniform_edf"		%read{800,800} %write{2147483647,-1}
+const	float	$const70	5		%read{812,812} %write{2147483647,-1}
+const	string	$const71	"mx_generalized_schlick_edf"		%read{803,803} %write{2147483647,-1}
+temp	float	$tmp392	%read{806,806} %write{805,805}
+temp	vector	$tmp393	%read{805,805} %write{804,804}
+const	string	$const72	"mx_fresnel_schlick"		%read{807,807} %write{2147483647,-1}
+temp	float	$tmp394	%read{810,810} %write{808,808}
+temp	float	$tmp395	%read{811,811} %write{810,810}
+temp	float	$tmp396	%read{813,813} %write{812,812}
+temp	float	$tmp397	%read{817,817} %write{816,816}
+temp	closure color	$tmp398	%read{819,819} %write{817,817}
+temp	closure color	$tmp399	%read{819,819} %write{818,818}
+const	string	$const73	"mx_surface"		%read{823,823} %write{2147483647,-1}
+temp	float	$tmp400	%read{828,828} %write{827,827}
+const	string	$const74	"mx_surfacematerial"		%read{833,833} %write{2147483647,-1}
+temp	float	$tmp401	%read{836,836} %write{835,835}
+temp	closure color	$tmp402	%read{838,838} %write{837,837}
+temp	closure color	$tmp403	%read{842,842} %write{838,838}
+temp	closure color	$tmp404	%read{841,841} %write{839,839}
+const	string	$const75	"transparent"		%read{839,839} %write{2147483647,-1}
+temp	float	$tmp405	%read{841,841} %write{840,840}
+temp	closure color	$tmp406	%read{842,842} %write{841,841}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:987
+#     textureresource diffuse1_file_ = {diffuse1_file, diffuse1_file_colorspace};
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{987} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:988
+#     textureresource metallic1_file_ = {metallic1_file, metallic1_file_colorspace};
+	assign		diffuse1_file_.filename diffuse1_file 	%line{988} %argrw{"wr"}
+	assign		diffuse1_file_.colorspace diffuse1_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:989
+#     textureresource roughness1_file_ = {roughness1_file, roughness1_file_colorspace};
+	assign		metallic1_file_.filename metallic1_file 	%line{989} %argrw{"wr"}
+	assign		metallic1_file_.colorspace metallic1_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:990
+#     textureresource sss1_file_ = {sss1_file, sss1_file_colorspace};
+	assign		roughness1_file_.filename roughness1_file 	%line{990} %argrw{"wr"}
+	assign		roughness1_file_.colorspace roughness1_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:991
+#     textureresource normal1_file_ = {normal1_file, normal1_file_colorspace};
+	assign		sss1_file_.filename sss1_file 	%line{991} %argrw{"wr"}
+	assign		sss1_file_.colorspace sss1_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:992
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		normal1_file_.filename normal1_file 	%line{992} %argrw{"wr"}
+	assign		normal1_file_.colorspace normal1_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:993
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const2 13 	%line{993} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:994
+#     vector2 geomprop_UV0_out1 = vector2(u,v);
+	compref		$tmp2 N $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{994} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const5 $tmp4 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:995
+#     vector geomprop_Bworld_out1 = normalize(cross(N, vector(N[2], 0, -N[0])));
+	assign		geomprop_UV0_out1.x u 	%line{995} %argrw{"wr"}
+	assign		geomprop_UV0_out1.y v 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:996
+#     color diffuse1_out = color(0.0);
+	compref		$tmp7 N $const4 	%line{996} %argrw{"wrr"}
+	compref		$tmp8 N $const1 	%argrw{"wrr"}
+	neg		$tmp9 $tmp8 	%argrw{"wr"}
+	vector		$tmp6 $tmp7 $const5 $tmp9 	%argrw{"wrrr"}
+	cross		$tmp5 N $tmp6 	%argrw{"wrr"}
+	normalize	geomprop_Bworld_out1 $tmp5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:997
+#     mx_image_color3(diffuse1_file_, diffuse1_layer, diffuse1_default, geomprop_UV0_out1, diffuse1_uaddressmode, diffuse1_vaddressmode, diffuse1_filtertype, diffuse1_framerange, diffuse1_frameoffset, diffuse1_frameendaction, diffuse1_out);
+	assign		diffuse1_out $const6 	%line{997} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:998
+#     float metallic1_out = 0.0;
+	functioncall	$const7 67 	%line{998} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp10 diffuse1_file_.filename $const8 	%line{25} %argrw{"wrr"}
+	neq		$tmp11 $tmp10 $const1 	%argrw{"wrr"}
+	if		$tmp11 31 44 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp12 diffuse1_uaddressmode $const9 	%line{26} %argrw{"wrr"}
+	neq		$tmp13 $tmp12 $const1 	%argrw{"wrr"}
+	if		$tmp13 42 42 	%argrw{"r"}
+	lt		$tmp14 geomprop_UV0_out1.x $const5 	%argrw{"wrr"}
+	neq		$tmp15 $tmp14 $const1 	%argrw{"wrr"}
+	if		$tmp15 37 40 	%argrw{"r"}
+	gt		$tmp16 geomprop_UV0_out1.x $const10 	%argrw{"wrr"}
+	neq		$tmp17 $tmp16 $const1 	%argrw{"wrr"}
+	assign		$tmp15 $tmp17 	%argrw{"wr"}
+	neq		$tmp18 $tmp15 $const1 	%argrw{"wrr"}
+	assign		$tmp13 $tmp18 	%argrw{"wr"}
+	neq		$tmp19 $tmp13 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp11 $tmp19 	%line{25} %argrw{"wr"}
+	neq		$tmp20 $tmp11 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp20 46 59 	%line{26} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:27
+#     {
+	eq		$tmp21 diffuse1_vaddressmode $const9 	%line{27} %argrw{"wrr"}
+	neq		$tmp22 $tmp21 $const1 	%argrw{"wrr"}
+	if		$tmp22 57 57 	%argrw{"r"}
+	lt		$tmp23 geomprop_UV0_out1.y $const5 	%argrw{"wrr"}
+	neq		$tmp24 $tmp23 $const1 	%argrw{"wrr"}
+	if		$tmp24 52 55 	%argrw{"r"}
+	gt		$tmp25 geomprop_UV0_out1.y $const10 	%argrw{"wrr"}
+	neq		$tmp26 $tmp25 $const1 	%argrw{"wrr"}
+	assign		$tmp24 $tmp26 	%argrw{"wr"}
+	neq		$tmp27 $tmp24 $const1 	%argrw{"wrr"}
+	assign		$tmp22 $tmp27 	%argrw{"wr"}
+	neq		$tmp28 $tmp22 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp20 $tmp28 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp20 62 62 	%line{25} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:29
+#         return;
+	assign		diffuse1_out diffuse1_default 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:30
+#     }
+	return	%line{30}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:33
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___670_missingColor diffuse1_default 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:34
+#     out = texture(file.filename, st.x, st.y,
+	functioncall	$const11 66 	%line{34} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:20
+# }
+	assign		___670_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___670_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:35
+#                   "subimage", layer, "interp", filtertype,
+	texture		diffuse1_out diffuse1_file_.filename ___670_st.x ___670_st.y $const12 diffuse1_layer $const13 diffuse1_filtertype $const14 ___670_missingColor $const15 diffuse1_uaddressmode $const16 diffuse1_vaddressmode $const17 diffuse1_file_.colorspace 	%line{35} %argrw{"wrrrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:999
+#     mx_image_float(metallic1_file_, metallic1_layer, metallic1_default, geomprop_UV0_out1, metallic1_uaddressmode, metallic1_vaddressmode, metallic1_filtertype, metallic1_framerange, metallic1_frameoffset, metallic1_frameendaction, metallic1_out);
+	assign		metallic1_out $const5 	%line{999} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1000
+#     float roughness1_out = 0.0;
+	functioncall	$const18 109 	%line{1000} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp29 metallic1_file_.filename $const8 	%line{45} %argrw{"wrr"}
+	neq		$tmp30 $tmp29 $const1 	%argrw{"wrr"}
+	if		$tmp30 72 85 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp31 metallic1_uaddressmode $const9 	%line{46} %argrw{"wrr"}
+	neq		$tmp32 $tmp31 $const1 	%argrw{"wrr"}
+	if		$tmp32 83 83 	%argrw{"r"}
+	lt		$tmp33 geomprop_UV0_out1.x $const5 	%argrw{"wrr"}
+	neq		$tmp34 $tmp33 $const1 	%argrw{"wrr"}
+	if		$tmp34 78 81 	%argrw{"r"}
+	gt		$tmp35 geomprop_UV0_out1.x $const10 	%argrw{"wrr"}
+	neq		$tmp36 $tmp35 $const1 	%argrw{"wrr"}
+	assign		$tmp34 $tmp36 	%argrw{"wr"}
+	neq		$tmp37 $tmp34 $const1 	%argrw{"wrr"}
+	assign		$tmp32 $tmp37 	%argrw{"wr"}
+	neq		$tmp38 $tmp32 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp30 $tmp38 	%line{45} %argrw{"wr"}
+	neq		$tmp39 $tmp30 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp39 87 100 	%line{46} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:47
+#     {
+	eq		$tmp40 metallic1_vaddressmode $const9 	%line{47} %argrw{"wrr"}
+	neq		$tmp41 $tmp40 $const1 	%argrw{"wrr"}
+	if		$tmp41 98 98 	%argrw{"r"}
+	lt		$tmp42 geomprop_UV0_out1.y $const5 	%argrw{"wrr"}
+	neq		$tmp43 $tmp42 $const1 	%argrw{"wrr"}
+	if		$tmp43 93 96 	%argrw{"r"}
+	gt		$tmp44 geomprop_UV0_out1.y $const10 	%argrw{"wrr"}
+	neq		$tmp45 $tmp44 $const1 	%argrw{"wrr"}
+	assign		$tmp43 $tmp45 	%argrw{"wr"}
+	neq		$tmp46 $tmp43 $const1 	%argrw{"wrr"}
+	assign		$tmp41 $tmp46 	%argrw{"wr"}
+	neq		$tmp47 $tmp41 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp39 $tmp47 	%line{46} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp39 103 103 	%line{45} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:49
+#         return;
+	assign		metallic1_out metallic1_default 	%line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:50
+#     }
+	return	%line{50}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:53
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___672_missingColor metallic1_default 	%line{53} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:54
+#     color rgb = texture(file.filename, st.x, st.y,
+	functioncall	$const11 107 	%line{54} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:20
+# }
+	assign		___672_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___672_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:55
+#                         "subimage", layer, "interp", filtertype,
+	texture		___672_rgb metallic1_file_.filename ___672_st.x ___672_st.y $const12 metallic1_layer $const13 metallic1_filtertype $const14 ___672_missingColor $const15 metallic1_uaddressmode $const16 metallic1_vaddressmode 	%line{55} %argrw{"wrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:59
+# }
+	compref		metallic1_out ___672_rgb $const1 	%line{59} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1001
+#     mx_image_float(roughness1_file_, roughness1_layer, roughness1_default, geomprop_UV0_out1, roughness1_uaddressmode, roughness1_vaddressmode, roughness1_filtertype, roughness1_framerange, roughness1_frameoffset, roughness1_frameendaction, roughness1_out);
+	assign		roughness1_out $const5 	%line{1001} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1002
+#     float sss1_out = 0.0;
+	functioncall	$const18 151 	%line{1002} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp48 roughness1_file_.filename $const8 	%line{45} %argrw{"wrr"}
+	neq		$tmp49 $tmp48 $const1 	%argrw{"wrr"}
+	if		$tmp49 114 127 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp50 roughness1_uaddressmode $const9 	%line{46} %argrw{"wrr"}
+	neq		$tmp51 $tmp50 $const1 	%argrw{"wrr"}
+	if		$tmp51 125 125 	%argrw{"r"}
+	lt		$tmp52 geomprop_UV0_out1.x $const5 	%argrw{"wrr"}
+	neq		$tmp53 $tmp52 $const1 	%argrw{"wrr"}
+	if		$tmp53 120 123 	%argrw{"r"}
+	gt		$tmp54 geomprop_UV0_out1.x $const10 	%argrw{"wrr"}
+	neq		$tmp55 $tmp54 $const1 	%argrw{"wrr"}
+	assign		$tmp53 $tmp55 	%argrw{"wr"}
+	neq		$tmp56 $tmp53 $const1 	%argrw{"wrr"}
+	assign		$tmp51 $tmp56 	%argrw{"wr"}
+	neq		$tmp57 $tmp51 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp49 $tmp57 	%line{45} %argrw{"wr"}
+	neq		$tmp58 $tmp49 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp58 129 142 	%line{46} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:47
+#     {
+	eq		$tmp59 roughness1_vaddressmode $const9 	%line{47} %argrw{"wrr"}
+	neq		$tmp60 $tmp59 $const1 	%argrw{"wrr"}
+	if		$tmp60 140 140 	%argrw{"r"}
+	lt		$tmp61 geomprop_UV0_out1.y $const5 	%argrw{"wrr"}
+	neq		$tmp62 $tmp61 $const1 	%argrw{"wrr"}
+	if		$tmp62 135 138 	%argrw{"r"}
+	gt		$tmp63 geomprop_UV0_out1.y $const10 	%argrw{"wrr"}
+	neq		$tmp64 $tmp63 $const1 	%argrw{"wrr"}
+	assign		$tmp62 $tmp64 	%argrw{"wr"}
+	neq		$tmp65 $tmp62 $const1 	%argrw{"wrr"}
+	assign		$tmp60 $tmp65 	%argrw{"wr"}
+	neq		$tmp66 $tmp60 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp58 $tmp66 	%line{46} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp58 145 145 	%line{45} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:49
+#         return;
+	assign		roughness1_out roughness1_default 	%line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:50
+#     }
+	return	%line{50}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:53
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___672_missingColor roughness1_default 	%line{53} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:54
+#     color rgb = texture(file.filename, st.x, st.y,
+	functioncall	$const11 149 	%line{54} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:20
+# }
+	assign		___672_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___672_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:55
+#                         "subimage", layer, "interp", filtertype,
+	texture		___672_rgb roughness1_file_.filename ___672_st.x ___672_st.y $const12 roughness1_layer $const13 roughness1_filtertype $const14 ___672_missingColor $const15 roughness1_uaddressmode $const16 roughness1_vaddressmode 	%line{55} %argrw{"wrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:59
+# }
+	compref		roughness1_out ___672_rgb $const1 	%line{59} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1003
+#     mx_image_float(sss1_file_, sss1_layer, sss1_default, geomprop_UV0_out1, sss1_uaddressmode, sss1_vaddressmode, sss1_filtertype, sss1_framerange, sss1_frameoffset, sss1_frameendaction, sss1_out);
+	assign		sss1_out $const5 	%line{1003} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1004
+#     vector normal1_out = vector(0.0);
+	functioncall	$const18 193 	%line{1004} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp67 sss1_file_.filename $const8 	%line{45} %argrw{"wrr"}
+	neq		$tmp68 $tmp67 $const1 	%argrw{"wrr"}
+	if		$tmp68 156 169 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp69 sss1_uaddressmode $const9 	%line{46} %argrw{"wrr"}
+	neq		$tmp70 $tmp69 $const1 	%argrw{"wrr"}
+	if		$tmp70 167 167 	%argrw{"r"}
+	lt		$tmp71 geomprop_UV0_out1.x $const5 	%argrw{"wrr"}
+	neq		$tmp72 $tmp71 $const1 	%argrw{"wrr"}
+	if		$tmp72 162 165 	%argrw{"r"}
+	gt		$tmp73 geomprop_UV0_out1.x $const10 	%argrw{"wrr"}
+	neq		$tmp74 $tmp73 $const1 	%argrw{"wrr"}
+	assign		$tmp72 $tmp74 	%argrw{"wr"}
+	neq		$tmp75 $tmp72 $const1 	%argrw{"wrr"}
+	assign		$tmp70 $tmp75 	%argrw{"wr"}
+	neq		$tmp76 $tmp70 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp68 $tmp76 	%line{45} %argrw{"wr"}
+	neq		$tmp77 $tmp68 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp77 171 184 	%line{46} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:47
+#     {
+	eq		$tmp78 sss1_vaddressmode $const9 	%line{47} %argrw{"wrr"}
+	neq		$tmp79 $tmp78 $const1 	%argrw{"wrr"}
+	if		$tmp79 182 182 	%argrw{"r"}
+	lt		$tmp80 geomprop_UV0_out1.y $const5 	%argrw{"wrr"}
+	neq		$tmp81 $tmp80 $const1 	%argrw{"wrr"}
+	if		$tmp81 177 180 	%argrw{"r"}
+	gt		$tmp82 geomprop_UV0_out1.y $const10 	%argrw{"wrr"}
+	neq		$tmp83 $tmp82 $const1 	%argrw{"wrr"}
+	assign		$tmp81 $tmp83 	%argrw{"wr"}
+	neq		$tmp84 $tmp81 $const1 	%argrw{"wrr"}
+	assign		$tmp79 $tmp84 	%argrw{"wr"}
+	neq		$tmp85 $tmp79 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:46
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp77 $tmp85 	%line{46} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:45
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp77 187 187 	%line{45} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:49
+#         return;
+	assign		sss1_out sss1_default 	%line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:50
+#     }
+	return	%line{50}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:53
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___672_missingColor sss1_default 	%line{53} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:54
+#     color rgb = texture(file.filename, st.x, st.y,
+	functioncall	$const11 191 	%line{54} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:20
+# }
+	assign		___672_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___672_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:55
+#                         "subimage", layer, "interp", filtertype,
+	texture		___672_rgb sss1_file_.filename ___672_st.x ___672_st.y $const12 sss1_layer $const13 sss1_filtertype $const14 ___672_missingColor $const15 sss1_uaddressmode $const16 sss1_vaddressmode 	%line{55} %argrw{"wrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:59
+# }
+	compref		sss1_out ___672_rgb $const1 	%line{59} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1005
+#     mx_image_vector3(normal1_file_, normal1_layer, normal1_default, geomprop_UV0_out1, normal1_uaddressmode, normal1_vaddressmode, normal1_filtertype, normal1_framerange, normal1_frameoffset, normal1_frameendaction, normal1_out);
+	assign		normal1_out $const19 	%line{1005} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1006
+#     color diffuse1_out_cm_out = color(0.0);
+	functioncall	$const20 234 	%line{1006} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:65
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp86 normal1_file_.filename $const8 	%line{65} %argrw{"wrr"}
+	neq		$tmp87 $tmp86 $const1 	%argrw{"wrr"}
+	if		$tmp87 198 211 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:66
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp88 normal1_uaddressmode $const9 	%line{66} %argrw{"wrr"}
+	neq		$tmp89 $tmp88 $const1 	%argrw{"wrr"}
+	if		$tmp89 209 209 	%argrw{"r"}
+	lt		$tmp90 geomprop_UV0_out1.x $const5 	%argrw{"wrr"}
+	neq		$tmp91 $tmp90 $const1 	%argrw{"wrr"}
+	if		$tmp91 204 207 	%argrw{"r"}
+	gt		$tmp92 geomprop_UV0_out1.x $const10 	%argrw{"wrr"}
+	neq		$tmp93 $tmp92 $const1 	%argrw{"wrr"}
+	assign		$tmp91 $tmp93 	%argrw{"wr"}
+	neq		$tmp94 $tmp91 $const1 	%argrw{"wrr"}
+	assign		$tmp89 $tmp94 	%argrw{"wr"}
+	neq		$tmp95 $tmp89 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:65
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp87 $tmp95 	%line{65} %argrw{"wr"}
+	neq		$tmp96 $tmp87 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:66
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp96 213 226 	%line{66} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:67
+#     {
+	eq		$tmp97 normal1_vaddressmode $const9 	%line{67} %argrw{"wrr"}
+	neq		$tmp98 $tmp97 $const1 	%argrw{"wrr"}
+	if		$tmp98 224 224 	%argrw{"r"}
+	lt		$tmp99 geomprop_UV0_out1.y $const5 	%argrw{"wrr"}
+	neq		$tmp100 $tmp99 $const1 	%argrw{"wrr"}
+	if		$tmp100 219 222 	%argrw{"r"}
+	gt		$tmp101 geomprop_UV0_out1.y $const10 	%argrw{"wrr"}
+	neq		$tmp102 $tmp101 $const1 	%argrw{"wrr"}
+	assign		$tmp100 $tmp102 	%argrw{"wr"}
+	neq		$tmp103 $tmp100 $const1 	%argrw{"wrr"}
+	assign		$tmp98 $tmp103 	%argrw{"wr"}
+	neq		$tmp104 $tmp98 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:66
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp96 $tmp104 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:65
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp96 229 229 	%line{65} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:69
+#         return;
+	assign		normal1_out normal1_default 	%line{69} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:70
+#     }
+	return	%line{70}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:73
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___674_missingColor normal1_default 	%line{73} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:74
+#     out = texture(file.filename, st.x, st.y,
+	functioncall	$const11 233 	%line{74} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:20
+# }
+	assign		___674_st.x geomprop_UV0_out1.x 	%line{20} %argrw{"wr"}
+	assign		___674_st.y geomprop_UV0_out1.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:75
+#                   "subimage", layer, "interp", filtertype,
+	texture		normal1_out normal1_file_.filename ___674_st.x ___674_st.y $const12 normal1_layer $const13 normal1_filtertype $const14 ___674_missingColor $const15 normal1_uaddressmode $const16 normal1_vaddressmode 	%line{75} %argrw{"wrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1007
+#     NG_srgb_texture_to_lin_rec709_color3(diffuse1_out, diffuse1_out_cm_out);
+	assign		diffuse1_out_cm_out $const6 	%line{1007} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1008
+#     vector mtlxnormalmap3_out = vector(0.0);
+	functioncall	$const21 296 	%line{1008} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:96
+#     color bias_out = in + bias_in2_tmp;
+	assign		___677_bias_in2_tmp $const22 	%line{96} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:97
+#     float linSeg_in2_tmp = 12.920000;
+	add		___677_bias_out diffuse1_out ___677_bias_in2_tmp 	%line{97} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:98
+#     color linSeg_out = in / linSeg_in2_tmp;
+	assign		___677_linSeg_in2_tmp $const23 	%line{98} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:99
+#     float colorSeparate_outr = 0.0;
+	div		___677_linSeg_out diffuse1_out ___677_linSeg_in2_tmp 	%line{99} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:100
+#     float colorSeparate_outg = 0.0;
+	assign		___677_colorSeparate_outr $const5 	%line{100} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:101
+#     float colorSeparate_outb = 0.0;
+	assign		___677_colorSeparate_outg $const5 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:102
+#     NG_separate3_color3(in, colorSeparate_outr, colorSeparate_outg, colorSeparate_outb);
+	assign		___677_colorSeparate_outb $const5 	%line{102} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:103
+#     float max_in2_tmp = 0.000000;
+	functioncall	$const24 256 	%line{103} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:83
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___676_N_extract_0_index_tmp $const1 	%line{83} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:84
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const25 247 	%line{84} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_0_out diffuse1_out ___676_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:85
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___676_N_extract_1_index_tmp $const26 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{85} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:86
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const25 250 	%line{86} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_1_out diffuse1_out ___676_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:87
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___676_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{87} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:88
+#     outr = N_extract_0_out;
+	functioncall	$const25 253 	%line{88} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_2_out diffuse1_out ___676_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:89
+#     outg = N_extract_1_out;
+	assign		___677_colorSeparate_outr ___676_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{89} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:90
+#     outb = N_extract_2_out;
+	assign		___677_colorSeparate_outg ___676_N_extract_1_out 	%line{90} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:91
+# }
+	assign		___677_colorSeparate_outb ___676_N_extract_2_out 	%line{91} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:104
+#     color max_out = max(bias_out, max_in2_tmp);
+	assign		___677_max_in2_tmp $const5 	%line{104} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:105
+#     float isAboveR_value2_tmp = 0.040450;
+	assign		$tmp105 ___677_max_in2_tmp 	%line{105} %argrw{"wr"}
+	max		___677_max_out ___677_bias_out $tmp105 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:106
+#     float isAboveR_in1_tmp = 1.000000;
+	assign		___677_isAboveR_value2_tmp $const27 	%line{106} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:107
+#     float isAboveR_in2_tmp = 0.000000;
+	assign		___677_isAboveR_in1_tmp $const10 	%line{107} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:108
+#     float isAboveR_out = mx_ternary(colorSeparate_outr > isAboveR_value2_tmp, isAboveR_in1_tmp, isAboveR_in2_tmp);
+	assign		___677_isAboveR_in2_tmp $const5 	%line{108} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:109
+#     float isAboveG_value2_tmp = 0.040450;
+	gt		$tmp106 ___677_colorSeparate_outr ___677_isAboveR_value2_tmp 	%line{109} %argrw{"wrr"}
+	functioncall	$const28 269 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp106 267 269 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveR_out ___677_isAboveR_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveR_out ___677_isAboveR_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:110
+#     float isAboveG_in1_tmp = 1.000000;
+	assign		___677_isAboveG_value2_tmp $const27 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{110} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:111
+#     float isAboveG_in2_tmp = 0.000000;
+	assign		___677_isAboveG_in1_tmp $const10 	%line{111} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:112
+#     float isAboveG_out = mx_ternary(colorSeparate_outg > isAboveG_value2_tmp, isAboveG_in1_tmp, isAboveG_in2_tmp);
+	assign		___677_isAboveG_in2_tmp $const5 	%line{112} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:113
+#     float isAboveB_value2_tmp = 0.040450;
+	gt		$tmp107 ___677_colorSeparate_outg ___677_isAboveG_value2_tmp 	%line{113} %argrw{"wrr"}
+	functioncall	$const28 279 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp107 277 279 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveG_out ___677_isAboveG_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveG_out ___677_isAboveG_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:114
+#     float isAboveB_in1_tmp = 1.000000;
+	assign		___677_isAboveB_value2_tmp $const27 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{114} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:115
+#     float isAboveB_in2_tmp = 0.000000;
+	assign		___677_isAboveB_in1_tmp $const10 	%line{115} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:116
+#     float isAboveB_out = mx_ternary(colorSeparate_outb > isAboveB_value2_tmp, isAboveB_in1_tmp, isAboveB_in2_tmp);
+	assign		___677_isAboveB_in2_tmp $const5 	%line{116} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:117
+#     float scale_in2_tmp = 1.055000;
+	gt		$tmp108 ___677_colorSeparate_outb ___677_isAboveB_value2_tmp 	%line{117} %argrw{"wrr"}
+	functioncall	$const28 289 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp108 287 289 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveB_out ___677_isAboveB_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveB_out ___677_isAboveB_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:118
+#     color scale_out = max_out / scale_in2_tmp;
+	assign		___677_scale_in2_tmp $const29 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{118} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:119
+#     color isAbove_out = color( isAboveR_out,isAboveG_out,isAboveB_out );
+	div		___677_scale_out ___677_max_out ___677_scale_in2_tmp 	%line{119} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:120
+#     float powSeg_in2_tmp = 2.400000;
+	color		___677_isAbove_out ___677_isAboveR_out ___677_isAboveG_out ___677_isAboveB_out 	%line{120} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:121
+#     color powSeg_out = pow(scale_out, powSeg_in2_tmp);
+	assign		___677_powSeg_in2_tmp $const30 	%line{121} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:122
+#     color mix_out = mix(linSeg_out, powSeg_out, isAbove_out);
+	pow		___677_powSeg_out ___677_scale_out ___677_powSeg_in2_tmp 	%line{122} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:123
+#     out = mix_out;
+	mix		___677_mix_out ___677_linSeg_out ___677_powSeg_out ___677_isAbove_out 	%line{123} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:124
+# }
+	assign		diffuse1_out_cm_out ___677_mix_out 	%line{124} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1009
+#     mx_normalmap_float(normal1_out, mtlxnormalmap3_scale, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Bworld_out1, mtlxnormalmap3_out);
+	assign		mtlxnormalmap3_out $const19 	%line{1009} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1010
+#     surfaceshader Queen_W_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const31 317 	%line{1010} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:144
+# }
+	assign		$tmp109.x mtlxnormalmap3_scale 	%line{144} %argrw{"wr"}
+	assign		$tmp109.y mtlxnormalmap3_scale 	%argrw{"wr"}
+	functioncall	$const32 317 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:130
+#     {
+	eq		$tmp111 normal1_out $const19 	%line{130} %argrw{"wrr"}
+	if		$tmp111 304 306 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:132
+#     }
+	assign		___678_decodedValue $const33 	%line{132} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:136
+#     }
+	mul		$tmp112 normal1_out $const34 	%line{136} %argrw{"wrr"}
+	sub		___678_decodedValue $tmp112 $const10 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:139
+# }
+	compref		$tmp113 ___678_decodedValue $const1 	%line{139} %argrw{"wrr"}
+	mul		$tmp114 geomprop_Tworld_out1 $tmp113 	%argrw{"wrr"}
+	mul		$tmp115 $tmp114 $tmp109.x 	%argrw{"wrr"}
+	compref		$tmp116 ___678_decodedValue $const26 	%argrw{"wrr"}
+	mul		$tmp117 geomprop_Bworld_out1 $tmp116 	%argrw{"wrr"}
+	mul		$tmp118 $tmp117 $tmp109.y 	%argrw{"wrr"}
+	add		$tmp119 $tmp115 $tmp118 	%argrw{"wrr"}
+	compref		$tmp120 ___678_decodedValue $const4 	%argrw{"wrr"}
+	mul		$tmp121 geomprop_Nworld_out1 $tmp120 	%argrw{"wrr"}
+	add		$tmp122 $tmp119 $tmp121 	%argrw{"wrr"}
+	normalize	mtlxnormalmap3_out $tmp122 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1011
+#     NG_standard_surface_surfaceshader_100(Queen_W_base, diffuse1_out_cm_out, Queen_W_diffuse_roughness, metallic1_out, Queen_W_specular, Queen_W_specular_color, roughness1_out, Queen_W_specular_IOR, Queen_W_specular_anisotropy, Queen_W_specular_rotation, Queen_W_transmission, Queen_W_transmission_color, Queen_W_transmission_depth, Queen_W_transmission_scatter, Queen_W_transmission_scatter_anisotropy, Queen_W_transmission_dispersion, Queen_W_transmission_extra_roughness, sss1_out, diffuse1_out_cm_out, diffuse1_out_cm_out, Queen_W_subsurface_scale, Queen_W_subsurface_anisotropy, Queen_W_sheen, Queen_W_sheen_color, Queen_W_sheen_roughness, Queen_W_coat, Queen_W_coat_color, Queen_W_coat_roughness, Queen_W_coat_anisotropy, Queen_W_coat_rotation, Queen_W_coat_IOR, geomprop_Nworld_out1, Queen_W_coat_affect_color, Queen_W_coat_affect_roughness, Queen_W_thin_film_thickness, Queen_W_thin_film_IOR, Queen_W_emission, Queen_W_emission_color, Queen_W_opacity, Queen_W_thin_walled, mtlxnormalmap3_out, geomprop_Tworld_out1, Queen_W_out);
+	assign		Queen_W_out.bsdf null_closure 	%line{1011} %argrw{"wr"}
+	assign		Queen_W_out.edf null_closure 	%argrw{"wr"}
+	assign		Queen_W_out.opacity $const10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1012
+#     MATERIAL M_Queen_W_out = mx_surfacematerial(Queen_W_out, backsurfaceshader, displacementshader1);
+	functioncall	$const35 833 	%line{1012} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:324
+#     vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+	assign		___706_null_closure $const1 	%line{324} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:325
+#     mx_roughness_anisotropy(coat_roughness, coat_anisotropy, coat_roughness_vector_out);
+	assign		___706_coat_roughness_vector_out.x $const5 	%line{325} %argrw{"wr"}
+	assign		___706_coat_roughness_vector_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:326
+#     float coat_tangent_rotate_degree_in2_tmp = 360.000000;
+	functioncall	$const36 343 	%line{326} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:149
+#     if (anisotropy > 0.0)
+	mul		$tmp123 Queen_W_coat_roughness Queen_W_coat_roughness 	%line{149} %argrw{"wrr"}
+	functioncall	$const38 329 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp124 $tmp123 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___682_roughness_sqr $tmp124 $const37 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:150
+#     {
+	gt		$tmp125 Queen_W_coat_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{150} %argrw{"wrr"}
+	if		$tmp125 341 343 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const38 334 	%line{152} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp127 Queen_W_coat_anisotropy $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp126 $tmp127 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp128 $const10 $tmp126 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{152} %argrw{"wrr"}
+	sqrt		___683_aspect $tmp128 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:153
+#         result.y = roughness_sqr * aspect;
+	div		$tmp129 ___682_roughness_sqr ___683_aspect 	%line{153} %argrw{"wrr"}
+	min		___706_coat_roughness_vector_out.x $tmp129 $const10 	%argrw{"wrr"}
+	assign		___706_coat_roughness_vector_out.x ___706_coat_roughness_vector_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:154
+#     }
+	mul		___706_coat_roughness_vector_out.y ___682_roughness_sqr ___683_aspect 	%line{154} %argrw{"wrr"}
+	assign		___706_coat_roughness_vector_out.y ___706_coat_roughness_vector_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:158
+#         result.y = roughness_sqr;
+	assign		___706_coat_roughness_vector_out.x ___682_roughness_sqr 	%line{158} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:159
+#     }
+	assign		___706_coat_roughness_vector_out.y ___682_roughness_sqr 	%line{159} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:327
+#     float coat_tangent_rotate_degree_out = coat_rotation * coat_tangent_rotate_degree_in2_tmp;
+	assign		___706_coat_tangent_rotate_degree_in2_tmp $const40 	%line{327} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:328
+#     color metal_reflectivity_out = base_color * base;
+	mul		___706_coat_tangent_rotate_degree_out Queen_W_coat_rotation ___706_coat_tangent_rotate_degree_in2_tmp 	%line{328} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:329
+#     color metal_edgecolor_out = specular_color * specular;
+	mul		___706_metal_reflectivity_out diffuse1_out_cm_out Queen_W_base 	%line{329} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:330
+#     float coat_affect_roughness_multiply1_out = coat_affect_roughness * coat;
+	mul		___706_metal_edgecolor_out Queen_W_specular_color Queen_W_specular 	%line{330} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:331
+#     float tangent_rotate_degree_in2_tmp = 360.000000;
+	mul		___706_coat_affect_roughness_multiply1_out Queen_W_coat_affect_roughness Queen_W_coat 	%line{331} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:332
+#     float tangent_rotate_degree_out = specular_rotation * tangent_rotate_degree_in2_tmp;
+	assign		___706_tangent_rotate_degree_in2_tmp $const40 	%line{332} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:333
+#     float transmission_roughness_add_out = specular_roughness + transmission_extra_roughness;
+	mul		___706_tangent_rotate_degree_out Queen_W_specular_rotation ___706_tangent_rotate_degree_in2_tmp 	%line{333} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:334
+#     float subsurface_color_nonnegative_in2_tmp = 0.000000;
+	add		___706_transmission_roughness_add_out roughness1_out Queen_W_transmission_extra_roughness 	%line{334} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:335
+#     color subsurface_color_nonnegative_out = max(subsurface_color, subsurface_color_nonnegative_in2_tmp);
+	assign		___706_subsurface_color_nonnegative_in2_tmp $const5 	%line{335} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:336
+#     float coat_clamped_low_tmp = 0.000000;
+	assign		$tmp130 ___706_subsurface_color_nonnegative_in2_tmp 	%line{336} %argrw{"wr"}
+	max		___706_subsurface_color_nonnegative_out diffuse1_out_cm_out $tmp130 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:337
+#     float coat_clamped_high_tmp = 1.000000;
+	assign		___706_coat_clamped_low_tmp $const5 	%line{337} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:338
+#     float coat_clamped_out = clamp(coat, coat_clamped_low_tmp, coat_clamped_high_tmp);
+	assign		___706_coat_clamped_high_tmp $const10 	%line{338} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:339
+#     color subsurface_radius_scaled_out = subsurface_radius * subsurface_scale;
+	functioncall	$const38 359 	%line{339} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp131 Queen_W_coat ___706_coat_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___706_coat_clamped_out $tmp131 ___706_coat_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:340
+#     float subsurface_selector_out = float(thin_walled);
+	mul		___706_subsurface_radius_scaled_out diffuse1_out_cm_out Queen_W_subsurface_scale 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{340} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:341
+#     float base_color_nonnegative_in2_tmp = 0.000000;
+	assign		$tmp132 Queen_W_thin_walled 	%line{341} %argrw{"wr"}
+	assign		___706_subsurface_selector_out $tmp132 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:342
+#     color base_color_nonnegative_out = max(base_color, base_color_nonnegative_in2_tmp);
+	assign		___706_base_color_nonnegative_in2_tmp $const5 	%line{342} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:343
+#     color coat_attenuation_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	assign		$tmp133 ___706_base_color_nonnegative_in2_tmp 	%line{343} %argrw{"wr"}
+	max		___706_base_color_nonnegative_out diffuse1_out_cm_out $tmp133 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:344
+#     color coat_attenuation_out = mix(coat_attenuation_bg_tmp, coat_color, coat);
+	assign		___706_coat_attenuation_bg_tmp $const41 	%line{344} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:345
+#     float one_minus_coat_ior_in1_tmp = 1.000000;
+	mix		___706_coat_attenuation_out ___706_coat_attenuation_bg_tmp Queen_W_coat_color Queen_W_coat 	%line{345} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:346
+#     float one_minus_coat_ior_out = one_minus_coat_ior_in1_tmp - coat_IOR;
+	assign		___706_one_minus_coat_ior_in1_tmp $const10 	%line{346} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:347
+#     float one_plus_coat_ior_in1_tmp = 1.000000;
+	sub		___706_one_minus_coat_ior_out ___706_one_minus_coat_ior_in1_tmp Queen_W_coat_IOR 	%line{347} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:348
+#     float one_plus_coat_ior_out = one_plus_coat_ior_in1_tmp + coat_IOR;
+	assign		___706_one_plus_coat_ior_in1_tmp $const10 	%line{348} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:349
+#     color emission_weight_out = emission_color * emission1;
+	add		___706_one_plus_coat_ior_out ___706_one_plus_coat_ior_in1_tmp Queen_W_coat_IOR 	%line{349} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:350
+#     color opacity_luminance_out = color(0.0);
+	mul		___706_emission_weight_out Queen_W_emission_color Queen_W_emission 	%line{350} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:351
+#     mx_luminance_color3(opacity, color(0.272229, 0.674082, 0.053689), opacity_luminance_out);
+	assign		___706_opacity_luminance_out $const6 	%line{351} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:352
+#     vector coat_tangent_rotate_out = vector(0.0);
+	functioncall	$const43 376 	%line{352} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:165
+# }
+	dot		$tmp135 Queen_W_opacity $const42 	%line{165} %argrw{"wrr"}
+	assign		___706_opacity_luminance_out $tmp135 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:353
+#     mx_rotate_vector3(tangent, coat_tangent_rotate_degree_out, coat_normal, coat_tangent_rotate_out);
+	assign		___706_coat_tangent_rotate_out $const19 	%line{353} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:354
+#     color artistic_ior_ior = color(0.0);
+	functioncall	$const44 494 	%line{354} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:183
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const45 381 	%line{183} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp136 $const46 $const47 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___687_rotationRadians ___706_coat_tangent_rotate_degree_out $tmp136 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:184
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const48 444 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{184} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:170
+#     float s = sin(angle);
+	normalize	___686_nAxis geomprop_Nworld_out1 	%line{170} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:171
+#     float c = cos(angle);
+	sin		___686_s ___687_rotationRadians 	%line{171} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:172
+#     float oc = 1.0 - c;
+	cos		___686_c ___687_rotationRadians 	%line{172} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:173
+# 
+	sub		___686_oc $const10 ___686_c 	%line{173} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:175
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp137 ___686_nAxis $const1 	%line{175} %argrw{"wrr"}
+	mul		$tmp138 ___686_oc $tmp137 	%argrw{"wrr"}
+	compref		$tmp139 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp140 $tmp138 $tmp139 	%argrw{"wrr"}
+	add		$tmp141 $tmp140 ___686_c 	%argrw{"wrr"}
+	compref		$tmp142 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp143 ___686_oc $tmp142 	%argrw{"wrr"}
+	compref		$tmp144 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp145 $tmp143 $tmp144 	%argrw{"wrr"}
+	compref		$tmp146 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp147 $tmp146 ___686_s 	%argrw{"wrr"}
+	sub		$tmp148 $tmp145 $tmp147 	%argrw{"wrr"}
+	compref		$tmp149 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp150 ___686_oc $tmp149 	%argrw{"wrr"}
+	compref		$tmp151 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp152 $tmp150 $tmp151 	%argrw{"wrr"}
+	compref		$tmp153 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp154 $tmp153 ___686_s 	%argrw{"wrr"}
+	add		$tmp155 $tmp152 $tmp154 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:176
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp156 ___686_nAxis $const1 	%line{176} %argrw{"wrr"}
+	mul		$tmp157 ___686_oc $tmp156 	%argrw{"wrr"}
+	compref		$tmp158 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp159 $tmp157 $tmp158 	%argrw{"wrr"}
+	compref		$tmp160 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp161 $tmp160 ___686_s 	%argrw{"wrr"}
+	add		$tmp162 $tmp159 $tmp161 	%argrw{"wrr"}
+	compref		$tmp163 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp164 ___686_oc $tmp163 	%argrw{"wrr"}
+	compref		$tmp165 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp166 $tmp164 $tmp165 	%argrw{"wrr"}
+	add		$tmp167 $tmp166 ___686_c 	%argrw{"wrr"}
+	compref		$tmp168 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp169 ___686_oc $tmp168 	%argrw{"wrr"}
+	compref		$tmp170 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp171 $tmp169 $tmp170 	%argrw{"wrr"}
+	compref		$tmp172 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp173 $tmp172 ___686_s 	%argrw{"wrr"}
+	sub		$tmp174 $tmp171 $tmp173 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:177
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp175 ___686_nAxis $const4 	%line{177} %argrw{"wrr"}
+	mul		$tmp176 ___686_oc $tmp175 	%argrw{"wrr"}
+	compref		$tmp177 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp178 $tmp176 $tmp177 	%argrw{"wrr"}
+	compref		$tmp179 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp180 $tmp179 ___686_s 	%argrw{"wrr"}
+	sub		$tmp181 $tmp178 $tmp180 	%argrw{"wrr"}
+	compref		$tmp182 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp183 ___686_oc $tmp182 	%argrw{"wrr"}
+	compref		$tmp184 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp185 $tmp183 $tmp184 	%argrw{"wrr"}
+	compref		$tmp186 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp187 $tmp186 ___686_s 	%argrw{"wrr"}
+	add		$tmp188 $tmp185 $tmp187 	%argrw{"wrr"}
+	compref		$tmp189 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp190 ___686_oc $tmp189 	%argrw{"wrr"}
+	compref		$tmp191 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp192 $tmp190 $tmp191 	%argrw{"wrr"}
+	add		$tmp193 $tmp192 ___686_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:175
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___687_m $tmp141 $tmp148 $tmp155 $const5 $tmp162 $tmp167 $tmp174 $const5 $tmp181 $tmp188 $tmp193 $const5 $const5 $const5 $const5 $const10 	%line{175} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:185
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp194.x geomprop_Tworld_out1 $const1 	%line{185} %argrw{"wrr"}
+	compref		$tmp194.y geomprop_Tworld_out1 $const26 	%argrw{"wrr"}
+	compref		$tmp194.z geomprop_Tworld_out1 $const4 	%argrw{"wrr"}
+	assign		$tmp194.w $const10 	%argrw{"wr"}
+	functioncall	$const2 493 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp195 ___687_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp196 $tmp195 $tmp194.x 	%argrw{"wrr"}
+	mxcompref	$tmp197 ___687_m $const26 $const1 	%argrw{"wrrr"}
+	mul		$tmp198 $tmp197 $tmp194.y 	%argrw{"wrr"}
+	add		$tmp199 $tmp196 $tmp198 	%argrw{"wrr"}
+	mxcompref	$tmp200 ___687_m $const4 $const1 	%argrw{"wrrr"}
+	mul		$tmp201 $tmp200 $tmp194.z 	%argrw{"wrr"}
+	add		$tmp202 $tmp199 $tmp201 	%argrw{"wrr"}
+	mxcompref	$tmp203 ___687_m $const49 $const1 	%argrw{"wrrr"}
+	mul		$tmp204 $tmp203 $tmp194.w 	%argrw{"wrr"}
+	add		___687_trans.x $tmp202 $tmp204 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp205 ___687_m $const1 $const26 	%line{416} %argrw{"wrrr"}
+	mul		$tmp206 $tmp205 $tmp194.x 	%argrw{"wrr"}
+	mxcompref	$tmp207 ___687_m $const26 $const26 	%argrw{"wrrr"}
+	mul		$tmp208 $tmp207 $tmp194.y 	%argrw{"wrr"}
+	add		$tmp209 $tmp206 $tmp208 	%argrw{"wrr"}
+	mxcompref	$tmp210 ___687_m $const4 $const26 	%argrw{"wrrr"}
+	mul		$tmp211 $tmp210 $tmp194.z 	%argrw{"wrr"}
+	add		$tmp212 $tmp209 $tmp211 	%argrw{"wrr"}
+	mxcompref	$tmp213 ___687_m $const49 $const26 	%argrw{"wrrr"}
+	mul		$tmp214 $tmp213 $tmp194.w 	%argrw{"wrr"}
+	add		___687_trans.y $tmp212 $tmp214 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp215 ___687_m $const1 $const4 	%line{417} %argrw{"wrrr"}
+	mul		$tmp216 $tmp215 $tmp194.x 	%argrw{"wrr"}
+	mxcompref	$tmp217 ___687_m $const26 $const4 	%argrw{"wrrr"}
+	mul		$tmp218 $tmp217 $tmp194.y 	%argrw{"wrr"}
+	add		$tmp219 $tmp216 $tmp218 	%argrw{"wrr"}
+	mxcompref	$tmp220 ___687_m $const4 $const4 	%argrw{"wrrr"}
+	mul		$tmp221 $tmp220 $tmp194.z 	%argrw{"wrr"}
+	add		$tmp222 $tmp219 $tmp221 	%argrw{"wrr"}
+	mxcompref	$tmp223 ___687_m $const49 $const4 	%argrw{"wrrr"}
+	mul		$tmp224 $tmp223 $tmp194.w 	%argrw{"wrr"}
+	add		___687_trans.z $tmp222 $tmp224 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp225 ___687_m $const1 $const49 	%line{418} %argrw{"wrrr"}
+	mul		$tmp226 $tmp225 $tmp194.x 	%argrw{"wrr"}
+	mxcompref	$tmp227 ___687_m $const26 $const49 	%argrw{"wrrr"}
+	mul		$tmp228 $tmp227 $tmp194.y 	%argrw{"wrr"}
+	add		$tmp229 $tmp226 $tmp228 	%argrw{"wrr"}
+	mxcompref	$tmp230 ___687_m $const4 $const49 	%argrw{"wrrr"}
+	mul		$tmp231 $tmp230 $tmp194.z 	%argrw{"wrr"}
+	add		$tmp232 $tmp229 $tmp231 	%argrw{"wrr"}
+	mxcompref	$tmp233 ___687_m $const49 $const49 	%argrw{"wrrr"}
+	mul		$tmp234 $tmp233 $tmp194.w 	%argrw{"wrr"}
+	add		___687_trans.w $tmp232 $tmp234 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:186
+# }
+	vector		___706_coat_tangent_rotate_out ___687_trans.x ___687_trans.y ___687_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{186} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:355
+#     color artistic_ior_extinction = color(0.0);
+	assign		___706_artistic_ior_ior $const6 	%line{355} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:356
+#     mx_artistic_ior(metal_reflectivity_out, metal_edgecolor_out, artistic_ior_ior, artistic_ior_extinction);
+	assign		___706_artistic_ior_extinction $const6 	%line{356} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:357
+#     float coat_affect_roughness_multiply2_out = coat_affect_roughness_multiply1_out * coat_roughness;
+	functioncall	$const50 521 	%line{357} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:194
+#     color r_sqrt = sqrt(r);
+	assign		$tmp235 $const5 	%line{194} %argrw{"wr"}
+	assign		$tmp236 $const51 	%argrw{"wr"}
+	functioncall	$const38 502 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp237 ___706_metal_reflectivity_out $tmp236 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___688_r $tmp237 $tmp235 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:195
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___688_r_sqrt ___688_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{195} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:196
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp238 $const10 ___688_r 	%line{196} %argrw{"wrr"}
+	add		$tmp239 $const10 ___688_r 	%argrw{"wrr"}
+	div		___688_n_min $tmp238 $tmp239 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:197
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp240 $const10 ___688_r_sqrt 	%line{197} %argrw{"wrr"}
+	sub		$tmp241 $const10 ___688_r_sqrt 	%argrw{"wrr"}
+	div		___688_n_max $tmp240 $tmp241 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:198
+# 
+	mix		___706_artistic_ior_ior ___688_n_max ___688_n_min ___706_metal_edgecolor_out 	%line{198} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:200
+#     color nm1 = ior - 1.0;
+	add		___688_np1 ___706_artistic_ior_ior $const10 	%line{200} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:201
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___688_nm1 ___706_artistic_ior_ior $const10 	%line{201} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:202
+#     k2 = max(k2, 0.0);
+	mul		$tmp242 ___688_np1 ___688_np1 	%line{202} %argrw{"wrr"}
+	mul		$tmp243 $tmp242 ___688_r 	%argrw{"wrr"}
+	mul		$tmp244 ___688_nm1 ___688_nm1 	%argrw{"wrr"}
+	sub		$tmp245 $tmp243 $tmp244 	%argrw{"wrr"}
+	sub		$tmp246 $const10 ___688_r 	%argrw{"wrr"}
+	div		___688_k2 $tmp245 $tmp246 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:203
+#     extinction = sqrt(k2);
+	assign		$tmp247 $const5 	%line{203} %argrw{"wr"}
+	max		___688_k2 ___688_k2 $tmp247 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:204
+# }
+	sqrt		___706_artistic_ior_extinction ___688_k2 	%line{204} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:358
+#     vector tangent_rotate_out = vector(0.0);
+	mul		___706_coat_affect_roughness_multiply2_out ___706_coat_affect_roughness_multiply1_out Queen_W_coat_roughness 	%line{358} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:359
+#     mx_rotate_vector3(tangent, tangent_rotate_degree_out, normal1, tangent_rotate_out);
+	assign		___706_tangent_rotate_out $const19 	%line{359} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:360
+#     float transmission_roughness_clamped_low_tmp = 0.000000;
+	functioncall	$const44 640 	%line{360} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:183
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const45 527 	%line{183} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp248 $const46 $const47 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___687_rotationRadians ___706_tangent_rotate_degree_out $tmp248 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:184
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const48 590 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{184} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:170
+#     float s = sin(angle);
+	normalize	___686_nAxis mtlxnormalmap3_out 	%line{170} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:171
+#     float c = cos(angle);
+	sin		___686_s ___687_rotationRadians 	%line{171} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:172
+#     float oc = 1.0 - c;
+	cos		___686_c ___687_rotationRadians 	%line{172} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:173
+# 
+	sub		___686_oc $const10 ___686_c 	%line{173} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:175
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp249 ___686_nAxis $const1 	%line{175} %argrw{"wrr"}
+	mul		$tmp250 ___686_oc $tmp249 	%argrw{"wrr"}
+	compref		$tmp251 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp252 $tmp250 $tmp251 	%argrw{"wrr"}
+	add		$tmp253 $tmp252 ___686_c 	%argrw{"wrr"}
+	compref		$tmp254 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp255 ___686_oc $tmp254 	%argrw{"wrr"}
+	compref		$tmp256 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp257 $tmp255 $tmp256 	%argrw{"wrr"}
+	compref		$tmp258 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp259 $tmp258 ___686_s 	%argrw{"wrr"}
+	sub		$tmp260 $tmp257 $tmp259 	%argrw{"wrr"}
+	compref		$tmp261 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp262 ___686_oc $tmp261 	%argrw{"wrr"}
+	compref		$tmp263 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp264 $tmp262 $tmp263 	%argrw{"wrr"}
+	compref		$tmp265 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp266 $tmp265 ___686_s 	%argrw{"wrr"}
+	add		$tmp267 $tmp264 $tmp266 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:176
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp268 ___686_nAxis $const1 	%line{176} %argrw{"wrr"}
+	mul		$tmp269 ___686_oc $tmp268 	%argrw{"wrr"}
+	compref		$tmp270 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp271 $tmp269 $tmp270 	%argrw{"wrr"}
+	compref		$tmp272 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp273 $tmp272 ___686_s 	%argrw{"wrr"}
+	add		$tmp274 $tmp271 $tmp273 	%argrw{"wrr"}
+	compref		$tmp275 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp276 ___686_oc $tmp275 	%argrw{"wrr"}
+	compref		$tmp277 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp278 $tmp276 $tmp277 	%argrw{"wrr"}
+	add		$tmp279 $tmp278 ___686_c 	%argrw{"wrr"}
+	compref		$tmp280 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp281 ___686_oc $tmp280 	%argrw{"wrr"}
+	compref		$tmp282 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp283 $tmp281 $tmp282 	%argrw{"wrr"}
+	compref		$tmp284 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp285 $tmp284 ___686_s 	%argrw{"wrr"}
+	sub		$tmp286 $tmp283 $tmp285 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:177
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp287 ___686_nAxis $const4 	%line{177} %argrw{"wrr"}
+	mul		$tmp288 ___686_oc $tmp287 	%argrw{"wrr"}
+	compref		$tmp289 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp290 $tmp288 $tmp289 	%argrw{"wrr"}
+	compref		$tmp291 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp292 $tmp291 ___686_s 	%argrw{"wrr"}
+	sub		$tmp293 $tmp290 $tmp292 	%argrw{"wrr"}
+	compref		$tmp294 ___686_nAxis $const26 	%argrw{"wrr"}
+	mul		$tmp295 ___686_oc $tmp294 	%argrw{"wrr"}
+	compref		$tmp296 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp297 $tmp295 $tmp296 	%argrw{"wrr"}
+	compref		$tmp298 ___686_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp299 $tmp298 ___686_s 	%argrw{"wrr"}
+	add		$tmp300 $tmp297 $tmp299 	%argrw{"wrr"}
+	compref		$tmp301 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp302 ___686_oc $tmp301 	%argrw{"wrr"}
+	compref		$tmp303 ___686_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp304 $tmp302 $tmp303 	%argrw{"wrr"}
+	add		$tmp305 $tmp304 ___686_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:175
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___687_m $tmp253 $tmp260 $tmp267 $const5 $tmp274 $tmp279 $tmp286 $const5 $tmp293 $tmp300 $tmp305 $const5 $const5 $const5 $const5 $const10 	%line{175} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:185
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp306.x geomprop_Tworld_out1 $const1 	%line{185} %argrw{"wrr"}
+	compref		$tmp306.y geomprop_Tworld_out1 $const26 	%argrw{"wrr"}
+	compref		$tmp306.z geomprop_Tworld_out1 $const4 	%argrw{"wrr"}
+	assign		$tmp306.w $const10 	%argrw{"wr"}
+	functioncall	$const2 639 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp307 ___687_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp308 $tmp307 $tmp306.x 	%argrw{"wrr"}
+	mxcompref	$tmp309 ___687_m $const26 $const1 	%argrw{"wrrr"}
+	mul		$tmp310 $tmp309 $tmp306.y 	%argrw{"wrr"}
+	add		$tmp311 $tmp308 $tmp310 	%argrw{"wrr"}
+	mxcompref	$tmp312 ___687_m $const4 $const1 	%argrw{"wrrr"}
+	mul		$tmp313 $tmp312 $tmp306.z 	%argrw{"wrr"}
+	add		$tmp314 $tmp311 $tmp313 	%argrw{"wrr"}
+	mxcompref	$tmp315 ___687_m $const49 $const1 	%argrw{"wrrr"}
+	mul		$tmp316 $tmp315 $tmp306.w 	%argrw{"wrr"}
+	add		___687_trans.x $tmp314 $tmp316 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp317 ___687_m $const1 $const26 	%line{416} %argrw{"wrrr"}
+	mul		$tmp318 $tmp317 $tmp306.x 	%argrw{"wrr"}
+	mxcompref	$tmp319 ___687_m $const26 $const26 	%argrw{"wrrr"}
+	mul		$tmp320 $tmp319 $tmp306.y 	%argrw{"wrr"}
+	add		$tmp321 $tmp318 $tmp320 	%argrw{"wrr"}
+	mxcompref	$tmp322 ___687_m $const4 $const26 	%argrw{"wrrr"}
+	mul		$tmp323 $tmp322 $tmp306.z 	%argrw{"wrr"}
+	add		$tmp324 $tmp321 $tmp323 	%argrw{"wrr"}
+	mxcompref	$tmp325 ___687_m $const49 $const26 	%argrw{"wrrr"}
+	mul		$tmp326 $tmp325 $tmp306.w 	%argrw{"wrr"}
+	add		___687_trans.y $tmp324 $tmp326 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp327 ___687_m $const1 $const4 	%line{417} %argrw{"wrrr"}
+	mul		$tmp328 $tmp327 $tmp306.x 	%argrw{"wrr"}
+	mxcompref	$tmp329 ___687_m $const26 $const4 	%argrw{"wrrr"}
+	mul		$tmp330 $tmp329 $tmp306.y 	%argrw{"wrr"}
+	add		$tmp331 $tmp328 $tmp330 	%argrw{"wrr"}
+	mxcompref	$tmp332 ___687_m $const4 $const4 	%argrw{"wrrr"}
+	mul		$tmp333 $tmp332 $tmp306.z 	%argrw{"wrr"}
+	add		$tmp334 $tmp331 $tmp333 	%argrw{"wrr"}
+	mxcompref	$tmp335 ___687_m $const49 $const4 	%argrw{"wrrr"}
+	mul		$tmp336 $tmp335 $tmp306.w 	%argrw{"wrr"}
+	add		___687_trans.z $tmp334 $tmp336 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp337 ___687_m $const1 $const49 	%line{418} %argrw{"wrrr"}
+	mul		$tmp338 $tmp337 $tmp306.x 	%argrw{"wrr"}
+	mxcompref	$tmp339 ___687_m $const26 $const49 	%argrw{"wrrr"}
+	mul		$tmp340 $tmp339 $tmp306.y 	%argrw{"wrr"}
+	add		$tmp341 $tmp338 $tmp340 	%argrw{"wrr"}
+	mxcompref	$tmp342 ___687_m $const4 $const49 	%argrw{"wrrr"}
+	mul		$tmp343 $tmp342 $tmp306.z 	%argrw{"wrr"}
+	add		$tmp344 $tmp341 $tmp343 	%argrw{"wrr"}
+	mxcompref	$tmp345 ___687_m $const49 $const49 	%argrw{"wrrr"}
+	mul		$tmp346 $tmp345 $tmp306.w 	%argrw{"wrr"}
+	add		___687_trans.w $tmp344 $tmp346 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:186
+# }
+	vector		___706_tangent_rotate_out ___687_trans.x ___687_trans.y ___687_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{186} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:361
+#     float transmission_roughness_clamped_high_tmp = 1.000000;
+	assign		___706_transmission_roughness_clamped_low_tmp $const5 	%line{361} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:362
+#     float transmission_roughness_clamped_out = clamp(transmission_roughness_add_out, transmission_roughness_clamped_low_tmp, transmission_roughness_clamped_high_tmp);
+	assign		___706_transmission_roughness_clamped_high_tmp $const10 	%line{362} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:363
+#     float coat_gamma_multiply_out = coat_clamped_out * coat_affect_color;
+	functioncall	$const38 645 	%line{363} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp347 ___706_transmission_roughness_add_out ___706_transmission_roughness_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___706_transmission_roughness_clamped_out $tmp347 ___706_transmission_roughness_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:364
+#     float coat_ior_to_F0_sqrt_out = one_minus_coat_ior_out / one_plus_coat_ior_out;
+	mul		___706_coat_gamma_multiply_out ___706_coat_clamped_out Queen_W_coat_affect_color 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{364} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:365
+#     int opacity_luminance_float_index_tmp = 0;
+	div		___706_coat_ior_to_F0_sqrt_out ___706_one_minus_coat_ior_out ___706_one_plus_coat_ior_out 	%line{365} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:366
+#     float opacity_luminance_float_out = mx_extract(opacity_luminance_out, opacity_luminance_float_index_tmp);
+	assign		___706_opacity_luminance_float_index_tmp $const1 	%line{366} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:367
+#     vector coat_tangent_rotate_normalize_out = normalize(coat_tangent_rotate_out);
+	functioncall	$const25 650 	%line{367} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___706_opacity_luminance_float_out ___706_opacity_luminance_out ___706_opacity_luminance_float_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:368
+#     float coat_affected_roughness_fg_tmp = 1.000000;
+	normalize	___706_coat_tangent_rotate_normalize_out ___706_coat_tangent_rotate_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{368} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:369
+#     float coat_affected_roughness_out = mix(specular_roughness, coat_affected_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___706_coat_affected_roughness_fg_tmp $const10 	%line{369} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:370
+#     vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+	mix		___706_coat_affected_roughness_out roughness1_out ___706_coat_affected_roughness_fg_tmp ___706_coat_affect_roughness_multiply2_out 	%line{370} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:371
+#     float coat_affected_transmission_roughness_fg_tmp = 1.000000;
+	normalize	___706_tangent_rotate_normalize_out ___706_tangent_rotate_out 	%line{371} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:372
+#     float coat_affected_transmission_roughness_out = mix(transmission_roughness_clamped_out, coat_affected_transmission_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___706_coat_affected_transmission_roughness_fg_tmp $const10 	%line{372} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:373
+#     float coat_gamma_in2_tmp = 1.000000;
+	mix		___706_coat_affected_transmission_roughness_out ___706_transmission_roughness_clamped_out ___706_coat_affected_transmission_roughness_fg_tmp ___706_coat_affect_roughness_multiply2_out 	%line{373} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:374
+#     float coat_gamma_out = coat_gamma_multiply_out + coat_gamma_in2_tmp;
+	assign		___706_coat_gamma_in2_tmp $const10 	%line{374} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:375
+#     float coat_ior_to_F0_out = coat_ior_to_F0_sqrt_out * coat_ior_to_F0_sqrt_out;
+	add		___706_coat_gamma_out ___706_coat_gamma_multiply_out ___706_coat_gamma_in2_tmp 	%line{375} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:376
+#     float coat_tangent_value2_tmp = 0.000000;
+	mul		___706_coat_ior_to_F0_out ___706_coat_ior_to_F0_sqrt_out ___706_coat_ior_to_F0_sqrt_out 	%line{376} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:377
+#     vector coat_tangent_out = mx_ternary(coat_anisotropy > coat_tangent_value2_tmp, coat_tangent_rotate_normalize_out, tangent);
+	assign		___706_coat_tangent_value2_tmp $const5 	%line{377} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:378
+#     vector2 main_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp348 Queen_W_coat_anisotropy ___706_coat_tangent_value2_tmp 	%line{378} %argrw{"wrr"}
+	functioncall	$const28 667 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp348 665 667 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___706_coat_tangent_out ___706_coat_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___706_coat_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:379
+#     mx_roughness_anisotropy(coat_affected_roughness_out, specular_anisotropy, main_roughness_out);
+	assign		___706_main_roughness_out.x $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{379} %argrw{"wr"}
+	assign		___706_main_roughness_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:380
+#     float main_tangent_value2_tmp = 0.000000;
+	functioncall	$const36 688 	%line{380} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:149
+#     if (anisotropy > 0.0)
+	mul		$tmp349 ___706_coat_affected_roughness_out ___706_coat_affected_roughness_out 	%line{149} %argrw{"wrr"}
+	functioncall	$const38 674 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp350 $tmp349 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___682_roughness_sqr $tmp350 $const37 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:150
+#     {
+	gt		$tmp351 Queen_W_specular_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{150} %argrw{"wrr"}
+	if		$tmp351 686 688 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const38 679 	%line{152} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp353 Queen_W_specular_anisotropy $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp352 $tmp353 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp354 $const10 $tmp352 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{152} %argrw{"wrr"}
+	sqrt		___683_aspect $tmp354 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:153
+#         result.y = roughness_sqr * aspect;
+	div		$tmp355 ___682_roughness_sqr ___683_aspect 	%line{153} %argrw{"wrr"}
+	min		___706_main_roughness_out.x $tmp355 $const10 	%argrw{"wrr"}
+	assign		___706_main_roughness_out.x ___706_main_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:154
+#     }
+	mul		___706_main_roughness_out.y ___682_roughness_sqr ___683_aspect 	%line{154} %argrw{"wrr"}
+	assign		___706_main_roughness_out.y ___706_main_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:158
+#         result.y = roughness_sqr;
+	assign		___706_main_roughness_out.x ___682_roughness_sqr 	%line{158} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:159
+#     }
+	assign		___706_main_roughness_out.y ___682_roughness_sqr 	%line{159} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:381
+#     vector main_tangent_out = mx_ternary(specular_anisotropy > main_tangent_value2_tmp, tangent_rotate_normalize_out, tangent);
+	assign		___706_main_tangent_value2_tmp $const5 	%line{381} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:382
+#     vector2 transmission_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp356 Queen_W_specular_anisotropy ___706_main_tangent_value2_tmp 	%line{382} %argrw{"wrr"}
+	functioncall	$const28 696 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp356 694 696 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___706_main_tangent_out ___706_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___706_main_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:383
+#     mx_roughness_anisotropy(coat_affected_transmission_roughness_out, specular_anisotropy, transmission_roughness_out);
+	assign		___706_transmission_roughness_out.x $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{383} %argrw{"wr"}
+	assign		___706_transmission_roughness_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:384
+#     color coat_affected_subsurface_color_out = pow(subsurface_color_nonnegative_out, coat_gamma_out);
+	functioncall	$const36 717 	%line{384} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:149
+#     if (anisotropy > 0.0)
+	mul		$tmp357 ___706_coat_affected_transmission_roughness_out ___706_coat_affected_transmission_roughness_out 	%line{149} %argrw{"wrr"}
+	functioncall	$const38 703 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp358 $tmp357 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___682_roughness_sqr $tmp358 $const37 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:150
+#     {
+	gt		$tmp359 Queen_W_specular_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{150} %argrw{"wrr"}
+	if		$tmp359 715 717 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const38 708 	%line{152} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp361 Queen_W_specular_anisotropy $const39 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp360 $tmp361 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:152
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp362 $const10 $tmp360 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{152} %argrw{"wrr"}
+	sqrt		___683_aspect $tmp362 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:153
+#         result.y = roughness_sqr * aspect;
+	div		$tmp363 ___682_roughness_sqr ___683_aspect 	%line{153} %argrw{"wrr"}
+	min		___706_transmission_roughness_out.x $tmp363 $const10 	%argrw{"wrr"}
+	assign		___706_transmission_roughness_out.x ___706_transmission_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:154
+#     }
+	mul		___706_transmission_roughness_out.y ___682_roughness_sqr ___683_aspect 	%line{154} %argrw{"wrr"}
+	assign		___706_transmission_roughness_out.y ___706_transmission_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:158
+#         result.y = roughness_sqr;
+	assign		___706_transmission_roughness_out.x ___682_roughness_sqr 	%line{158} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:159
+#     }
+	assign		___706_transmission_roughness_out.y ___682_roughness_sqr 	%line{159} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:385
+#     color coat_affected_diffuse_color_out = pow(base_color_nonnegative_out, coat_gamma_out);
+	pow		___706_coat_affected_subsurface_color_out ___706_subsurface_color_nonnegative_out ___706_coat_gamma_out 	%line{385} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:386
+#     float one_minus_coat_ior_to_F0_in1_tmp = 1.000000;
+	pow		___706_coat_affected_diffuse_color_out ___706_base_color_nonnegative_out ___706_coat_gamma_out 	%line{386} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:387
+#     float one_minus_coat_ior_to_F0_out = one_minus_coat_ior_to_F0_in1_tmp - coat_ior_to_F0_out;
+	assign		___706_one_minus_coat_ior_to_F0_in1_tmp $const10 	%line{387} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:388
+#     color emission_color0_out = color(0.0);
+	sub		___706_one_minus_coat_ior_to_F0_out ___706_one_minus_coat_ior_to_F0_in1_tmp ___706_coat_ior_to_F0_out 	%line{388} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:389
+#     NG_convert_float_color3(one_minus_coat_ior_to_F0_out, emission_color0_out);
+	assign		___706_emission_color0_out $const6 	%line{389} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:390
+#     BSDF coat_bsdf_out = null_closure;
+	functioncall	$const52 725 	%line{390} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:225
+#     out = combine_out;
+	color		___691_combine_out ___706_one_minus_coat_ior_to_F0_out ___706_one_minus_coat_ior_to_F0_out ___706_one_minus_coat_ior_to_F0_out 	%line{225} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:226
+# }
+	assign		___706_emission_color0_out ___691_combine_out 	%line{226} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:391
+#     mx_dielectric_bsdf(coat, color(1.000000, 1.000000, 1.000000), coat_IOR, coat_roughness_vector_out, 0.000000, 1.500000, coat_normal, coat_tangent_out, "ggx", "R", coat_bsdf_out);
+	assign		___706_coat_bsdf_out ___706_null_closure 	%line{391} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:392
+#     float metal_bsdf_weight_tmp = 1.000000;
+	functioncall	$const56 737 	%line{392} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:209
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp365 $const55 $const57 	%line{209} %argrw{"wrr"}
+	if		$tmp365 730 731 	%argrw{"r"}
+	assign		___689_reflection_tint $const6 	%argrw{"wr"}
+	assign		___689_reflection_tint $const41 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:210
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp366 $const55 $const55 	%line{210} %argrw{"wrr"}
+	if		$tmp366 734 735 	%argrw{"r"}
+	assign		___689_transmission_tint $const6 	%argrw{"wr"}
+	assign		___689_transmission_tint $const41 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:211
+# }
+	closure		$tmp367 $const60 geomprop_Nworld_out1 ___706_coat_tangent_out ___689_reflection_tint ___689_transmission_tint ___706_coat_roughness_vector_out.x ___706_coat_roughness_vector_out.y Queen_W_coat_IOR $const54 $const58 $const5 $const59 $const53 	%line{211} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___706_coat_bsdf_out $tmp367 Queen_W_coat 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:393
+#     string metal_bsdf_distribution_tmp = "ggx";
+	assign		___706_metal_bsdf_weight_tmp $const10 	%line{393} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:394
+#     BSDF metal_bsdf_out = metal_bsdf_weight_tmp * conductor_bsdf(normal1, main_tangent_out, main_roughness_out.x, main_roughness_out.y, artistic_ior_ior, artistic_ior_extinction, metal_bsdf_distribution_tmp, "thinfilm_thickness", thin_film_thickness, "thinfilm_ior", thin_film_IOR);
+	assign		___706_metal_bsdf_distribution_tmp $const54 	%line{394} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:395
+#     BSDF specular_bsdf_out = null_closure;
+	closure		$tmp368 $const61 mtlxnormalmap3_out ___706_main_tangent_out ___706_main_roughness_out.x ___706_main_roughness_out.y ___706_artistic_ior_ior ___706_artistic_ior_extinction ___706_metal_bsdf_distribution_tmp $const58 Queen_W_thin_film_thickness $const59 Queen_W_thin_film_IOR 	%line{395} %argrw{"wrrrrrrrrrrrr"}
+	mul		___706_metal_bsdf_out $tmp368 ___706_metal_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:396
+#     mx_dielectric_bsdf(specular, specular_color, specular_IOR, main_roughness_out, thin_film_thickness, thin_film_IOR, normal1, main_tangent_out, "ggx", "R", specular_bsdf_out);
+	assign		___706_specular_bsdf_out ___706_null_closure 	%line{396} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:397
+#     BSDF transmission_bsdf_out = null_closure;
+	functioncall	$const56 753 	%line{397} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:209
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp369 $const55 $const57 	%line{209} %argrw{"wrr"}
+	if		$tmp369 746 747 	%argrw{"r"}
+	assign		___689_reflection_tint $const6 	%argrw{"wr"}
+	assign		___689_reflection_tint Queen_W_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:210
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp370 $const55 $const55 	%line{210} %argrw{"wrr"}
+	if		$tmp370 750 751 	%argrw{"r"}
+	assign		___689_transmission_tint $const6 	%argrw{"wr"}
+	assign		___689_transmission_tint Queen_W_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:211
+# }
+	closure		$tmp371 $const60 mtlxnormalmap3_out ___706_main_tangent_out ___689_reflection_tint ___689_transmission_tint ___706_main_roughness_out.x ___706_main_roughness_out.y Queen_W_specular_IOR $const54 $const58 Queen_W_thin_film_thickness $const59 Queen_W_thin_film_IOR 	%line{211} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___706_specular_bsdf_out $tmp371 Queen_W_specular 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:398
+#     mx_dielectric_bsdf(1.000000, transmission_color, specular_IOR, transmission_roughness_out, 0.000000, 1.500000, normal1, main_tangent_out, "ggx", "T", transmission_bsdf_out);
+	assign		___706_transmission_bsdf_out ___706_null_closure 	%line{398} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:399
+#     BSDF sheen_bsdf_out = sheen1 * sheen_bsdf(normal1, sheen_color, sheen_roughness);
+	functioncall	$const56 765 	%line{399} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:209
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp372 $const57 $const57 	%line{209} %argrw{"wrr"}
+	if		$tmp372 758 759 	%argrw{"r"}
+	assign		___689_reflection_tint $const6 	%argrw{"wr"}
+	assign		___689_reflection_tint Queen_W_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:210
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp373 $const57 $const55 	%line{210} %argrw{"wrr"}
+	if		$tmp373 762 763 	%argrw{"r"}
+	assign		___689_transmission_tint $const6 	%argrw{"wr"}
+	assign		___689_transmission_tint Queen_W_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:211
+# }
+	closure		$tmp374 $const60 mtlxnormalmap3_out ___706_main_tangent_out ___689_reflection_tint ___689_transmission_tint ___706_transmission_roughness_out.x ___706_transmission_roughness_out.y Queen_W_specular_IOR $const54 $const58 $const5 $const59 $const53 	%line{211} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___706_transmission_bsdf_out $tmp374 $const10 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:400
+#     float translucent_bsdf_weight_tmp = 1.000000;
+	closure		$tmp375 $const62 mtlxnormalmap3_out Queen_W_sheen_color Queen_W_sheen_roughness 	%line{400} %argrw{"wrrrr"}
+	mul		___706_sheen_bsdf_out $tmp375 Queen_W_sheen 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:401
+#     BSDF translucent_bsdf_out = translucent_bsdf_weight_tmp * translucent_bsdf(normal1, coat_affected_subsurface_color_out);
+	assign		___706_translucent_bsdf_weight_tmp $const10 	%line{401} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:402
+#     BSDF subsurface_bsdf_out = null_closure;
+	closure		$tmp376 $const63 mtlxnormalmap3_out ___706_coat_affected_subsurface_color_out 	%line{402} %argrw{"wrrr"}
+	mul		___706_translucent_bsdf_out $tmp376 ___706_translucent_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:403
+#     mx_subsurface_bsdf(1.000000, coat_affected_subsurface_color_out, subsurface_radius_scaled_out, subsurface_anisotropy, normal1, subsurface_bsdf_out);
+	assign		___706_subsurface_bsdf_out ___706_null_closure 	%line{403} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:404
+#     BSDF selected_subsurface_bsdf_out = mix(subsurface_bsdf_out, translucent_bsdf_out, subsurface_selector_out);
+	functioncall	$const64 774 	%line{404} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:219
+# #endif
+	mul		$tmp377 $const10 ___706_coat_affected_subsurface_color_out 	%line{219} %argrw{"wrr"}
+	closure		___706_subsurface_bsdf_out $const65 mtlxnormalmap3_out $tmp377 $const10 ___706_subsurface_radius_scaled_out Queen_W_subsurface_anisotropy 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:405
+#     BSDF diffuse_bsdf_out = base * oren_nayar_diffuse_bsdf(normal1, coat_affected_diffuse_color_out, diffuse_roughness);
+	functioncall	$const66 779 	%line{405} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp378 $const10 ___706_subsurface_selector_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp379 ___706_subsurface_bsdf_out $tmp378 	%argrw{"wrr"}
+	mul		$tmp380 ___706_translucent_bsdf_out ___706_subsurface_selector_out 	%argrw{"wrr"}
+	add		___706_selected_subsurface_bsdf_out $tmp379 $tmp380 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:406
+#     BSDF subsurface_mix_out = mix(diffuse_bsdf_out, selected_subsurface_bsdf_out, subsurface1);
+	closure		$tmp381 $const67 mtlxnormalmap3_out ___706_coat_affected_diffuse_color_out Queen_W_diffuse_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{406} %argrw{"wrrrr"}
+	mul		___706_diffuse_bsdf_out $tmp381 Queen_W_base 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:407
+#     BSDF sheen_layer_out = layer(sheen_bsdf_out, subsurface_mix_out);
+	functioncall	$const66 786 	%line{407} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp382 $const10 sss1_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp383 ___706_diffuse_bsdf_out $tmp382 	%argrw{"wrr"}
+	mul		$tmp384 ___706_selected_subsurface_bsdf_out sss1_out 	%argrw{"wrr"}
+	add		___706_subsurface_mix_out $tmp383 $tmp384 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:408
+#     BSDF transmission_mix_out = mix(sheen_layer_out, transmission_bsdf_out, transmission);
+	closure		___706_sheen_layer_out $const68 ___706_sheen_bsdf_out ___706_subsurface_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{408} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:409
+#     BSDF specular_layer_out = layer(specular_bsdf_out, transmission_mix_out);
+	functioncall	$const66 792 	%line{409} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp385 $const10 Queen_W_transmission 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp386 ___706_sheen_layer_out $tmp385 	%argrw{"wrr"}
+	mul		$tmp387 ___706_transmission_bsdf_out Queen_W_transmission 	%argrw{"wrr"}
+	add		___706_transmission_mix_out $tmp386 $tmp387 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:410
+#     BSDF metalness_mix_out = mix(specular_layer_out, metal_bsdf_out, metalness);
+	closure		___706_specular_layer_out $const68 ___706_specular_bsdf_out ___706_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{410} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:411
+#     BSDF thin_film_layer_attenuated_out = (coat_attenuation_out * metalness_mix_out);
+	functioncall	$const66 798 	%line{411} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp388 $const10 metallic1_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp389 ___706_specular_layer_out $tmp388 	%argrw{"wrr"}
+	mul		$tmp390 ___706_metal_bsdf_out metallic1_out 	%argrw{"wrr"}
+	add		___706_metalness_mix_out $tmp389 $tmp390 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:412
+#     BSDF coat_layer_out = layer(coat_bsdf_out, thin_film_layer_attenuated_out);
+	mul		___706_thin_film_layer_attenuated_out ___706_metalness_mix_out ___706_coat_attenuation_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{412} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:413
+#     EDF emission_edf_out = uniform_edf(emission_weight_out);
+	closure		___706_coat_layer_out $const68 ___706_coat_bsdf_out ___706_thin_film_layer_attenuated_out 	%line{413} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:414
+#     EDF coat_tinted_emission_edf_out = (coat_color * emission_edf_out);
+	closure		___706_emission_edf_out $const69 ___706_emission_weight_out 	%line{414} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:415
+#     EDF coat_emission_edf_out = null_closure;
+	mul		___706_coat_tinted_emission_edf_out ___706_emission_edf_out Queen_W_coat_color 	%line{415} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:416
+#     mx_generalized_schlick_edf(emission_color0_out, color(0.000000, 0.000000, 0.000000), 5.000000, coat_tinted_emission_edf_out, coat_emission_edf_out);
+	assign		___706_coat_emission_edf_out ___706_null_closure 	%line{416} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:417
+#     EDF blended_coat_emission_edf_out = mix(emission_edf_out, coat_emission_edf_out, coat);
+	functioncall	$const71 815 	%line{417} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:310
+#     color f = mx_fresnel_schlick(NdotV, color0, color90, exponent);
+	neg		$tmp393 I 	%line{310} %argrw{"wr"}
+	dot		$tmp392 N $tmp393 	%argrw{"wrr"}
+	fabs		___704_NdotV $tmp392 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:311
+#     result = base * f;
+	functioncall	$const72 814 	%line{311} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:304
+#     return mix(f0, f90, pow(x, exponent));
+	sub		$tmp394 $const10 ___704_NdotV 	%line{304} %argrw{"wrr"}
+	functioncall	$const38 812 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp395 $tmp394 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___703_x $tmp395 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:305
+# }
+	pow		$tmp396 ___703_x $const70 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{305} %argrw{"wrr"}
+	mix		___704_f ___706_emission_color0_out $const6 $tmp396 	%argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:312
+# }
+	mul		___706_coat_emission_edf_out ___706_coat_tinted_emission_edf_out ___704_f 	%line{312} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:418
+#     surfaceshader shader_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const66 820 	%line{418} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp397 $const10 Queen_W_coat 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp398 ___706_emission_edf_out $tmp397 	%argrw{"wrr"}
+	mul		$tmp399 ___706_coat_emission_edf_out Queen_W_coat 	%argrw{"wrr"}
+	add		___706_blended_coat_emission_edf_out $tmp398 $tmp399 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:419
+#     mx_surface(coat_layer_out, blended_coat_emission_edf_out, opacity_luminance_float_out, 0, shader_constructor_out);
+	assign		___706_shader_constructor_out.bsdf ___706_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{419} %argrw{"wr"}
+	assign		___706_shader_constructor_out.edf ___706_null_closure 	%argrw{"wr"}
+	assign		___706_shader_constructor_out.opacity $const10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:420
+#     out = shader_constructor_out;
+	functioncall	$const73 830 	%line{420} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:317
+#     result.edf     = edf;
+	assign		___706_shader_constructor_out.bsdf ___706_coat_layer_out 	%line{317} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:318
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___706_shader_constructor_out.edf ___706_blended_coat_emission_edf_out 	%line{318} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:319
+# }
+	functioncall	$const38 829 	%line{319} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp400 ___706_opacity_luminance_float_out $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___706_shader_constructor_out.opacity $tmp400 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:319
+# }
+	assign		___706_shader_constructor_out.opacity ___706_shader_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{319} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:421
+# }
+	assign		Queen_W_out.bsdf ___706_shader_constructor_out.bsdf 	%line{421} %argrw{"wr"}
+	assign		Queen_W_out.edf ___706_shader_constructor_out.edf 	%argrw{"wr"}
+	assign		Queen_W_out.opacity ___706_shader_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1013
+#     out = M_Queen_W_out;
+	functioncall	$const74 843 	%line{1013} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:426
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const38 837 	%line{426} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp401 Queen_W_out.opacity $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___707_opacity_weight $tmp401 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:427
+# }
+	add		$tmp402 Queen_W_out.bsdf Queen_W_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl"} %line{427} %argrw{"wrr"}
+	mul		$tmp403 $tmp402 ___707_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp404 $const75 	%argrw{"wr"}
+	sub		$tmp405 $const10 ___707_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp406 $tmp404 $tmp405 	%argrw{"wrr"}
+	add		M_Queen_W_out $tmp403 $tmp406 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_chess_set\\M_Queen_W.osl:1014
+# }
+	assign		out M_Queen_W_out 	%line{1014} %argrw{"wr"}
+	end

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "materialxusd"
+version = "0.0.1"
+description = "Utilities for MaterialX and USD"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "materialx>=1.39.2"
+]
+
+[tool.setuptools.packages.find]
+where = ["source"]
+[tool.setuptools.package-data]
+"materialxusd.data" = ["*.*"]

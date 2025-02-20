@@ -1,0 +1,100 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/Examples\\DisneyPrincipled\\disney_principled_plastic.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "DisneyPrincipled_Plastic" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:anisotropic
+            color3f inputs:baseColor = (0.104704, 0.241883, 0.818)
+            float inputs:clearcoat
+            float inputs:clearcoatGloss
+            float inputs:ior
+            float inputs:metallic
+            float inputs:roughness = 0.324675
+            float inputs:sheen
+            float inputs:sheenTint
+            float inputs:specTrans
+            float inputs:specular
+            float inputs:specularTint
+            float inputs:subsurface
+            color3f inputs:subsurfaceDistance
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/DisneyPrincipled_Plastic/SR_plastic.outputs:surface>
+
+            def Shader "SR_plastic" (
+                prepend references = </MaterialX/Shaders/SR_plastic>
+            )
+            {
+                float inputs:anisotropic.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:anisotropic>
+                color3f inputs:baseColor.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:baseColor>
+                float inputs:clearcoat.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:clearcoat>
+                float inputs:clearcoatGloss.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:clearcoatGloss>
+                float inputs:ior.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:ior>
+                float inputs:metallic.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:metallic>
+                float inputs:roughness.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:roughness>
+                float inputs:sheen.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:sheen>
+                float inputs:sheenTint.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:sheenTint>
+                float inputs:specTrans.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:specTrans>
+                float inputs:specular.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:specular>
+                float inputs:specularTint.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:specularTint>
+                float inputs:subsurface.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:subsurface>
+                color3f inputs:subsurfaceDistance.connect = </MaterialX/Materials/DisneyPrincipled_Plastic.inputs:subsurfaceDistance>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "SR_plastic"
+        {
+            uniform token info:id = "ND_disney_principled"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/DisneyPrincipled_Plastic>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

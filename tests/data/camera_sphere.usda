@@ -1,0 +1,24 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    doc = """Camera for unit sphere"""
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "root" 
+{
+    def Camera "Camera" (
+        active = true
+    )
+    {
+        float2 clippingRange = (0.01, 100)
+        float focalLength = 35
+        float horizontalAperture = 20
+        float verticalAperture = 20
+        float xformOp:rotateY = 0
+        double3 xformOp:translate = (0, 0, 4.2)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY"]
+    }    
+}
+

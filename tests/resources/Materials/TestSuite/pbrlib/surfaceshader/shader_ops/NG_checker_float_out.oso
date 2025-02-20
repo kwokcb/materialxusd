@@ -1,0 +1,93 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\pbrlib\surfaceshader\shader_ops\NG_checker_float_out.oso
+shader NG_checker_float_out	%meta{string,mtlx_category,"output"} %meta{string,mtlx_name,"out"} 
+param	struct vector2	scale			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	scale.x	8		%read{3,3} %write{2147483647,-1} %mystruct{scale} %mystructfield{0}
+param	float	scale.y	8		%read{4,4} %write{2147483647,-1} %mystruct{scale} %mystructfield{1}
+param	int	texcoord1_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	int	mult1_x_index	0		%meta{int,min,0} %meta{int,max,1} %meta{string,widget,"number"}  %read{6,6} %write{2147483647,-1}
+param	int	mult1_y_index	1		%meta{int,min,0} %meta{int,max,1} %meta{string,widget,"number"}  %read{13,13} %write{2147483647,-1}
+param	float	mod1_in2	2		%meta{string,widget,"number"}  %read{23,25} %write{2147483647,-1}
+oparam	float	out	0		%read{2147483647,-1} %write{27,27}
+global	float	u	%read{0,0} %write{2147483647,-1}
+global	float	v	%read{1,1} %write{2147483647,-1}
+local	float	texcoord1_out.x	%read{3,3} %write{0,0} %mystruct{texcoord1_out} %mystructfield{0}
+local	float	texcoord1_out.y	%read{4,4} %write{1,1} %mystruct{texcoord1_out} %mystructfield{1}
+local	float	mult1_out.x	%read{8,15} %write{3,3} %mystruct{mult1_out} %mystructfield{0}
+local	float	mult1_out.y	%read{10,17} %write{4,4} %mystruct{mult1_out} %mystructfield{1}
+local	float	mult1_x_out	%read{19,19} %write{8,10}
+local	float	mult1_y_out	%read{20,20} %write{15,17}
+local	float	floor1_out	%read{21,21} %write{19,19}
+local	float	floor2_out	%read{21,21} %write{20,20}
+local	float	add1_out	%read{23,26} %write{21,21}
+local	float	mod1_out	%read{27,27} %write{26,26}
+const	string	$const1	"__operator__mul__"		%read{2,2} %write{2147483647,-1}
+const	string	$const2	"mx_extract"		%read{5,12} %write{2147483647,-1}
+const	int	$const3	0		%read{6,13} %write{2147483647,-1}
+temp	int	$tmp1	%read{7,7} %write{6,6}
+temp	int	$tmp2	%read{14,14} %write{13,13}
+const	string	$const4	"mod"		%read{22,22} %write{2147483647,-1}
+temp	float	$tmp3	%read{25,25} %write{24,24}
+temp	float	$tmp4	%read{24,24} %write{23,23}
+temp	float	$tmp5	%read{26,26} %write{25,25}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:48
+#     vector2 mult1_out = texcoord1_out * scale;
+	assign		texcoord1_out.x u 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl"} %line{48} %argrw{"wr"}
+	assign		texcoord1_out.y v 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:58
+# 
+	functioncall	$const1 5 	%line{58} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		mult1_out.x texcoord1_out.x scale.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		mult1_out.y texcoord1_out.y scale.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:50
+#     float mult1_y_out = mx_extract(mult1_out, mult1_y_index);
+	functioncall	$const2 12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl"} %line{50} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:118
+#     if (index == 0) return in.x;
+	eq		$tmp1 mult1_x_index $const3 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{118} %argrw{"wrr"}
+	if		$tmp1 10 12 	%argrw{"r"}
+	assign		mult1_x_out mult1_out.x 	%argrw{"wr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:119
+#     else return in.y;
+	assign		mult1_x_out mult1_out.y 	%line{119} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:51
+#     float floor1_out = floor(mult1_x_out);
+	functioncall	$const2 19 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl"} %line{51} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:118
+#     if (index == 0) return in.x;
+	eq		$tmp2 mult1_y_index $const3 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{118} %argrw{"wrr"}
+	if		$tmp2 17 19 	%argrw{"r"}
+	assign		mult1_y_out mult1_out.x 	%argrw{"wr"}
+	return
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:119
+#     else return in.y;
+	assign		mult1_y_out mult1_out.y 	%line{119} %argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:52
+#     float floor2_out = floor(mult1_y_out);
+	floor		floor1_out mult1_x_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl"} %line{52} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:53
+#     float add1_out = floor1_out + floor2_out;
+	floor		floor2_out mult1_y_out 	%line{53} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:54
+#     float mod1_out = mod(add1_out, mod1_in2);
+	add		add1_out floor1_out floor2_out 	%line{54} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:55
+#     out = mod1_out;
+	functioncall	$const4 27 	%line{55} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:132
+# float  mod (float  a, float  b) { return a - b*floor(a/b); }
+	div		$tmp4 add1_out mod1_in2 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{132} %argrw{"wrr"}
+	floor		$tmp3 $tmp4 	%argrw{"wr"}
+	mul		$tmp5 mod1_in2 $tmp3 	%argrw{"wrr"}
+	sub		mod1_out add1_out $tmp5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl:56
+# }
+	assign		out mod1_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\shader_ops\\NG_checker_float_out.osl"} %line{56} %argrw{"wr"}
+	end

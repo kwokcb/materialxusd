@@ -1,0 +1,1176 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\stdlib\convolution\blur\blur_cellnoise_out.oso
+shader blur_cellnoise_out1	%meta{string,mtlx_category,"output"} %meta{string,mtlx_name,"out"} 
+param	int	texcoord1_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	multiply1_in2	100		%meta{string,widget,"number"}  %read{5,6} %write{2147483647,-1} %derivs
+param	float	blur_cellnoise_size	0.5		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	blur_cellnoise_filtertype	"gaussian"		%read{342,342} %write{2147483647,-1}
+oparam	float	out	0		%read{2147483647,-1} %write{372,372}
+global	float	u	%read{2,2} %write{2147483647,-1} %derivs
+global	float	v	%read{3,3} %write{2147483647,-1} %derivs
+local	vector	___670_derivUVx	%read{20,25} %write{16,16}
+local	vector	___670_derivUVy	%read{22,27} %write{19,19}
+local	float	___670_derivX	%read{30,30} %write{24,24}
+local	float	___670_derivY	%read{35,35} %write{29,29}
+local	float	___670_sampleSizeU	%read{32,40} %write{31,34}
+local	float	___670_sampleSizeV	%read{37,41} %write{36,39}
+local	float	___679_result	%read{348,371} %write{345,370}
+local	int	___680_i	%read{348,370} %write{347,370}
+local	float[84]	c_box_filter_weights	%read{362,370} %write{0,0}
+local	float[84]	c_gaussian_filter_weights	%read{348,356} %write{1,1}
+local	float	texcoord1_out.x	%read{8,8} %write{2,2} %mystruct{texcoord1_out} %mystructfield{0} %derivs
+local	float	texcoord1_out.y	%read{9,9} %write{3,3} %mystruct{texcoord1_out} %mystructfield{1} %derivs
+local	float	multiply1_out.x	%read{12,313} %write{8,8} %mystruct{multiply1_out} %mystructfield{0} %derivs
+local	float	multiply1_out.y	%read{12,314} %write{9,9} %mystruct{multiply1_out} %mystructfield{1} %derivs
+local	float	cellnoise2d1_out	%read{2147483647,-1} %write{10,12}
+local	float	blur_cellnoise_out_sample_size.x	%read{46,310} %write{40,40} %mystruct{blur_cellnoise_out_sample_size} %mystructfield{0}
+local	float	blur_cellnoise_out_sample_size.y	%read{47,311} %write{41,41} %mystruct{blur_cellnoise_out_sample_size} %mystructfield{1}
+local	float	cellnoise2d1_out_blur_cellnoise_out0	%read{317,317} %write{42,52}
+local	float	cellnoise2d1_out_blur_cellnoise_out1	%read{318,318} %write{53,63}
+local	float	cellnoise2d1_out_blur_cellnoise_out2	%read{319,319} %write{64,74}
+local	float	cellnoise2d1_out_blur_cellnoise_out3	%read{320,320} %write{75,85}
+local	float	cellnoise2d1_out_blur_cellnoise_out4	%read{321,321} %write{86,96}
+local	float	cellnoise2d1_out_blur_cellnoise_out5	%read{322,322} %write{97,107}
+local	float	cellnoise2d1_out_blur_cellnoise_out6	%read{323,323} %write{108,118}
+local	float	cellnoise2d1_out_blur_cellnoise_out7	%read{324,324} %write{119,129}
+local	float	cellnoise2d1_out_blur_cellnoise_out8	%read{325,325} %write{130,140}
+local	float	cellnoise2d1_out_blur_cellnoise_out9	%read{326,326} %write{141,151}
+local	float	cellnoise2d1_out_blur_cellnoise_out10	%read{327,327} %write{152,162}
+local	float	cellnoise2d1_out_blur_cellnoise_out11	%read{328,328} %write{163,173}
+local	float	cellnoise2d1_out_blur_cellnoise_out12	%read{329,329} %write{174,184}
+local	float	cellnoise2d1_out_blur_cellnoise_out13	%read{330,330} %write{185,195}
+local	float	cellnoise2d1_out_blur_cellnoise_out14	%read{331,331} %write{196,206}
+local	float	cellnoise2d1_out_blur_cellnoise_out15	%read{332,332} %write{207,217}
+local	float	cellnoise2d1_out_blur_cellnoise_out16	%read{333,333} %write{218,228}
+local	float	cellnoise2d1_out_blur_cellnoise_out17	%read{334,334} %write{229,239}
+local	float	cellnoise2d1_out_blur_cellnoise_out18	%read{335,335} %write{240,250}
+local	float	cellnoise2d1_out_blur_cellnoise_out19	%read{336,336} %write{251,261}
+local	float	cellnoise2d1_out_blur_cellnoise_out20	%read{337,337} %write{262,272}
+local	float	cellnoise2d1_out_blur_cellnoise_out21	%read{338,338} %write{273,283}
+local	float	cellnoise2d1_out_blur_cellnoise_out22	%read{339,339} %write{284,294}
+local	float	cellnoise2d1_out_blur_cellnoise_out23	%read{340,340} %write{295,305}
+local	float	cellnoise2d1_out_blur_cellnoise_out24	%read{341,341} %write{306,316}
+local	float[49]	blur_cellnoise_out_samples	%read{348,370} %write{317,341}
+local	float	blur_cellnoise_out	%read{372,372} %write{357,371}
+const	float[84]	$const1	1 0.111111 0.111111 0.111111 0.111111 0.111111 0.111111 0.111111 0.111111 0.111111 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.04 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 0.020408 		%read{0,0} %write{2147483647,-1}
+const	float[84]	$const2	1 0.077847 0.123317 0.077847 0.123317 0.195346 0.123317 0.077847 0.123317 0.077847 0.003765 0.015019 0.023792 0.015019 0.003765 0.015019 0.059912 0.094907 0.059912 0.015019 0.023792 0.094907 0.150342 0.094907 0.023792 0.015019 0.059912 0.094907 0.059912 0.015019 0.003765 0.015019 0.023792 0.015019 0.003765 3.6e-05 0.000363 0.001446 0.002291 0.001446 0.000363 3.6e-05 0.000363 0.003676 0.014662 0.023226 0.014662 0.003676 0.000363 0.001446 0.014662 0.058488 0.092651 0.058488 0.014662 0.001446 0.002291 0.023226 0.092651 0.146768 0.092651 0.023226 0.002291 0.001446 0.014662 0.058488 0.092651 0.058488 0.014662 0.001446 0.000363 0.003676 0.014662 0.023226 0.014662 0.003676 0.000363 3.6e-05 0.000363 0.001446 0.002291 0.001446 0.000363 3.6e-05 		%read{1,1} %write{2147483647,-1}
+const	string	$const3	"__operator__mul__"		%read{4,309} %write{2147483647,-1}
+temp	float	$tmp1.x	%read{8,8} %write{5,5} %derivs
+temp	float	$tmp1.y	%read{9,9} %write{6,6} %derivs
+const	float	$const4	0		%read{10,359} %write{2147483647,-1}
+const	string	$const5	"mx_cellnoise2d_float"		%read{11,315} %write{2147483647,-1}
+const	float	$const6	1		%read{30,296} %write{2147483647,-1}
+const	string	$const7	"mx_compute_sample_size_uv"		%read{13,13} %write{2147483647,-1}
+temp	vector	$tmp2	%read{16,16} %write{15,15}
+temp	vector	$tmp3	%read{15,15} %write{14,14} %derivs
+const	float	$const8	0.5		%read{16,19} %write{2147483647,-1}
+temp	vector	$tmp4	%read{19,19} %write{18,18}
+temp	vector	$tmp5	%read{18,18} %write{17,17} %derivs
+temp	float	$tmp6	%read{24,24} %write{21,21}
+const	int	$const9	0		%read{20,363} %write{2147483647,-1}
+temp	float	$tmp7	%read{21,21} %write{20,20}
+temp	float	$tmp8	%read{24,24} %write{23,23}
+temp	float	$tmp9	%read{23,23} %write{22,22}
+temp	float	$tmp10	%read{29,29} %write{26,26}
+const	int	$const10	1		%read{25,370} %write{2147483647,-1}
+temp	float	$tmp11	%read{26,26} %write{25,25}
+temp	float	$tmp12	%read{29,29} %write{28,28}
+temp	float	$tmp13	%read{28,28} %write{27,27}
+temp	float	$tmp14	%read{31,31} %write{30,30}
+const	float	$const11	1e-05		%read{32,39} %write{2147483647,-1}
+temp	int	$tmp15	%read{33,33} %write{32,32}
+temp	float	$tmp16	%read{36,36} %write{35,35}
+temp	int	$tmp17	%read{38,38} %write{37,37}
+temp	float	$tmp18.x	%read{52,52} %write{49,49}
+temp	float	$tmp18.y	%read{52,52} %write{50,50}
+temp	float	$tmp19.x	%read{49,49} %write{46,46}
+temp	float	$tmp19.y	%read{50,50} %write{47,47}
+temp	float	$tmp20.x	%read{46,46} %write{43,43}
+temp	float	$tmp20.y	%read{47,47} %write{44,44}
+const	float	$const12	-2		%read{43,263} %write{2147483647,-1}
+const	string	$const13	"__operator__add__"		%read{48,312} %write{2147483647,-1}
+temp	float	$tmp21.x	%read{63,63} %write{60,60}
+temp	float	$tmp21.y	%read{63,63} %write{61,61}
+temp	float	$tmp22.x	%read{60,60} %write{57,57}
+temp	float	$tmp22.y	%read{61,61} %write{58,58}
+temp	float	$tmp23.x	%read{57,57} %write{54,54}
+temp	float	$tmp23.y	%read{58,58} %write{55,55}
+const	float	$const14	-1		%read{54,274} %write{2147483647,-1}
+temp	float	$tmp24.x	%read{74,74} %write{71,71}
+temp	float	$tmp24.y	%read{74,74} %write{72,72}
+temp	float	$tmp25.x	%read{71,71} %write{68,68}
+temp	float	$tmp25.y	%read{72,72} %write{69,69}
+temp	float	$tmp26.x	%read{68,68} %write{65,65}
+temp	float	$tmp26.y	%read{69,69} %write{66,66}
+temp	float	$tmp27.x	%read{85,85} %write{82,82}
+temp	float	$tmp27.y	%read{85,85} %write{83,83}
+temp	float	$tmp28.x	%read{82,82} %write{79,79}
+temp	float	$tmp28.y	%read{83,83} %write{80,80}
+temp	float	$tmp29.x	%read{79,79} %write{76,76}
+temp	float	$tmp29.y	%read{80,80} %write{77,77}
+temp	float	$tmp30.x	%read{96,96} %write{93,93}
+temp	float	$tmp30.y	%read{96,96} %write{94,94}
+temp	float	$tmp31.x	%read{93,93} %write{90,90}
+temp	float	$tmp31.y	%read{94,94} %write{91,91}
+temp	float	$tmp32.x	%read{90,90} %write{87,87}
+temp	float	$tmp32.y	%read{91,91} %write{88,88}
+const	float	$const15	2		%read{87,308} %write{2147483647,-1}
+temp	float	$tmp33.x	%read{107,107} %write{104,104}
+temp	float	$tmp33.y	%read{107,107} %write{105,105}
+temp	float	$tmp34.x	%read{104,104} %write{101,101}
+temp	float	$tmp34.y	%read{105,105} %write{102,102}
+temp	float	$tmp35.x	%read{101,101} %write{98,98}
+temp	float	$tmp35.y	%read{102,102} %write{99,99}
+temp	float	$tmp36.x	%read{118,118} %write{115,115}
+temp	float	$tmp36.y	%read{118,118} %write{116,116}
+temp	float	$tmp37.x	%read{115,115} %write{112,112}
+temp	float	$tmp37.y	%read{116,116} %write{113,113}
+temp	float	$tmp38.x	%read{112,112} %write{109,109}
+temp	float	$tmp38.y	%read{113,113} %write{110,110}
+temp	float	$tmp39.x	%read{129,129} %write{126,126}
+temp	float	$tmp39.y	%read{129,129} %write{127,127}
+temp	float	$tmp40.x	%read{126,126} %write{123,123}
+temp	float	$tmp40.y	%read{127,127} %write{124,124}
+temp	float	$tmp41.x	%read{123,123} %write{120,120}
+temp	float	$tmp41.y	%read{124,124} %write{121,121}
+temp	float	$tmp42.x	%read{140,140} %write{137,137}
+temp	float	$tmp42.y	%read{140,140} %write{138,138}
+temp	float	$tmp43.x	%read{137,137} %write{134,134}
+temp	float	$tmp43.y	%read{138,138} %write{135,135}
+temp	float	$tmp44.x	%read{134,134} %write{131,131}
+temp	float	$tmp44.y	%read{135,135} %write{132,132}
+temp	float	$tmp45.x	%read{151,151} %write{148,148}
+temp	float	$tmp45.y	%read{151,151} %write{149,149}
+temp	float	$tmp46.x	%read{148,148} %write{145,145}
+temp	float	$tmp46.y	%read{149,149} %write{146,146}
+temp	float	$tmp47.x	%read{145,145} %write{142,142}
+temp	float	$tmp47.y	%read{146,146} %write{143,143}
+temp	float	$tmp48.x	%read{162,162} %write{159,159}
+temp	float	$tmp48.y	%read{162,162} %write{160,160}
+temp	float	$tmp49.x	%read{159,159} %write{156,156}
+temp	float	$tmp49.y	%read{160,160} %write{157,157}
+temp	float	$tmp50.x	%read{156,156} %write{153,153}
+temp	float	$tmp50.y	%read{157,157} %write{154,154}
+temp	float	$tmp51.x	%read{173,173} %write{170,170}
+temp	float	$tmp51.y	%read{173,173} %write{171,171}
+temp	float	$tmp52.x	%read{170,170} %write{167,167}
+temp	float	$tmp52.y	%read{171,171} %write{168,168}
+temp	float	$tmp53.x	%read{167,167} %write{164,164}
+temp	float	$tmp53.y	%read{168,168} %write{165,165}
+temp	float	$tmp54.x	%read{184,184} %write{181,181}
+temp	float	$tmp54.y	%read{184,184} %write{182,182}
+temp	float	$tmp55.x	%read{181,181} %write{178,178}
+temp	float	$tmp55.y	%read{182,182} %write{179,179}
+temp	float	$tmp56.x	%read{178,178} %write{175,175}
+temp	float	$tmp56.y	%read{179,179} %write{176,176}
+temp	float	$tmp57.x	%read{195,195} %write{192,192}
+temp	float	$tmp57.y	%read{195,195} %write{193,193}
+temp	float	$tmp58.x	%read{192,192} %write{189,189}
+temp	float	$tmp58.y	%read{193,193} %write{190,190}
+temp	float	$tmp59.x	%read{189,189} %write{186,186}
+temp	float	$tmp59.y	%read{190,190} %write{187,187}
+temp	float	$tmp60.x	%read{206,206} %write{203,203}
+temp	float	$tmp60.y	%read{206,206} %write{204,204}
+temp	float	$tmp61.x	%read{203,203} %write{200,200}
+temp	float	$tmp61.y	%read{204,204} %write{201,201}
+temp	float	$tmp62.x	%read{200,200} %write{197,197}
+temp	float	$tmp62.y	%read{201,201} %write{198,198}
+temp	float	$tmp63.x	%read{217,217} %write{214,214}
+temp	float	$tmp63.y	%read{217,217} %write{215,215}
+temp	float	$tmp64.x	%read{214,214} %write{211,211}
+temp	float	$tmp64.y	%read{215,215} %write{212,212}
+temp	float	$tmp65.x	%read{211,211} %write{208,208}
+temp	float	$tmp65.y	%read{212,212} %write{209,209}
+temp	float	$tmp66.x	%read{228,228} %write{225,225}
+temp	float	$tmp66.y	%read{228,228} %write{226,226}
+temp	float	$tmp67.x	%read{225,225} %write{222,222}
+temp	float	$tmp67.y	%read{226,226} %write{223,223}
+temp	float	$tmp68.x	%read{222,222} %write{219,219}
+temp	float	$tmp68.y	%read{223,223} %write{220,220}
+temp	float	$tmp69.x	%read{239,239} %write{236,236}
+temp	float	$tmp69.y	%read{239,239} %write{237,237}
+temp	float	$tmp70.x	%read{236,236} %write{233,233}
+temp	float	$tmp70.y	%read{237,237} %write{234,234}
+temp	float	$tmp71.x	%read{233,233} %write{230,230}
+temp	float	$tmp71.y	%read{234,234} %write{231,231}
+temp	float	$tmp72.x	%read{250,250} %write{247,247}
+temp	float	$tmp72.y	%read{250,250} %write{248,248}
+temp	float	$tmp73.x	%read{247,247} %write{244,244}
+temp	float	$tmp73.y	%read{248,248} %write{245,245}
+temp	float	$tmp74.x	%read{244,244} %write{241,241}
+temp	float	$tmp74.y	%read{245,245} %write{242,242}
+temp	float	$tmp75.x	%read{261,261} %write{258,258}
+temp	float	$tmp75.y	%read{261,261} %write{259,259}
+temp	float	$tmp76.x	%read{258,258} %write{255,255}
+temp	float	$tmp76.y	%read{259,259} %write{256,256}
+temp	float	$tmp77.x	%read{255,255} %write{252,252}
+temp	float	$tmp77.y	%read{256,256} %write{253,253}
+temp	float	$tmp78.x	%read{272,272} %write{269,269}
+temp	float	$tmp78.y	%read{272,272} %write{270,270}
+temp	float	$tmp79.x	%read{269,269} %write{266,266}
+temp	float	$tmp79.y	%read{270,270} %write{267,267}
+temp	float	$tmp80.x	%read{266,266} %write{263,263}
+temp	float	$tmp80.y	%read{267,267} %write{264,264}
+temp	float	$tmp81.x	%read{283,283} %write{280,280}
+temp	float	$tmp81.y	%read{283,283} %write{281,281}
+temp	float	$tmp82.x	%read{280,280} %write{277,277}
+temp	float	$tmp82.y	%read{281,281} %write{278,278}
+temp	float	$tmp83.x	%read{277,277} %write{274,274}
+temp	float	$tmp83.y	%read{278,278} %write{275,275}
+temp	float	$tmp84.x	%read{294,294} %write{291,291}
+temp	float	$tmp84.y	%read{294,294} %write{292,292}
+temp	float	$tmp85.x	%read{291,291} %write{288,288}
+temp	float	$tmp85.y	%read{292,292} %write{289,289}
+temp	float	$tmp86.x	%read{288,288} %write{285,285}
+temp	float	$tmp86.y	%read{289,289} %write{286,286}
+temp	float	$tmp87.x	%read{305,305} %write{302,302}
+temp	float	$tmp87.y	%read{305,305} %write{303,303}
+temp	float	$tmp88.x	%read{302,302} %write{299,299}
+temp	float	$tmp88.y	%read{303,303} %write{300,300}
+temp	float	$tmp89.x	%read{299,299} %write{296,296}
+temp	float	$tmp89.y	%read{300,300} %write{297,297}
+temp	float	$tmp90.x	%read{316,316} %write{313,313}
+temp	float	$tmp90.y	%read{316,316} %write{314,314}
+temp	float	$tmp91.x	%read{313,313} %write{310,310}
+temp	float	$tmp91.y	%read{314,314} %write{311,311}
+temp	float	$tmp92.x	%read{310,310} %write{307,307}
+temp	float	$tmp92.y	%read{311,311} %write{308,308}
+const	int	$const16	2		%read{319,319} %write{2147483647,-1}
+const	int	$const17	3		%read{320,320} %write{2147483647,-1}
+const	int	$const18	4		%read{321,321} %write{2147483647,-1}
+const	int	$const19	5		%read{322,322} %write{2147483647,-1}
+const	int	$const20	6		%read{323,323} %write{2147483647,-1}
+const	int	$const21	7		%read{324,324} %write{2147483647,-1}
+const	int	$const22	8		%read{325,325} %write{2147483647,-1}
+const	int	$const23	9		%read{326,326} %write{2147483647,-1}
+const	int	$const24	10		%read{327,365} %write{2147483647,-1}
+const	int	$const25	11		%read{328,328} %write{2147483647,-1}
+const	int	$const26	12		%read{329,329} %write{2147483647,-1}
+const	int	$const27	13		%read{330,330} %write{2147483647,-1}
+const	int	$const28	14		%read{331,331} %write{2147483647,-1}
+const	int	$const29	15		%read{332,332} %write{2147483647,-1}
+const	int	$const30	16		%read{333,333} %write{2147483647,-1}
+const	int	$const31	17		%read{334,334} %write{2147483647,-1}
+const	int	$const32	18		%read{335,335} %write{2147483647,-1}
+const	int	$const33	19		%read{336,336} %write{2147483647,-1}
+const	int	$const34	20		%read{337,337} %write{2147483647,-1}
+const	int	$const35	21		%read{338,338} %write{2147483647,-1}
+const	int	$const36	22		%read{339,339} %write{2147483647,-1}
+const	int	$const37	23		%read{340,340} %write{2147483647,-1}
+const	int	$const38	24		%read{341,341} %write{2147483647,-1}
+const	string	$const39	"gaussian"		%read{342,342} %write{2147483647,-1}
+temp	int	$tmp93	%read{343,343} %write{342,342}
+const	int	$const40	25		%read{348,362} %write{2147483647,-1}
+const	string	$const41	"mx_convolution_float"		%read{344,358} %write{2147483647,-1}
+temp	int	$tmp94	%read{348,356} %write{348,356}
+temp	int	$tmp95	%read{346,356} %write{347,356}
+temp	float	$tmp96	%read{348,356} %write{348,356}
+temp	int	$tmp97	%read{348,356} %write{348,356}
+temp	float	$tmp98	%read{348,356} %write{348,356}
+temp	float	$tmp99	%read{348,356} %write{348,356}
+temp	int	$tmp100	%read{2147483647,-1} %write{348,356}
+temp	int	$tmp101	%read{362,370} %write{362,370}
+temp	int	$tmp102	%read{360,370} %write{361,370}
+temp	float	$tmp103	%read{362,370} %write{362,370}
+temp	int	$tmp104	%read{362,370} %write{362,370}
+temp	float	$tmp105	%read{362,370} %write{362,370}
+temp	float	$tmp106	%read{362,370} %write{362,370}
+temp	int	$tmp107	%read{2147483647,-1} %write{362,370}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:196
+#     float c_gaussian_filter_weights[84] = {1.000000, 0.077847, 0.123317, 0.077847, 0.123317, 0.195346, 0.123317, 0.077847, 0.123317, 0.077847, 0.003765, 0.015019, 0.023792, 0.015019, 0.003765, 0.015019, 0.059912, 0.094907, 0.059912, 0.015019, 0.023792, 0.094907, 0.150342, 0.094907, 0.023792, 0.015019, 0.059912, 0.094907, 0.059912, 0.015019, 0.003765, 0.015019, 0.023792, 0.015019, 0.003765, 0.000036, 0.000363, 0.001446, 0.002291, 0.001446, 0.000363, 0.000036, 0.000363, 0.003676, 0.014662, 0.023226, 0.014662, 0.003676, 0.000363, 0.001446, 0.014662, 0.058488, 0.092651, 0.058488, 0.014662, 0.001446, 0.002291, 0.023226, 0.092651, 0.146768, 0.092651, 0.023226, 0.002291, 0.001446, 0.014662, 0.058488, 0.092651, 0.058488, 0.014662, 0.001446, 0.000363, 0.003676, 0.014662, 0.023226, 0.014662, 0.003676, 0.000363, 0.000036, 0.000363, 0.001446, 0.002291, 0.001446, 0.000363, 0.000036};
+	assign		c_box_filter_weights $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{196} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:197
+# 
+	assign		c_gaussian_filter_weights $const2 	%line{197} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:199
+#     vector2 multiply1_out = texcoord1_out * multiply1_in2;
+	assign		texcoord1_out.x u 	%line{199} %argrw{"wr"}
+	assign		texcoord1_out.y v 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 10 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:88
+#     return a * vector2(b, b);
+	assign		$tmp1.x multiply1_in2 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{88} %argrw{"wr"}
+	assign		$tmp1.y multiply1_in2 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 10 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		multiply1_out.x texcoord1_out.x $tmp1.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		multiply1_out.y texcoord1_out.y $tmp1.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:201
+#     mx_cellnoise2d_float(multiply1_out, cellnoise2d1_out);
+	assign		cellnoise2d1_out $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{201} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:202
+#     vector2 blur_cellnoise_out_sample_size = mx_compute_sample_size_uv(multiply1_out,1.000000,0.000000);
+	functioncall	$const5 13 	%line{202} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out multiply1_out.x multiply1_out.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:203
+#     float cellnoise2d1_out_blur_cellnoise_out0 = 0.0;
+	functioncall	$const7 42 	%line{203} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:33
+#    vector derivUVy = Dy(vector(uv.x, uv.y, 0.0)) * 0.5;
+	vector		$tmp3 multiply1_out.x multiply1_out.y $const4 	%line{33} %argrw{"wrrr"}
+	Dx		$tmp2 $tmp3 	%argrw{"wr"} %argderivs{1}
+	mul		___670_derivUVx $tmp2 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:34
+#    float derivX = abs(derivUVx[0]) + abs(derivUVy[0]);
+	vector		$tmp5 multiply1_out.x multiply1_out.y $const4 	%line{34} %argrw{"wrrr"}
+	Dy		$tmp4 $tmp5 	%argrw{"wr"} %argderivs{1}
+	mul		___670_derivUVy $tmp4 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:35
+#    float derivY = abs(derivUVx[1]) + abs(derivUVy[1]);
+	compref		$tmp7 ___670_derivUVx $const9 	%line{35} %argrw{"wrr"}
+	abs		$tmp6 $tmp7 	%argrw{"wr"}
+	compref		$tmp9 ___670_derivUVy $const9 	%argrw{"wrr"}
+	abs		$tmp8 $tmp9 	%argrw{"wr"}
+	add		___670_derivX $tmp6 $tmp8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:36
+#    float sampleSizeU = filterSize * derivX + filterOffset;
+	compref		$tmp11 ___670_derivUVx $const10 	%line{36} %argrw{"wrr"}
+	abs		$tmp10 $tmp11 	%argrw{"wr"}
+	compref		$tmp13 ___670_derivUVy $const10 	%argrw{"wrr"}
+	abs		$tmp12 $tmp13 	%argrw{"wr"}
+	add		___670_derivY $tmp10 $tmp12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:37
+#    if (sampleSizeU < 1.0E-05)
+	mul		$tmp14 $const6 ___670_derivX 	%line{37} %argrw{"wrr"}
+	add		___670_sampleSizeU $tmp14 $const4 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:38
+#        sampleSizeU = 1.0E-05;
+	lt		$tmp15 ___670_sampleSizeU $const11 	%line{38} %argrw{"wrr"}
+	if		$tmp15 35 35 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:39
+#    float sampleSizeV = filterSize * derivY + filterOffset;
+	assign		___670_sampleSizeU $const11 	%line{39} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:40
+#    if (sampleSizeV < 1.0E-05)
+	mul		$tmp16 $const6 ___670_derivY 	%line{40} %argrw{"wrr"}
+	add		___670_sampleSizeV $tmp16 $const4 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:41
+#        sampleSizeV = 1.0E-05;
+	lt		$tmp17 ___670_sampleSizeV $const11 	%line{41} %argrw{"wrr"}
+	if		$tmp17 40 40 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:42
+#    return vector2(sampleSizeU, sampleSizeV);
+	assign		___670_sampleSizeV $const11 	%line{42} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:43
+# }
+	assign		blur_cellnoise_out_sample_size.x ___670_sampleSizeU 	%line{43} %argrw{"wr"}
+	assign		blur_cellnoise_out_sample_size.y ___670_sampleSizeV 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:204
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-2.000000,-2.000000), cellnoise2d1_out_blur_cellnoise_out0);
+	assign		cellnoise2d1_out_blur_cellnoise_out0 $const4 	%line{204} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:205
+#     float cellnoise2d1_out_blur_cellnoise_out1 = 0.0;
+	assign		$tmp20.x $const12 	%line{205} %argrw{"wr"}
+	assign		$tmp20.y $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 48 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp19.x blur_cellnoise_out_sample_size.x $tmp20.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp19.y blur_cellnoise_out_sample_size.y $tmp20.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 51 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp18.x multiply1_out.x $tmp19.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp18.y multiply1_out.y $tmp19.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:205
+#     float cellnoise2d1_out_blur_cellnoise_out1 = 0.0;
+	functioncall	$const5 53 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{205} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out0 $tmp18.x $tmp18.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:206
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-1.000000,-2.000000), cellnoise2d1_out_blur_cellnoise_out1);
+	assign		cellnoise2d1_out_blur_cellnoise_out1 $const4 	%line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:207
+#     float cellnoise2d1_out_blur_cellnoise_out2 = 0.0;
+	assign		$tmp23.x $const14 	%line{207} %argrw{"wr"}
+	assign		$tmp23.y $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 59 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp22.x blur_cellnoise_out_sample_size.x $tmp23.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp22.y blur_cellnoise_out_sample_size.y $tmp23.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 62 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp21.x multiply1_out.x $tmp22.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp21.y multiply1_out.y $tmp22.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:207
+#     float cellnoise2d1_out_blur_cellnoise_out2 = 0.0;
+	functioncall	$const5 64 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{207} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out1 $tmp21.x $tmp21.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:208
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(0.000000,-2.000000), cellnoise2d1_out_blur_cellnoise_out2);
+	assign		cellnoise2d1_out_blur_cellnoise_out2 $const4 	%line{208} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:209
+#     float cellnoise2d1_out_blur_cellnoise_out3 = 0.0;
+	assign		$tmp26.x $const4 	%line{209} %argrw{"wr"}
+	assign		$tmp26.y $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 70 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp25.x blur_cellnoise_out_sample_size.x $tmp26.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp25.y blur_cellnoise_out_sample_size.y $tmp26.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 73 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp24.x multiply1_out.x $tmp25.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp24.y multiply1_out.y $tmp25.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:209
+#     float cellnoise2d1_out_blur_cellnoise_out3 = 0.0;
+	functioncall	$const5 75 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{209} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out2 $tmp24.x $tmp24.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:210
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(1.000000,-2.000000), cellnoise2d1_out_blur_cellnoise_out3);
+	assign		cellnoise2d1_out_blur_cellnoise_out3 $const4 	%line{210} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:211
+#     float cellnoise2d1_out_blur_cellnoise_out4 = 0.0;
+	assign		$tmp29.x $const6 	%line{211} %argrw{"wr"}
+	assign		$tmp29.y $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 81 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp28.x blur_cellnoise_out_sample_size.x $tmp29.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp28.y blur_cellnoise_out_sample_size.y $tmp29.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 84 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp27.x multiply1_out.x $tmp28.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp27.y multiply1_out.y $tmp28.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:211
+#     float cellnoise2d1_out_blur_cellnoise_out4 = 0.0;
+	functioncall	$const5 86 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{211} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out3 $tmp27.x $tmp27.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:212
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(2.000000,-2.000000), cellnoise2d1_out_blur_cellnoise_out4);
+	assign		cellnoise2d1_out_blur_cellnoise_out4 $const4 	%line{212} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:213
+#     float cellnoise2d1_out_blur_cellnoise_out5 = 0.0;
+	assign		$tmp32.x $const15 	%line{213} %argrw{"wr"}
+	assign		$tmp32.y $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 92 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp31.x blur_cellnoise_out_sample_size.x $tmp32.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp31.y blur_cellnoise_out_sample_size.y $tmp32.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 95 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp30.x multiply1_out.x $tmp31.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp30.y multiply1_out.y $tmp31.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:213
+#     float cellnoise2d1_out_blur_cellnoise_out5 = 0.0;
+	functioncall	$const5 97 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{213} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out4 $tmp30.x $tmp30.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:214
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-2.000000,-1.000000), cellnoise2d1_out_blur_cellnoise_out5);
+	assign		cellnoise2d1_out_blur_cellnoise_out5 $const4 	%line{214} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:215
+#     float cellnoise2d1_out_blur_cellnoise_out6 = 0.0;
+	assign		$tmp35.x $const12 	%line{215} %argrw{"wr"}
+	assign		$tmp35.y $const14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 103 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp34.x blur_cellnoise_out_sample_size.x $tmp35.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp34.y blur_cellnoise_out_sample_size.y $tmp35.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 106 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp33.x multiply1_out.x $tmp34.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp33.y multiply1_out.y $tmp34.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:215
+#     float cellnoise2d1_out_blur_cellnoise_out6 = 0.0;
+	functioncall	$const5 108 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{215} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out5 $tmp33.x $tmp33.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:216
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-1.000000,-1.000000), cellnoise2d1_out_blur_cellnoise_out6);
+	assign		cellnoise2d1_out_blur_cellnoise_out6 $const4 	%line{216} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:217
+#     float cellnoise2d1_out_blur_cellnoise_out7 = 0.0;
+	assign		$tmp38.x $const14 	%line{217} %argrw{"wr"}
+	assign		$tmp38.y $const14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 114 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp37.x blur_cellnoise_out_sample_size.x $tmp38.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp37.y blur_cellnoise_out_sample_size.y $tmp38.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 117 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp36.x multiply1_out.x $tmp37.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp36.y multiply1_out.y $tmp37.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:217
+#     float cellnoise2d1_out_blur_cellnoise_out7 = 0.0;
+	functioncall	$const5 119 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{217} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out6 $tmp36.x $tmp36.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:218
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(0.000000,-1.000000), cellnoise2d1_out_blur_cellnoise_out7);
+	assign		cellnoise2d1_out_blur_cellnoise_out7 $const4 	%line{218} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:219
+#     float cellnoise2d1_out_blur_cellnoise_out8 = 0.0;
+	assign		$tmp41.x $const4 	%line{219} %argrw{"wr"}
+	assign		$tmp41.y $const14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 125 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp40.x blur_cellnoise_out_sample_size.x $tmp41.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp40.y blur_cellnoise_out_sample_size.y $tmp41.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 128 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp39.x multiply1_out.x $tmp40.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp39.y multiply1_out.y $tmp40.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:219
+#     float cellnoise2d1_out_blur_cellnoise_out8 = 0.0;
+	functioncall	$const5 130 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{219} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out7 $tmp39.x $tmp39.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:220
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(1.000000,-1.000000), cellnoise2d1_out_blur_cellnoise_out8);
+	assign		cellnoise2d1_out_blur_cellnoise_out8 $const4 	%line{220} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:221
+#     float cellnoise2d1_out_blur_cellnoise_out9 = 0.0;
+	assign		$tmp44.x $const6 	%line{221} %argrw{"wr"}
+	assign		$tmp44.y $const14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 136 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp43.x blur_cellnoise_out_sample_size.x $tmp44.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp43.y blur_cellnoise_out_sample_size.y $tmp44.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 139 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp42.x multiply1_out.x $tmp43.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp42.y multiply1_out.y $tmp43.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:221
+#     float cellnoise2d1_out_blur_cellnoise_out9 = 0.0;
+	functioncall	$const5 141 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{221} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out8 $tmp42.x $tmp42.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:222
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(2.000000,-1.000000), cellnoise2d1_out_blur_cellnoise_out9);
+	assign		cellnoise2d1_out_blur_cellnoise_out9 $const4 	%line{222} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:223
+#     float cellnoise2d1_out_blur_cellnoise_out10 = 0.0;
+	assign		$tmp47.x $const15 	%line{223} %argrw{"wr"}
+	assign		$tmp47.y $const14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 147 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp46.x blur_cellnoise_out_sample_size.x $tmp47.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp46.y blur_cellnoise_out_sample_size.y $tmp47.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 150 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp45.x multiply1_out.x $tmp46.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp45.y multiply1_out.y $tmp46.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:223
+#     float cellnoise2d1_out_blur_cellnoise_out10 = 0.0;
+	functioncall	$const5 152 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{223} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out9 $tmp45.x $tmp45.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:224
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-2.000000,0.000000), cellnoise2d1_out_blur_cellnoise_out10);
+	assign		cellnoise2d1_out_blur_cellnoise_out10 $const4 	%line{224} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:225
+#     float cellnoise2d1_out_blur_cellnoise_out11 = 0.0;
+	assign		$tmp50.x $const12 	%line{225} %argrw{"wr"}
+	assign		$tmp50.y $const4 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 158 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp49.x blur_cellnoise_out_sample_size.x $tmp50.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp49.y blur_cellnoise_out_sample_size.y $tmp50.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 161 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp48.x multiply1_out.x $tmp49.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp48.y multiply1_out.y $tmp49.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:225
+#     float cellnoise2d1_out_blur_cellnoise_out11 = 0.0;
+	functioncall	$const5 163 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{225} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out10 $tmp48.x $tmp48.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:226
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-1.000000,0.000000), cellnoise2d1_out_blur_cellnoise_out11);
+	assign		cellnoise2d1_out_blur_cellnoise_out11 $const4 	%line{226} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:227
+#     float cellnoise2d1_out_blur_cellnoise_out12 = 0.0;
+	assign		$tmp53.x $const14 	%line{227} %argrw{"wr"}
+	assign		$tmp53.y $const4 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 169 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp52.x blur_cellnoise_out_sample_size.x $tmp53.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp52.y blur_cellnoise_out_sample_size.y $tmp53.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 172 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp51.x multiply1_out.x $tmp52.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp51.y multiply1_out.y $tmp52.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:227
+#     float cellnoise2d1_out_blur_cellnoise_out12 = 0.0;
+	functioncall	$const5 174 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{227} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out11 $tmp51.x $tmp51.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:228
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(0.000000,0.000000), cellnoise2d1_out_blur_cellnoise_out12);
+	assign		cellnoise2d1_out_blur_cellnoise_out12 $const4 	%line{228} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:229
+#     float cellnoise2d1_out_blur_cellnoise_out13 = 0.0;
+	assign		$tmp56.x $const4 	%line{229} %argrw{"wr"}
+	assign		$tmp56.y $const4 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 180 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp55.x blur_cellnoise_out_sample_size.x $tmp56.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp55.y blur_cellnoise_out_sample_size.y $tmp56.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 183 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp54.x multiply1_out.x $tmp55.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp54.y multiply1_out.y $tmp55.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:229
+#     float cellnoise2d1_out_blur_cellnoise_out13 = 0.0;
+	functioncall	$const5 185 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{229} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out12 $tmp54.x $tmp54.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:230
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(1.000000,0.000000), cellnoise2d1_out_blur_cellnoise_out13);
+	assign		cellnoise2d1_out_blur_cellnoise_out13 $const4 	%line{230} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:231
+#     float cellnoise2d1_out_blur_cellnoise_out14 = 0.0;
+	assign		$tmp59.x $const6 	%line{231} %argrw{"wr"}
+	assign		$tmp59.y $const4 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 191 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp58.x blur_cellnoise_out_sample_size.x $tmp59.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp58.y blur_cellnoise_out_sample_size.y $tmp59.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 194 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp57.x multiply1_out.x $tmp58.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp57.y multiply1_out.y $tmp58.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:231
+#     float cellnoise2d1_out_blur_cellnoise_out14 = 0.0;
+	functioncall	$const5 196 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{231} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out13 $tmp57.x $tmp57.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:232
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(2.000000,0.000000), cellnoise2d1_out_blur_cellnoise_out14);
+	assign		cellnoise2d1_out_blur_cellnoise_out14 $const4 	%line{232} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:233
+#     float cellnoise2d1_out_blur_cellnoise_out15 = 0.0;
+	assign		$tmp62.x $const15 	%line{233} %argrw{"wr"}
+	assign		$tmp62.y $const4 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 202 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp61.x blur_cellnoise_out_sample_size.x $tmp62.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp61.y blur_cellnoise_out_sample_size.y $tmp62.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 205 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp60.x multiply1_out.x $tmp61.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp60.y multiply1_out.y $tmp61.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:233
+#     float cellnoise2d1_out_blur_cellnoise_out15 = 0.0;
+	functioncall	$const5 207 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{233} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out14 $tmp60.x $tmp60.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:234
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-2.000000,1.000000), cellnoise2d1_out_blur_cellnoise_out15);
+	assign		cellnoise2d1_out_blur_cellnoise_out15 $const4 	%line{234} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:235
+#     float cellnoise2d1_out_blur_cellnoise_out16 = 0.0;
+	assign		$tmp65.x $const12 	%line{235} %argrw{"wr"}
+	assign		$tmp65.y $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 213 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp64.x blur_cellnoise_out_sample_size.x $tmp65.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp64.y blur_cellnoise_out_sample_size.y $tmp65.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 216 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp63.x multiply1_out.x $tmp64.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp63.y multiply1_out.y $tmp64.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:235
+#     float cellnoise2d1_out_blur_cellnoise_out16 = 0.0;
+	functioncall	$const5 218 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{235} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out15 $tmp63.x $tmp63.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:236
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-1.000000,1.000000), cellnoise2d1_out_blur_cellnoise_out16);
+	assign		cellnoise2d1_out_blur_cellnoise_out16 $const4 	%line{236} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:237
+#     float cellnoise2d1_out_blur_cellnoise_out17 = 0.0;
+	assign		$tmp68.x $const14 	%line{237} %argrw{"wr"}
+	assign		$tmp68.y $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 224 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp67.x blur_cellnoise_out_sample_size.x $tmp68.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp67.y blur_cellnoise_out_sample_size.y $tmp68.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 227 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp66.x multiply1_out.x $tmp67.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp66.y multiply1_out.y $tmp67.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:237
+#     float cellnoise2d1_out_blur_cellnoise_out17 = 0.0;
+	functioncall	$const5 229 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{237} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out16 $tmp66.x $tmp66.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:238
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(0.000000,1.000000), cellnoise2d1_out_blur_cellnoise_out17);
+	assign		cellnoise2d1_out_blur_cellnoise_out17 $const4 	%line{238} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:239
+#     float cellnoise2d1_out_blur_cellnoise_out18 = 0.0;
+	assign		$tmp71.x $const4 	%line{239} %argrw{"wr"}
+	assign		$tmp71.y $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 235 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp70.x blur_cellnoise_out_sample_size.x $tmp71.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp70.y blur_cellnoise_out_sample_size.y $tmp71.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 238 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp69.x multiply1_out.x $tmp70.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp69.y multiply1_out.y $tmp70.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:239
+#     float cellnoise2d1_out_blur_cellnoise_out18 = 0.0;
+	functioncall	$const5 240 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{239} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out17 $tmp69.x $tmp69.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:240
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(1.000000,1.000000), cellnoise2d1_out_blur_cellnoise_out18);
+	assign		cellnoise2d1_out_blur_cellnoise_out18 $const4 	%line{240} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:241
+#     float cellnoise2d1_out_blur_cellnoise_out19 = 0.0;
+	assign		$tmp74.x $const6 	%line{241} %argrw{"wr"}
+	assign		$tmp74.y $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 246 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp73.x blur_cellnoise_out_sample_size.x $tmp74.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp73.y blur_cellnoise_out_sample_size.y $tmp74.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 249 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp72.x multiply1_out.x $tmp73.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp72.y multiply1_out.y $tmp73.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:241
+#     float cellnoise2d1_out_blur_cellnoise_out19 = 0.0;
+	functioncall	$const5 251 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{241} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out18 $tmp72.x $tmp72.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:242
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(2.000000,1.000000), cellnoise2d1_out_blur_cellnoise_out19);
+	assign		cellnoise2d1_out_blur_cellnoise_out19 $const4 	%line{242} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:243
+#     float cellnoise2d1_out_blur_cellnoise_out20 = 0.0;
+	assign		$tmp77.x $const15 	%line{243} %argrw{"wr"}
+	assign		$tmp77.y $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 257 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp76.x blur_cellnoise_out_sample_size.x $tmp77.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp76.y blur_cellnoise_out_sample_size.y $tmp77.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 260 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp75.x multiply1_out.x $tmp76.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp75.y multiply1_out.y $tmp76.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:243
+#     float cellnoise2d1_out_blur_cellnoise_out20 = 0.0;
+	functioncall	$const5 262 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{243} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out19 $tmp75.x $tmp75.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:244
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-2.000000,2.000000), cellnoise2d1_out_blur_cellnoise_out20);
+	assign		cellnoise2d1_out_blur_cellnoise_out20 $const4 	%line{244} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:245
+#     float cellnoise2d1_out_blur_cellnoise_out21 = 0.0;
+	assign		$tmp80.x $const12 	%line{245} %argrw{"wr"}
+	assign		$tmp80.y $const15 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 268 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp79.x blur_cellnoise_out_sample_size.x $tmp80.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp79.y blur_cellnoise_out_sample_size.y $tmp80.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 271 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp78.x multiply1_out.x $tmp79.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp78.y multiply1_out.y $tmp79.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:245
+#     float cellnoise2d1_out_blur_cellnoise_out21 = 0.0;
+	functioncall	$const5 273 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{245} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out20 $tmp78.x $tmp78.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:246
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(-1.000000,2.000000), cellnoise2d1_out_blur_cellnoise_out21);
+	assign		cellnoise2d1_out_blur_cellnoise_out21 $const4 	%line{246} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:247
+#     float cellnoise2d1_out_blur_cellnoise_out22 = 0.0;
+	assign		$tmp83.x $const14 	%line{247} %argrw{"wr"}
+	assign		$tmp83.y $const15 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 279 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp82.x blur_cellnoise_out_sample_size.x $tmp83.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp82.y blur_cellnoise_out_sample_size.y $tmp83.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 282 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp81.x multiply1_out.x $tmp82.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp81.y multiply1_out.y $tmp82.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:247
+#     float cellnoise2d1_out_blur_cellnoise_out22 = 0.0;
+	functioncall	$const5 284 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{247} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out21 $tmp81.x $tmp81.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:248
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(0.000000,2.000000), cellnoise2d1_out_blur_cellnoise_out22);
+	assign		cellnoise2d1_out_blur_cellnoise_out22 $const4 	%line{248} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:249
+#     float cellnoise2d1_out_blur_cellnoise_out23 = 0.0;
+	assign		$tmp86.x $const4 	%line{249} %argrw{"wr"}
+	assign		$tmp86.y $const15 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 290 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp85.x blur_cellnoise_out_sample_size.x $tmp86.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp85.y blur_cellnoise_out_sample_size.y $tmp86.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 293 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp84.x multiply1_out.x $tmp85.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp84.y multiply1_out.y $tmp85.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:249
+#     float cellnoise2d1_out_blur_cellnoise_out23 = 0.0;
+	functioncall	$const5 295 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{249} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out22 $tmp84.x $tmp84.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:250
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(1.000000,2.000000), cellnoise2d1_out_blur_cellnoise_out23);
+	assign		cellnoise2d1_out_blur_cellnoise_out23 $const4 	%line{250} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:251
+#     float cellnoise2d1_out_blur_cellnoise_out24 = 0.0;
+	assign		$tmp89.x $const6 	%line{251} %argrw{"wr"}
+	assign		$tmp89.y $const15 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 301 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp88.x blur_cellnoise_out_sample_size.x $tmp89.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp88.y blur_cellnoise_out_sample_size.y $tmp89.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 304 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp87.x multiply1_out.x $tmp88.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp87.y multiply1_out.y $tmp88.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:251
+#     float cellnoise2d1_out_blur_cellnoise_out24 = 0.0;
+	functioncall	$const5 306 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{251} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out23 $tmp87.x $tmp87.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:252
+#     mx_cellnoise2d_float(multiply1_out + blur_cellnoise_out_sample_size * vector2(2.000000,2.000000), cellnoise2d1_out_blur_cellnoise_out24);
+	assign		cellnoise2d1_out_blur_cellnoise_out24 $const4 	%line{252} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:253
+#     float blur_cellnoise_out_samples[MX_MAX_SAMPLE_COUNT];
+	assign		$tmp92.x $const15 	%line{253} %argrw{"wr"}
+	assign		$tmp92.y $const15 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const3 312 	%line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		$tmp91.x blur_cellnoise_out_sample_size.x $tmp92.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		$tmp91.y blur_cellnoise_out_sample_size.y $tmp92.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:291
+# 
+	functioncall	$const13 315 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{291} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:28
+#     return vector2(a.x + b.x, a.y + b.y);
+	add		$tmp90.x multiply1_out.x $tmp91.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{28} %argrw{"wrr"}
+	add		$tmp90.y multiply1_out.y $tmp91.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:253
+#     float blur_cellnoise_out_samples[MX_MAX_SAMPLE_COUNT];
+	functioncall	$const5 317 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl"} %line{253} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:20
+# }
+	cellnoise	cellnoise2d1_out_blur_cellnoise_out24 $tmp90.x $tmp90.y 	%line{20} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:255
+#     blur_cellnoise_out_samples[1] = cellnoise2d1_out_blur_cellnoise_out1;
+	aassign		blur_cellnoise_out_samples $const9 cellnoise2d1_out_blur_cellnoise_out0 	%line{255} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:256
+#     blur_cellnoise_out_samples[2] = cellnoise2d1_out_blur_cellnoise_out2;
+	aassign		blur_cellnoise_out_samples $const10 cellnoise2d1_out_blur_cellnoise_out1 	%line{256} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:257
+#     blur_cellnoise_out_samples[3] = cellnoise2d1_out_blur_cellnoise_out3;
+	aassign		blur_cellnoise_out_samples $const16 cellnoise2d1_out_blur_cellnoise_out2 	%line{257} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:258
+#     blur_cellnoise_out_samples[4] = cellnoise2d1_out_blur_cellnoise_out4;
+	aassign		blur_cellnoise_out_samples $const17 cellnoise2d1_out_blur_cellnoise_out3 	%line{258} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:259
+#     blur_cellnoise_out_samples[5] = cellnoise2d1_out_blur_cellnoise_out5;
+	aassign		blur_cellnoise_out_samples $const18 cellnoise2d1_out_blur_cellnoise_out4 	%line{259} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:260
+#     blur_cellnoise_out_samples[6] = cellnoise2d1_out_blur_cellnoise_out6;
+	aassign		blur_cellnoise_out_samples $const19 cellnoise2d1_out_blur_cellnoise_out5 	%line{260} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:261
+#     blur_cellnoise_out_samples[7] = cellnoise2d1_out_blur_cellnoise_out7;
+	aassign		blur_cellnoise_out_samples $const20 cellnoise2d1_out_blur_cellnoise_out6 	%line{261} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:262
+#     blur_cellnoise_out_samples[8] = cellnoise2d1_out_blur_cellnoise_out8;
+	aassign		blur_cellnoise_out_samples $const21 cellnoise2d1_out_blur_cellnoise_out7 	%line{262} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:263
+#     blur_cellnoise_out_samples[9] = cellnoise2d1_out_blur_cellnoise_out9;
+	aassign		blur_cellnoise_out_samples $const22 cellnoise2d1_out_blur_cellnoise_out8 	%line{263} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:264
+#     blur_cellnoise_out_samples[10] = cellnoise2d1_out_blur_cellnoise_out10;
+	aassign		blur_cellnoise_out_samples $const23 cellnoise2d1_out_blur_cellnoise_out9 	%line{264} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:265
+#     blur_cellnoise_out_samples[11] = cellnoise2d1_out_blur_cellnoise_out11;
+	aassign		blur_cellnoise_out_samples $const24 cellnoise2d1_out_blur_cellnoise_out10 	%line{265} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:266
+#     blur_cellnoise_out_samples[12] = cellnoise2d1_out_blur_cellnoise_out12;
+	aassign		blur_cellnoise_out_samples $const25 cellnoise2d1_out_blur_cellnoise_out11 	%line{266} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:267
+#     blur_cellnoise_out_samples[13] = cellnoise2d1_out_blur_cellnoise_out13;
+	aassign		blur_cellnoise_out_samples $const26 cellnoise2d1_out_blur_cellnoise_out12 	%line{267} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:268
+#     blur_cellnoise_out_samples[14] = cellnoise2d1_out_blur_cellnoise_out14;
+	aassign		blur_cellnoise_out_samples $const27 cellnoise2d1_out_blur_cellnoise_out13 	%line{268} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:269
+#     blur_cellnoise_out_samples[15] = cellnoise2d1_out_blur_cellnoise_out15;
+	aassign		blur_cellnoise_out_samples $const28 cellnoise2d1_out_blur_cellnoise_out14 	%line{269} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:270
+#     blur_cellnoise_out_samples[16] = cellnoise2d1_out_blur_cellnoise_out16;
+	aassign		blur_cellnoise_out_samples $const29 cellnoise2d1_out_blur_cellnoise_out15 	%line{270} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:271
+#     blur_cellnoise_out_samples[17] = cellnoise2d1_out_blur_cellnoise_out17;
+	aassign		blur_cellnoise_out_samples $const30 cellnoise2d1_out_blur_cellnoise_out16 	%line{271} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:272
+#     blur_cellnoise_out_samples[18] = cellnoise2d1_out_blur_cellnoise_out18;
+	aassign		blur_cellnoise_out_samples $const31 cellnoise2d1_out_blur_cellnoise_out17 	%line{272} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:273
+#     blur_cellnoise_out_samples[19] = cellnoise2d1_out_blur_cellnoise_out19;
+	aassign		blur_cellnoise_out_samples $const32 cellnoise2d1_out_blur_cellnoise_out18 	%line{273} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:274
+#     blur_cellnoise_out_samples[20] = cellnoise2d1_out_blur_cellnoise_out20;
+	aassign		blur_cellnoise_out_samples $const33 cellnoise2d1_out_blur_cellnoise_out19 	%line{274} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:275
+#     blur_cellnoise_out_samples[21] = cellnoise2d1_out_blur_cellnoise_out21;
+	aassign		blur_cellnoise_out_samples $const34 cellnoise2d1_out_blur_cellnoise_out20 	%line{275} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:276
+#     blur_cellnoise_out_samples[22] = cellnoise2d1_out_blur_cellnoise_out22;
+	aassign		blur_cellnoise_out_samples $const35 cellnoise2d1_out_blur_cellnoise_out21 	%line{276} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:277
+#     blur_cellnoise_out_samples[23] = cellnoise2d1_out_blur_cellnoise_out23;
+	aassign		blur_cellnoise_out_samples $const36 cellnoise2d1_out_blur_cellnoise_out22 	%line{277} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:278
+#     blur_cellnoise_out_samples[24] = cellnoise2d1_out_blur_cellnoise_out24;
+	aassign		blur_cellnoise_out_samples $const37 cellnoise2d1_out_blur_cellnoise_out23 	%line{278} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:279
+#     float blur_cellnoise_out;
+	aassign		blur_cellnoise_out_samples $const38 cellnoise2d1_out_blur_cellnoise_out24 	%line{279} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:281
+#     {
+	eq		$tmp93 blur_cellnoise_filtertype $const39 	%line{281} %argrw{"wrr"}
+	if		$tmp93 358 372 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:283
+#     }
+	functioncall	$const41 358 	%line{283} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:96
+#     for (int i = 0;  i < sampleCount; i++)
+	assign		___679_result $const4 	%line{96} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:97
+#     {
+	for		$tmp95 348 350 355 357 	%line{97} %argrw{"r"}
+	assign		___680_i $const9 	%argrw{"wr"}
+	lt		$tmp94 ___680_i $const40 	%argrw{"wrr"}
+	neq		$tmp95 $tmp94 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:99
+#     }
+	aref		$tmp96 blur_cellnoise_out_samples ___680_i 	%line{99} %argrw{"wrr"}
+	add		$tmp97 ___680_i $const24 	%argrw{"wrr"}
+	aref		$tmp98 c_gaussian_filter_weights $tmp97 	%argrw{"wrr"}
+	mul		$tmp99 $tmp96 $tmp98 	%argrw{"wrr"}
+	add		___679_result ___679_result $tmp99 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:97
+#     {
+	assign		$tmp100 ___680_i 	%line{97} %argrw{"wr"}
+	add		___680_i ___680_i $const10 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:101
+# }
+	assign		blur_cellnoise_out ___679_result 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:287
+#     }
+	functioncall	$const41 372 	%line{287} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:96
+#     for (int i = 0;  i < sampleCount; i++)
+	assign		___679_result $const4 	%line{96} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:97
+#     {
+	for		$tmp102 362 364 369 371 	%line{97} %argrw{"r"}
+	assign		___680_i $const9 	%argrw{"wr"}
+	lt		$tmp101 ___680_i $const40 	%argrw{"wrr"}
+	neq		$tmp102 $tmp101 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:99
+#     }
+	aref		$tmp103 blur_cellnoise_out_samples ___680_i 	%line{99} %argrw{"wrr"}
+	add		$tmp104 ___680_i $const24 	%argrw{"wrr"}
+	aref		$tmp105 c_box_filter_weights $tmp104 	%argrw{"wrr"}
+	mul		$tmp106 $tmp103 $tmp105 	%argrw{"wrr"}
+	add		___679_result ___679_result $tmp106 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:97
+#     {
+	assign		$tmp107 ___680_i 	%line{97} %argrw{"wr"}
+	add		___680_i ___680_i $const10 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:101
+# }
+	assign		blur_cellnoise_out ___679_result 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\convolution\\blur\\blur_cellnoise_out.osl:289
+# }
+	assign		out blur_cellnoise_out 	%line{289} %argrw{"wr"}
+	end

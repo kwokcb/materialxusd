@@ -1,0 +1,238 @@
+#include "D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"
+
+#define true 1
+#define false 0
+struct textureresource { string filename; string colorspace; };
+#define BSDF closure color
+#define EDF closure color
+#define VDF closure color
+struct surfaceshader { closure color bsdf; closure color edf; float opacity; };
+#define volumeshader closure color
+#define displacementshader vector
+#define lightshader closure color
+#define MATERIAL closure color
+
+#define M_FLOAT_EPS 1e-8
+
+void mx_artistic_ior(color reflectivity, color edge_color, output vector ior, output vector extinction)
+{
+    // "Artist Friendly Metallic Fresnel", Ole Gulbrandsen, 2014
+    // http://jcgt.org/published/0003/04/03/paper.pdf
+
+    color r = clamp(reflectivity, 0.0, 0.99);
+    color r_sqrt = sqrt(r);
+    color n_min = (1.0 - r) / (1.0 + r);
+    color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+    ior = mix(n_max, n_min, edge_color);
+
+    color np1 = ior + 1.0;
+    color nm1 = ior - 1.0;
+    color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+    k2 = max(k2, 0.0);
+    extinction = sqrt(k2);
+}
+
+void mx_roughness_dual(vector2 roughness, output vector2 result)
+{
+    result.x = clamp(roughness.x * roughness.x, M_FLOAT_EPS, 1.0);
+    if (roughness.y < 0.0)
+    {
+        result.y = result.x;
+    }
+    else
+    {
+        result.y = clamp(roughness.y * roughness.y, M_FLOAT_EPS, 1.0);
+    }
+}
+
+void mx_subsurface_bsdf(float weight, color albedo, color radius, float anisotropy, normal N, output BSDF bsdf)
+{
+#if OSL_VERSION_MAJOR >= 1 && OSL_VERSION_MINOR >= 14
+    bsdf = subsurface_bssrdf(N, weight * albedo, radius, anisotropy);
+#else
+    bsdf = subsurface_bssrdf(N, weight * albedo, 1.0, radius, anisotropy);
+#endif
+}
+
+void mx_generalized_schlick_bsdf(float weight, color color0, color color82, color color90, float exponent, vector2 roughness, float thinfilm_thickness, float thinfilm_ior, normal N, vector U, string distribution, string scatter_mode, output BSDF bsdf)
+{
+    color reflection_tint = (scatter_mode == "T") ? color(0.0) : color(1.0);
+    color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+    bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+}
+
+void mx_surface(BSDF bsdf, EDF edf, float opacity, int thin_walled, output surfaceshader result)
+{
+    result.bsdf    = bsdf;
+    result.edf     = edf;
+    result.opacity = clamp(opacity, 0.0, 1.0);
+}
+
+void mx_mix_surfaceshader(surfaceshader fg, surfaceshader bg, float w, output surfaceshader result)
+{
+    result.bsdf = mix(bg.bsdf, fg.bsdf, w);
+    result.edf = mix(bg.edf, fg.edf, w);
+    result.opacity = mix(bg.opacity, fg.opacity, w);
+}
+
+surface nodegraph1_out
+[[
+    string mtlx_category = "output",
+    string mtlx_name = "out"
+]]
+(
+    string geomprop_Nworld_space = "world",
+    string geomprop_Tworld_space = "world",
+    int geomprop_Tworld_index = 0
+    [[
+        string widget = "number"
+    ]],
+    color conductor_brdf1__artistic_ior_reflectivity = color(0.944000, 0.776000, 0.373000)
+    [[
+        string colorspace = "lin_rec709"
+    ]],
+    color conductor_brdf1__artistic_ior_edge_color = color(0.998000, 0.981000, 0.751000)
+    [[
+        string colorspace = "lin_rec709"
+    ]],
+    color Emission_EDF_color = color(0.200000, 1.000000, 0.200000),
+    vector2 roughness_dual1_roughness = {0.200000, 0.400000},
+    float sheen_brdf1_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    color sheen_brdf1_color = color(1.000000, 1.000000, 1.000000),
+    float sheen_brdf1_roughness = 0.300000
+    [[
+        string widget = "number"
+    ]],
+    string sheen_brdf1_mode = "conty_kulla",
+    float subsurface_brdf1_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    color subsurface_brdf1_color = color(0.180000, 0.180000, 0.180000),
+    color subsurface_brdf1_radius = color(1.000000, 1.000000, 1.000000),
+    float subsurface_brdf1_anisotropy = 0.000000
+    [[
+        string widget = "number"
+    ]],
+    float conductor_brdf1_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    vector2 conductor_brdf1_roughness = {0.000000, 0.000000},
+    float conductor_brdf1_thinfilm_thickness = 0.000000
+    [[
+        string unit = "nanometer",
+        string widget = "number"
+    ]],
+    float conductor_brdf1_thinfilm_ior = 1.500000
+    [[
+        string widget = "number"
+    ]],
+    string conductor_brdf1_distribution = "ggx",
+    float mix_edf1_mix = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Mixing weight, range [0, 1].",
+        string widget = "number"
+    ]],
+    float SchlickBRDF__layer_top_weight = 1.000000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string widget = "number"
+    ]],
+    color SchlickBRDF__layer_top_color0 = color(1.000000, 1.000000, 1.000000),
+    color SchlickBRDF__layer_top_color82 = color(1.000000, 1.000000, 1.000000),
+    color SchlickBRDF__layer_top_color90 = color(1.000000, 1.000000, 1.000000),
+    float SchlickBRDF__layer_top_exponent = 5.000000
+    [[
+        string widget = "number"
+    ]],
+    float SchlickBRDF__layer_top_thinfilm_thickness = 0.000000
+    [[
+        string unit = "nanometer",
+        string widget = "number"
+    ]],
+    float SchlickBRDF__layer_top_thinfilm_ior = 1.500000
+    [[
+        string widget = "number"
+    ]],
+    string SchlickBRDF__layer_top_distribution = "ggx",
+    string SchlickBRDF__layer_top_scatter_mode = "R",
+    float mix_bsdf1_mix = 0.500000
+    [[
+        float min = 0.000000,
+        float max = 1.000000,
+        string help = "Mixing weight, range [0, 1].",
+        string widget = "number"
+    ]],
+    float surface1_opacity = 1.000000
+    [[
+        string help = "Surface cutout opacity",
+        string widget = "number"
+    ]],
+    int surface1_thin_walled = 0
+    [[
+        string help = "Option to make the surface thin-walled.",
+        string widget = "checkBox"
+    ]],
+    float surface2_opacity = 1.000000
+    [[
+        string help = "Surface cutout opacity",
+        string widget = "number"
+    ]],
+    int surface2_thin_walled = 0
+    [[
+        string help = "Option to make the surface thin-walled.",
+        string widget = "checkBox"
+    ]],
+    float mix_surface1_mix = 0.500000
+    [[
+        float slidermin = 0.000000,
+        float slidermax = 1.000000,
+        string widget = "number"
+    ]],
+    output closure color out = 0
+)
+{
+    closure color null_closure = 0;
+    vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+    vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+    color conductor_brdf1__artistic_ior_ior = color(0.0);
+    color conductor_brdf1__artistic_ior_extinction = color(0.0);
+    mx_artistic_ior(conductor_brdf1__artistic_ior_reflectivity, conductor_brdf1__artistic_ior_edge_color, conductor_brdf1__artistic_ior_ior, conductor_brdf1__artistic_ior_extinction);
+    vector2 roughness_dual1_out = vector2(0.0, 0.0);
+    mx_roughness_dual(roughness_dual1_roughness, roughness_dual1_out);
+    BSDF conductor_brdf1_out = conductor_brdf1_weight * conductor_bsdf(geomprop_Nworld_out1, geomprop_Tworld_out1, conductor_brdf1_roughness.x, conductor_brdf1_roughness.y, conductor_brdf1__artistic_ior_ior, conductor_brdf1__artistic_ior_extinction, conductor_brdf1_distribution, "thinfilm_thickness", conductor_brdf1_thinfilm_thickness, "thinfilm_ior", conductor_brdf1_thinfilm_ior);
+    EDF Emission_EDF_out = uniform_edf(Emission_EDF_color);
+    EDF mix_edf1_bg_tmp = null_closure;
+    EDF mix_edf1_out = mix(mix_edf1_bg_tmp, Emission_EDF_out, mix_edf1_mix);
+    surfaceshader surface1_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(conductor_brdf1_out, mix_edf1_out, surface1_opacity, surface1_thin_walled, surface1_out);
+    BSDF SchlickBRDF__layer_top_out = null_closure;
+    mx_generalized_schlick_bsdf(SchlickBRDF__layer_top_weight, SchlickBRDF__layer_top_color0, SchlickBRDF__layer_top_color82, SchlickBRDF__layer_top_color90, SchlickBRDF__layer_top_exponent, roughness_dual1_out, SchlickBRDF__layer_top_thinfilm_thickness, SchlickBRDF__layer_top_thinfilm_ior, geomprop_Nworld_out1, geomprop_Tworld_out1, SchlickBRDF__layer_top_distribution, SchlickBRDF__layer_top_scatter_mode, SchlickBRDF__layer_top_out);
+    BSDF sheen_brdf1_out = sheen_brdf1_weight * sheen_bsdf(geomprop_Nworld_out1, sheen_brdf1_color, sheen_brdf1_roughness);
+    BSDF subsurface_brdf1_out = null_closure;
+    mx_subsurface_bsdf(subsurface_brdf1_weight, subsurface_brdf1_color, subsurface_brdf1_radius, subsurface_brdf1_anisotropy, geomprop_Nworld_out1, subsurface_brdf1_out);
+    BSDF mix_bsdf1_out = mix(subsurface_brdf1_out, sheen_brdf1_out, mix_bsdf1_mix);
+    BSDF SchlickBRDF_out = layer(SchlickBRDF__layer_top_out, mix_bsdf1_out);
+    surfaceshader surface2_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_surface(SchlickBRDF_out, Emission_EDF_out, surface2_opacity, surface2_thin_walled, surface2_out);
+    surfaceshader mix_surface1_out = surfaceshader(null_closure, null_closure, 1.0);
+    mx_mix_surfaceshader(surface1_out, surface2_out, mix_surface1_mix, mix_surface1_out);
+    {
+        float opacity_weight = clamp(mix_surface1_out.opacity, 0.0, 1.0);
+        out = (mix_surface1_out.bsdf + mix_surface1_out.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+    }
+}
+

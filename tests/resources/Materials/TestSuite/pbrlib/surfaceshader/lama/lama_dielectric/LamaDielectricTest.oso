@@ -1,0 +1,1770 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\pbrlib\surfaceshader\lama\lama_dielectric\LamaDielectricTest.oso
+shader LamaDielectricTest	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"LamaDielectricTest"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Nworld_space	"world"		%read{2,2} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	color	LamaDielectric_reflectionTint_cm_in	1 1 1		%read{18,24} %write{2147483647,-1}
+param	color	LamaDielectric_transmissionTint_cm_in	1 1 1		%read{63,69} %write{2147483647,-1}
+param	color	LamaDielectric_absorptionColor_cm_in	1 1 1		%read{108,114} %write{2147483647,-1}
+param	color	LamaDielectric_scatterColor_cm_in	0 0 0		%read{153,159} %write{2147483647,-1}
+param	int	LamaDielectric_fresnelMode	0		%meta{string,label,"Fresnel Mode"} %meta{string,page,"Main"} %meta{string,help,"Switches the Fresnel parameterization between Artistic and Scientific mode. The Artistic mode offers a scalar value defining the reflectivity in the normal direction. The Scientific mode proposes an index of refraction. Both parameterizations can achieve identical results, as one can be mapped to the other."} %meta{string,widget,"number"}  %read{450,522} %write{2147483647,-1}
+param	float	LamaDielectric_IOR	1.5		%meta{float,min,1} %meta{float,max,3} %meta{string,label,"IOR"} %meta{string,page,"Main"} %meta{string,help,"Index of refraction (often denoted by eta), defining the amount reflected by the surface in the normal direction, and how the rays are bent by refraction."} %meta{string,widget,"number"}  %read{517,517} %write{2147483647,-1}
+param	float	LamaDielectric_reflectivity	0.0399999991		%meta{float,min,0} %meta{float,max,1} %meta{float,slidermin,0} %meta{float,slidermax,0.25} %meta{string,label,"Reflectivity"} %meta{string,page,"Main"} %meta{string,help,"Amount reflected by the surface in the normal direction. Also affects how the rays are bent by refraction."} %meta{string,widget,"number"}  %read{193,193} %write{2147483647,-1}
+param	float	LamaDielectric_roughness	0.100000001		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Roughness"} %meta{string,page,"Main"} %meta{string,help,"Micro-facet distribution roughness."} %meta{string,widget,"number"}  %read{196,535} %write{2147483647,-1}
+param	float	LamaDielectric_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Anisotropy"} %meta{string,page,"Anisotropy"} %meta{string,help,"Defines the amount of anisotropy, changing the co-tangent axis roughness from the original value to 1 (or to 0 with a negative value)."} %meta{string,widget,"number"}  %read{266,322} %write{2147483647,-1}
+param	float	LamaDielectric_rotation	0		%meta{float,slidermin,0} %meta{float,slidermax,1} %meta{string,label,"Rotation"} %meta{string,page,"Anisotropy"} %meta{string,help,"Rotates the anisotropy direction (possibly overridden by the previous attribute) around the normal, from 0 to 360 degrees."} %meta{string,widget,"number"}  %read{198,198} %write{2147483647,-1}
+param	float	LamaDielectric_absorptionRadius	1		%meta{float,min,0} %meta{string,label,"Absorption Radius"} %meta{string,page,"Interior"} %meta{string,help,"Distance, in world space units, at which the Absorption Color is assumed to be reached. Can be used to control the rate of absorption."} %meta{string,widget,"number"}  %read{199,199} %write{2147483647,-1}
+param	float	LamaDielectric_scatterAnisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Scatter Anisotropy"} %meta{string,page,"Interior"} %meta{string,help,"Anisotropy of the medium's phase function, ranging from full backward scattering at -1 to forward scattering at 1. Only takes effect if the Scatter Color is non-null."} %meta{string,widget,"number"}  %read{579,579} %write{2147483647,-1}
+param	float	LamaDielectricSurface_opacity	1		%meta{string,help,"Surface cutout opacity"} %meta{string,widget,"number"}  %read{590,590} %write{2147483647,-1}
+param	int	LamaDielectricSurface_thin_walled	0		%meta{string,help,"Option to make the surface thin-walled."} %meta{string,widget,"checkBox"}  %read{2147483647,-1} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{603,603}
+global	normal	N	%read{2,4} %write{2147483647,-1}
+local	int	___669_N_extract_0_index_tmp	%read{18,283} %write{16,281}
+local	float	___669_N_extract_0_out	%read{25,290} %write{18,283}
+local	int	___669_N_extract_1_index_tmp	%read{21,286} %write{19,284}
+local	float	___669_N_extract_1_out	%read{26,291} %write{21,286}
+local	int	___669_N_extract_2_index_tmp	%read{24,289} %write{22,287}
+local	float	___669_N_extract_2_out	%read{27,292} %write{24,289}
+local	float	___670_separate_outr	%read{28,293} %write{12,290}
+local	float	___670_separate_outg	%read{28,293} %write{13,291}
+local	float	___670_separate_outb	%read{28,293} %write{14,292}
+local	vector	___670_combine_out	%read{29,294} %write{28,293}
+local	int	___671_N_extract_0_index_tmp	%read{40,252} %write{38,250}
+local	float	___671_N_extract_0_out	%read{47,259} %write{40,252}
+local	int	___671_N_extract_1_index_tmp	%read{43,255} %write{41,253}
+local	float	___671_N_extract_1_out	%read{48,260} %write{43,255}
+local	int	___671_N_extract_2_index_tmp	%read{46,258} %write{44,256}
+local	float	___671_N_extract_2_out	%read{49,261} %write{46,258}
+local	float	___672_separate_outx	%read{50,262} %write{34,259}
+local	float	___672_separate_outy	%read{50,262} %write{35,260}
+local	float	___672_separate_outz	%read{50,262} %write{36,261}
+local	color	___672_combine_out	%read{51,263} %write{50,262}
+local	vector	___673_asVec_out	%read{31,243} %write{10,241}
+local	matrix	___673_transform_mat_tmp	%read{31,243} %write{30,242}
+local	vector	___673_transform_out	%read{40,258} %write{31,243}
+local	color	___673_asColor_out	%read{52,264} %write{32,263}
+local	color	___674_combine_out	%read{194,194} %write{193,193}
+local	color	___675_r	%read{303,317} %write{302,302}
+local	color	___675_r_sqrt	%read{307,308} %write{303,303}
+local	color	___675_n_min	%read{310,310} %write{306,306}
+local	color	___675_n_max	%read{310,310} %write{309,309}
+local	color	___675_np1	%read{313,313} %write{311,311}
+local	color	___675_nm1	%read{315,315} %write{312,312}
+local	color	___675_k2	%read{320,321} %write{318,320}
+local	vector	___676_nAxis	%read{333,387} %write{329,329}
+local	float	___676_s	%read{343,383} %write{330,330}
+local	float	___676_c	%read{332,389} %write{331,331}
+local	float	___676_oc	%read{334,386} %write{332,332}
+local	float	___677_rotationRadians	%read{330,331} %write{327,327}
+local	matrix	___677_m	%read{396,437} %write{390,390}
+local	float	___677_trans.x	%read{440,440} %write{406,406} %mystruct{___677_trans} %mystructfield{0}
+local	float	___677_trans.y	%read{440,440} %write{417,417} %mystruct{___677_trans} %mystructfield{1}
+local	float	___677_trans.z	%read{440,440} %write{428,428} %mystruct{___677_trans} %mystructfield{2}
+local	float	___677_trans.w	%read{2147483647,-1} %write{439,439} %mystruct{___677_trans} %mystructfield{3}
+local	color	___678_extinction	%read{578,579} %write{577,577}
+local	color	___678_albedo	%read{579,579} %write{578,578}
+local	int	___679_ifgreater_10_value1_tmp	%read{450,450} %write{448,448}
+local	float	___679_ifgreater_10_in2_tmp	%read{455,455} %write{449,449}
+local	float	___679_ifgreater_10_out	%read{463,463} %write{453,455}
+local	int	___679_ifgreater_9_value1_tmp	%read{458,458} %write{457,457}
+local	float	___679_ifgreater_9_out	%read{471,471} %write{461,463}
+local	int	___679_ifgreater_8_value1_tmp	%read{466,466} %write{465,465}
+local	float	___679_ifgreater_8_out	%read{479,479} %write{469,471}
+local	int	___679_ifgreater_7_value1_tmp	%read{474,474} %write{473,473}
+local	float	___679_ifgreater_7_out	%read{487,487} %write{477,479}
+local	int	___679_ifgreater_6_value1_tmp	%read{482,482} %write{481,481}
+local	float	___679_ifgreater_6_out	%read{495,495} %write{485,487}
+local	int	___679_ifgreater_5_value1_tmp	%read{490,490} %write{489,489}
+local	float	___679_ifgreater_5_out	%read{503,503} %write{493,495}
+local	int	___679_ifgreater_4_value1_tmp	%read{498,498} %write{497,497}
+local	float	___679_ifgreater_4_out	%read{511,511} %write{501,503}
+local	int	___679_ifgreater_3_value1_tmp	%read{506,506} %write{505,505}
+local	float	___679_ifgreater_3_out	%read{519,519} %write{509,511}
+local	int	___679_ifgreater_2_value1_tmp	%read{514,514} %write{513,513}
+local	float	___679_ifgreater_2_out	%read{527,527} %write{517,519}
+local	int	___679_ifgreater_1_value1_tmp	%read{522,522} %write{521,521}
+local	float	___679_ifgreater_1_out	%read{529,529} %write{525,527}
+local	color	___680_reflection_tint	%read{561,573} %write{555,568}
+local	color	___680_transmission_tint	%read{561,573} %write{559,572}
+local	closure color	___681_null_closure	%read{551,575} %write{190,190}
+local	color	___681_reflectivity_color_out	%read{301,301} %write{191,194}
+local	float	___681_roughness_inverse_in1_tmp	%read{196,196} %write{195,195}
+local	float	___681_roughness_inverse_out	%read{269,269} %write{196,196}
+local	float	___681_tangent_rotate_degree_in2_tmp	%read{198,198} %write{197,197}
+local	float	___681_tangent_rotate_degree_out	%read{274,274} %write{198,198}
+local	color	___681_absorption_out	%read{283,289} %write{199,199}
+local	vector	___681_scatter_vector_out	%read{577,578} %write{200,219}
+local	color	___681_artistic_ior_edge_color_cm_out	%read{310,310} %write{220,264}
+local	float	___681_delta_value2_tmp	%read{266,266} %write{265,265}
+local	float	___681_delta_out	%read{322,322} %write{269,271}
+local	float	___681_tangent_rotate_degree_offset_in2_tmp	%read{274,274} %write{273,273}
+local	float	___681_tangent_rotate_degree_offset_out	%read{327,327} %write{274,274}
+local	vector	___681_absorption_vector_out	%read{577,577} %write{275,294}
+local	color	___681_artistic_ior_ior	%read{311,443} %write{295,310}
+local	color	___681_artistic_ior_extinction	%read{2147483647,-1} %write{296,321}
+local	float	___681_roughness_additional_out	%read{444,444} %write{322,322}
+local	vector	___681_tangent_rotate_out	%read{445,445} %write{323,440}
+local	int	___681_ior_float_index_tmp	%read{443,443} %write{441,441}
+local	float	___681_ior_float_out	%read{525,525} %write{443,443}
+local	float	___681_roughness_bitangent_out	%read{533,533} %write{444,444}
+local	vector	___681_tangent_rotate_normalize_out	%read{561,573} %write{445,445}
+local	float	___681_fresnel_mode_switch_out	%read{561,573} %write{446,529}
+local	float	___681_roughness_bitangent_clamped_low_tmp	%read{534,534} %write{530,530}
+local	float	___681_roughness_bitangent_clamped_high_tmp	%read{533,533} %write{531,531}
+local	float	___681_roughness_bitangent_clamped_out	%read{536,536} %write{534,534}
+local	float	___681_roughness_linear_out.x	%read{542,542} %write{535,535} %mystruct{___681_roughness_linear_out} %mystructfield{0}
+local	float	___681_roughness_linear_out.y	%read{543,543} %write{536,536} %mystruct{___681_roughness_linear_out} %mystructfield{1}
+local	float	___681_roughness_anisotropic_squared_in2_tmp	%read{539,540} %write{537,537}
+local	float	___681_roughness_anisotropic_squared_out.x	%read{549,549} %write{542,542} %mystruct{___681_roughness_anisotropic_squared_out} %mystructfield{0}
+local	float	___681_roughness_anisotropic_squared_out.y	%read{550,550} %write{543,543} %mystruct{___681_roughness_anisotropic_squared_out} %mystructfield{1}
+local	float	___681_roughness_anisotropic_squared_clamped_in2_tmp	%read{546,547} %write{544,544}
+local	float	___681_roughness_anisotropic_squared_clamped_out.x	%read{561,573} %write{549,549} %mystruct{___681_roughness_anisotropic_squared_clamped_out} %mystructfield{0}
+local	float	___681_roughness_anisotropic_squared_clamped_out.y	%read{561,573} %write{550,550} %mystruct{___681_roughness_anisotropic_squared_clamped_out} %mystructfield{1}
+local	closure color	___681_reflection_bsdf_out	%read{581,581} %write{551,562}
+local	closure color	___681_transmission_bsdf_out	%read{580,580} %write{563,574}
+local	closure color	___681_interior_vdf_out	%read{580,580} %write{575,579}
+local	closure color	___681_transmission_layer_out	%read{581,581} %write{580,580}
+local	closure color	___681_dielectric_bsdf_out	%read{582,582} %write{581,581}
+local	float	___683_opacity_weight	%read{598,600} %write{596,596}
+local	closure color	null_closure	%read{188,588} %write{0,0}
+local	vector	geomprop_Nworld_out1	%read{329,573} %write{2,2}
+local	vector	geomprop_Tworld_out1	%read{391,393} %write{7,7}
+local	color	LamaDielectric_reflectionTint_cm_out	%read{556,560} %write{8,52}
+local	color	LamaDielectric_transmissionTint_cm_out	%read{568,572} %write{53,97}
+local	color	LamaDielectric_absorptionColor_cm_out	%read{199,199} %write{98,142}
+local	color	LamaDielectric_scatterColor_cm_out	%read{208,214} %write{143,187}
+local	closure color	LamaDielectric_out	%read{587,587} %write{188,582}
+local	closure color	LamaDielectricSurface_out.bsdf	%read{597,597} %write{583,587} %mystruct{LamaDielectricSurface_out} %mystructfield{0}
+local	closure color	LamaDielectricSurface_out.edf	%read{597,597} %write{584,588} %mystruct{LamaDielectricSurface_out} %mystructfield{1}
+local	float	LamaDielectricSurface_out.opacity	%read{592,595} %write{585,592} %mystruct{LamaDielectricSurface_out} %mystructfield{2}
+local	closure color	LamaDielectricTest_out	%read{603,603} %write{602,602}
+const	int	$const1	0		%read{0,441} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{1,395} %write{2147483647,-1}
+const	string	$const3	"common"		%read{2,2} %write{2147483647,-1}
+temp	vector	$tmp1	%read{7,7} %write{6,6}
+const	int	$const4	2		%read{3,513} %write{2147483647,-1}
+temp	float	$tmp2	%read{6,6} %write{3,3}
+const	float	$const5	0		%read{6,596} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{4,4}
+temp	float	$tmp4	%read{6,6} %write{5,5}
+const	color	$const6	0 0 0		%read{8,571} %write{2147483647,-1}
+const	string	$const7	"NG_acescg_to_lin_rec709_color3"		%read{9,221} %write{2147483647,-1}
+const	vector	$const8	0 0 0		%read{10,323} %write{2147483647,-1}
+const	string	$const9	"NG_convert_color3_vector3"		%read{11,276} %write{2147483647,-1}
+const	string	$const10	"NG_separate3_color3"		%read{15,280} %write{2147483647,-1}
+const	string	$const11	"mx_extract"		%read{17,442} %write{2147483647,-1}
+const	int	$const12	1		%read{19,521} %write{2147483647,-1}
+const	float	$const13	1.705051		%read{30,242} %write{2147483647,-1}
+const	float	$const14	-0.130256		%read{30,242} %write{2147483647,-1}
+const	float	$const15	-0.024003		%read{30,242} %write{2147483647,-1}
+const	float	$const16	-0.621792		%read{30,242} %write{2147483647,-1}
+const	float	$const17	1.140805		%read{30,242} %write{2147483647,-1}
+const	float	$const18	-0.128969		%read{30,242} %write{2147483647,-1}
+const	float	$const19	-0.083259		%read{30,242} %write{2147483647,-1}
+const	float	$const20	-0.010548		%read{30,242} %write{2147483647,-1}
+const	float	$const21	1.152972		%read{30,242} %write{2147483647,-1}
+const	float	$const22	1		%read{30,600} %write{2147483647,-1}
+const	string	$const23	"NG_convert_vector3_color3"		%read{33,245} %write{2147483647,-1}
+const	string	$const24	"NG_separate3_vector3"		%read{37,249} %write{2147483647,-1}
+const	string	$const25	"IMPL_lama_dielectric"		%read{189,189} %write{2147483647,-1}
+const	string	$const26	"NG_convert_float_color3"		%read{192,192} %write{2147483647,-1}
+const	float	$const27	-360		%read{197,197} %write{2147483647,-1}
+temp	int	$tmp6	%read{268,268} %write{266,266}
+const	string	$const28	"mx_ternary"		%read{267,523} %write{2147483647,-1}
+const	string	$const29	"mx_artistic_ior"		%read{297,297} %write{2147483647,-1}
+temp	color	$tmp7	%read{302,302} %write{298,298}
+const	float	$const30	0.99		%read{299,299} %write{2147483647,-1}
+temp	color	$tmp8	%read{301,301} %write{299,299}
+const	string	$const31	"clamp"		%read{300,594} %write{2147483647,-1}
+temp	color	$tmp9	%read{302,302} %write{301,301}
+temp	color	$tmp10	%read{306,306} %write{304,304}
+temp	color	$tmp11	%read{306,306} %write{305,305}
+temp	color	$tmp12	%read{309,309} %write{307,307}
+temp	color	$tmp13	%read{309,309} %write{308,308}
+temp	color	$tmp14	%read{314,314} %write{313,313}
+temp	color	$tmp15	%read{316,316} %write{314,314}
+temp	color	$tmp16	%read{316,316} %write{315,315}
+temp	color	$tmp17	%read{318,318} %write{316,316}
+temp	color	$tmp18	%read{318,318} %write{317,317}
+temp	color	$tmp19	%read{320,320} %write{319,319}
+const	string	$const32	"mx_rotate_vector3"		%read{324,324} %write{2147483647,-1}
+const	string	$const33	"radians"		%read{325,325} %write{2147483647,-1}
+const	float	$const34	3.1415927		%read{326,326} %write{2147483647,-1}
+const	float	$const35	180		%read{326,326} %write{2147483647,-1}
+temp	float	$tmp20	%read{327,327} %write{326,326}
+const	string	$const36	"rotationMatrix"		%read{328,328} %write{2147483647,-1}
+temp	float	$tmp21	%read{334,334} %write{333,333}
+temp	float	$tmp22	%read{336,336} %write{334,334}
+temp	float	$tmp23	%read{336,336} %write{335,335}
+temp	float	$tmp24	%read{337,337} %write{336,336}
+temp	float	$tmp25	%read{390,390} %write{337,337}
+temp	float	$tmp26	%read{339,339} %write{338,338}
+temp	float	$tmp27	%read{341,341} %write{339,339}
+temp	float	$tmp28	%read{341,341} %write{340,340}
+temp	float	$tmp29	%read{344,344} %write{341,341}
+temp	float	$tmp30	%read{343,343} %write{342,342}
+temp	float	$tmp31	%read{344,344} %write{343,343}
+temp	float	$tmp32	%read{390,390} %write{344,344}
+temp	float	$tmp33	%read{346,346} %write{345,345}
+temp	float	$tmp34	%read{348,348} %write{346,346}
+temp	float	$tmp35	%read{348,348} %write{347,347}
+temp	float	$tmp36	%read{351,351} %write{348,348}
+temp	float	$tmp37	%read{350,350} %write{349,349}
+temp	float	$tmp38	%read{351,351} %write{350,350}
+temp	float	$tmp39	%read{390,390} %write{351,351}
+temp	float	$tmp40	%read{353,353} %write{352,352}
+temp	float	$tmp41	%read{355,355} %write{353,353}
+temp	float	$tmp42	%read{355,355} %write{354,354}
+temp	float	$tmp43	%read{358,358} %write{355,355}
+temp	float	$tmp44	%read{357,357} %write{356,356}
+temp	float	$tmp45	%read{358,358} %write{357,357}
+temp	float	$tmp46	%read{390,390} %write{358,358}
+temp	float	$tmp47	%read{360,360} %write{359,359}
+temp	float	$tmp48	%read{362,362} %write{360,360}
+temp	float	$tmp49	%read{362,362} %write{361,361}
+temp	float	$tmp50	%read{363,363} %write{362,362}
+temp	float	$tmp51	%read{390,390} %write{363,363}
+temp	float	$tmp52	%read{365,365} %write{364,364}
+temp	float	$tmp53	%read{367,367} %write{365,365}
+temp	float	$tmp54	%read{367,367} %write{366,366}
+temp	float	$tmp55	%read{370,370} %write{367,367}
+temp	float	$tmp56	%read{369,369} %write{368,368}
+temp	float	$tmp57	%read{370,370} %write{369,369}
+temp	float	$tmp58	%read{390,390} %write{370,370}
+temp	float	$tmp59	%read{372,372} %write{371,371}
+temp	float	$tmp60	%read{374,374} %write{372,372}
+temp	float	$tmp61	%read{374,374} %write{373,373}
+temp	float	$tmp62	%read{377,377} %write{374,374}
+temp	float	$tmp63	%read{376,376} %write{375,375}
+temp	float	$tmp64	%read{377,377} %write{376,376}
+temp	float	$tmp65	%read{390,390} %write{377,377}
+temp	float	$tmp66	%read{379,379} %write{378,378}
+temp	float	$tmp67	%read{381,381} %write{379,379}
+temp	float	$tmp68	%read{381,381} %write{380,380}
+temp	float	$tmp69	%read{384,384} %write{381,381}
+temp	float	$tmp70	%read{383,383} %write{382,382}
+temp	float	$tmp71	%read{384,384} %write{383,383}
+temp	float	$tmp72	%read{390,390} %write{384,384}
+temp	float	$tmp73	%read{386,386} %write{385,385}
+temp	float	$tmp74	%read{388,388} %write{386,386}
+temp	float	$tmp75	%read{388,388} %write{387,387}
+temp	float	$tmp76	%read{389,389} %write{388,388}
+temp	float	$tmp77	%read{390,390} %write{389,389}
+temp	float	$tmp78.x	%read{397,430} %write{391,391}
+temp	float	$tmp78.y	%read{399,432} %write{392,392}
+temp	float	$tmp78.z	%read{402,435} %write{393,393}
+temp	float	$tmp78.w	%read{405,438} %write{394,394}
+temp	float	$tmp79	%read{397,397} %write{396,396}
+temp	float	$tmp80	%read{400,400} %write{397,397}
+temp	float	$tmp81	%read{399,399} %write{398,398}
+temp	float	$tmp82	%read{400,400} %write{399,399}
+temp	float	$tmp83	%read{403,403} %write{400,400}
+temp	float	$tmp84	%read{402,402} %write{401,401}
+temp	float	$tmp85	%read{403,403} %write{402,402}
+temp	float	$tmp86	%read{406,406} %write{403,403}
+const	int	$const37	3		%read{404,505} %write{2147483647,-1}
+temp	float	$tmp87	%read{405,405} %write{404,404}
+temp	float	$tmp88	%read{406,406} %write{405,405}
+temp	float	$tmp89	%read{408,408} %write{407,407}
+temp	float	$tmp90	%read{411,411} %write{408,408}
+temp	float	$tmp91	%read{410,410} %write{409,409}
+temp	float	$tmp92	%read{411,411} %write{410,410}
+temp	float	$tmp93	%read{414,414} %write{411,411}
+temp	float	$tmp94	%read{413,413} %write{412,412}
+temp	float	$tmp95	%read{414,414} %write{413,413}
+temp	float	$tmp96	%read{417,417} %write{414,414}
+temp	float	$tmp97	%read{416,416} %write{415,415}
+temp	float	$tmp98	%read{417,417} %write{416,416}
+temp	float	$tmp99	%read{419,419} %write{418,418}
+temp	float	$tmp100	%read{422,422} %write{419,419}
+temp	float	$tmp101	%read{421,421} %write{420,420}
+temp	float	$tmp102	%read{422,422} %write{421,421}
+temp	float	$tmp103	%read{425,425} %write{422,422}
+temp	float	$tmp104	%read{424,424} %write{423,423}
+temp	float	$tmp105	%read{425,425} %write{424,424}
+temp	float	$tmp106	%read{428,428} %write{425,425}
+temp	float	$tmp107	%read{427,427} %write{426,426}
+temp	float	$tmp108	%read{428,428} %write{427,427}
+temp	float	$tmp109	%read{430,430} %write{429,429}
+temp	float	$tmp110	%read{433,433} %write{430,430}
+temp	float	$tmp111	%read{432,432} %write{431,431}
+temp	float	$tmp112	%read{433,433} %write{432,432}
+temp	float	$tmp113	%read{436,436} %write{433,433}
+temp	float	$tmp114	%read{435,435} %write{434,434}
+temp	float	$tmp115	%read{436,436} %write{435,435}
+temp	float	$tmp116	%read{439,439} %write{436,436}
+temp	float	$tmp117	%read{438,438} %write{437,437}
+temp	float	$tmp118	%read{439,439} %write{438,438}
+const	string	$const38	"NG_switch_floatI"		%read{447,447} %write{2147483647,-1}
+const	int	$const39	10		%read{448,448} %write{2147483647,-1}
+temp	int	$tmp119	%read{452,452} %write{450,450}
+const	int	$const40	9		%read{457,457} %write{2147483647,-1}
+temp	int	$tmp120	%read{460,460} %write{458,458}
+const	int	$const41	8		%read{465,465} %write{2147483647,-1}
+temp	int	$tmp121	%read{468,468} %write{466,466}
+const	int	$const42	7		%read{473,473} %write{2147483647,-1}
+temp	int	$tmp122	%read{476,476} %write{474,474}
+const	int	$const43	6		%read{481,481} %write{2147483647,-1}
+temp	int	$tmp123	%read{484,484} %write{482,482}
+const	int	$const44	5		%read{489,489} %write{2147483647,-1}
+temp	int	$tmp124	%read{492,492} %write{490,490}
+const	int	$const45	4		%read{497,497} %write{2147483647,-1}
+temp	int	$tmp125	%read{500,500} %write{498,498}
+temp	int	$tmp126	%read{508,508} %write{506,506}
+temp	int	$tmp127	%read{516,516} %write{514,514}
+temp	int	$tmp128	%read{524,524} %write{522,522}
+temp	float	$tmp129	%read{534,534} %write{533,533}
+const	float	$const46	2		%read{537,537} %write{2147483647,-1}
+const	string	$const47	"pow"		%read{538,541} %write{2147483647,-1}
+temp	float	$tmp130.x	%read{542,542} %write{539,539}
+temp	float	$tmp130.y	%read{543,543} %write{540,540}
+const	float	$const48	1e-06		%read{544,544} %write{2147483647,-1}
+const	string	$const49	"max"		%read{545,548} %write{2147483647,-1}
+temp	float	$tmp131.x	%read{549,549} %write{546,546}
+temp	float	$tmp131.y	%read{550,550} %write{547,547}
+const	float	$const50	1.5		%read{561,573} %write{2147483647,-1}
+const	string	$const51	"ggx"		%read{561,573} %write{2147483647,-1}
+const	string	$const52	"R"		%read{553,569} %write{2147483647,-1}
+const	string	$const53	"mx_dielectric_bsdf"		%read{552,564} %write{2147483647,-1}
+const	string	$const54	"T"		%read{553,569} %write{2147483647,-1}
+temp	int	$tmp132	%read{554,554} %write{553,553}
+temp	int	$tmp133	%read{558,558} %write{557,557}
+temp	closure color	$tmp134	%read{562,562} %write{561,561}
+const	string	$const55	"thinfilm_thickness"		%read{561,573} %write{2147483647,-1}
+const	string	$const56	"thinfilm_ior"		%read{561,573} %write{2147483647,-1}
+const	string	$const57	"dielectric_bsdf"		%read{561,573} %write{2147483647,-1}
+temp	int	$tmp135	%read{566,566} %write{565,565}
+temp	int	$tmp136	%read{570,570} %write{569,569}
+temp	closure color	$tmp137	%read{574,574} %write{573,573}
+const	string	$const58	"mx_anisotropic_vdf"		%read{576,576} %write{2147483647,-1}
+const	string	$const59	"anisotropic_vdf"		%read{579,579} %write{2147483647,-1}
+const	string	$const60	"layer"		%read{580,581} %write{2147483647,-1}
+const	string	$const61	"mx_surface"		%read{586,586} %write{2147483647,-1}
+temp	float	$tmp138	%read{591,591} %write{590,590}
+const	string	$const62	"mx_surfacematerial"		%read{593,593} %write{2147483647,-1}
+temp	float	$tmp139	%read{596,596} %write{595,595}
+temp	closure color	$tmp140	%read{598,598} %write{597,597}
+temp	closure color	$tmp141	%read{602,602} %write{598,598}
+temp	closure color	$tmp142	%read{601,601} %write{599,599}
+const	string	$const63	"transparent"		%read{599,599} %write{2147483647,-1}
+temp	float	$tmp143	%read{601,601} %write{600,600}
+temp	closure color	$tmp144	%read{602,602} %write{601,601}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:328
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{328} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:329
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const2 3 	%line{329} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:330
+#     color LamaDielectric_reflectionTint_cm_out = color(0.0);
+	compref		$tmp2 N $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{330} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const5 $tmp4 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:331
+#     NG_acescg_to_lin_rec709_color3(LamaDielectric_reflectionTint_cm_in, LamaDielectric_reflectionTint_cm_out);
+	assign		LamaDielectric_reflectionTint_cm_out $const6 	%line{331} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:332
+#     color LamaDielectric_transmissionTint_cm_out = color(0.0);
+	functioncall	$const7 53 	%line{332} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const8 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const9 30 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 28 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 19 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaDielectric_reflectionTint_cm_in ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 22 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaDielectric_reflectionTint_cm_in ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 25 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaDielectric_reflectionTint_cm_in ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const5 $const16 $const17 $const18 $const5 $const19 $const20 $const21 $const5 $const5 $const5 $const5 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const6 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 52 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const5 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const5 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const5 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 50 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 41 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 44 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const11 47 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:72
+# }
+	assign		LamaDielectric_reflectionTint_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:333
+#     NG_acescg_to_lin_rec709_color3(LamaDielectric_transmissionTint_cm_in, LamaDielectric_transmissionTint_cm_out);
+	assign		LamaDielectric_transmissionTint_cm_out $const6 	%line{333} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:334
+#     color LamaDielectric_absorptionColor_cm_out = color(0.0);
+	functioncall	$const7 98 	%line{334} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const8 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const9 75 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 73 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 64 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaDielectric_transmissionTint_cm_in ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 67 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaDielectric_transmissionTint_cm_in ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 70 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaDielectric_transmissionTint_cm_in ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const5 $const16 $const17 $const18 $const5 $const19 $const20 $const21 $const5 $const5 $const5 $const5 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const6 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 97 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const5 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const5 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const5 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 95 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 86 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 89 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const11 92 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:72
+# }
+	assign		LamaDielectric_transmissionTint_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:335
+#     NG_acescg_to_lin_rec709_color3(LamaDielectric_absorptionColor_cm_in, LamaDielectric_absorptionColor_cm_out);
+	assign		LamaDielectric_absorptionColor_cm_out $const6 	%line{335} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:336
+#     color LamaDielectric_scatterColor_cm_out = color(0.0);
+	functioncall	$const7 143 	%line{336} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const8 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const9 120 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 118 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 109 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaDielectric_absorptionColor_cm_in ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 112 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaDielectric_absorptionColor_cm_in ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 115 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaDielectric_absorptionColor_cm_in ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const5 $const16 $const17 $const18 $const5 $const19 $const20 $const21 $const5 $const5 $const5 $const5 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const6 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 142 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const5 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const5 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const5 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 140 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 131 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 134 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const11 137 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:72
+# }
+	assign		LamaDielectric_absorptionColor_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:337
+#     NG_acescg_to_lin_rec709_color3(LamaDielectric_scatterColor_cm_in, LamaDielectric_scatterColor_cm_out);
+	assign		LamaDielectric_scatterColor_cm_out $const6 	%line{337} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:338
+#     BSDF LamaDielectric_out = null_closure;
+	functioncall	$const7 188 	%line{338} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const8 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const9 165 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 163 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 154 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaDielectric_scatterColor_cm_in ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 157 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaDielectric_scatterColor_cm_in ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 160 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaDielectric_scatterColor_cm_in ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const5 $const16 $const17 $const18 $const5 $const19 $const20 $const21 $const5 $const5 $const5 $const5 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const6 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 187 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const5 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const5 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const5 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 185 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 176 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 179 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const11 182 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:72
+# }
+	assign		LamaDielectric_scatterColor_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:339
+#     IMPL_lama_dielectric(LamaDielectric_reflectionTint_cm_out, LamaDielectric_transmissionTint_cm_out, LamaDielectric_fresnelMode, LamaDielectric_IOR, LamaDielectric_reflectivity, LamaDielectric_roughness, geomprop_Nworld_out1, LamaDielectric_anisotropy, geomprop_Tworld_out1, LamaDielectric_rotation, LamaDielectric_absorptionColor_cm_out, LamaDielectric_absorptionRadius, LamaDielectric_scatterColor_cm_out, LamaDielectric_scatterAnisotropy, LamaDielectric_out);
+	assign		LamaDielectric_out null_closure 	%line{339} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:340
+#     surfaceshader LamaDielectricSurface_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const25 583 	%line{340} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:164
+#     color reflectivity_color_out = color(0.0);
+	assign		___681_null_closure $const1 	%line{164} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:165
+#     NG_convert_float_color3(reflectivity, reflectivity_color_out);
+	assign		___681_reflectivity_color_out $const6 	%line{165} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:166
+#     float roughness_inverse_in1_tmp = 1.000000;
+	functioncall	$const26 195 	%line{166} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:77
+#     out = combine_out;
+	color		___674_combine_out LamaDielectric_reflectivity LamaDielectric_reflectivity LamaDielectric_reflectivity 	%line{77} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:78
+# }
+	assign		___681_reflectivity_color_out ___674_combine_out 	%line{78} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:167
+#     float roughness_inverse_out = roughness_inverse_in1_tmp - roughness;
+	assign		___681_roughness_inverse_in1_tmp $const22 	%line{167} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:168
+#     float tangent_rotate_degree_in2_tmp = -360.000000;
+	sub		___681_roughness_inverse_out ___681_roughness_inverse_in1_tmp LamaDielectric_roughness 	%line{168} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:169
+#     float tangent_rotate_degree_out = rotation * tangent_rotate_degree_in2_tmp;
+	assign		___681_tangent_rotate_degree_in2_tmp $const27 	%line{169} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:170
+#     color absorption_out = absorptionColor / absorptionRadius;
+	mul		___681_tangent_rotate_degree_out LamaDielectric_rotation ___681_tangent_rotate_degree_in2_tmp 	%line{170} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:171
+#     vector scatter_vector_out = vector(0.0);
+	div		___681_absorption_out LamaDielectric_absorptionColor_cm_out LamaDielectric_absorptionRadius 	%line{171} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:172
+#     NG_convert_color3_vector3(scatterColor, scatter_vector_out);
+	assign		___681_scatter_vector_out $const8 	%line{172} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:173
+#     color artistic_ior_edge_color_cm_out = color(0.0);
+	functioncall	$const9 220 	%line{173} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 218 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 209 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaDielectric_scatterColor_cm_out ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 212 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaDielectric_scatterColor_cm_out ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 215 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaDielectric_scatterColor_cm_out ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___681_scatter_vector_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:174
+#     NG_acescg_to_lin_rec709_color3(color(0.000000, 0.000000, 0.000000), artistic_ior_edge_color_cm_out);
+	assign		___681_artistic_ior_edge_color_cm_out $const6 	%line{174} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:175
+#     float delta_value2_tmp = 0.000000;
+	functioncall	$const7 265 	%line{175} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const8 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const9 242 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 240 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 231 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out $const6 ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 234 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out $const6 ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 237 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out $const6 ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const5 $const16 $const17 $const18 $const5 $const19 $const20 $const21 $const5 $const5 $const5 $const5 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const6 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 264 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const5 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const5 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const5 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 262 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 253 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 256 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const11 259 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:72
+# }
+	assign		___681_artistic_ior_edge_color_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:176
+#     float delta_out = mx_ternary(anisotropy >= delta_value2_tmp, roughness_inverse_out, roughness);
+	assign		___681_delta_value2_tmp $const5 	%line{176} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:177
+#     float tangent_rotate_degree_offset_in2_tmp = 0.000000;
+	ge		$tmp6 LamaDielectric_anisotropy ___681_delta_value2_tmp 	%line{177} %argrw{"wrr"}
+	functioncall	$const28 273 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp6 271 273 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___681_delta_out ___681_roughness_inverse_out 	%argrw{"wr"}
+	return
+	assign		___681_delta_out LamaDielectric_roughness 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:178
+#     float tangent_rotate_degree_offset_out = tangent_rotate_degree_out - tangent_rotate_degree_offset_in2_tmp;
+	assign		___681_tangent_rotate_degree_offset_in2_tmp $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{178} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:179
+#     vector absorption_vector_out = vector(0.0);
+	sub		___681_tangent_rotate_degree_offset_out ___681_tangent_rotate_degree_out ___681_tangent_rotate_degree_offset_in2_tmp 	%line{179} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:180
+#     NG_convert_color3_vector3(absorption_out, absorption_vector_out);
+	assign		___681_absorption_vector_out $const8 	%line{180} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:181
+#     color artistic_ior_ior = color(0.0);
+	functioncall	$const9 295 	%line{181} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const5 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const5 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const5 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const10 293 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const11 284 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out ___681_absorption_out ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const11 287 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out ___681_absorption_out ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const11 290 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out ___681_absorption_out ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:38
+# }
+	assign		___681_absorption_vector_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:182
+#     color artistic_ior_extinction = color(0.0);
+	assign		___681_artistic_ior_ior $const6 	%line{182} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:183
+#     mx_artistic_ior(reflectivity_color_out, artistic_ior_edge_color_cm_out, artistic_ior_ior, artistic_ior_extinction);
+	assign		___681_artistic_ior_extinction $const6 	%line{183} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:184
+#     float roughness_additional_out = anisotropy * delta_out;
+	functioncall	$const29 322 	%line{184} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:86
+#     color r_sqrt = sqrt(r);
+	assign		$tmp7 $const5 	%line{86} %argrw{"wr"}
+	assign		$tmp8 $const30 	%argrw{"wr"}
+	functioncall	$const31 303 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp9 ___681_reflectivity_color_out $tmp8 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___675_r $tmp9 $tmp7 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:87
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___675_r_sqrt ___675_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{87} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:88
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp10 $const22 ___675_r 	%line{88} %argrw{"wrr"}
+	add		$tmp11 $const22 ___675_r 	%argrw{"wrr"}
+	div		___675_n_min $tmp10 $tmp11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:89
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp12 $const22 ___675_r_sqrt 	%line{89} %argrw{"wrr"}
+	sub		$tmp13 $const22 ___675_r_sqrt 	%argrw{"wrr"}
+	div		___675_n_max $tmp12 $tmp13 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:90
+# 
+	mix		___681_artistic_ior_ior ___675_n_max ___675_n_min ___681_artistic_ior_edge_color_cm_out 	%line{90} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:92
+#     color nm1 = ior - 1.0;
+	add		___675_np1 ___681_artistic_ior_ior $const22 	%line{92} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:93
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___675_nm1 ___681_artistic_ior_ior $const22 	%line{93} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:94
+#     k2 = max(k2, 0.0);
+	mul		$tmp14 ___675_np1 ___675_np1 	%line{94} %argrw{"wrr"}
+	mul		$tmp15 $tmp14 ___675_r 	%argrw{"wrr"}
+	mul		$tmp16 ___675_nm1 ___675_nm1 	%argrw{"wrr"}
+	sub		$tmp17 $tmp15 $tmp16 	%argrw{"wrr"}
+	sub		$tmp18 $const22 ___675_r 	%argrw{"wrr"}
+	div		___675_k2 $tmp17 $tmp18 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:95
+#     extinction = sqrt(k2);
+	assign		$tmp19 $const5 	%line{95} %argrw{"wr"}
+	max		___675_k2 ___675_k2 $tmp19 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:96
+# }
+	sqrt		___681_artistic_ior_extinction ___675_k2 	%line{96} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:185
+#     vector tangent_rotate_out = vector(0.0);
+	mul		___681_roughness_additional_out LamaDielectric_anisotropy ___681_delta_out 	%line{185} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:186
+#     mx_rotate_vector3(direction, tangent_rotate_degree_offset_out, normal1, tangent_rotate_out);
+	assign		___681_tangent_rotate_out $const8 	%line{186} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:187
+#     int ior_float_index_tmp = 0;
+	functioncall	$const32 441 	%line{187} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:114
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const33 328 	%line{114} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp20 $const34 $const35 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___677_rotationRadians ___681_tangent_rotate_degree_offset_out $tmp20 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:115
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const36 391 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{115} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:101
+#     float s = sin(angle);
+	normalize	___676_nAxis geomprop_Nworld_out1 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:102
+#     float c = cos(angle);
+	sin		___676_s ___677_rotationRadians 	%line{102} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:103
+#     float oc = 1.0 - c;
+	cos		___676_c ___677_rotationRadians 	%line{103} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:104
+# 
+	sub		___676_oc $const22 ___676_c 	%line{104} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:106
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp21 ___676_nAxis $const1 	%line{106} %argrw{"wrr"}
+	mul		$tmp22 ___676_oc $tmp21 	%argrw{"wrr"}
+	compref		$tmp23 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp24 $tmp22 $tmp23 	%argrw{"wrr"}
+	add		$tmp25 $tmp24 ___676_c 	%argrw{"wrr"}
+	compref		$tmp26 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp27 ___676_oc $tmp26 	%argrw{"wrr"}
+	compref		$tmp28 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp29 $tmp27 $tmp28 	%argrw{"wrr"}
+	compref		$tmp30 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp31 $tmp30 ___676_s 	%argrw{"wrr"}
+	sub		$tmp32 $tmp29 $tmp31 	%argrw{"wrr"}
+	compref		$tmp33 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp34 ___676_oc $tmp33 	%argrw{"wrr"}
+	compref		$tmp35 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp36 $tmp34 $tmp35 	%argrw{"wrr"}
+	compref		$tmp37 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp38 $tmp37 ___676_s 	%argrw{"wrr"}
+	add		$tmp39 $tmp36 $tmp38 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:107
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp40 ___676_nAxis $const1 	%line{107} %argrw{"wrr"}
+	mul		$tmp41 ___676_oc $tmp40 	%argrw{"wrr"}
+	compref		$tmp42 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp43 $tmp41 $tmp42 	%argrw{"wrr"}
+	compref		$tmp44 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp45 $tmp44 ___676_s 	%argrw{"wrr"}
+	add		$tmp46 $tmp43 $tmp45 	%argrw{"wrr"}
+	compref		$tmp47 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp48 ___676_oc $tmp47 	%argrw{"wrr"}
+	compref		$tmp49 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp50 $tmp48 $tmp49 	%argrw{"wrr"}
+	add		$tmp51 $tmp50 ___676_c 	%argrw{"wrr"}
+	compref		$tmp52 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp53 ___676_oc $tmp52 	%argrw{"wrr"}
+	compref		$tmp54 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp55 $tmp53 $tmp54 	%argrw{"wrr"}
+	compref		$tmp56 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp57 $tmp56 ___676_s 	%argrw{"wrr"}
+	sub		$tmp58 $tmp55 $tmp57 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:108
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp59 ___676_nAxis $const4 	%line{108} %argrw{"wrr"}
+	mul		$tmp60 ___676_oc $tmp59 	%argrw{"wrr"}
+	compref		$tmp61 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp62 $tmp60 $tmp61 	%argrw{"wrr"}
+	compref		$tmp63 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp64 $tmp63 ___676_s 	%argrw{"wrr"}
+	sub		$tmp65 $tmp62 $tmp64 	%argrw{"wrr"}
+	compref		$tmp66 ___676_nAxis $const12 	%argrw{"wrr"}
+	mul		$tmp67 ___676_oc $tmp66 	%argrw{"wrr"}
+	compref		$tmp68 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp69 $tmp67 $tmp68 	%argrw{"wrr"}
+	compref		$tmp70 ___676_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp71 $tmp70 ___676_s 	%argrw{"wrr"}
+	add		$tmp72 $tmp69 $tmp71 	%argrw{"wrr"}
+	compref		$tmp73 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp74 ___676_oc $tmp73 	%argrw{"wrr"}
+	compref		$tmp75 ___676_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp76 $tmp74 $tmp75 	%argrw{"wrr"}
+	add		$tmp77 $tmp76 ___676_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:106
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___677_m $tmp25 $tmp32 $tmp39 $const5 $tmp46 $tmp51 $tmp58 $const5 $tmp65 $tmp72 $tmp77 $const5 $const5 $const5 $const5 $const22 	%line{106} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:116
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp78.x geomprop_Tworld_out1 $const1 	%line{116} %argrw{"wrr"}
+	compref		$tmp78.y geomprop_Tworld_out1 $const12 	%argrw{"wrr"}
+	compref		$tmp78.z geomprop_Tworld_out1 $const4 	%argrw{"wrr"}
+	assign		$tmp78.w $const22 	%argrw{"wr"}
+	functioncall	$const2 440 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp79 ___677_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp80 $tmp79 $tmp78.x 	%argrw{"wrr"}
+	mxcompref	$tmp81 ___677_m $const12 $const1 	%argrw{"wrrr"}
+	mul		$tmp82 $tmp81 $tmp78.y 	%argrw{"wrr"}
+	add		$tmp83 $tmp80 $tmp82 	%argrw{"wrr"}
+	mxcompref	$tmp84 ___677_m $const4 $const1 	%argrw{"wrrr"}
+	mul		$tmp85 $tmp84 $tmp78.z 	%argrw{"wrr"}
+	add		$tmp86 $tmp83 $tmp85 	%argrw{"wrr"}
+	mxcompref	$tmp87 ___677_m $const37 $const1 	%argrw{"wrrr"}
+	mul		$tmp88 $tmp87 $tmp78.w 	%argrw{"wrr"}
+	add		___677_trans.x $tmp86 $tmp88 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp89 ___677_m $const1 $const12 	%line{416} %argrw{"wrrr"}
+	mul		$tmp90 $tmp89 $tmp78.x 	%argrw{"wrr"}
+	mxcompref	$tmp91 ___677_m $const12 $const12 	%argrw{"wrrr"}
+	mul		$tmp92 $tmp91 $tmp78.y 	%argrw{"wrr"}
+	add		$tmp93 $tmp90 $tmp92 	%argrw{"wrr"}
+	mxcompref	$tmp94 ___677_m $const4 $const12 	%argrw{"wrrr"}
+	mul		$tmp95 $tmp94 $tmp78.z 	%argrw{"wrr"}
+	add		$tmp96 $tmp93 $tmp95 	%argrw{"wrr"}
+	mxcompref	$tmp97 ___677_m $const37 $const12 	%argrw{"wrrr"}
+	mul		$tmp98 $tmp97 $tmp78.w 	%argrw{"wrr"}
+	add		___677_trans.y $tmp96 $tmp98 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp99 ___677_m $const1 $const4 	%line{417} %argrw{"wrrr"}
+	mul		$tmp100 $tmp99 $tmp78.x 	%argrw{"wrr"}
+	mxcompref	$tmp101 ___677_m $const12 $const4 	%argrw{"wrrr"}
+	mul		$tmp102 $tmp101 $tmp78.y 	%argrw{"wrr"}
+	add		$tmp103 $tmp100 $tmp102 	%argrw{"wrr"}
+	mxcompref	$tmp104 ___677_m $const4 $const4 	%argrw{"wrrr"}
+	mul		$tmp105 $tmp104 $tmp78.z 	%argrw{"wrr"}
+	add		$tmp106 $tmp103 $tmp105 	%argrw{"wrr"}
+	mxcompref	$tmp107 ___677_m $const37 $const4 	%argrw{"wrrr"}
+	mul		$tmp108 $tmp107 $tmp78.w 	%argrw{"wrr"}
+	add		___677_trans.z $tmp106 $tmp108 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp109 ___677_m $const1 $const37 	%line{418} %argrw{"wrrr"}
+	mul		$tmp110 $tmp109 $tmp78.x 	%argrw{"wrr"}
+	mxcompref	$tmp111 ___677_m $const12 $const37 	%argrw{"wrrr"}
+	mul		$tmp112 $tmp111 $tmp78.y 	%argrw{"wrr"}
+	add		$tmp113 $tmp110 $tmp112 	%argrw{"wrr"}
+	mxcompref	$tmp114 ___677_m $const4 $const37 	%argrw{"wrrr"}
+	mul		$tmp115 $tmp114 $tmp78.z 	%argrw{"wrr"}
+	add		$tmp116 $tmp113 $tmp115 	%argrw{"wrr"}
+	mxcompref	$tmp117 ___677_m $const37 $const37 	%argrw{"wrrr"}
+	mul		$tmp118 $tmp117 $tmp78.w 	%argrw{"wrr"}
+	add		___677_trans.w $tmp116 $tmp118 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:117
+# }
+	vector		___681_tangent_rotate_out ___677_trans.x ___677_trans.y ___677_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{117} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:188
+#     float ior_float_out = mx_extract(artistic_ior_ior, ior_float_index_tmp);
+	assign		___681_ior_float_index_tmp $const1 	%line{188} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:189
+#     float roughness_bitangent_out = roughness + roughness_additional_out;
+	functioncall	$const11 444 	%line{189} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___681_ior_float_out ___681_artistic_ior_ior ___681_ior_float_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:190
+#     vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+	add		___681_roughness_bitangent_out LamaDielectric_roughness ___681_roughness_additional_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{190} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:191
+#     float fresnel_mode_switch_out = 0.0;
+	normalize	___681_tangent_rotate_normalize_out ___681_tangent_rotate_out 	%line{191} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:192
+#     NG_switch_floatI(ior_float_out, IOR, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, fresnelMode, fresnel_mode_switch_out);
+	assign		___681_fresnel_mode_switch_out $const5 	%line{192} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:193
+#     float roughness_bitangent_clamped_low_tmp = 0.000000;
+	functioncall	$const38 530 	%line{193} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:131
+#     float ifgreater_10_in2_tmp = 0.000000;
+	assign		___679_ifgreater_10_value1_tmp $const39 	%line{131} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:132
+#     float ifgreater_10_out = mx_ternary(ifgreater_10_value1_tmp > which, in10, ifgreater_10_in2_tmp);
+	assign		___679_ifgreater_10_in2_tmp $const5 	%line{132} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:133
+#     int ifgreater_9_value1_tmp = 9;
+	gt		$tmp119 ___679_ifgreater_10_value1_tmp LamaDielectric_fresnelMode 	%line{133} %argrw{"wrr"}
+	functioncall	$const28 457 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp119 455 457 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_10_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_10_out ___679_ifgreater_10_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:134
+#     float ifgreater_9_out = mx_ternary(ifgreater_9_value1_tmp > which, in9, ifgreater_10_out);
+	assign		___679_ifgreater_9_value1_tmp $const40 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{134} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:135
+#     int ifgreater_8_value1_tmp = 8;
+	gt		$tmp120 ___679_ifgreater_9_value1_tmp LamaDielectric_fresnelMode 	%line{135} %argrw{"wrr"}
+	functioncall	$const28 465 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp120 463 465 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_9_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_9_out ___679_ifgreater_10_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:136
+#     float ifgreater_8_out = mx_ternary(ifgreater_8_value1_tmp > which, in8, ifgreater_9_out);
+	assign		___679_ifgreater_8_value1_tmp $const41 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{136} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:137
+#     int ifgreater_7_value1_tmp = 7;
+	gt		$tmp121 ___679_ifgreater_8_value1_tmp LamaDielectric_fresnelMode 	%line{137} %argrw{"wrr"}
+	functioncall	$const28 473 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp121 471 473 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_8_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_8_out ___679_ifgreater_9_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:138
+#     float ifgreater_7_out = mx_ternary(ifgreater_7_value1_tmp > which, in7, ifgreater_8_out);
+	assign		___679_ifgreater_7_value1_tmp $const42 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{138} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:139
+#     int ifgreater_6_value1_tmp = 6;
+	gt		$tmp122 ___679_ifgreater_7_value1_tmp LamaDielectric_fresnelMode 	%line{139} %argrw{"wrr"}
+	functioncall	$const28 481 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp122 479 481 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_7_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_7_out ___679_ifgreater_8_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:140
+#     float ifgreater_6_out = mx_ternary(ifgreater_6_value1_tmp > which, in6, ifgreater_7_out);
+	assign		___679_ifgreater_6_value1_tmp $const43 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{140} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:141
+#     int ifgreater_5_value1_tmp = 5;
+	gt		$tmp123 ___679_ifgreater_6_value1_tmp LamaDielectric_fresnelMode 	%line{141} %argrw{"wrr"}
+	functioncall	$const28 489 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp123 487 489 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_6_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_6_out ___679_ifgreater_7_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:142
+#     float ifgreater_5_out = mx_ternary(ifgreater_5_value1_tmp > which, in5, ifgreater_6_out);
+	assign		___679_ifgreater_5_value1_tmp $const44 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{142} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:143
+#     int ifgreater_4_value1_tmp = 4;
+	gt		$tmp124 ___679_ifgreater_5_value1_tmp LamaDielectric_fresnelMode 	%line{143} %argrw{"wrr"}
+	functioncall	$const28 497 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp124 495 497 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_5_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_5_out ___679_ifgreater_6_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:144
+#     float ifgreater_4_out = mx_ternary(ifgreater_4_value1_tmp > which, in4, ifgreater_5_out);
+	assign		___679_ifgreater_4_value1_tmp $const45 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{144} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:145
+#     int ifgreater_3_value1_tmp = 3;
+	gt		$tmp125 ___679_ifgreater_4_value1_tmp LamaDielectric_fresnelMode 	%line{145} %argrw{"wrr"}
+	functioncall	$const28 505 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp125 503 505 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_4_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_4_out ___679_ifgreater_5_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:146
+#     float ifgreater_3_out = mx_ternary(ifgreater_3_value1_tmp > which, in3, ifgreater_4_out);
+	assign		___679_ifgreater_3_value1_tmp $const37 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{146} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:147
+#     int ifgreater_2_value1_tmp = 2;
+	gt		$tmp126 ___679_ifgreater_3_value1_tmp LamaDielectric_fresnelMode 	%line{147} %argrw{"wrr"}
+	functioncall	$const28 513 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp126 511 513 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_3_out $const5 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_3_out ___679_ifgreater_4_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:148
+#     float ifgreater_2_out = mx_ternary(ifgreater_2_value1_tmp > which, in2, ifgreater_3_out);
+	assign		___679_ifgreater_2_value1_tmp $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{148} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:149
+#     int ifgreater_1_value1_tmp = 1;
+	gt		$tmp127 ___679_ifgreater_2_value1_tmp LamaDielectric_fresnelMode 	%line{149} %argrw{"wrr"}
+	functioncall	$const28 521 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp127 519 521 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_2_out LamaDielectric_IOR 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_2_out ___679_ifgreater_3_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:150
+#     float ifgreater_1_out = mx_ternary(ifgreater_1_value1_tmp > which, in1, ifgreater_2_out);
+	assign		___679_ifgreater_1_value1_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{150} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:151
+#     out = ifgreater_1_out;
+	gt		$tmp128 ___679_ifgreater_1_value1_tmp LamaDielectric_fresnelMode 	%line{151} %argrw{"wrr"}
+	functioncall	$const28 529 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp128 527 529 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___679_ifgreater_1_out ___681_ior_float_out 	%argrw{"wr"}
+	return
+	assign		___679_ifgreater_1_out ___679_ifgreater_2_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:152
+# }
+	assign		___681_fresnel_mode_switch_out ___679_ifgreater_1_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{152} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:194
+#     float roughness_bitangent_clamped_high_tmp = 1.000000;
+	assign		___681_roughness_bitangent_clamped_low_tmp $const5 	%line{194} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:195
+#     float roughness_bitangent_clamped_out = clamp(roughness_bitangent_out, roughness_bitangent_clamped_low_tmp, roughness_bitangent_clamped_high_tmp);
+	assign		___681_roughness_bitangent_clamped_high_tmp $const22 	%line{195} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:196
+#     vector2 roughness_linear_out = { roughness,roughness_bitangent_clamped_out };
+	functioncall	$const31 535 	%line{196} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp129 ___681_roughness_bitangent_out ___681_roughness_bitangent_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___681_roughness_bitangent_clamped_out $tmp129 ___681_roughness_bitangent_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:197
+#     float roughness_anisotropic_squared_in2_tmp = 2.000000;
+	assign		___681_roughness_linear_out.x LamaDielectric_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{197} %argrw{"wr"}
+	assign		___681_roughness_linear_out.y ___681_roughness_bitangent_clamped_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:198
+#     vector2 roughness_anisotropic_squared_out = pow(roughness_linear_out, roughness_anisotropic_squared_in2_tmp);
+	assign		___681_roughness_anisotropic_squared_in2_tmp $const46 	%line{198} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:199
+#     float roughness_anisotropic_squared_clamped_in2_tmp = 0.000001;
+	functioncall	$const47 544 	%line{199} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:284
+#     return pow(in, vector2(amount, amount));
+	assign		$tmp130.x ___681_roughness_anisotropic_squared_in2_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{284} %argrw{"wr"}
+	assign		$tmp130.y ___681_roughness_anisotropic_squared_in2_tmp 	%argrw{"wr"}
+	functioncall	$const47 544 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:279
+#     return vector2(pow(in.x, amount.x), pow(in.y, amount.y));
+	pow		___681_roughness_anisotropic_squared_out.x ___681_roughness_linear_out.x $tmp130.x 	%line{279} %argrw{"wrr"}
+	pow		___681_roughness_anisotropic_squared_out.y ___681_roughness_linear_out.y $tmp130.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:200
+#     vector2 roughness_anisotropic_squared_clamped_out = max(roughness_anisotropic_squared_out, roughness_anisotropic_squared_clamped_in2_tmp);
+	assign		___681_roughness_anisotropic_squared_clamped_in2_tmp $const48 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{200} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:201
+#     BSDF reflection_bsdf_out = null_closure;
+	functioncall	$const49 551 	%line{201} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:247
+#     return max(a, vector2(b, b));
+	assign		$tmp131.x ___681_roughness_anisotropic_squared_clamped_in2_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{247} %argrw{"wr"}
+	assign		$tmp131.y ___681_roughness_anisotropic_squared_clamped_in2_tmp 	%argrw{"wr"}
+	functioncall	$const49 551 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:230
+#     return vector2 (max(a.x, b.x),
+	max		___681_roughness_anisotropic_squared_clamped_out.x ___681_roughness_anisotropic_squared_out.x $tmp131.x 	%line{230} %argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:231
+#                     max(a.y, b.y));
+	max		___681_roughness_anisotropic_squared_clamped_out.y ___681_roughness_anisotropic_squared_out.y $tmp131.y 	%line{231} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:202
+#     mx_dielectric_bsdf(1.000000, reflectionTint, fresnel_mode_switch_out, roughness_anisotropic_squared_clamped_out, 0.000000, 1.500000, normal1, tangent_rotate_normalize_out, "ggx", "R", reflection_bsdf_out);
+	assign		___681_reflection_bsdf_out ___681_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{202} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:203
+#     BSDF transmission_bsdf_out = null_closure;
+	functioncall	$const53 563 	%line{203} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:157
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp132 $const52 $const54 	%line{157} %argrw{"wrr"}
+	if		$tmp132 556 557 	%argrw{"r"}
+	assign		___680_reflection_tint $const6 	%argrw{"wr"}
+	assign		___680_reflection_tint LamaDielectric_reflectionTint_cm_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:158
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp133 $const52 $const52 	%line{158} %argrw{"wrr"}
+	if		$tmp133 560 561 	%argrw{"r"}
+	assign		___680_transmission_tint $const6 	%argrw{"wr"}
+	assign		___680_transmission_tint LamaDielectric_reflectionTint_cm_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:159
+# }
+	closure		$tmp134 $const57 geomprop_Nworld_out1 ___681_tangent_rotate_normalize_out ___680_reflection_tint ___680_transmission_tint ___681_roughness_anisotropic_squared_clamped_out.x ___681_roughness_anisotropic_squared_clamped_out.y ___681_fresnel_mode_switch_out $const51 $const55 $const5 $const56 $const50 	%line{159} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___681_reflection_bsdf_out $tmp134 $const22 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:204
+#     mx_dielectric_bsdf(1.000000, transmissionTint, fresnel_mode_switch_out, roughness_anisotropic_squared_clamped_out, 0.000000, 1.500000, normal1, tangent_rotate_normalize_out, "ggx", "T", transmission_bsdf_out);
+	assign		___681_transmission_bsdf_out ___681_null_closure 	%line{204} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:205
+#     VDF interior_vdf_out = null_closure;
+	functioncall	$const53 575 	%line{205} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:157
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp135 $const54 $const54 	%line{157} %argrw{"wrr"}
+	if		$tmp135 568 569 	%argrw{"r"}
+	assign		___680_reflection_tint $const6 	%argrw{"wr"}
+	assign		___680_reflection_tint LamaDielectric_transmissionTint_cm_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:158
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp136 $const54 $const52 	%line{158} %argrw{"wrr"}
+	if		$tmp136 572 573 	%argrw{"r"}
+	assign		___680_transmission_tint $const6 	%argrw{"wr"}
+	assign		___680_transmission_tint LamaDielectric_transmissionTint_cm_out 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:159
+# }
+	closure		$tmp137 $const57 geomprop_Nworld_out1 ___681_tangent_rotate_normalize_out ___680_reflection_tint ___680_transmission_tint ___681_roughness_anisotropic_squared_clamped_out.x ___681_roughness_anisotropic_squared_clamped_out.y ___681_fresnel_mode_switch_out $const51 $const55 $const5 $const56 $const50 	%line{159} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___681_transmission_bsdf_out $tmp137 $const22 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:206
+#     mx_anisotropic_vdf(absorption_vector_out, scatter_vector_out, scatterAnisotropy, interior_vdf_out);
+	assign		___681_interior_vdf_out ___681_null_closure 	%line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:207
+#     BSDF transmission_layer_out = layer(transmission_bsdf_out, interior_vdf_out);
+	functioncall	$const58 580 	%line{207} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:124
+#     color albedo = scattering / extinction;
+	add		___678_extinction ___681_absorption_vector_out ___681_scatter_vector_out 	%line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:125
+#     vdf = anisotropic_vdf(albedo, extinction, anisotropy);
+	div		___678_albedo ___681_scatter_vector_out ___678_extinction 	%line{125} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:126
+# }
+	closure		___681_interior_vdf_out $const59 ___678_albedo ___678_extinction LamaDielectric_scatterAnisotropy 	%line{126} %argrw{"wrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:208
+#     BSDF dielectric_bsdf_out = layer(reflection_bsdf_out, transmission_layer_out);
+	closure		___681_transmission_layer_out $const60 ___681_transmission_bsdf_out ___681_interior_vdf_out 	%line{208} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:209
+#     out = dielectric_bsdf_out;
+	closure		___681_dielectric_bsdf_out $const60 ___681_reflection_bsdf_out ___681_transmission_layer_out 	%line{209} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:210
+# }
+	assign		LamaDielectric_out ___681_dielectric_bsdf_out 	%line{210} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:341
+#     mx_surface(LamaDielectric_out, null_closure, LamaDielectricSurface_opacity, LamaDielectricSurface_thin_walled, LamaDielectricSurface_out);
+	assign		LamaDielectricSurface_out.bsdf null_closure 	%line{341} %argrw{"wr"}
+	assign		LamaDielectricSurface_out.edf null_closure 	%argrw{"wr"}
+	assign		LamaDielectricSurface_out.opacity $const22 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:342
+#     MATERIAL LamaDielectricTest_out = mx_surfacematerial(LamaDielectricSurface_out, backsurfaceshader, displacementshader1);
+	functioncall	$const61 593 	%line{342} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:215
+#     result.edf     = edf;
+	assign		LamaDielectricSurface_out.bsdf LamaDielectric_out 	%line{215} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:216
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		LamaDielectricSurface_out.edf null_closure 	%line{216} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:217
+# }
+	functioncall	$const31 592 	%line{217} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp138 LamaDielectricSurface_opacity $const22 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		LamaDielectricSurface_out.opacity $tmp138 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:217
+# }
+	assign		LamaDielectricSurface_out.opacity LamaDielectricSurface_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{217} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:343
+#     out = LamaDielectricTest_out;
+	functioncall	$const62 603 	%line{343} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:222
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const31 597 	%line{222} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp139 LamaDielectricSurface_out.opacity $const22 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___683_opacity_weight $tmp139 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:223
+# }
+	add		$tmp140 LamaDielectricSurface_out.bsdf LamaDielectricSurface_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl"} %line{223} %argrw{"wrr"}
+	mul		$tmp141 $tmp140 ___683_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp142 $const63 	%argrw{"wr"}
+	sub		$tmp143 $const22 ___683_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp144 $tmp142 $tmp143 	%argrw{"wrr"}
+	add		LamaDielectricTest_out $tmp141 $tmp144 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_dielectric\\LamaDielectricTest.osl:344
+# }
+	assign		out LamaDielectricTest_out 	%line{344} %argrw{"wr"}
+	end

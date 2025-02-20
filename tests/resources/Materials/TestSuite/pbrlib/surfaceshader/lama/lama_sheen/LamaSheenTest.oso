@@ -1,0 +1,327 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\pbrlib\surfaceshader\lama\lama_sheen\LamaSheenTest.oso
+shader LamaSheenTest	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"LamaSheenTest"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Nworld_space	"world"		%read{2,2} %write{2147483647,-1}
+param	color	LamaSheen_color_cm_in	1 1 1		%read{13,19} %write{2147483647,-1}
+param	float	LamaSheen_roughness	0.100000001		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Roughness"} %meta{string,page,"Main"} %meta{string,help,"Roughness of the sheen effect. Very rough sheen can be used to create a rough diffuse look (when combined with a diffuse node by a layer or mix)."} %meta{string,widget,"number"}  %read{52,52} %write{2147483647,-1}
+param	float	LamaSheenSurface_opacity	1		%meta{string,help,"Surface cutout opacity"} %meta{string,widget,"number"}  %read{68,68} %write{2147483647,-1}
+param	int	LamaSheenSurface_thin_walled	0		%meta{string,help,"Option to make the surface thin-walled."} %meta{string,widget,"checkBox"}  %read{2147483647,-1} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{81,81}
+global	normal	N	%read{2,2} %write{2147483647,-1}
+local	int	___669_N_extract_0_index_tmp	%read{13,13} %write{11,11}
+local	float	___669_N_extract_0_out	%read{20,20} %write{13,13}
+local	int	___669_N_extract_1_index_tmp	%read{16,16} %write{14,14}
+local	float	___669_N_extract_1_out	%read{21,21} %write{16,16}
+local	int	___669_N_extract_2_index_tmp	%read{19,19} %write{17,17}
+local	float	___669_N_extract_2_out	%read{22,22} %write{19,19}
+local	float	___670_separate_outr	%read{23,23} %write{7,20}
+local	float	___670_separate_outg	%read{23,23} %write{8,21}
+local	float	___670_separate_outb	%read{23,23} %write{9,22}
+local	vector	___670_combine_out	%read{24,24} %write{23,23}
+local	int	___671_N_extract_0_index_tmp	%read{35,35} %write{33,33}
+local	float	___671_N_extract_0_out	%read{42,42} %write{35,35}
+local	int	___671_N_extract_1_index_tmp	%read{38,38} %write{36,36}
+local	float	___671_N_extract_1_out	%read{43,43} %write{38,38}
+local	int	___671_N_extract_2_index_tmp	%read{41,41} %write{39,39}
+local	float	___671_N_extract_2_out	%read{44,44} %write{41,41}
+local	float	___672_separate_outx	%read{45,45} %write{29,42}
+local	float	___672_separate_outy	%read{45,45} %write{30,43}
+local	float	___672_separate_outz	%read{45,45} %write{31,44}
+local	color	___672_combine_out	%read{46,46} %write{45,45}
+local	vector	___673_asVec_out	%read{26,26} %write{5,24}
+local	matrix	___673_transform_mat_tmp	%read{26,26} %write{25,25}
+local	vector	___673_transform_out	%read{35,41} %write{26,26}
+local	color	___673_asColor_out	%read{47,47} %write{27,46}
+local	closure color	___674_null_closure	%read{2147483647,-1} %write{50,50}
+local	float	___674_roughness_compressed_in2_tmp	%read{52,52} %write{51,51}
+local	float	___674_roughness_compressed_out	%read{54,54} %write{52,52}
+local	float	___674_roughness_remapped_in2_tmp	%read{54,54} %write{53,53}
+local	float	___674_roughness_remapped_out	%read{56,56} %write{54,54}
+local	float	___674_roughness_squared_in2_tmp	%read{56,56} %write{55,55}
+local	float	___674_roughness_squared_out	%read{58,58} %write{56,56}
+local	float	___674_sheen_bsdf_weight_tmp	%read{59,59} %write{57,57}
+local	closure color	___674_sheen_bsdf_out	%read{60,60} %write{59,59}
+local	float	___676_opacity_weight	%read{76,78} %write{74,74}
+local	closure color	null_closure	%read{48,66} %write{0,0}
+local	vector	geomprop_Nworld_out1	%read{58,58} %write{2,2}
+local	color	LamaSheen_color_cm_out	%read{58,58} %write{3,47}
+local	closure color	LamaSheen_out	%read{65,65} %write{48,60}
+local	closure color	LamaSheenSurface_out.bsdf	%read{75,75} %write{61,65} %mystruct{LamaSheenSurface_out} %mystructfield{0}
+local	closure color	LamaSheenSurface_out.edf	%read{75,75} %write{62,66} %mystruct{LamaSheenSurface_out} %mystructfield{1}
+local	float	LamaSheenSurface_out.opacity	%read{70,73} %write{63,70} %mystruct{LamaSheenSurface_out} %mystructfield{2}
+local	closure color	LamaSheenTest_out	%read{81,81} %write{80,80}
+const	int	$const1	0		%read{0,50} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{1,1} %write{2147483647,-1}
+const	string	$const3	"common"		%read{2,2} %write{2147483647,-1}
+const	color	$const4	0 0 0		%read{3,27} %write{2147483647,-1}
+const	string	$const5	"NG_acescg_to_lin_rec709_color3"		%read{4,4} %write{2147483647,-1}
+const	vector	$const6	0 0 0		%read{5,5} %write{2147483647,-1}
+const	string	$const7	"NG_convert_color3_vector3"		%read{6,6} %write{2147483647,-1}
+const	float	$const8	0		%read{7,74} %write{2147483647,-1}
+const	string	$const9	"NG_separate3_color3"		%read{10,10} %write{2147483647,-1}
+const	string	$const10	"mx_extract"		%read{12,40} %write{2147483647,-1}
+const	int	$const11	1		%read{14,36} %write{2147483647,-1}
+const	int	$const12	2		%read{17,39} %write{2147483647,-1}
+const	float	$const13	1.705051		%read{25,25} %write{2147483647,-1}
+const	float	$const14	-0.130256		%read{25,25} %write{2147483647,-1}
+const	float	$const15	-0.024003		%read{25,25} %write{2147483647,-1}
+const	float	$const16	-0.621792		%read{25,25} %write{2147483647,-1}
+const	float	$const17	1.140805		%read{25,25} %write{2147483647,-1}
+const	float	$const18	-0.128969		%read{25,25} %write{2147483647,-1}
+const	float	$const19	-0.083259		%read{25,25} %write{2147483647,-1}
+const	float	$const20	-0.010548		%read{25,25} %write{2147483647,-1}
+const	float	$const21	1.152972		%read{25,25} %write{2147483647,-1}
+const	float	$const22	1		%read{25,78} %write{2147483647,-1}
+const	string	$const23	"NG_convert_vector3_color3"		%read{28,28} %write{2147483647,-1}
+const	string	$const24	"NG_separate3_vector3"		%read{32,32} %write{2147483647,-1}
+const	string	$const25	"IMPL_lama_sheen"		%read{49,49} %write{2147483647,-1}
+const	float	$const26	0.9		%read{51,51} %write{2147483647,-1}
+const	float	$const27	0.1		%read{53,53} %write{2147483647,-1}
+const	float	$const28	2		%read{55,55} %write{2147483647,-1}
+temp	closure color	$tmp1	%read{59,59} %write{58,58}
+const	string	$const29	"sheen_bsdf"		%read{58,58} %write{2147483647,-1}
+const	string	$const30	"mx_surface"		%read{64,64} %write{2147483647,-1}
+const	string	$const31	"clamp"		%read{67,72} %write{2147483647,-1}
+temp	float	$tmp2	%read{69,69} %write{68,68}
+const	string	$const32	"mx_surfacematerial"		%read{71,71} %write{2147483647,-1}
+temp	float	$tmp3	%read{74,74} %write{73,73}
+temp	closure color	$tmp4	%read{76,76} %write{75,75}
+temp	closure color	$tmp5	%read{80,80} %write{76,76}
+temp	closure color	$tmp6	%read{79,79} %write{77,77}
+const	string	$const33	"transparent"		%read{77,77} %write{2147483647,-1}
+temp	float	$tmp7	%read{79,79} %write{78,78}
+temp	closure color	$tmp8	%read{80,80} %write{79,79}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:134
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{134} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:135
+#     color LamaSheen_color_cm_out = color(0.0);
+	functioncall	$const2 3 	%line{135} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:136
+#     NG_acescg_to_lin_rec709_color3(LamaSheen_color_cm_in, LamaSheen_color_cm_out);
+	assign		LamaSheen_color_cm_out $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{136} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:137
+#     BSDF LamaSheen_out = null_closure;
+	functioncall	$const5 48 	%line{137} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:66
+#     NG_convert_color3_vector3(in, asVec_out);
+	assign		___673_asVec_out $const6 	%line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:67
+#     matrix transform_mat_tmp = matrix(1.705051,  -0.130256,  -0.024003, 0.000,  -0.621792,  1.140805,  -0.128969, 0.000,  -0.083259,  -0.010548,  1.152972, 0.000, 0.000, 0.000, 0.000, 1.000);
+	functioncall	$const7 25 	%line{67} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:33
+#     float separate_outg = 0.0;
+	assign		___670_separate_outr $const8 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:34
+#     float separate_outb = 0.0;
+	assign		___670_separate_outg $const8 	%line{34} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:35
+#     NG_separate3_color3(in, separate_outr, separate_outg, separate_outb);
+	assign		___670_separate_outb $const8 	%line{35} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:36
+#     vector combine_out = vector( separate_outr,separate_outg,separate_outb );
+	functioncall	$const9 23 	%line{36} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:20
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___669_N_extract_0_index_tmp $const1 	%line{20} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:21
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const10 14 	%line{21} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_0_out LamaSheen_color_cm_in ___669_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:22
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___669_N_extract_1_index_tmp $const11 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{22} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:23
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const10 17 	%line{23} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_1_out LamaSheen_color_cm_in ___669_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:24
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___669_N_extract_2_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:25
+#     outr = N_extract_0_out;
+	functioncall	$const10 20 	%line{25} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___669_N_extract_2_out LamaSheen_color_cm_in ___669_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:26
+#     outg = N_extract_1_out;
+	assign		___670_separate_outr ___669_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:27
+#     outb = N_extract_2_out;
+	assign		___670_separate_outg ___669_N_extract_1_out 	%line{27} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:28
+# }
+	assign		___670_separate_outb ___669_N_extract_2_out 	%line{28} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:37
+#     out = combine_out;
+	vector		___670_combine_out ___670_separate_outr ___670_separate_outg ___670_separate_outb 	%line{37} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:38
+# }
+	assign		___673_asVec_out ___670_combine_out 	%line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:68
+#     vector transform_out = transform(transform_mat_tmp, asVec_out);
+	matrix		___673_transform_mat_tmp $const13 $const14 $const15 $const8 $const16 $const17 $const18 $const8 $const19 $const20 $const21 $const8 $const8 $const8 $const8 $const22 	%line{68} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:69
+#     color asColor_out = color(0.0);
+	transformv	___673_transform_out ___673_transform_mat_tmp ___673_asVec_out 	%line{69} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:70
+#     NG_convert_vector3_color3(transform_out, asColor_out);
+	assign		___673_asColor_out $const4 	%line{70} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:71
+#     out = asColor_out;
+	functioncall	$const23 47 	%line{71} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:56
+#     float separate_outy = 0.0;
+	assign		___672_separate_outx $const8 	%line{56} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:57
+#     float separate_outz = 0.0;
+	assign		___672_separate_outy $const8 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:58
+#     NG_separate3_vector3(in, separate_outx, separate_outy, separate_outz);
+	assign		___672_separate_outz $const8 	%line{58} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:59
+#     color combine_out = color( separate_outx,separate_outy,separate_outz );
+	functioncall	$const24 45 	%line{59} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:43
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___671_N_extract_0_index_tmp $const1 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:44
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const10 36 	%line{44} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_0_out ___673_transform_out ___671_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:45
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___671_N_extract_1_index_tmp $const11 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:46
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const10 39 	%line{46} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_1_out ___673_transform_out ___671_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:47
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___671_N_extract_2_index_tmp $const12 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{47} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:48
+#     outx = N_extract_0_out;
+	functioncall	$const10 42 	%line{48} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:124
+#     return in[index];
+	compref		___671_N_extract_2_out ___673_transform_out ___671_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{124} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:49
+#     outy = N_extract_1_out;
+	assign		___672_separate_outx ___671_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{49} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:50
+#     outz = N_extract_2_out;
+	assign		___672_separate_outy ___671_N_extract_1_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:51
+# }
+	assign		___672_separate_outz ___671_N_extract_2_out 	%line{51} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:60
+#     out = combine_out;
+	color		___672_combine_out ___672_separate_outx ___672_separate_outy ___672_separate_outz 	%line{60} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:61
+# }
+	assign		___673_asColor_out ___672_combine_out 	%line{61} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:72
+# }
+	assign		LamaSheen_color_cm_out ___673_asColor_out 	%line{72} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:138
+#     IMPL_lama_sheen(LamaSheen_color_cm_out, LamaSheen_roughness, geomprop_Nworld_out1, LamaSheen_out);
+	assign		LamaSheen_out null_closure 	%line{138} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:139
+#     surfaceshader LamaSheenSurface_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const25 61 	%line{139} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:77
+#     float roughness_compressed_in2_tmp = 0.900000;
+	assign		___674_null_closure $const1 	%line{77} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:78
+#     float roughness_compressed_out = roughness * roughness_compressed_in2_tmp;
+	assign		___674_roughness_compressed_in2_tmp $const26 	%line{78} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:79
+#     float roughness_remapped_in2_tmp = 0.100000;
+	mul		___674_roughness_compressed_out LamaSheen_roughness ___674_roughness_compressed_in2_tmp 	%line{79} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:80
+#     float roughness_remapped_out = roughness_compressed_out + roughness_remapped_in2_tmp;
+	assign		___674_roughness_remapped_in2_tmp $const27 	%line{80} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:81
+#     float roughness_squared_in2_tmp = 2.000000;
+	add		___674_roughness_remapped_out ___674_roughness_compressed_out ___674_roughness_remapped_in2_tmp 	%line{81} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:82
+#     float roughness_squared_out = pow(roughness_remapped_out, roughness_squared_in2_tmp);
+	assign		___674_roughness_squared_in2_tmp $const28 	%line{82} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:83
+#     float sheen_bsdf_weight_tmp = 1.000000;
+	pow		___674_roughness_squared_out ___674_roughness_remapped_out ___674_roughness_squared_in2_tmp 	%line{83} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:84
+#     BSDF sheen_bsdf_out = sheen_bsdf_weight_tmp * sheen_bsdf(normal1, color1, roughness_squared_out);
+	assign		___674_sheen_bsdf_weight_tmp $const22 	%line{84} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:85
+#     out = sheen_bsdf_out;
+	closure		$tmp1 $const29 geomprop_Nworld_out1 LamaSheen_color_cm_out ___674_roughness_squared_out 	%line{85} %argrw{"wrrrr"}
+	mul		___674_sheen_bsdf_out $tmp1 ___674_sheen_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:86
+# }
+	assign		LamaSheen_out ___674_sheen_bsdf_out 	%line{86} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:140
+#     mx_surface(LamaSheen_out, null_closure, LamaSheenSurface_opacity, LamaSheenSurface_thin_walled, LamaSheenSurface_out);
+	assign		LamaSheenSurface_out.bsdf null_closure 	%line{140} %argrw{"wr"}
+	assign		LamaSheenSurface_out.edf null_closure 	%argrw{"wr"}
+	assign		LamaSheenSurface_out.opacity $const22 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:141
+#     MATERIAL LamaSheenTest_out = mx_surfacematerial(LamaSheenSurface_out, backsurfaceshader, displacementshader1);
+	functioncall	$const30 71 	%line{141} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:91
+#     result.edf     = edf;
+	assign		LamaSheenSurface_out.bsdf LamaSheen_out 	%line{91} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:92
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		LamaSheenSurface_out.edf null_closure 	%line{92} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:93
+# }
+	functioncall	$const31 70 	%line{93} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp2 LamaSheenSurface_opacity $const22 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		LamaSheenSurface_out.opacity $tmp2 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:93
+# }
+	assign		LamaSheenSurface_out.opacity LamaSheenSurface_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{93} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:142
+#     out = LamaSheenTest_out;
+	functioncall	$const32 81 	%line{142} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:98
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const31 75 	%line{98} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp3 LamaSheenSurface_out.opacity $const22 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___676_opacity_weight $tmp3 $const8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:99
+# }
+	add		$tmp4 LamaSheenSurface_out.bsdf LamaSheenSurface_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl"} %line{99} %argrw{"wrr"}
+	mul		$tmp5 $tmp4 ___676_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp6 $const33 	%argrw{"wr"}
+	sub		$tmp7 $const22 ___676_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp8 $tmp6 $tmp7 	%argrw{"wrr"}
+	add		LamaSheenTest_out $tmp5 $tmp8 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\lama\\lama_sheen\\LamaSheenTest.osl:143
+# }
+	assign		out LamaSheenTest_out 	%line{143} %argrw{"wr"}
+	end

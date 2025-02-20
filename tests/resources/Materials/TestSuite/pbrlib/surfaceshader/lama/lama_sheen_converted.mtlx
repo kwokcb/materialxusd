@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="acescg">
+  <surface name="LamaSheenSurface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="top_level_nodes" output="out" />
+  </surface>
+  <surfacematerial name="LamaSheenTest" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="LamaSheenSurface" />
+  </surfacematerial>
+  <nodegraph name="top_level_nodes">
+    <LamaSheen name="LamaSheen" type="BSDF">
+      <input name="color" type="color3" value="1, 1, 1" />
+      <input name="roughness" type="float" value="0.1" />
+    </LamaSheen>
+    <output name="out" type="BSDF" nodename="LamaSheen" />
+  </nodegraph>
+</materialx>

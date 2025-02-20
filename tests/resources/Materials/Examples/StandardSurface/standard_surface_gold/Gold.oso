@@ -1,0 +1,1491 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\Examples\StandardSurface\standard_surface_gold\Gold.oso
+shader Gold	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"Gold"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	string	geomprop_Nworld_space	"world"		%read{2,2} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	SR_gold_base	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Base"} %meta{string,page,"Base"} %meta{string,help,"Multiplier on the intensity of the diffuse reflection."} %meta{string,widget,"number"}  %read{36,471} %write{2147483647,-1}
+param	color	SR_gold_base_color	0.944000006 0.776000023 0.372999996		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Base Color"} %meta{string,page,"Base"} %meta{string,help,"Color of the diffuse reflection."}  %read{36,55} %write{2147483647,-1}
+param	float	SR_gold_diffuse_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Diffuse Roughness"} %meta{string,page,"Base"} %meta{int,uiadvanced,1} %meta{string,help,"Roughness of the diffuse reflection. Higher values cause the surface to appear flatter and darker."} %meta{string,widget,"number"}  %read{470,470} %write{2147483647,-1}
+param	float	SR_gold_metalness	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Metalness"} %meta{string,page,"Base"} %meta{string,help,"Specifies how metallic the material appears. At its maximum, the surface behaves like a metal, using fully specular reflection and complex fresnel."} %meta{string,widget,"number"}  %read{485,487} %write{2147483647,-1}
+param	float	SR_gold_specular	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular"} %meta{string,page,"Specular"} %meta{string,help,"Multiplier on the intensity of the specular reflection."} %meta{string,widget,"number"}  %read{37,443} %write{2147483647,-1}
+param	color	SR_gold_specular_color	0.998000026 0.981000006 0.750999987		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"} %meta{string,page,"Specular"} %meta{string,help,"Color tint on the specular reflection."}  %read{37,441} %write{2147483647,-1}
+param	float	SR_gold_specular_roughness	0.0199999996		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Roughness"} %meta{string,page,"Specular"} %meta{string,help,"The roughness of the specular reflection. Lower numbers produce sharper reflections, higher numbers produce blurrier reflections."} %meta{string,widget,"number"}  %read{41,343} %write{2147483647,-1}
+param	float	SR_gold_specular_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Index of Refraction"} %meta{string,page,"Specular"} %meta{string,help,"Index of refraction for specular reflection."} %meta{string,widget,"number"}  %read{442,454} %write{2147483647,-1}
+param	float	SR_gold_specular_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Anisotropy"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"The directional bias of reflected and transmitted light resulting in materials appearing rougher or glossier in certain directions."} %meta{string,widget,"number"}  %read{365,397} %write{2147483647,-1}
+param	float	SR_gold_specular_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Specular Rotation"} %meta{string,page,"Specular"} %meta{int,uiadvanced,1} %meta{string,help,"Rotation of the axis of specular anisotropy around the surface normal."} %meta{string,widget,"number"}  %read{40,40} %write{2147483647,-1}
+param	float	SR_gold_transmission	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Transmission of light through the surface for materials such as glass or water. The greater the value the more transparent the material."} %meta{string,widget,"number"}  %read{479,481} %write{2147483647,-1}
+param	color	SR_gold_transmission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Color"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Color tint on the transmitted light."}  %read{449,453} %write{2147483647,-1}
+param	float	SR_gold_transmission_depth	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Depth"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Specifies the distance light travels inside the material before its becomes exactly the transmission color according to Beer's law."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	color	SR_gold_transmission_scatter	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Transmission Scatter"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Scattering coefficient of the interior medium. Suitable for a large body of liquid or one that is fairly thick, such as an ocean, honey, ice, or frosted glass."}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	SR_gold_transmission_scatter_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Transmission Anisotropy"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the scattering."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	SR_gold_transmission_dispersion	0		%meta{float,min,0} %meta{float,slidermax,100} %meta{string,label,"Transmission Dispersion"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Dispersion amount, describing how much the index of refraction varies across wavelengths."} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	SR_gold_transmission_extra_roughness	0		%meta{float,min,-1} %meta{float,slidermin,0} %meta{float,max,1} %meta{string,label,"Transmission Roughness"} %meta{string,page,"Transmission"} %meta{int,uiadvanced,1} %meta{string,help,"Additional roughness on top of specular roughness. Positive values blur refractions more than reflections, and negative values blur refractions less."} %meta{string,widget,"number"}  %read{41,41} %write{2147483647,-1}
+param	float	SR_gold_subsurface	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Subsurface"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The blend between diffuse reflection and subsurface scattering. A value of 1.0 indicates full subsurface scattering and a value 0 for diffuse reflection only."} %meta{string,widget,"number"}  %read{473,475} %write{2147483647,-1}
+param	color	SR_gold_subsurface_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Color"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the subsurface scattering effect."}  %read{44,44} %write{2147483647,-1}
+param	color	SR_gold_subsurface_radius	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Subsurface Radius"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The mean free path. The distance which light can travel before being scattered inside the surface."}  %read{50,50} %write{2147483647,-1}
+param	float	SR_gold_subsurface_scale	1		%meta{float,min,0} %meta{float,slidermax,10} %meta{string,label,"Subsurface Scale"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"Scalar weight for the subsurface radius value."} %meta{string,widget,"number"}  %read{50,50} %write{2147483647,-1}
+param	float	SR_gold_subsurface_anisotropy	0		%meta{float,min,-1} %meta{float,max,1} %meta{string,label,"Subsurface Anisotropy"} %meta{string,page,"Subsurface"} %meta{int,uiadvanced,1} %meta{string,help,"The direction of subsurface scattering. 0 scatters light evenly, positive values scatter forward and negative values scatter backward."} %meta{string,widget,"number"}  %read{464,464} %write{2147483647,-1}
+param	float	SR_gold_sheen	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The weight of a sheen layer that can be used to approximate microfibers or fabrics such as velvet and satin."} %meta{string,widget,"number"}  %read{457,457} %write{2147483647,-1}
+param	color	SR_gold_sheen_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Sheen Color"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The color of the sheen layer."}  %read{456,456} %write{2147483647,-1}
+param	float	SR_gold_sheen_roughness	0.300000012		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Sheen Roughness"} %meta{string,page,"Sheen"} %meta{int,uiadvanced,1} %meta{string,help,"The roughness of the sheen layer."} %meta{string,widget,"number"}  %read{456,456} %write{2147483647,-1}
+param	float	SR_gold_coat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat"} %meta{string,page,"Coat"} %meta{string,help,"The weight of a reflective clear-coat layer on top of the material. Use for materials such as car paint or an oily layer."} %meta{string,widget,"number"}  %read{38,509} %write{2147483647,-1}
+param	color	SR_gold_coat_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Coat Color"} %meta{string,page,"Coat"} %meta{string,help,"The color of the clear-coat layer's transparency."}  %read{57,492} %write{2147483647,-1}
+param	float	SR_gold_coat_roughness	0.100000001		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Roughness"} %meta{string,page,"Coat"} %meta{string,help,"The roughness of the clear-coat reflections. The lower the value, the sharper the reflection."} %meta{string,widget,"number"}  %read{16,212} %write{2147483647,-1}
+param	float	SR_gold_coat_anisotropy	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Anisotropy"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The amount of directional bias, or anisotropy, of the clear-coat layer."} %meta{string,widget,"number"}  %read{20,351} %write{2147483647,-1}
+param	float	SR_gold_coat_rotation	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Rotation"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"The rotation of the anisotropic effect of the clear-coat layer."} %meta{string,widget,"number"}  %read{35,35} %write{2147483647,-1}
+param	float	SR_gold_coat_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Coat Index of Refraction"} %meta{string,page,"Coat"} %meta{string,help,"The index of refraction of the clear-coat layer."} %meta{string,widget,"number"}  %read{59,426} %write{2147483647,-1}
+param	float	SR_gold_coat_affect_color	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Color"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the saturation of diffuse reflection and subsurface scattering below the clear-coat."} %meta{string,widget,"number"}  %read{336,336} %write{2147483647,-1}
+param	float	SR_gold_coat_affect_roughness	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Coat Affect Roughness"} %meta{string,page,"Coat"} %meta{int,uiadvanced,1} %meta{string,help,"Controls the roughness of the specular reflection in the layers below the clear-coat."} %meta{string,widget,"number"}  %read{38,38} %write{2147483647,-1}
+param	float	SR_gold_thin_film_thickness	0		%meta{float,min,0} %meta{float,slidermax,2000} %meta{string,label,"Thin Film Thickness"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The thickness of the thin film layer on a surface. Use for materials such as multitone car paint or soap bubbles (in nanometers)."} %meta{string,widget,"number"}  %read{430,442} %write{2147483647,-1}
+param	float	SR_gold_thin_film_IOR	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Thin Film Index of Refraction"} %meta{string,page,"Thin Film"} %meta{int,uiadvanced,1} %meta{string,help,"The index of refraction of the medium surrounding the material."} %meta{string,widget,"number"}  %read{430,442} %write{2147483647,-1}
+param	float	SR_gold_emission	0		%meta{float,min,0} %meta{float,slidermax,1} %meta{string,label,"Emission"} %meta{string,page,"Emission"} %meta{string,help,"The amount of emitted incandescent light."} %meta{string,widget,"number"}  %read{62,62} %write{2147483647,-1}
+param	color	SR_gold_emission_color	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Emission Color"} %meta{string,page,"Emission"} %meta{string,help,"The color of the emitted light."}  %read{62,62} %write{2147483647,-1}
+param	color	SR_gold_opacity	1 1 1		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Opacity"} %meta{string,page,"Geometry"} %meta{string,help,"The opacity of the entire material."}  %read{65,65} %write{2147483647,-1}
+param	int	SR_gold_thin_walled	0		%meta{string,label,"Thin Walled"} %meta{string,page,"Geometry"} %meta{int,uiadvanced,1} %meta{string,help,"If true the surface is double-sided and represents an infinitely thin shell. Suitable for thin objects such as tree leaves or paper."} %meta{string,widget,"checkBox"}  %read{51,51} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{534,534}
+global	vector	I	%read{495,495} %write{2147483647,-1}
+global	normal	N	%read{2,496} %write{2147483647,-1}
+local	float	___669_roughness_sqr	%read{27,407} %write{19,393}
+local	float	___670_aspect	%read{27,404} %write{26,400}
+local	vector	___673_nAxis	%read{77,277} %write{73,219}
+local	float	___673_s	%read{87,273} %write{74,220}
+local	float	___673_c	%read{76,279} %write{75,221}
+local	float	___673_oc	%read{78,276} %write{76,222}
+local	float	___674_rotationRadians	%read{74,221} %write{71,217}
+local	matrix	___674_m	%read{140,327} %write{134,280}
+local	float	___674_trans.x	%read{184,330} %write{150,296} %mystruct{___674_trans} %mystructfield{0}
+local	float	___674_trans.y	%read{184,330} %write{161,307} %mystruct{___674_trans} %mystructfield{1}
+local	float	___674_trans.z	%read{184,330} %write{172,318} %mystruct{___674_trans} %mystructfield{2}
+local	float	___674_trans.w	%read{2147483647,-1} %write{183,329} %mystruct{___674_trans} %mystructfield{3}
+local	color	___675_r	%read{193,207} %write{192,192}
+local	color	___675_r_sqrt	%read{197,198} %write{193,193}
+local	color	___675_n_min	%read{200,200} %write{196,196}
+local	color	___675_n_max	%read{200,200} %write{199,199}
+local	color	___675_np1	%read{203,203} %write{201,201}
+local	color	___675_nm1	%read{205,205} %write{202,202}
+local	color	___675_k2	%read{210,211} %write{208,210}
+local	color	___676_reflection_tint	%read{426,454} %write{420,449}
+local	color	___676_transmission_tint	%read{426,454} %write{424,453}
+local	color	___678_combine_out	%read{415,415} %write{414,414}
+local	float	___690_x	%read{503,503} %write{502,502}
+local	float	___691_NdotV	%read{499,499} %write{497,497}
+local	color	___691_f	%read{505,505} %write{504,504}
+local	closure color	___693_null_closure	%read{416,512} %write{12,12}
+local	float	___693_coat_roughness_vector_out.x	%read{29,426} %write{13,32} %mystruct{___693_coat_roughness_vector_out} %mystructfield{0}
+local	float	___693_coat_roughness_vector_out.y	%read{31,426} %write{14,33} %mystruct{___693_coat_roughness_vector_out} %mystructfield{1}
+local	float	___693_coat_tangent_rotate_degree_in2_tmp	%read{35,35} %write{34,34}
+local	float	___693_coat_tangent_rotate_degree_out	%read{71,71} %write{35,35}
+local	color	___693_metal_reflectivity_out	%read{191,191} %write{36,36}
+local	color	___693_metal_edgecolor_out	%read{200,200} %write{37,37}
+local	float	___693_coat_affect_roughness_multiply1_out	%read{212,212} %write{38,38}
+local	float	___693_tangent_rotate_degree_in2_tmp	%read{40,40} %write{39,39}
+local	float	___693_tangent_rotate_degree_out	%read{217,217} %write{40,40}
+local	float	___693_transmission_roughness_add_out	%read{334,334} %write{41,41}
+local	float	___693_subsurface_color_nonnegative_in2_tmp	%read{43,43} %write{42,42}
+local	color	___693_subsurface_color_nonnegative_out	%read{408,408} %write{44,44}
+local	float	___693_coat_clamped_low_tmp	%read{49,49} %write{45,45}
+local	float	___693_coat_clamped_high_tmp	%read{48,48} %write{46,46}
+local	float	___693_coat_clamped_out	%read{336,336} %write{49,49}
+local	color	___693_subsurface_radius_scaled_out	%read{464,464} %write{50,50}
+local	float	___693_subsurface_selector_out	%read{466,468} %write{52,52}
+local	float	___693_base_color_nonnegative_in2_tmp	%read{54,54} %write{53,53}
+local	color	___693_base_color_nonnegative_out	%read{409,409} %write{55,55}
+local	color	___693_coat_attenuation_bg_tmp	%read{57,57} %write{56,56}
+local	color	___693_coat_attenuation_out	%read{489,489} %write{57,57}
+local	float	___693_one_minus_coat_ior_in1_tmp	%read{59,59} %write{58,58}
+local	float	___693_one_minus_coat_ior_out	%read{337,337} %write{59,59}
+local	float	___693_one_plus_coat_ior_in1_tmp	%read{61,61} %write{60,60}
+local	float	___693_one_plus_coat_ior_out	%read{337,337} %write{61,61}
+local	color	___693_emission_weight_out	%read{491,491} %write{62,62}
+local	color	___693_opacity_luminance_out	%read{340,340} %write{63,66}
+local	vector	___693_coat_tangent_rotate_out	%read{341,341} %write{67,184}
+local	color	___693_artistic_ior_ior	%read{201,430} %write{185,200}
+local	color	___693_artistic_ior_extinction	%read{430,430} %write{186,211}
+local	float	___693_coat_affect_roughness_multiply2_out	%read{343,346} %write{212,212}
+local	vector	___693_tangent_rotate_out	%read{344,344} %write{213,330}
+local	float	___693_transmission_roughness_clamped_low_tmp	%read{335,335} %write{331,331}
+local	float	___693_transmission_roughness_clamped_high_tmp	%read{334,334} %write{332,332}
+local	float	___693_transmission_roughness_clamped_out	%read{346,346} %write{335,335}
+local	float	___693_coat_gamma_multiply_out	%read{348,348} %write{336,336}
+local	float	___693_coat_ior_to_F0_sqrt_out	%read{349,349} %write{337,337}
+local	int	___693_opacity_luminance_float_index_tmp	%read{340,340} %write{338,338}
+local	float	___693_opacity_luminance_float_out	%read{518,518} %write{340,340}
+local	vector	___693_coat_tangent_rotate_normalize_out	%read{354,354} %write{341,341}
+local	float	___693_coat_affected_roughness_fg_tmp	%read{343,343} %write{342,342}
+local	float	___693_coat_affected_roughness_out	%read{361,361} %write{343,343}
+local	vector	___693_tangent_rotate_normalize_out	%read{383,383} %write{344,344}
+local	float	___693_coat_affected_transmission_roughness_fg_tmp	%read{346,346} %write{345,345}
+local	float	___693_coat_affected_transmission_roughness_out	%read{390,390} %write{346,346}
+local	float	___693_coat_gamma_in2_tmp	%read{348,348} %write{347,347}
+local	float	___693_coat_gamma_out	%read{408,409} %write{348,348}
+local	float	___693_coat_ior_to_F0_out	%read{411,411} %write{349,349}
+local	float	___693_coat_tangent_value2_tmp	%read{351,351} %write{350,350}
+local	vector	___693_coat_tangent_out	%read{426,426} %write{354,356}
+local	float	___693_main_roughness_out.x	%read{374,442} %write{358,377} %mystruct{___693_main_roughness_out} %mystructfield{0}
+local	float	___693_main_roughness_out.y	%read{376,442} %write{359,378} %mystruct{___693_main_roughness_out} %mystructfield{1}
+local	float	___693_main_tangent_value2_tmp	%read{380,380} %write{379,379}
+local	vector	___693_main_tangent_out	%read{430,454} %write{383,385}
+local	float	___693_transmission_roughness_out.x	%read{403,454} %write{387,406} %mystruct{___693_transmission_roughness_out} %mystructfield{0}
+local	float	___693_transmission_roughness_out.y	%read{405,454} %write{388,407} %mystruct{___693_transmission_roughness_out} %mystructfield{1}
+local	color	___693_coat_affected_subsurface_color_out	%read{459,463} %write{408,408}
+local	color	___693_coat_affected_diffuse_color_out	%read{470,470} %write{409,409}
+local	float	___693_one_minus_coat_ior_to_F0_in1_tmp	%read{411,411} %write{410,410}
+local	float	___693_one_minus_coat_ior_to_F0_out	%read{414,414} %write{411,411}
+local	color	___693_emission_color0_out	%read{504,504} %write{412,415}
+local	closure color	___693_coat_bsdf_out	%read{490,490} %write{416,427}
+local	float	___693_metal_bsdf_weight_tmp	%read{431,431} %write{428,428}
+local	string	___693_metal_bsdf_distribution_tmp	%read{430,430} %write{429,429}
+local	closure color	___693_metal_bsdf_out	%read{487,487} %write{431,431}
+local	closure color	___693_specular_bsdf_out	%read{483,483} %write{432,443}
+local	closure color	___693_transmission_bsdf_out	%read{481,481} %write{444,455}
+local	closure color	___693_sheen_bsdf_out	%read{477,477} %write{457,457}
+local	float	___693_translucent_bsdf_weight_tmp	%read{460,460} %write{458,458}
+local	closure color	___693_translucent_bsdf_out	%read{468,468} %write{460,460}
+local	closure color	___693_subsurface_bsdf_out	%read{467,467} %write{461,464}
+local	closure color	___693_selected_subsurface_bsdf_out	%read{475,475} %write{469,469}
+local	closure color	___693_diffuse_bsdf_out	%read{474,474} %write{471,471}
+local	closure color	___693_subsurface_mix_out	%read{477,477} %write{476,476}
+local	closure color	___693_sheen_layer_out	%read{480,480} %write{477,477}
+local	closure color	___693_transmission_mix_out	%read{483,483} %write{482,482}
+local	closure color	___693_specular_layer_out	%read{486,486} %write{483,483}
+local	closure color	___693_metalness_mix_out	%read{489,489} %write{488,488}
+local	closure color	___693_thin_film_layer_attenuated_out	%read{490,490} %write{489,489}
+local	closure color	___693_coat_layer_out	%read{515,515} %write{490,490}
+local	closure color	___693_emission_edf_out	%read{492,508} %write{491,491}
+local	closure color	___693_coat_tinted_emission_edf_out	%read{505,505} %write{492,492}
+local	closure color	___693_coat_emission_edf_out	%read{509,509} %write{493,505}
+local	closure color	___693_blended_coat_emission_edf_out	%read{516,516} %write{510,510}
+local	closure color	___693_shader_constructor_out.bsdf	%read{521,521} %write{511,515} %mystruct{___693_shader_constructor_out} %mystructfield{0}
+local	closure color	___693_shader_constructor_out.edf	%read{522,522} %write{512,516} %mystruct{___693_shader_constructor_out} %mystructfield{1}
+local	float	___693_shader_constructor_out.opacity	%read{520,523} %write{513,520} %mystruct{___693_shader_constructor_out} %mystructfield{2}
+local	float	___694_opacity_weight	%read{529,531} %write{527,527}
+local	closure color	null_closure	%read{8,9} %write{0,0}
+local	vector	geomprop_Nworld_out1	%read{73,470} %write{2,2}
+local	vector	geomprop_Tworld_out1	%read{135,385} %write{7,7}
+local	closure color	SR_gold_out.bsdf	%read{528,528} %write{8,521} %mystruct{SR_gold_out} %mystructfield{0}
+local	closure color	SR_gold_out.edf	%read{528,528} %write{9,522} %mystruct{SR_gold_out} %mystructfield{1}
+local	float	SR_gold_out.opacity	%read{526,526} %write{10,523} %mystruct{SR_gold_out} %mystructfield{2}
+local	closure color	Gold_out	%read{534,534} %write{533,533}
+const	int	$const1	0		%read{0,338} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{1,285} %write{2147483647,-1}
+const	string	$const3	"common"		%read{2,2} %write{2147483647,-1}
+temp	vector	$tmp1	%read{7,7} %write{6,6}
+const	int	$const4	2		%read{3,324} %write{2147483647,-1}
+temp	float	$tmp2	%read{6,6} %write{3,3}
+const	float	$const5	0		%read{6,527} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{4,4}
+temp	float	$tmp4	%read{6,6} %write{5,5}
+const	float	$const6	1		%read{10,531} %write{2147483647,-1}
+const	string	$const7	"NG_standard_surface_surfaceshader_100"		%read{11,11} %write{2147483647,-1}
+const	string	$const8	"mx_roughness_anisotropy"		%read{15,389} %write{2147483647,-1}
+temp	float	$tmp5	%read{18,18} %write{16,16}
+const	float	$const9	1e-08		%read{19,393} %write{2147483647,-1}
+const	string	$const10	"clamp"		%read{17,525} %write{2147483647,-1}
+temp	float	$tmp6	%read{19,19} %write{18,18}
+temp	int	$tmp7	%read{21,21} %write{20,20}
+temp	float	$tmp8	%read{25,25} %write{24,24}
+const	float	$const11	0.98		%read{23,397} %write{2147483647,-1}
+temp	float	$tmp9	%read{24,24} %write{23,23}
+temp	float	$tmp10	%read{26,26} %write{25,25}
+temp	float	$tmp11	%read{28,28} %write{27,27}
+const	float	$const12	360		%read{34,39} %write{2147483647,-1}
+temp	color	$tmp12	%read{44,44} %write{43,43}
+temp	float	$tmp13	%read{49,49} %write{48,48}
+temp	float	$tmp14	%read{52,52} %write{51,51}
+temp	color	$tmp15	%read{55,55} %write{54,54}
+const	color	$const13	1 1 1		%read{56,425} %write{2147483647,-1}
+const	color	$const14	0 0 0		%read{63,504} %write{2147483647,-1}
+const	color	$const15	0.272229 0.674082 0.053689		%read{65,65} %write{2147483647,-1}
+const	string	$const16	"mx_luminance_color3"		%read{64,64} %write{2147483647,-1}
+temp	float	$tmp17	%read{66,66} %write{65,65}
+const	vector	$const17	0 0 0		%read{67,213} %write{2147483647,-1}
+const	string	$const18	"mx_rotate_vector3"		%read{68,214} %write{2147483647,-1}
+const	string	$const19	"radians"		%read{69,215} %write{2147483647,-1}
+const	float	$const20	3.1415927		%read{70,216} %write{2147483647,-1}
+const	float	$const21	180		%read{70,216} %write{2147483647,-1}
+temp	float	$tmp18	%read{71,71} %write{70,70}
+const	string	$const22	"rotationMatrix"		%read{72,218} %write{2147483647,-1}
+temp	float	$tmp19	%read{78,78} %write{77,77}
+temp	float	$tmp20	%read{80,80} %write{78,78}
+temp	float	$tmp21	%read{80,80} %write{79,79}
+temp	float	$tmp22	%read{81,81} %write{80,80}
+temp	float	$tmp23	%read{134,134} %write{81,81}
+temp	float	$tmp24	%read{83,83} %write{82,82}
+temp	float	$tmp25	%read{85,85} %write{83,83}
+const	int	$const23	1		%read{84,321} %write{2147483647,-1}
+temp	float	$tmp26	%read{85,85} %write{84,84}
+temp	float	$tmp27	%read{88,88} %write{85,85}
+temp	float	$tmp28	%read{87,87} %write{86,86}
+temp	float	$tmp29	%read{88,88} %write{87,87}
+temp	float	$tmp30	%read{134,134} %write{88,88}
+temp	float	$tmp31	%read{90,90} %write{89,89}
+temp	float	$tmp32	%read{92,92} %write{90,90}
+temp	float	$tmp33	%read{92,92} %write{91,91}
+temp	float	$tmp34	%read{95,95} %write{92,92}
+temp	float	$tmp35	%read{94,94} %write{93,93}
+temp	float	$tmp36	%read{95,95} %write{94,94}
+temp	float	$tmp37	%read{134,134} %write{95,95}
+temp	float	$tmp38	%read{97,97} %write{96,96}
+temp	float	$tmp39	%read{99,99} %write{97,97}
+temp	float	$tmp40	%read{99,99} %write{98,98}
+temp	float	$tmp41	%read{102,102} %write{99,99}
+temp	float	$tmp42	%read{101,101} %write{100,100}
+temp	float	$tmp43	%read{102,102} %write{101,101}
+temp	float	$tmp44	%read{134,134} %write{102,102}
+temp	float	$tmp45	%read{104,104} %write{103,103}
+temp	float	$tmp46	%read{106,106} %write{104,104}
+temp	float	$tmp47	%read{106,106} %write{105,105}
+temp	float	$tmp48	%read{107,107} %write{106,106}
+temp	float	$tmp49	%read{134,134} %write{107,107}
+temp	float	$tmp50	%read{109,109} %write{108,108}
+temp	float	$tmp51	%read{111,111} %write{109,109}
+temp	float	$tmp52	%read{111,111} %write{110,110}
+temp	float	$tmp53	%read{114,114} %write{111,111}
+temp	float	$tmp54	%read{113,113} %write{112,112}
+temp	float	$tmp55	%read{114,114} %write{113,113}
+temp	float	$tmp56	%read{134,134} %write{114,114}
+temp	float	$tmp57	%read{116,116} %write{115,115}
+temp	float	$tmp58	%read{118,118} %write{116,116}
+temp	float	$tmp59	%read{118,118} %write{117,117}
+temp	float	$tmp60	%read{121,121} %write{118,118}
+temp	float	$tmp61	%read{120,120} %write{119,119}
+temp	float	$tmp62	%read{121,121} %write{120,120}
+temp	float	$tmp63	%read{134,134} %write{121,121}
+temp	float	$tmp64	%read{123,123} %write{122,122}
+temp	float	$tmp65	%read{125,125} %write{123,123}
+temp	float	$tmp66	%read{125,125} %write{124,124}
+temp	float	$tmp67	%read{128,128} %write{125,125}
+temp	float	$tmp68	%read{127,127} %write{126,126}
+temp	float	$tmp69	%read{128,128} %write{127,127}
+temp	float	$tmp70	%read{134,134} %write{128,128}
+temp	float	$tmp71	%read{130,130} %write{129,129}
+temp	float	$tmp72	%read{132,132} %write{130,130}
+temp	float	$tmp73	%read{132,132} %write{131,131}
+temp	float	$tmp74	%read{133,133} %write{132,132}
+temp	float	$tmp75	%read{134,134} %write{133,133}
+temp	float	$tmp76.x	%read{141,174} %write{135,135}
+temp	float	$tmp76.y	%read{143,176} %write{136,136}
+temp	float	$tmp76.z	%read{146,179} %write{137,137}
+temp	float	$tmp76.w	%read{149,182} %write{138,138}
+temp	float	$tmp77	%read{141,141} %write{140,140}
+temp	float	$tmp78	%read{144,144} %write{141,141}
+temp	float	$tmp79	%read{143,143} %write{142,142}
+temp	float	$tmp80	%read{144,144} %write{143,143}
+temp	float	$tmp81	%read{147,147} %write{144,144}
+temp	float	$tmp82	%read{146,146} %write{145,145}
+temp	float	$tmp83	%read{147,147} %write{146,146}
+temp	float	$tmp84	%read{150,150} %write{147,147}
+const	int	$const24	3		%read{148,327} %write{2147483647,-1}
+temp	float	$tmp85	%read{149,149} %write{148,148}
+temp	float	$tmp86	%read{150,150} %write{149,149}
+temp	float	$tmp87	%read{152,152} %write{151,151}
+temp	float	$tmp88	%read{155,155} %write{152,152}
+temp	float	$tmp89	%read{154,154} %write{153,153}
+temp	float	$tmp90	%read{155,155} %write{154,154}
+temp	float	$tmp91	%read{158,158} %write{155,155}
+temp	float	$tmp92	%read{157,157} %write{156,156}
+temp	float	$tmp93	%read{158,158} %write{157,157}
+temp	float	$tmp94	%read{161,161} %write{158,158}
+temp	float	$tmp95	%read{160,160} %write{159,159}
+temp	float	$tmp96	%read{161,161} %write{160,160}
+temp	float	$tmp97	%read{163,163} %write{162,162}
+temp	float	$tmp98	%read{166,166} %write{163,163}
+temp	float	$tmp99	%read{165,165} %write{164,164}
+temp	float	$tmp100	%read{166,166} %write{165,165}
+temp	float	$tmp101	%read{169,169} %write{166,166}
+temp	float	$tmp102	%read{168,168} %write{167,167}
+temp	float	$tmp103	%read{169,169} %write{168,168}
+temp	float	$tmp104	%read{172,172} %write{169,169}
+temp	float	$tmp105	%read{171,171} %write{170,170}
+temp	float	$tmp106	%read{172,172} %write{171,171}
+temp	float	$tmp107	%read{174,174} %write{173,173}
+temp	float	$tmp108	%read{177,177} %write{174,174}
+temp	float	$tmp109	%read{176,176} %write{175,175}
+temp	float	$tmp110	%read{177,177} %write{176,176}
+temp	float	$tmp111	%read{180,180} %write{177,177}
+temp	float	$tmp112	%read{179,179} %write{178,178}
+temp	float	$tmp113	%read{180,180} %write{179,179}
+temp	float	$tmp114	%read{183,183} %write{180,180}
+temp	float	$tmp115	%read{182,182} %write{181,181}
+temp	float	$tmp116	%read{183,183} %write{182,182}
+const	string	$const25	"mx_artistic_ior"		%read{187,187} %write{2147483647,-1}
+temp	color	$tmp117	%read{192,192} %write{188,188}
+const	float	$const26	0.99		%read{189,189} %write{2147483647,-1}
+temp	color	$tmp118	%read{191,191} %write{189,189}
+temp	color	$tmp119	%read{192,192} %write{191,191}
+temp	color	$tmp120	%read{196,196} %write{194,194}
+temp	color	$tmp121	%read{196,196} %write{195,195}
+temp	color	$tmp122	%read{199,199} %write{197,197}
+temp	color	$tmp123	%read{199,199} %write{198,198}
+temp	color	$tmp124	%read{204,204} %write{203,203}
+temp	color	$tmp125	%read{206,206} %write{204,204}
+temp	color	$tmp126	%read{206,206} %write{205,205}
+temp	color	$tmp127	%read{208,208} %write{206,206}
+temp	color	$tmp128	%read{208,208} %write{207,207}
+temp	color	$tmp129	%read{210,210} %write{209,209}
+temp	float	$tmp130	%read{217,217} %write{216,216}
+temp	float	$tmp131	%read{224,224} %write{223,223}
+temp	float	$tmp132	%read{226,226} %write{224,224}
+temp	float	$tmp133	%read{226,226} %write{225,225}
+temp	float	$tmp134	%read{227,227} %write{226,226}
+temp	float	$tmp135	%read{280,280} %write{227,227}
+temp	float	$tmp136	%read{229,229} %write{228,228}
+temp	float	$tmp137	%read{231,231} %write{229,229}
+temp	float	$tmp138	%read{231,231} %write{230,230}
+temp	float	$tmp139	%read{234,234} %write{231,231}
+temp	float	$tmp140	%read{233,233} %write{232,232}
+temp	float	$tmp141	%read{234,234} %write{233,233}
+temp	float	$tmp142	%read{280,280} %write{234,234}
+temp	float	$tmp143	%read{236,236} %write{235,235}
+temp	float	$tmp144	%read{238,238} %write{236,236}
+temp	float	$tmp145	%read{238,238} %write{237,237}
+temp	float	$tmp146	%read{241,241} %write{238,238}
+temp	float	$tmp147	%read{240,240} %write{239,239}
+temp	float	$tmp148	%read{241,241} %write{240,240}
+temp	float	$tmp149	%read{280,280} %write{241,241}
+temp	float	$tmp150	%read{243,243} %write{242,242}
+temp	float	$tmp151	%read{245,245} %write{243,243}
+temp	float	$tmp152	%read{245,245} %write{244,244}
+temp	float	$tmp153	%read{248,248} %write{245,245}
+temp	float	$tmp154	%read{247,247} %write{246,246}
+temp	float	$tmp155	%read{248,248} %write{247,247}
+temp	float	$tmp156	%read{280,280} %write{248,248}
+temp	float	$tmp157	%read{250,250} %write{249,249}
+temp	float	$tmp158	%read{252,252} %write{250,250}
+temp	float	$tmp159	%read{252,252} %write{251,251}
+temp	float	$tmp160	%read{253,253} %write{252,252}
+temp	float	$tmp161	%read{280,280} %write{253,253}
+temp	float	$tmp162	%read{255,255} %write{254,254}
+temp	float	$tmp163	%read{257,257} %write{255,255}
+temp	float	$tmp164	%read{257,257} %write{256,256}
+temp	float	$tmp165	%read{260,260} %write{257,257}
+temp	float	$tmp166	%read{259,259} %write{258,258}
+temp	float	$tmp167	%read{260,260} %write{259,259}
+temp	float	$tmp168	%read{280,280} %write{260,260}
+temp	float	$tmp169	%read{262,262} %write{261,261}
+temp	float	$tmp170	%read{264,264} %write{262,262}
+temp	float	$tmp171	%read{264,264} %write{263,263}
+temp	float	$tmp172	%read{267,267} %write{264,264}
+temp	float	$tmp173	%read{266,266} %write{265,265}
+temp	float	$tmp174	%read{267,267} %write{266,266}
+temp	float	$tmp175	%read{280,280} %write{267,267}
+temp	float	$tmp176	%read{269,269} %write{268,268}
+temp	float	$tmp177	%read{271,271} %write{269,269}
+temp	float	$tmp178	%read{271,271} %write{270,270}
+temp	float	$tmp179	%read{274,274} %write{271,271}
+temp	float	$tmp180	%read{273,273} %write{272,272}
+temp	float	$tmp181	%read{274,274} %write{273,273}
+temp	float	$tmp182	%read{280,280} %write{274,274}
+temp	float	$tmp183	%read{276,276} %write{275,275}
+temp	float	$tmp184	%read{278,278} %write{276,276}
+temp	float	$tmp185	%read{278,278} %write{277,277}
+temp	float	$tmp186	%read{279,279} %write{278,278}
+temp	float	$tmp187	%read{280,280} %write{279,279}
+temp	float	$tmp188.x	%read{287,320} %write{281,281}
+temp	float	$tmp188.y	%read{289,322} %write{282,282}
+temp	float	$tmp188.z	%read{292,325} %write{283,283}
+temp	float	$tmp188.w	%read{295,328} %write{284,284}
+temp	float	$tmp189	%read{287,287} %write{286,286}
+temp	float	$tmp190	%read{290,290} %write{287,287}
+temp	float	$tmp191	%read{289,289} %write{288,288}
+temp	float	$tmp192	%read{290,290} %write{289,289}
+temp	float	$tmp193	%read{293,293} %write{290,290}
+temp	float	$tmp194	%read{292,292} %write{291,291}
+temp	float	$tmp195	%read{293,293} %write{292,292}
+temp	float	$tmp196	%read{296,296} %write{293,293}
+temp	float	$tmp197	%read{295,295} %write{294,294}
+temp	float	$tmp198	%read{296,296} %write{295,295}
+temp	float	$tmp199	%read{298,298} %write{297,297}
+temp	float	$tmp200	%read{301,301} %write{298,298}
+temp	float	$tmp201	%read{300,300} %write{299,299}
+temp	float	$tmp202	%read{301,301} %write{300,300}
+temp	float	$tmp203	%read{304,304} %write{301,301}
+temp	float	$tmp204	%read{303,303} %write{302,302}
+temp	float	$tmp205	%read{304,304} %write{303,303}
+temp	float	$tmp206	%read{307,307} %write{304,304}
+temp	float	$tmp207	%read{306,306} %write{305,305}
+temp	float	$tmp208	%read{307,307} %write{306,306}
+temp	float	$tmp209	%read{309,309} %write{308,308}
+temp	float	$tmp210	%read{312,312} %write{309,309}
+temp	float	$tmp211	%read{311,311} %write{310,310}
+temp	float	$tmp212	%read{312,312} %write{311,311}
+temp	float	$tmp213	%read{315,315} %write{312,312}
+temp	float	$tmp214	%read{314,314} %write{313,313}
+temp	float	$tmp215	%read{315,315} %write{314,314}
+temp	float	$tmp216	%read{318,318} %write{315,315}
+temp	float	$tmp217	%read{317,317} %write{316,316}
+temp	float	$tmp218	%read{318,318} %write{317,317}
+temp	float	$tmp219	%read{320,320} %write{319,319}
+temp	float	$tmp220	%read{323,323} %write{320,320}
+temp	float	$tmp221	%read{322,322} %write{321,321}
+temp	float	$tmp222	%read{323,323} %write{322,322}
+temp	float	$tmp223	%read{326,326} %write{323,323}
+temp	float	$tmp224	%read{325,325} %write{324,324}
+temp	float	$tmp225	%read{326,326} %write{325,325}
+temp	float	$tmp226	%read{329,329} %write{326,326}
+temp	float	$tmp227	%read{328,328} %write{327,327}
+temp	float	$tmp228	%read{329,329} %write{328,328}
+temp	float	$tmp229	%read{335,335} %write{334,334}
+const	string	$const27	"mx_extract"		%read{339,339} %write{2147483647,-1}
+temp	int	$tmp230	%read{353,353} %write{351,351}
+const	string	$const28	"mx_ternary"		%read{352,381} %write{2147483647,-1}
+temp	float	$tmp231	%read{363,363} %write{361,361}
+temp	float	$tmp232	%read{364,364} %write{363,363}
+temp	int	$tmp233	%read{366,366} %write{365,365}
+temp	float	$tmp234	%read{370,370} %write{369,369}
+temp	float	$tmp235	%read{369,369} %write{368,368}
+temp	float	$tmp236	%read{371,371} %write{370,370}
+temp	float	$tmp237	%read{373,373} %write{372,372}
+temp	int	$tmp238	%read{382,382} %write{380,380}
+temp	float	$tmp239	%read{392,392} %write{390,390}
+temp	float	$tmp240	%read{393,393} %write{392,392}
+temp	int	$tmp241	%read{395,395} %write{394,394}
+temp	float	$tmp242	%read{399,399} %write{398,398}
+temp	float	$tmp243	%read{398,398} %write{397,397}
+temp	float	$tmp244	%read{400,400} %write{399,399}
+temp	float	$tmp245	%read{402,402} %write{401,401}
+const	string	$const29	"NG_convert_float_color3"		%read{413,413} %write{2147483647,-1}
+const	float	$const30	1.5		%read{426,454} %write{2147483647,-1}
+const	string	$const31	"ggx"		%read{426,454} %write{2147483647,-1}
+const	string	$const32	"R"		%read{418,450} %write{2147483647,-1}
+const	string	$const33	"mx_dielectric_bsdf"		%read{417,445} %write{2147483647,-1}
+const	string	$const34	"T"		%read{418,450} %write{2147483647,-1}
+temp	int	$tmp247	%read{419,419} %write{418,418}
+temp	int	$tmp248	%read{423,423} %write{422,422}
+temp	closure color	$tmp249	%read{427,427} %write{426,426}
+const	string	$const35	"thinfilm_thickness"		%read{426,454} %write{2147483647,-1}
+const	string	$const36	"thinfilm_ior"		%read{426,454} %write{2147483647,-1}
+const	string	$const37	"dielectric_bsdf"		%read{426,454} %write{2147483647,-1}
+temp	closure color	$tmp250	%read{431,431} %write{430,430}
+const	string	$const38	"conductor_bsdf"		%read{430,430} %write{2147483647,-1}
+temp	int	$tmp251	%read{435,435} %write{434,434}
+temp	int	$tmp252	%read{439,439} %write{438,438}
+temp	closure color	$tmp253	%read{443,443} %write{442,442}
+temp	int	$tmp254	%read{447,447} %write{446,446}
+temp	int	$tmp255	%read{451,451} %write{450,450}
+temp	closure color	$tmp256	%read{455,455} %write{454,454}
+temp	closure color	$tmp257	%read{457,457} %write{456,456}
+const	string	$const39	"sheen_bsdf"		%read{456,456} %write{2147483647,-1}
+temp	closure color	$tmp258	%read{460,460} %write{459,459}
+const	string	$const40	"translucent_bsdf"		%read{459,459} %write{2147483647,-1}
+const	string	$const41	"mx_subsurface_bsdf"		%read{462,462} %write{2147483647,-1}
+temp	color	$tmp259	%read{464,464} %write{463,463}
+const	string	$const42	"subsurface_bssrdf"		%read{464,464} %write{2147483647,-1}
+const	string	$const43	"mix"		%read{465,506} %write{2147483647,-1}
+temp	float	$tmp260	%read{467,467} %write{466,466}
+temp	closure color	$tmp261	%read{469,469} %write{467,467}
+temp	closure color	$tmp262	%read{469,469} %write{468,468}
+temp	closure color	$tmp263	%read{471,471} %write{470,470}
+const	string	$const44	"oren_nayar_diffuse_bsdf"		%read{470,470} %write{2147483647,-1}
+temp	float	$tmp264	%read{474,474} %write{473,473}
+temp	closure color	$tmp265	%read{476,476} %write{474,474}
+temp	closure color	$tmp266	%read{476,476} %write{475,475}
+const	string	$const45	"layer"		%read{477,490} %write{2147483647,-1}
+temp	float	$tmp267	%read{480,480} %write{479,479}
+temp	closure color	$tmp268	%read{482,482} %write{480,480}
+temp	closure color	$tmp269	%read{482,482} %write{481,481}
+temp	float	$tmp270	%read{486,486} %write{485,485}
+temp	closure color	$tmp271	%read{488,488} %write{486,486}
+temp	closure color	$tmp272	%read{488,488} %write{487,487}
+const	string	$const46	"uniform_edf"		%read{491,491} %write{2147483647,-1}
+const	float	$const47	5		%read{503,503} %write{2147483647,-1}
+const	string	$const48	"mx_generalized_schlick_edf"		%read{494,494} %write{2147483647,-1}
+temp	float	$tmp274	%read{497,497} %write{496,496}
+temp	vector	$tmp275	%read{496,496} %write{495,495}
+const	string	$const49	"mx_fresnel_schlick"		%read{498,498} %write{2147483647,-1}
+temp	float	$tmp276	%read{501,501} %write{499,499}
+temp	float	$tmp277	%read{502,502} %write{501,501}
+temp	float	$tmp278	%read{504,504} %write{503,503}
+temp	float	$tmp279	%read{508,508} %write{507,507}
+temp	closure color	$tmp280	%read{510,510} %write{508,508}
+temp	closure color	$tmp281	%read{510,510} %write{509,509}
+const	string	$const50	"mx_surface"		%read{514,514} %write{2147483647,-1}
+temp	float	$tmp282	%read{519,519} %write{518,518}
+const	string	$const51	"mx_surfacematerial"		%read{524,524} %write{2147483647,-1}
+temp	float	$tmp283	%read{527,527} %write{526,526}
+temp	closure color	$tmp284	%read{529,529} %write{528,528}
+temp	closure color	$tmp285	%read{533,533} %write{529,529}
+temp	closure color	$tmp286	%read{532,532} %write{530,530}
+const	string	$const52	"transparent"		%read{530,530} %write{2147483647,-1}
+temp	float	$tmp287	%read{532,532} %write{531,531}
+temp	closure color	$tmp288	%read{533,533} %write{532,532}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:686
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{686} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:687
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const2 3 	%line{687} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:688
+#     surfaceshader SR_gold_out = surfaceshader(null_closure, null_closure, 1.0);
+	compref		$tmp2 N $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{688} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const5 $tmp4 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:689
+#     NG_standard_surface_surfaceshader_100(SR_gold_base, SR_gold_base_color, SR_gold_diffuse_roughness, SR_gold_metalness, SR_gold_specular, SR_gold_specular_color, SR_gold_specular_roughness, SR_gold_specular_IOR, SR_gold_specular_anisotropy, SR_gold_specular_rotation, SR_gold_transmission, SR_gold_transmission_color, SR_gold_transmission_depth, SR_gold_transmission_scatter, SR_gold_transmission_scatter_anisotropy, SR_gold_transmission_dispersion, SR_gold_transmission_extra_roughness, SR_gold_subsurface, SR_gold_subsurface_color, SR_gold_subsurface_radius, SR_gold_subsurface_scale, SR_gold_subsurface_anisotropy, SR_gold_sheen, SR_gold_sheen_color, SR_gold_sheen_roughness, SR_gold_coat, SR_gold_coat_color, SR_gold_coat_roughness, SR_gold_coat_anisotropy, SR_gold_coat_rotation, SR_gold_coat_IOR, geomprop_Nworld_out1, SR_gold_coat_affect_color, SR_gold_coat_affect_roughness, SR_gold_thin_film_thickness, SR_gold_thin_film_IOR, SR_gold_emission, SR_gold_emission_color, SR_gold_opacity, SR_gold_thin_walled, geomprop_Nworld_out1, geomprop_Tworld_out1, SR_gold_out);
+	assign		SR_gold_out.bsdf null_closure 	%line{689} %argrw{"wr"}
+	assign		SR_gold_out.edf null_closure 	%argrw{"wr"}
+	assign		SR_gold_out.opacity $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:690
+#     MATERIAL Gold_out = mx_surfacematerial(SR_gold_out, backsurfaceshader, displacementshader1);
+	functioncall	$const7 524 	%line{690} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:195
+#     vector2 coat_roughness_vector_out = vector2(0.0, 0.0);
+	assign		___693_null_closure $const1 	%line{195} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:196
+#     mx_roughness_anisotropy(coat_roughness, coat_anisotropy, coat_roughness_vector_out);
+	assign		___693_coat_roughness_vector_out.x $const5 	%line{196} %argrw{"wr"}
+	assign		___693_coat_roughness_vector_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:197
+#     float coat_tangent_rotate_degree_in2_tmp = 360.000000;
+	functioncall	$const8 34 	%line{197} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:20
+#     if (anisotropy > 0.0)
+	mul		$tmp5 SR_gold_coat_roughness SR_gold_coat_roughness 	%line{20} %argrw{"wrr"}
+	functioncall	$const10 20 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp6 $tmp5 $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___669_roughness_sqr $tmp6 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:21
+#     {
+	gt		$tmp7 SR_gold_coat_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{21} %argrw{"wrr"}
+	if		$tmp7 32 34 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const10 25 	%line{23} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp9 SR_gold_coat_anisotropy $const11 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp8 $tmp9 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp10 $const6 $tmp8 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{23} %argrw{"wrr"}
+	sqrt		___670_aspect $tmp10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:24
+#         result.y = roughness_sqr * aspect;
+	div		$tmp11 ___669_roughness_sqr ___670_aspect 	%line{24} %argrw{"wrr"}
+	min		___693_coat_roughness_vector_out.x $tmp11 $const6 	%argrw{"wrr"}
+	assign		___693_coat_roughness_vector_out.x ___693_coat_roughness_vector_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:25
+#     }
+	mul		___693_coat_roughness_vector_out.y ___669_roughness_sqr ___670_aspect 	%line{25} %argrw{"wrr"}
+	assign		___693_coat_roughness_vector_out.y ___693_coat_roughness_vector_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:29
+#         result.y = roughness_sqr;
+	assign		___693_coat_roughness_vector_out.x ___669_roughness_sqr 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:30
+#     }
+	assign		___693_coat_roughness_vector_out.y ___669_roughness_sqr 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:198
+#     float coat_tangent_rotate_degree_out = coat_rotation * coat_tangent_rotate_degree_in2_tmp;
+	assign		___693_coat_tangent_rotate_degree_in2_tmp $const12 	%line{198} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:199
+#     color metal_reflectivity_out = base_color * base;
+	mul		___693_coat_tangent_rotate_degree_out SR_gold_coat_rotation ___693_coat_tangent_rotate_degree_in2_tmp 	%line{199} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:200
+#     color metal_edgecolor_out = specular_color * specular;
+	mul		___693_metal_reflectivity_out SR_gold_base_color SR_gold_base 	%line{200} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:201
+#     float coat_affect_roughness_multiply1_out = coat_affect_roughness * coat;
+	mul		___693_metal_edgecolor_out SR_gold_specular_color SR_gold_specular 	%line{201} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:202
+#     float tangent_rotate_degree_in2_tmp = 360.000000;
+	mul		___693_coat_affect_roughness_multiply1_out SR_gold_coat_affect_roughness SR_gold_coat 	%line{202} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:203
+#     float tangent_rotate_degree_out = specular_rotation * tangent_rotate_degree_in2_tmp;
+	assign		___693_tangent_rotate_degree_in2_tmp $const12 	%line{203} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:204
+#     float transmission_roughness_add_out = specular_roughness + transmission_extra_roughness;
+	mul		___693_tangent_rotate_degree_out SR_gold_specular_rotation ___693_tangent_rotate_degree_in2_tmp 	%line{204} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:205
+#     float subsurface_color_nonnegative_in2_tmp = 0.000000;
+	add		___693_transmission_roughness_add_out SR_gold_specular_roughness SR_gold_transmission_extra_roughness 	%line{205} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:206
+#     color subsurface_color_nonnegative_out = max(subsurface_color, subsurface_color_nonnegative_in2_tmp);
+	assign		___693_subsurface_color_nonnegative_in2_tmp $const5 	%line{206} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:207
+#     float coat_clamped_low_tmp = 0.000000;
+	assign		$tmp12 ___693_subsurface_color_nonnegative_in2_tmp 	%line{207} %argrw{"wr"}
+	max		___693_subsurface_color_nonnegative_out SR_gold_subsurface_color $tmp12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:208
+#     float coat_clamped_high_tmp = 1.000000;
+	assign		___693_coat_clamped_low_tmp $const5 	%line{208} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:209
+#     float coat_clamped_out = clamp(coat, coat_clamped_low_tmp, coat_clamped_high_tmp);
+	assign		___693_coat_clamped_high_tmp $const6 	%line{209} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:210
+#     color subsurface_radius_scaled_out = subsurface_radius * subsurface_scale;
+	functioncall	$const10 50 	%line{210} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp13 SR_gold_coat ___693_coat_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___693_coat_clamped_out $tmp13 ___693_coat_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:211
+#     float subsurface_selector_out = float(thin_walled);
+	mul		___693_subsurface_radius_scaled_out SR_gold_subsurface_radius SR_gold_subsurface_scale 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{211} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:212
+#     float base_color_nonnegative_in2_tmp = 0.000000;
+	assign		$tmp14 SR_gold_thin_walled 	%line{212} %argrw{"wr"}
+	assign		___693_subsurface_selector_out $tmp14 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:213
+#     color base_color_nonnegative_out = max(base_color, base_color_nonnegative_in2_tmp);
+	assign		___693_base_color_nonnegative_in2_tmp $const5 	%line{213} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:214
+#     color coat_attenuation_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	assign		$tmp15 ___693_base_color_nonnegative_in2_tmp 	%line{214} %argrw{"wr"}
+	max		___693_base_color_nonnegative_out SR_gold_base_color $tmp15 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:215
+#     color coat_attenuation_out = mix(coat_attenuation_bg_tmp, coat_color, coat);
+	assign		___693_coat_attenuation_bg_tmp $const13 	%line{215} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:216
+#     float one_minus_coat_ior_in1_tmp = 1.000000;
+	mix		___693_coat_attenuation_out ___693_coat_attenuation_bg_tmp SR_gold_coat_color SR_gold_coat 	%line{216} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:217
+#     float one_minus_coat_ior_out = one_minus_coat_ior_in1_tmp - coat_IOR;
+	assign		___693_one_minus_coat_ior_in1_tmp $const6 	%line{217} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:218
+#     float one_plus_coat_ior_in1_tmp = 1.000000;
+	sub		___693_one_minus_coat_ior_out ___693_one_minus_coat_ior_in1_tmp SR_gold_coat_IOR 	%line{218} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:219
+#     float one_plus_coat_ior_out = one_plus_coat_ior_in1_tmp + coat_IOR;
+	assign		___693_one_plus_coat_ior_in1_tmp $const6 	%line{219} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:220
+#     color emission_weight_out = emission_color * emission1;
+	add		___693_one_plus_coat_ior_out ___693_one_plus_coat_ior_in1_tmp SR_gold_coat_IOR 	%line{220} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:221
+#     color opacity_luminance_out = color(0.0);
+	mul		___693_emission_weight_out SR_gold_emission_color SR_gold_emission 	%line{221} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:222
+#     mx_luminance_color3(opacity, color(0.272229, 0.674082, 0.053689), opacity_luminance_out);
+	assign		___693_opacity_luminance_out $const14 	%line{222} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:223
+#     vector coat_tangent_rotate_out = vector(0.0);
+	functioncall	$const16 67 	%line{223} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:36
+# }
+	dot		$tmp17 SR_gold_opacity $const15 	%line{36} %argrw{"wrr"}
+	assign		___693_opacity_luminance_out $tmp17 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:224
+#     mx_rotate_vector3(tangent, coat_tangent_rotate_degree_out, coat_normal, coat_tangent_rotate_out);
+	assign		___693_coat_tangent_rotate_out $const17 	%line{224} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:225
+#     color artistic_ior_ior = color(0.0);
+	functioncall	$const18 185 	%line{225} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:54
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const19 72 	%line{54} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp18 $const20 $const21 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___674_rotationRadians ___693_coat_tangent_rotate_degree_out $tmp18 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:55
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const22 135 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{55} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:41
+#     float s = sin(angle);
+	normalize	___673_nAxis geomprop_Nworld_out1 	%line{41} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:42
+#     float c = cos(angle);
+	sin		___673_s ___674_rotationRadians 	%line{42} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:43
+#     float oc = 1.0 - c;
+	cos		___673_c ___674_rotationRadians 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:44
+# 
+	sub		___673_oc $const6 ___673_c 	%line{44} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:46
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp19 ___673_nAxis $const1 	%line{46} %argrw{"wrr"}
+	mul		$tmp20 ___673_oc $tmp19 	%argrw{"wrr"}
+	compref		$tmp21 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp22 $tmp20 $tmp21 	%argrw{"wrr"}
+	add		$tmp23 $tmp22 ___673_c 	%argrw{"wrr"}
+	compref		$tmp24 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp25 ___673_oc $tmp24 	%argrw{"wrr"}
+	compref		$tmp26 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp27 $tmp25 $tmp26 	%argrw{"wrr"}
+	compref		$tmp28 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp29 $tmp28 ___673_s 	%argrw{"wrr"}
+	sub		$tmp30 $tmp27 $tmp29 	%argrw{"wrr"}
+	compref		$tmp31 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp32 ___673_oc $tmp31 	%argrw{"wrr"}
+	compref		$tmp33 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp34 $tmp32 $tmp33 	%argrw{"wrr"}
+	compref		$tmp35 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp36 $tmp35 ___673_s 	%argrw{"wrr"}
+	add		$tmp37 $tmp34 $tmp36 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:47
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp38 ___673_nAxis $const1 	%line{47} %argrw{"wrr"}
+	mul		$tmp39 ___673_oc $tmp38 	%argrw{"wrr"}
+	compref		$tmp40 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp41 $tmp39 $tmp40 	%argrw{"wrr"}
+	compref		$tmp42 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp43 $tmp42 ___673_s 	%argrw{"wrr"}
+	add		$tmp44 $tmp41 $tmp43 	%argrw{"wrr"}
+	compref		$tmp45 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp46 ___673_oc $tmp45 	%argrw{"wrr"}
+	compref		$tmp47 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp48 $tmp46 $tmp47 	%argrw{"wrr"}
+	add		$tmp49 $tmp48 ___673_c 	%argrw{"wrr"}
+	compref		$tmp50 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp51 ___673_oc $tmp50 	%argrw{"wrr"}
+	compref		$tmp52 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp53 $tmp51 $tmp52 	%argrw{"wrr"}
+	compref		$tmp54 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp55 $tmp54 ___673_s 	%argrw{"wrr"}
+	sub		$tmp56 $tmp53 $tmp55 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:48
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp57 ___673_nAxis $const4 	%line{48} %argrw{"wrr"}
+	mul		$tmp58 ___673_oc $tmp57 	%argrw{"wrr"}
+	compref		$tmp59 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp60 $tmp58 $tmp59 	%argrw{"wrr"}
+	compref		$tmp61 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp62 $tmp61 ___673_s 	%argrw{"wrr"}
+	sub		$tmp63 $tmp60 $tmp62 	%argrw{"wrr"}
+	compref		$tmp64 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp65 ___673_oc $tmp64 	%argrw{"wrr"}
+	compref		$tmp66 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp67 $tmp65 $tmp66 	%argrw{"wrr"}
+	compref		$tmp68 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp69 $tmp68 ___673_s 	%argrw{"wrr"}
+	add		$tmp70 $tmp67 $tmp69 	%argrw{"wrr"}
+	compref		$tmp71 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp72 ___673_oc $tmp71 	%argrw{"wrr"}
+	compref		$tmp73 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp74 $tmp72 $tmp73 	%argrw{"wrr"}
+	add		$tmp75 $tmp74 ___673_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:46
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___674_m $tmp23 $tmp30 $tmp37 $const5 $tmp44 $tmp49 $tmp56 $const5 $tmp63 $tmp70 $tmp75 $const5 $const5 $const5 $const5 $const6 	%line{46} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:56
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp76.x geomprop_Tworld_out1 $const1 	%line{56} %argrw{"wrr"}
+	compref		$tmp76.y geomprop_Tworld_out1 $const23 	%argrw{"wrr"}
+	compref		$tmp76.z geomprop_Tworld_out1 $const4 	%argrw{"wrr"}
+	assign		$tmp76.w $const6 	%argrw{"wr"}
+	functioncall	$const2 184 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp77 ___674_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp78 $tmp77 $tmp76.x 	%argrw{"wrr"}
+	mxcompref	$tmp79 ___674_m $const23 $const1 	%argrw{"wrrr"}
+	mul		$tmp80 $tmp79 $tmp76.y 	%argrw{"wrr"}
+	add		$tmp81 $tmp78 $tmp80 	%argrw{"wrr"}
+	mxcompref	$tmp82 ___674_m $const4 $const1 	%argrw{"wrrr"}
+	mul		$tmp83 $tmp82 $tmp76.z 	%argrw{"wrr"}
+	add		$tmp84 $tmp81 $tmp83 	%argrw{"wrr"}
+	mxcompref	$tmp85 ___674_m $const24 $const1 	%argrw{"wrrr"}
+	mul		$tmp86 $tmp85 $tmp76.w 	%argrw{"wrr"}
+	add		___674_trans.x $tmp84 $tmp86 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp87 ___674_m $const1 $const23 	%line{416} %argrw{"wrrr"}
+	mul		$tmp88 $tmp87 $tmp76.x 	%argrw{"wrr"}
+	mxcompref	$tmp89 ___674_m $const23 $const23 	%argrw{"wrrr"}
+	mul		$tmp90 $tmp89 $tmp76.y 	%argrw{"wrr"}
+	add		$tmp91 $tmp88 $tmp90 	%argrw{"wrr"}
+	mxcompref	$tmp92 ___674_m $const4 $const23 	%argrw{"wrrr"}
+	mul		$tmp93 $tmp92 $tmp76.z 	%argrw{"wrr"}
+	add		$tmp94 $tmp91 $tmp93 	%argrw{"wrr"}
+	mxcompref	$tmp95 ___674_m $const24 $const23 	%argrw{"wrrr"}
+	mul		$tmp96 $tmp95 $tmp76.w 	%argrw{"wrr"}
+	add		___674_trans.y $tmp94 $tmp96 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp97 ___674_m $const1 $const4 	%line{417} %argrw{"wrrr"}
+	mul		$tmp98 $tmp97 $tmp76.x 	%argrw{"wrr"}
+	mxcompref	$tmp99 ___674_m $const23 $const4 	%argrw{"wrrr"}
+	mul		$tmp100 $tmp99 $tmp76.y 	%argrw{"wrr"}
+	add		$tmp101 $tmp98 $tmp100 	%argrw{"wrr"}
+	mxcompref	$tmp102 ___674_m $const4 $const4 	%argrw{"wrrr"}
+	mul		$tmp103 $tmp102 $tmp76.z 	%argrw{"wrr"}
+	add		$tmp104 $tmp101 $tmp103 	%argrw{"wrr"}
+	mxcompref	$tmp105 ___674_m $const24 $const4 	%argrw{"wrrr"}
+	mul		$tmp106 $tmp105 $tmp76.w 	%argrw{"wrr"}
+	add		___674_trans.z $tmp104 $tmp106 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp107 ___674_m $const1 $const24 	%line{418} %argrw{"wrrr"}
+	mul		$tmp108 $tmp107 $tmp76.x 	%argrw{"wrr"}
+	mxcompref	$tmp109 ___674_m $const23 $const24 	%argrw{"wrrr"}
+	mul		$tmp110 $tmp109 $tmp76.y 	%argrw{"wrr"}
+	add		$tmp111 $tmp108 $tmp110 	%argrw{"wrr"}
+	mxcompref	$tmp112 ___674_m $const4 $const24 	%argrw{"wrrr"}
+	mul		$tmp113 $tmp112 $tmp76.z 	%argrw{"wrr"}
+	add		$tmp114 $tmp111 $tmp113 	%argrw{"wrr"}
+	mxcompref	$tmp115 ___674_m $const24 $const24 	%argrw{"wrrr"}
+	mul		$tmp116 $tmp115 $tmp76.w 	%argrw{"wrr"}
+	add		___674_trans.w $tmp114 $tmp116 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:57
+# }
+	vector		___693_coat_tangent_rotate_out ___674_trans.x ___674_trans.y ___674_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{57} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:226
+#     color artistic_ior_extinction = color(0.0);
+	assign		___693_artistic_ior_ior $const14 	%line{226} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:227
+#     mx_artistic_ior(metal_reflectivity_out, metal_edgecolor_out, artistic_ior_ior, artistic_ior_extinction);
+	assign		___693_artistic_ior_extinction $const14 	%line{227} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:228
+#     float coat_affect_roughness_multiply2_out = coat_affect_roughness_multiply1_out * coat_roughness;
+	functioncall	$const25 212 	%line{228} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:65
+#     color r_sqrt = sqrt(r);
+	assign		$tmp117 $const5 	%line{65} %argrw{"wr"}
+	assign		$tmp118 $const26 	%argrw{"wr"}
+	functioncall	$const10 193 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp119 ___693_metal_reflectivity_out $tmp118 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___675_r $tmp119 $tmp117 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:66
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___675_r_sqrt ___675_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{66} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:67
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp120 $const6 ___675_r 	%line{67} %argrw{"wrr"}
+	add		$tmp121 $const6 ___675_r 	%argrw{"wrr"}
+	div		___675_n_min $tmp120 $tmp121 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:68
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp122 $const6 ___675_r_sqrt 	%line{68} %argrw{"wrr"}
+	sub		$tmp123 $const6 ___675_r_sqrt 	%argrw{"wrr"}
+	div		___675_n_max $tmp122 $tmp123 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:69
+# 
+	mix		___693_artistic_ior_ior ___675_n_max ___675_n_min ___693_metal_edgecolor_out 	%line{69} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:71
+#     color nm1 = ior - 1.0;
+	add		___675_np1 ___693_artistic_ior_ior $const6 	%line{71} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:72
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___675_nm1 ___693_artistic_ior_ior $const6 	%line{72} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:73
+#     k2 = max(k2, 0.0);
+	mul		$tmp124 ___675_np1 ___675_np1 	%line{73} %argrw{"wrr"}
+	mul		$tmp125 $tmp124 ___675_r 	%argrw{"wrr"}
+	mul		$tmp126 ___675_nm1 ___675_nm1 	%argrw{"wrr"}
+	sub		$tmp127 $tmp125 $tmp126 	%argrw{"wrr"}
+	sub		$tmp128 $const6 ___675_r 	%argrw{"wrr"}
+	div		___675_k2 $tmp127 $tmp128 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:74
+#     extinction = sqrt(k2);
+	assign		$tmp129 $const5 	%line{74} %argrw{"wr"}
+	max		___675_k2 ___675_k2 $tmp129 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:75
+# }
+	sqrt		___693_artistic_ior_extinction ___675_k2 	%line{75} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:229
+#     vector tangent_rotate_out = vector(0.0);
+	mul		___693_coat_affect_roughness_multiply2_out ___693_coat_affect_roughness_multiply1_out SR_gold_coat_roughness 	%line{229} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:230
+#     mx_rotate_vector3(tangent, tangent_rotate_degree_out, normal1, tangent_rotate_out);
+	assign		___693_tangent_rotate_out $const17 	%line{230} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:231
+#     float transmission_roughness_clamped_low_tmp = 0.000000;
+	functioncall	$const18 331 	%line{231} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:54
+#     matrix m = rotationMatrix(axis, rotationRadians);
+	functioncall	$const19 218 	%line{54} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:65
+# float  radians (float x)  { return x*(M_PI/180.0); }
+	div		$tmp130 $const20 $const21 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{65} %argrw{"wrr"}
+	mul		___674_rotationRadians ___693_tangent_rotate_degree_out $tmp130 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:55
+#     vector4 trans = transform(m, vector4(_in[0], _in[1], _in[2], 1.0));
+	functioncall	$const22 281 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{55} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:41
+#     float s = sin(angle);
+	normalize	___673_nAxis geomprop_Nworld_out1 	%line{41} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:42
+#     float c = cos(angle);
+	sin		___673_s ___674_rotationRadians 	%line{42} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:43
+#     float oc = 1.0 - c;
+	cos		___673_c ___674_rotationRadians 	%line{43} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:44
+# 
+	sub		___673_oc $const6 ___673_c 	%line{44} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:46
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	compref		$tmp131 ___673_nAxis $const1 	%line{46} %argrw{"wrr"}
+	mul		$tmp132 ___673_oc $tmp131 	%argrw{"wrr"}
+	compref		$tmp133 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp134 $tmp132 $tmp133 	%argrw{"wrr"}
+	add		$tmp135 $tmp134 ___673_c 	%argrw{"wrr"}
+	compref		$tmp136 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp137 ___673_oc $tmp136 	%argrw{"wrr"}
+	compref		$tmp138 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp139 $tmp137 $tmp138 	%argrw{"wrr"}
+	compref		$tmp140 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp141 $tmp140 ___673_s 	%argrw{"wrr"}
+	sub		$tmp142 $tmp139 $tmp141 	%argrw{"wrr"}
+	compref		$tmp143 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp144 ___673_oc $tmp143 	%argrw{"wrr"}
+	compref		$tmp145 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp146 $tmp144 $tmp145 	%argrw{"wrr"}
+	compref		$tmp147 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp148 $tmp147 ___673_s 	%argrw{"wrr"}
+	add		$tmp149 $tmp146 $tmp148 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:47
+#                   oc * nAxis[2] * nAxis[0] - nAxis[1] * s,  oc * nAxis[1] * nAxis[2] + nAxis[0] * s,  oc * nAxis[2] * nAxis[2] + c,             0.0,
+	compref		$tmp150 ___673_nAxis $const1 	%line{47} %argrw{"wrr"}
+	mul		$tmp151 ___673_oc $tmp150 	%argrw{"wrr"}
+	compref		$tmp152 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp153 $tmp151 $tmp152 	%argrw{"wrr"}
+	compref		$tmp154 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp155 $tmp154 ___673_s 	%argrw{"wrr"}
+	add		$tmp156 $tmp153 $tmp155 	%argrw{"wrr"}
+	compref		$tmp157 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp158 ___673_oc $tmp157 	%argrw{"wrr"}
+	compref		$tmp159 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp160 $tmp158 $tmp159 	%argrw{"wrr"}
+	add		$tmp161 $tmp160 ___673_c 	%argrw{"wrr"}
+	compref		$tmp162 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp163 ___673_oc $tmp162 	%argrw{"wrr"}
+	compref		$tmp164 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp165 $tmp163 $tmp164 	%argrw{"wrr"}
+	compref		$tmp166 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp167 $tmp166 ___673_s 	%argrw{"wrr"}
+	sub		$tmp168 $tmp165 $tmp167 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:48
+#                   0.0,                                      0.0,                                      0.0,                                      1.0);
+	compref		$tmp169 ___673_nAxis $const4 	%line{48} %argrw{"wrr"}
+	mul		$tmp170 ___673_oc $tmp169 	%argrw{"wrr"}
+	compref		$tmp171 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp172 $tmp170 $tmp171 	%argrw{"wrr"}
+	compref		$tmp173 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp174 $tmp173 ___673_s 	%argrw{"wrr"}
+	sub		$tmp175 $tmp172 $tmp174 	%argrw{"wrr"}
+	compref		$tmp176 ___673_nAxis $const23 	%argrw{"wrr"}
+	mul		$tmp177 ___673_oc $tmp176 	%argrw{"wrr"}
+	compref		$tmp178 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp179 $tmp177 $tmp178 	%argrw{"wrr"}
+	compref		$tmp180 ___673_nAxis $const1 	%argrw{"wrr"}
+	mul		$tmp181 $tmp180 ___673_s 	%argrw{"wrr"}
+	add		$tmp182 $tmp179 $tmp181 	%argrw{"wrr"}
+	compref		$tmp183 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp184 ___673_oc $tmp183 	%argrw{"wrr"}
+	compref		$tmp185 ___673_nAxis $const4 	%argrw{"wrr"}
+	mul		$tmp186 $tmp184 $tmp185 	%argrw{"wrr"}
+	add		$tmp187 $tmp186 ___673_c 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:46
+#                   oc * nAxis[0] * nAxis[1] + nAxis[2] * s,  oc * nAxis[1] * nAxis[1] + c,             oc * nAxis[1] * nAxis[2] - nAxis[0] * s,  0.0,
+	matrix		___674_m $tmp135 $tmp142 $tmp149 $const5 $tmp156 $tmp161 $tmp168 $const5 $tmp175 $tmp182 $tmp187 $const5 $const5 $const5 $const5 $const6 	%line{46} %argrw{"wrrrrrrrrrrrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:56
+#     result = vector(trans.x, trans.y, trans.z);
+	compref		$tmp188.x geomprop_Tworld_out1 $const1 	%line{56} %argrw{"wrr"}
+	compref		$tmp188.y geomprop_Tworld_out1 $const23 	%argrw{"wrr"}
+	compref		$tmp188.z geomprop_Tworld_out1 $const4 	%argrw{"wrr"}
+	assign		$tmp188.w $const6 	%argrw{"wr"}
+	functioncall	$const2 330 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:415
+#     return vector4 (M[0][0]*p.x + M[1][0]*p.y + M[2][0]*p.z + M[3][0]*p.w,
+	mxcompref	$tmp189 ___674_m $const1 $const1 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h"} %line{415} %argrw{"wrrr"}
+	mul		$tmp190 $tmp189 $tmp188.x 	%argrw{"wrr"}
+	mxcompref	$tmp191 ___674_m $const23 $const1 	%argrw{"wrrr"}
+	mul		$tmp192 $tmp191 $tmp188.y 	%argrw{"wrr"}
+	add		$tmp193 $tmp190 $tmp192 	%argrw{"wrr"}
+	mxcompref	$tmp194 ___674_m $const4 $const1 	%argrw{"wrrr"}
+	mul		$tmp195 $tmp194 $tmp188.z 	%argrw{"wrr"}
+	add		$tmp196 $tmp193 $tmp195 	%argrw{"wrr"}
+	mxcompref	$tmp197 ___674_m $const24 $const1 	%argrw{"wrrr"}
+	mul		$tmp198 $tmp197 $tmp188.w 	%argrw{"wrr"}
+	add		___674_trans.x $tmp196 $tmp198 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:416
+#                     M[0][1]*p.x + M[1][1]*p.y + M[2][1]*p.z + M[3][1]*p.w,
+	mxcompref	$tmp199 ___674_m $const1 $const23 	%line{416} %argrw{"wrrr"}
+	mul		$tmp200 $tmp199 $tmp188.x 	%argrw{"wrr"}
+	mxcompref	$tmp201 ___674_m $const23 $const23 	%argrw{"wrrr"}
+	mul		$tmp202 $tmp201 $tmp188.y 	%argrw{"wrr"}
+	add		$tmp203 $tmp200 $tmp202 	%argrw{"wrr"}
+	mxcompref	$tmp204 ___674_m $const4 $const23 	%argrw{"wrrr"}
+	mul		$tmp205 $tmp204 $tmp188.z 	%argrw{"wrr"}
+	add		$tmp206 $tmp203 $tmp205 	%argrw{"wrr"}
+	mxcompref	$tmp207 ___674_m $const24 $const23 	%argrw{"wrrr"}
+	mul		$tmp208 $tmp207 $tmp188.w 	%argrw{"wrr"}
+	add		___674_trans.y $tmp206 $tmp208 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:417
+#                     M[0][2]*p.x + M[1][2]*p.y + M[2][2]*p.z + M[3][2]*p.w,
+	mxcompref	$tmp209 ___674_m $const1 $const4 	%line{417} %argrw{"wrrr"}
+	mul		$tmp210 $tmp209 $tmp188.x 	%argrw{"wrr"}
+	mxcompref	$tmp211 ___674_m $const23 $const4 	%argrw{"wrrr"}
+	mul		$tmp212 $tmp211 $tmp188.y 	%argrw{"wrr"}
+	add		$tmp213 $tmp210 $tmp212 	%argrw{"wrr"}
+	mxcompref	$tmp214 ___674_m $const4 $const4 	%argrw{"wrrr"}
+	mul		$tmp215 $tmp214 $tmp188.z 	%argrw{"wrr"}
+	add		$tmp216 $tmp213 $tmp215 	%argrw{"wrr"}
+	mxcompref	$tmp217 ___674_m $const24 $const4 	%argrw{"wrrr"}
+	mul		$tmp218 $tmp217 $tmp188.w 	%argrw{"wrr"}
+	add		___674_trans.z $tmp216 $tmp218 	%argrw{"wrr"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector4.h:418
+#                     M[0][3]*p.x + M[1][3]*p.y + M[2][3]*p.z + M[3][3]*p.w);
+	mxcompref	$tmp219 ___674_m $const1 $const24 	%line{418} %argrw{"wrrr"}
+	mul		$tmp220 $tmp219 $tmp188.x 	%argrw{"wrr"}
+	mxcompref	$tmp221 ___674_m $const23 $const24 	%argrw{"wrrr"}
+	mul		$tmp222 $tmp221 $tmp188.y 	%argrw{"wrr"}
+	add		$tmp223 $tmp220 $tmp222 	%argrw{"wrr"}
+	mxcompref	$tmp224 ___674_m $const4 $const24 	%argrw{"wrrr"}
+	mul		$tmp225 $tmp224 $tmp188.z 	%argrw{"wrr"}
+	add		$tmp226 $tmp223 $tmp225 	%argrw{"wrr"}
+	mxcompref	$tmp227 ___674_m $const24 $const24 	%argrw{"wrrr"}
+	mul		$tmp228 $tmp227 $tmp188.w 	%argrw{"wrr"}
+	add		___674_trans.w $tmp226 $tmp228 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:57
+# }
+	vector		___693_tangent_rotate_out ___674_trans.x ___674_trans.y ___674_trans.z 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{57} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:232
+#     float transmission_roughness_clamped_high_tmp = 1.000000;
+	assign		___693_transmission_roughness_clamped_low_tmp $const5 	%line{232} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:233
+#     float transmission_roughness_clamped_out = clamp(transmission_roughness_add_out, transmission_roughness_clamped_low_tmp, transmission_roughness_clamped_high_tmp);
+	assign		___693_transmission_roughness_clamped_high_tmp $const6 	%line{233} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:234
+#     float coat_gamma_multiply_out = coat_clamped_out * coat_affect_color;
+	functioncall	$const10 336 	%line{234} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp229 ___693_transmission_roughness_add_out ___693_transmission_roughness_clamped_high_tmp 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___693_transmission_roughness_clamped_out $tmp229 ___693_transmission_roughness_clamped_low_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:235
+#     float coat_ior_to_F0_sqrt_out = one_minus_coat_ior_out / one_plus_coat_ior_out;
+	mul		___693_coat_gamma_multiply_out ___693_coat_clamped_out SR_gold_coat_affect_color 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{235} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:236
+#     int opacity_luminance_float_index_tmp = 0;
+	div		___693_coat_ior_to_F0_sqrt_out ___693_one_minus_coat_ior_out ___693_one_plus_coat_ior_out 	%line{236} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:237
+#     float opacity_luminance_float_out = mx_extract(opacity_luminance_out, opacity_luminance_float_index_tmp);
+	assign		___693_opacity_luminance_float_index_tmp $const1 	%line{237} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:238
+#     vector coat_tangent_rotate_normalize_out = normalize(coat_tangent_rotate_out);
+	functioncall	$const27 341 	%line{238} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___693_opacity_luminance_float_out ___693_opacity_luminance_out ___693_opacity_luminance_float_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:239
+#     float coat_affected_roughness_fg_tmp = 1.000000;
+	normalize	___693_coat_tangent_rotate_normalize_out ___693_coat_tangent_rotate_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{239} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:240
+#     float coat_affected_roughness_out = mix(specular_roughness, coat_affected_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___693_coat_affected_roughness_fg_tmp $const6 	%line{240} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:241
+#     vector tangent_rotate_normalize_out = normalize(tangent_rotate_out);
+	mix		___693_coat_affected_roughness_out SR_gold_specular_roughness ___693_coat_affected_roughness_fg_tmp ___693_coat_affect_roughness_multiply2_out 	%line{241} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:242
+#     float coat_affected_transmission_roughness_fg_tmp = 1.000000;
+	normalize	___693_tangent_rotate_normalize_out ___693_tangent_rotate_out 	%line{242} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:243
+#     float coat_affected_transmission_roughness_out = mix(transmission_roughness_clamped_out, coat_affected_transmission_roughness_fg_tmp, coat_affect_roughness_multiply2_out);
+	assign		___693_coat_affected_transmission_roughness_fg_tmp $const6 	%line{243} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:244
+#     float coat_gamma_in2_tmp = 1.000000;
+	mix		___693_coat_affected_transmission_roughness_out ___693_transmission_roughness_clamped_out ___693_coat_affected_transmission_roughness_fg_tmp ___693_coat_affect_roughness_multiply2_out 	%line{244} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:245
+#     float coat_gamma_out = coat_gamma_multiply_out + coat_gamma_in2_tmp;
+	assign		___693_coat_gamma_in2_tmp $const6 	%line{245} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:246
+#     float coat_ior_to_F0_out = coat_ior_to_F0_sqrt_out * coat_ior_to_F0_sqrt_out;
+	add		___693_coat_gamma_out ___693_coat_gamma_multiply_out ___693_coat_gamma_in2_tmp 	%line{246} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:247
+#     float coat_tangent_value2_tmp = 0.000000;
+	mul		___693_coat_ior_to_F0_out ___693_coat_ior_to_F0_sqrt_out ___693_coat_ior_to_F0_sqrt_out 	%line{247} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:248
+#     vector coat_tangent_out = mx_ternary(coat_anisotropy > coat_tangent_value2_tmp, coat_tangent_rotate_normalize_out, tangent);
+	assign		___693_coat_tangent_value2_tmp $const5 	%line{248} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:249
+#     vector2 main_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp230 SR_gold_coat_anisotropy ___693_coat_tangent_value2_tmp 	%line{249} %argrw{"wrr"}
+	functioncall	$const28 358 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp230 356 358 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___693_coat_tangent_out ___693_coat_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___693_coat_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:250
+#     mx_roughness_anisotropy(coat_affected_roughness_out, specular_anisotropy, main_roughness_out);
+	assign		___693_main_roughness_out.x $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{250} %argrw{"wr"}
+	assign		___693_main_roughness_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:251
+#     float main_tangent_value2_tmp = 0.000000;
+	functioncall	$const8 379 	%line{251} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:20
+#     if (anisotropy > 0.0)
+	mul		$tmp231 ___693_coat_affected_roughness_out ___693_coat_affected_roughness_out 	%line{20} %argrw{"wrr"}
+	functioncall	$const10 365 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp232 $tmp231 $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___669_roughness_sqr $tmp232 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:21
+#     {
+	gt		$tmp233 SR_gold_specular_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{21} %argrw{"wrr"}
+	if		$tmp233 377 379 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const10 370 	%line{23} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp235 SR_gold_specular_anisotropy $const11 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp234 $tmp235 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp236 $const6 $tmp234 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{23} %argrw{"wrr"}
+	sqrt		___670_aspect $tmp236 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:24
+#         result.y = roughness_sqr * aspect;
+	div		$tmp237 ___669_roughness_sqr ___670_aspect 	%line{24} %argrw{"wrr"}
+	min		___693_main_roughness_out.x $tmp237 $const6 	%argrw{"wrr"}
+	assign		___693_main_roughness_out.x ___693_main_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:25
+#     }
+	mul		___693_main_roughness_out.y ___669_roughness_sqr ___670_aspect 	%line{25} %argrw{"wrr"}
+	assign		___693_main_roughness_out.y ___693_main_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:29
+#         result.y = roughness_sqr;
+	assign		___693_main_roughness_out.x ___669_roughness_sqr 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:30
+#     }
+	assign		___693_main_roughness_out.y ___669_roughness_sqr 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:252
+#     vector main_tangent_out = mx_ternary(specular_anisotropy > main_tangent_value2_tmp, tangent_rotate_normalize_out, tangent);
+	assign		___693_main_tangent_value2_tmp $const5 	%line{252} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:253
+#     vector2 transmission_roughness_out = vector2(0.0, 0.0);
+	gt		$tmp238 SR_gold_specular_anisotropy ___693_main_tangent_value2_tmp 	%line{253} %argrw{"wrr"}
+	functioncall	$const28 387 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:22
+# vector mx_ternary(int expr, vector v1, vector v2) { if (expr) return v1; else return v2; }
+	if		$tmp238 385 387 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{22} %argrw{"r"}
+	assign		___693_main_tangent_out ___693_tangent_rotate_normalize_out 	%argrw{"wr"}
+	return
+	assign		___693_main_tangent_out geomprop_Tworld_out1 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:254
+#     mx_roughness_anisotropy(coat_affected_transmission_roughness_out, specular_anisotropy, transmission_roughness_out);
+	assign		___693_transmission_roughness_out.x $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{254} %argrw{"wr"}
+	assign		___693_transmission_roughness_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:255
+#     color coat_affected_subsurface_color_out = pow(subsurface_color_nonnegative_out, coat_gamma_out);
+	functioncall	$const8 408 	%line{255} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:20
+#     if (anisotropy > 0.0)
+	mul		$tmp239 ___693_coat_affected_transmission_roughness_out ___693_coat_affected_transmission_roughness_out 	%line{20} %argrw{"wrr"}
+	functioncall	$const10 394 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp240 $tmp239 $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___669_roughness_sqr $tmp240 $const9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:21
+#     {
+	gt		$tmp241 SR_gold_specular_anisotropy $const5 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{21} %argrw{"wrr"}
+	if		$tmp241 406 408 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const10 399 	%line{23} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp243 SR_gold_specular_anisotropy $const11 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp242 $tmp243 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:23
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp244 $const6 $tmp242 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{23} %argrw{"wrr"}
+	sqrt		___670_aspect $tmp244 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:24
+#         result.y = roughness_sqr * aspect;
+	div		$tmp245 ___669_roughness_sqr ___670_aspect 	%line{24} %argrw{"wrr"}
+	min		___693_transmission_roughness_out.x $tmp245 $const6 	%argrw{"wrr"}
+	assign		___693_transmission_roughness_out.x ___693_transmission_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:25
+#     }
+	mul		___693_transmission_roughness_out.y ___669_roughness_sqr ___670_aspect 	%line{25} %argrw{"wrr"}
+	assign		___693_transmission_roughness_out.y ___693_transmission_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:29
+#         result.y = roughness_sqr;
+	assign		___693_transmission_roughness_out.x ___669_roughness_sqr 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:30
+#     }
+	assign		___693_transmission_roughness_out.y ___669_roughness_sqr 	%line{30} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:256
+#     color coat_affected_diffuse_color_out = pow(base_color_nonnegative_out, coat_gamma_out);
+	pow		___693_coat_affected_subsurface_color_out ___693_subsurface_color_nonnegative_out ___693_coat_gamma_out 	%line{256} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:257
+#     float one_minus_coat_ior_to_F0_in1_tmp = 1.000000;
+	pow		___693_coat_affected_diffuse_color_out ___693_base_color_nonnegative_out ___693_coat_gamma_out 	%line{257} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:258
+#     float one_minus_coat_ior_to_F0_out = one_minus_coat_ior_to_F0_in1_tmp - coat_ior_to_F0_out;
+	assign		___693_one_minus_coat_ior_to_F0_in1_tmp $const6 	%line{258} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:259
+#     color emission_color0_out = color(0.0);
+	sub		___693_one_minus_coat_ior_to_F0_out ___693_one_minus_coat_ior_to_F0_in1_tmp ___693_coat_ior_to_F0_out 	%line{259} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:260
+#     NG_convert_float_color3(one_minus_coat_ior_to_F0_out, emission_color0_out);
+	assign		___693_emission_color0_out $const14 	%line{260} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:261
+#     BSDF coat_bsdf_out = null_closure;
+	functioncall	$const29 416 	%line{261} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:96
+#     out = combine_out;
+	color		___678_combine_out ___693_one_minus_coat_ior_to_F0_out ___693_one_minus_coat_ior_to_F0_out ___693_one_minus_coat_ior_to_F0_out 	%line{96} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:97
+# }
+	assign		___693_emission_color0_out ___678_combine_out 	%line{97} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:262
+#     mx_dielectric_bsdf(coat, color(1.000000, 1.000000, 1.000000), coat_IOR, coat_roughness_vector_out, 0.000000, 1.500000, coat_normal, coat_tangent_out, "ggx", "R", coat_bsdf_out);
+	assign		___693_coat_bsdf_out ___693_null_closure 	%line{262} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:263
+#     float metal_bsdf_weight_tmp = 1.000000;
+	functioncall	$const33 428 	%line{263} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:80
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp247 $const32 $const34 	%line{80} %argrw{"wrr"}
+	if		$tmp247 421 422 	%argrw{"r"}
+	assign		___676_reflection_tint $const14 	%argrw{"wr"}
+	assign		___676_reflection_tint $const13 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:81
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp248 $const32 $const32 	%line{81} %argrw{"wrr"}
+	if		$tmp248 425 426 	%argrw{"r"}
+	assign		___676_transmission_tint $const14 	%argrw{"wr"}
+	assign		___676_transmission_tint $const13 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:82
+# }
+	closure		$tmp249 $const37 geomprop_Nworld_out1 ___693_coat_tangent_out ___676_reflection_tint ___676_transmission_tint ___693_coat_roughness_vector_out.x ___693_coat_roughness_vector_out.y SR_gold_coat_IOR $const31 $const35 $const5 $const36 $const30 	%line{82} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___693_coat_bsdf_out $tmp249 SR_gold_coat 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:264
+#     string metal_bsdf_distribution_tmp = "ggx";
+	assign		___693_metal_bsdf_weight_tmp $const6 	%line{264} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:265
+#     BSDF metal_bsdf_out = metal_bsdf_weight_tmp * conductor_bsdf(normal1, main_tangent_out, main_roughness_out.x, main_roughness_out.y, artistic_ior_ior, artistic_ior_extinction, metal_bsdf_distribution_tmp, "thinfilm_thickness", thin_film_thickness, "thinfilm_ior", thin_film_IOR);
+	assign		___693_metal_bsdf_distribution_tmp $const31 	%line{265} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:266
+#     BSDF specular_bsdf_out = null_closure;
+	closure		$tmp250 $const38 geomprop_Nworld_out1 ___693_main_tangent_out ___693_main_roughness_out.x ___693_main_roughness_out.y ___693_artistic_ior_ior ___693_artistic_ior_extinction ___693_metal_bsdf_distribution_tmp $const35 SR_gold_thin_film_thickness $const36 SR_gold_thin_film_IOR 	%line{266} %argrw{"wrrrrrrrrrrrr"}
+	mul		___693_metal_bsdf_out $tmp250 ___693_metal_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:267
+#     mx_dielectric_bsdf(specular, specular_color, specular_IOR, main_roughness_out, thin_film_thickness, thin_film_IOR, normal1, main_tangent_out, "ggx", "R", specular_bsdf_out);
+	assign		___693_specular_bsdf_out ___693_null_closure 	%line{267} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:268
+#     BSDF transmission_bsdf_out = null_closure;
+	functioncall	$const33 444 	%line{268} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:80
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp251 $const32 $const34 	%line{80} %argrw{"wrr"}
+	if		$tmp251 437 438 	%argrw{"r"}
+	assign		___676_reflection_tint $const14 	%argrw{"wr"}
+	assign		___676_reflection_tint SR_gold_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:81
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp252 $const32 $const32 	%line{81} %argrw{"wrr"}
+	if		$tmp252 441 442 	%argrw{"r"}
+	assign		___676_transmission_tint $const14 	%argrw{"wr"}
+	assign		___676_transmission_tint SR_gold_specular_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:82
+# }
+	closure		$tmp253 $const37 geomprop_Nworld_out1 ___693_main_tangent_out ___676_reflection_tint ___676_transmission_tint ___693_main_roughness_out.x ___693_main_roughness_out.y SR_gold_specular_IOR $const31 $const35 SR_gold_thin_film_thickness $const36 SR_gold_thin_film_IOR 	%line{82} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___693_specular_bsdf_out $tmp253 SR_gold_specular 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:269
+#     mx_dielectric_bsdf(1.000000, transmission_color, specular_IOR, transmission_roughness_out, 0.000000, 1.500000, normal1, main_tangent_out, "ggx", "T", transmission_bsdf_out);
+	assign		___693_transmission_bsdf_out ___693_null_closure 	%line{269} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:270
+#     BSDF sheen_bsdf_out = sheen1 * sheen_bsdf(normal1, sheen_color, sheen_roughness);
+	functioncall	$const33 456 	%line{270} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:80
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp254 $const34 $const34 	%line{80} %argrw{"wrr"}
+	if		$tmp254 449 450 	%argrw{"r"}
+	assign		___676_reflection_tint $const14 	%argrw{"wr"}
+	assign		___676_reflection_tint SR_gold_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:81
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp255 $const34 $const32 	%line{81} %argrw{"wrr"}
+	if		$tmp255 453 454 	%argrw{"r"}
+	assign		___676_transmission_tint $const14 	%argrw{"wr"}
+	assign		___676_transmission_tint SR_gold_transmission_color 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:82
+# }
+	closure		$tmp256 $const37 geomprop_Nworld_out1 ___693_main_tangent_out ___676_reflection_tint ___676_transmission_tint ___693_transmission_roughness_out.x ___693_transmission_roughness_out.y SR_gold_specular_IOR $const31 $const35 $const5 $const36 $const30 	%line{82} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___693_transmission_bsdf_out $tmp256 $const6 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:271
+#     float translucent_bsdf_weight_tmp = 1.000000;
+	closure		$tmp257 $const39 geomprop_Nworld_out1 SR_gold_sheen_color SR_gold_sheen_roughness 	%line{271} %argrw{"wrrrr"}
+	mul		___693_sheen_bsdf_out $tmp257 SR_gold_sheen 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:272
+#     BSDF translucent_bsdf_out = translucent_bsdf_weight_tmp * translucent_bsdf(normal1, coat_affected_subsurface_color_out);
+	assign		___693_translucent_bsdf_weight_tmp $const6 	%line{272} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:273
+#     BSDF subsurface_bsdf_out = null_closure;
+	closure		$tmp258 $const40 geomprop_Nworld_out1 ___693_coat_affected_subsurface_color_out 	%line{273} %argrw{"wrrr"}
+	mul		___693_translucent_bsdf_out $tmp258 ___693_translucent_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:274
+#     mx_subsurface_bsdf(1.000000, coat_affected_subsurface_color_out, subsurface_radius_scaled_out, subsurface_anisotropy, normal1, subsurface_bsdf_out);
+	assign		___693_subsurface_bsdf_out ___693_null_closure 	%line{274} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:275
+#     BSDF selected_subsurface_bsdf_out = mix(subsurface_bsdf_out, translucent_bsdf_out, subsurface_selector_out);
+	functioncall	$const41 465 	%line{275} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:90
+# #endif
+	mul		$tmp259 $const6 ___693_coat_affected_subsurface_color_out 	%line{90} %argrw{"wrr"}
+	closure		___693_subsurface_bsdf_out $const42 geomprop_Nworld_out1 $tmp259 $const6 ___693_subsurface_radius_scaled_out SR_gold_subsurface_anisotropy 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:276
+#     BSDF diffuse_bsdf_out = base * oren_nayar_diffuse_bsdf(normal1, coat_affected_diffuse_color_out, diffuse_roughness);
+	functioncall	$const43 470 	%line{276} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp260 $const6 ___693_subsurface_selector_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp261 ___693_subsurface_bsdf_out $tmp260 	%argrw{"wrr"}
+	mul		$tmp262 ___693_translucent_bsdf_out ___693_subsurface_selector_out 	%argrw{"wrr"}
+	add		___693_selected_subsurface_bsdf_out $tmp261 $tmp262 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:277
+#     BSDF subsurface_mix_out = mix(diffuse_bsdf_out, selected_subsurface_bsdf_out, subsurface1);
+	closure		$tmp263 $const44 geomprop_Nworld_out1 ___693_coat_affected_diffuse_color_out SR_gold_diffuse_roughness 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{277} %argrw{"wrrrr"}
+	mul		___693_diffuse_bsdf_out $tmp263 SR_gold_base 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:278
+#     BSDF sheen_layer_out = layer(sheen_bsdf_out, subsurface_mix_out);
+	functioncall	$const43 477 	%line{278} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp264 $const6 SR_gold_subsurface 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp265 ___693_diffuse_bsdf_out $tmp264 	%argrw{"wrr"}
+	mul		$tmp266 ___693_selected_subsurface_bsdf_out SR_gold_subsurface 	%argrw{"wrr"}
+	add		___693_subsurface_mix_out $tmp265 $tmp266 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:279
+#     BSDF transmission_mix_out = mix(sheen_layer_out, transmission_bsdf_out, transmission);
+	closure		___693_sheen_layer_out $const45 ___693_sheen_bsdf_out ___693_subsurface_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{279} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:280
+#     BSDF specular_layer_out = layer(specular_bsdf_out, transmission_mix_out);
+	functioncall	$const43 483 	%line{280} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp267 $const6 SR_gold_transmission 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp268 ___693_sheen_layer_out $tmp267 	%argrw{"wrr"}
+	mul		$tmp269 ___693_transmission_bsdf_out SR_gold_transmission 	%argrw{"wrr"}
+	add		___693_transmission_mix_out $tmp268 $tmp269 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:281
+#     BSDF metalness_mix_out = mix(specular_layer_out, metal_bsdf_out, metalness);
+	closure		___693_specular_layer_out $const45 ___693_specular_bsdf_out ___693_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{281} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:282
+#     BSDF thin_film_layer_attenuated_out = (coat_attenuation_out * metalness_mix_out);
+	functioncall	$const43 489 	%line{282} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp270 $const6 SR_gold_metalness 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp271 ___693_specular_layer_out $tmp270 	%argrw{"wrr"}
+	mul		$tmp272 ___693_metal_bsdf_out SR_gold_metalness 	%argrw{"wrr"}
+	add		___693_metalness_mix_out $tmp271 $tmp272 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:283
+#     BSDF coat_layer_out = layer(coat_bsdf_out, thin_film_layer_attenuated_out);
+	mul		___693_thin_film_layer_attenuated_out ___693_metalness_mix_out ___693_coat_attenuation_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{283} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:284
+#     EDF emission_edf_out = uniform_edf(emission_weight_out);
+	closure		___693_coat_layer_out $const45 ___693_coat_bsdf_out ___693_thin_film_layer_attenuated_out 	%line{284} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:285
+#     EDF coat_tinted_emission_edf_out = (coat_color * emission_edf_out);
+	closure		___693_emission_edf_out $const46 ___693_emission_weight_out 	%line{285} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:286
+#     EDF coat_emission_edf_out = null_closure;
+	mul		___693_coat_tinted_emission_edf_out ___693_emission_edf_out SR_gold_coat_color 	%line{286} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:287
+#     mx_generalized_schlick_edf(emission_color0_out, color(0.000000, 0.000000, 0.000000), 5.000000, coat_tinted_emission_edf_out, coat_emission_edf_out);
+	assign		___693_coat_emission_edf_out ___693_null_closure 	%line{287} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:288
+#     EDF blended_coat_emission_edf_out = mix(emission_edf_out, coat_emission_edf_out, coat);
+	functioncall	$const48 506 	%line{288} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:181
+#     color f = mx_fresnel_schlick(NdotV, color0, color90, exponent);
+	neg		$tmp275 I 	%line{181} %argrw{"wr"}
+	dot		$tmp274 N $tmp275 	%argrw{"wrr"}
+	fabs		___691_NdotV $tmp274 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:182
+#     result = base * f;
+	functioncall	$const49 505 	%line{182} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:175
+#     return mix(f0, f90, pow(x, exponent));
+	sub		$tmp276 $const6 ___691_NdotV 	%line{175} %argrw{"wrr"}
+	functioncall	$const10 503 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp277 $tmp276 $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___690_x $tmp277 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:176
+# }
+	pow		$tmp278 ___690_x $const47 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{176} %argrw{"wrr"}
+	mix		___691_f ___693_emission_color0_out $const14 $tmp278 	%argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:183
+# }
+	mul		___693_coat_emission_edf_out ___693_coat_tinted_emission_edf_out ___691_f 	%line{183} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:289
+#     surfaceshader shader_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const43 511 	%line{289} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp279 $const6 SR_gold_coat 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp280 ___693_emission_edf_out $tmp279 	%argrw{"wrr"}
+	mul		$tmp281 ___693_coat_emission_edf_out SR_gold_coat 	%argrw{"wrr"}
+	add		___693_blended_coat_emission_edf_out $tmp280 $tmp281 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:290
+#     mx_surface(coat_layer_out, blended_coat_emission_edf_out, opacity_luminance_float_out, 0, shader_constructor_out);
+	assign		___693_shader_constructor_out.bsdf ___693_null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{290} %argrw{"wr"}
+	assign		___693_shader_constructor_out.edf ___693_null_closure 	%argrw{"wr"}
+	assign		___693_shader_constructor_out.opacity $const6 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:291
+#     out = shader_constructor_out;
+	functioncall	$const50 521 	%line{291} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:188
+#     result.edf     = edf;
+	assign		___693_shader_constructor_out.bsdf ___693_coat_layer_out 	%line{188} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:189
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___693_shader_constructor_out.edf ___693_blended_coat_emission_edf_out 	%line{189} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:190
+# }
+	functioncall	$const10 520 	%line{190} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp282 ___693_opacity_luminance_float_out $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___693_shader_constructor_out.opacity $tmp282 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:190
+# }
+	assign		___693_shader_constructor_out.opacity ___693_shader_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{190} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:292
+# }
+	assign		SR_gold_out.bsdf ___693_shader_constructor_out.bsdf 	%line{292} %argrw{"wr"}
+	assign		SR_gold_out.edf ___693_shader_constructor_out.edf 	%argrw{"wr"}
+	assign		SR_gold_out.opacity ___693_shader_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:691
+#     out = Gold_out;
+	functioncall	$const51 534 	%line{691} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:297
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const10 528 	%line{297} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp283 SR_gold_out.opacity $const6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___694_opacity_weight $tmp283 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:298
+# }
+	add		$tmp284 SR_gold_out.bsdf SR_gold_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl"} %line{298} %argrw{"wrr"}
+	mul		$tmp285 $tmp284 ___694_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp286 $const52 	%argrw{"wr"}
+	sub		$tmp287 $const6 ___694_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp288 $tmp286 $tmp287 	%argrw{"wrr"}
+	add		Gold_out $tmp285 $tmp288 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\StandardSurface\\standard_surface_gold\\Gold.osl:692
+# }
+	assign		out Gold_out 	%line{692} %argrw{"wr"}
+	end

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709" fileprefix="boombox/">
+  <gltf_pbr name="SR_boombox" type="surfaceshader">
+    <input name="base_color" type="color3" output="out" nodegraph="top_level_nodes" />
+    <input name="alpha" type="float" output="out2" nodegraph="top_level_nodes" />
+    <input name="metallic" type="float" output="out5" nodegraph="top_level_nodes" />
+    <input name="roughness" type="float" output="out6" nodegraph="top_level_nodes" />
+    <input name="occlusion" type="float" output="out7" nodegraph="top_level_nodes" />
+    <input name="normal" type="vector3" nodegraph="top_level_nodes" output="out3" />
+    <input name="emissive" type="color3" nodegraph="top_level_nodes" output="out4" />
+  </gltf_pbr>
+  <surfacematerial name="Material_boombox" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_boombox" />
+  </surfacematerial>
+  <nodegraph name="top_level_nodes">
+    <gltf_colorimage name="image_basecolor" type="multioutput">
+      <input name="file" type="filename" value="BoomBox_baseColor.png" colorspace="srgb_texture" />
+    </gltf_colorimage>
+    <output name="out" type="color3" nodename="image_basecolor" output="outcolor" />
+    <output name="out2" type="float" nodename="image_basecolor" output="outa" />
+    <gltf_image name="image_orm" type="vector3">
+      <input name="file" type="filename" value="BoomBox_occlusionRoughnessMetallic.png" />
+    </gltf_image>
+    <gltf_normalmap name="image_normal" type="vector3">
+      <input name="file" type="filename" value="BoomBox_normal.png" />
+    </gltf_normalmap>
+    <output name="out3" type="vector3" nodename="image_normal" />
+    <gltf_image name="image_emission" type="color3">
+      <input name="file" type="filename" value="BoomBox_emissive.png" colorspace="srgb_texture" />
+    </gltf_image>
+    <output name="out4" type="color3" nodename="image_emission" />
+    <separate3 name="image_orm_channels" type="multioutput">
+      <input name="in" type="vector3" nodename="image_orm" />
+    </separate3>
+    <output name="out5" type="float" nodename="image_orm_channels" output="outz" />
+    <output name="out6" type="float" nodename="image_orm_channels" output="outy" />
+    <output name="out7" type="float" nodename="image_orm_channels" output="outx" />
+  </nodegraph>
+</materialx>

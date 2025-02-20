@@ -1,0 +1,433 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\TestSuite\pbrlib\surfaceshader\surface_ops\nodegraph1_out.oso
+surface nodegraph1_out	%meta{string,mtlx_category,"output"} %meta{string,mtlx_name,"out"} 
+param	string	geomprop_Nworld_space	"world"		%read{2,2} %write{2147483647,-1}
+param	string	geomprop_Tworld_space	"world"		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_Tworld_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	color	conductor_brdf1__artistic_ior_reflectivity	0.944000006 0.776000023 0.372999996		%meta{string,colorspace,"lin_rec709"}  %read{14,14} %write{2147483647,-1}
+param	color	conductor_brdf1__artistic_ior_edge_color	0.998000026 0.981000006 0.750999987		%meta{string,colorspace,"lin_rec709"}  %read{23,23} %write{2147483647,-1}
+param	color	Emission_EDF_color	0.200000003 1 0.200000003		%read{53,53} %write{2147483647,-1}
+param	struct vector2	roughness_dual1_roughness			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	roughness_dual1_roughness.x	0.200000003		%read{38,38} %write{2147483647,-1} %mystruct{roughness_dual1_roughness} %mystructfield{0}
+param	float	roughness_dual1_roughness.y	0.400000006		%read{43,46} %write{2147483647,-1} %mystruct{roughness_dual1_roughness} %mystructfield{1}
+param	float	sheen_brdf1_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,widget,"number"}  %read{83,83} %write{2147483647,-1}
+param	color	sheen_brdf1_color	1 1 1		%read{82,82} %write{2147483647,-1}
+param	float	sheen_brdf1_roughness	0.300000012		%meta{string,widget,"number"}  %read{82,82} %write{2147483647,-1}
+param	string	sheen_brdf1_mode	"conty_kulla"		%read{2147483647,-1} %write{2147483647,-1}
+param	float	subsurface_brdf1_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,widget,"number"}  %read{86,86} %write{2147483647,-1}
+param	color	subsurface_brdf1_color	0.180000007 0.180000007 0.180000007		%read{86,86} %write{2147483647,-1}
+param	color	subsurface_brdf1_radius	1 1 1		%read{87,87} %write{2147483647,-1}
+param	float	subsurface_brdf1_anisotropy	0		%meta{string,widget,"number"}  %read{87,87} %write{2147483647,-1}
+param	float	conductor_brdf1_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,widget,"number"}  %read{52,52} %write{2147483647,-1}
+param	struct vector2	conductor_brdf1_roughness			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	conductor_brdf1_roughness.x	0		%read{51,51} %write{2147483647,-1} %mystruct{conductor_brdf1_roughness} %mystructfield{0}
+param	float	conductor_brdf1_roughness.y	0		%read{51,51} %write{2147483647,-1} %mystruct{conductor_brdf1_roughness} %mystructfield{1}
+param	float	conductor_brdf1_thinfilm_thickness	0		%meta{string,unit,"nanometer"} %meta{string,widget,"number"}  %read{51,51} %write{2147483647,-1}
+param	float	conductor_brdf1_thinfilm_ior	1.5		%meta{string,widget,"number"}  %read{51,51} %write{2147483647,-1}
+param	string	conductor_brdf1_distribution	"ggx"		%read{51,51} %write{2147483647,-1}
+param	float	mix_edf1_mix	0.5		%meta{float,min,0} %meta{float,max,1} %meta{string,help,"Mixing weight, range [0, 1]."} %meta{string,widget,"number"}  %read{56,58} %write{2147483647,-1}
+param	float	SchlickBRDF__layer_top_weight	1		%meta{float,min,0} %meta{float,max,1} %meta{string,widget,"number"}  %read{81,81} %write{2147483647,-1}
+param	color	SchlickBRDF__layer_top_color0	1 1 1		%read{80,80} %write{2147483647,-1}
+param	color	SchlickBRDF__layer_top_color82	1 1 1		%read{2147483647,-1} %write{2147483647,-1}
+param	color	SchlickBRDF__layer_top_color90	1 1 1		%read{80,80} %write{2147483647,-1}
+param	float	SchlickBRDF__layer_top_exponent	5		%meta{string,widget,"number"}  %read{80,80} %write{2147483647,-1}
+param	float	SchlickBRDF__layer_top_thinfilm_thickness	0		%meta{string,unit,"nanometer"} %meta{string,widget,"number"}  %read{80,80} %write{2147483647,-1}
+param	float	SchlickBRDF__layer_top_thinfilm_ior	1.5		%meta{string,widget,"number"}  %read{80,80} %write{2147483647,-1}
+param	string	SchlickBRDF__layer_top_distribution	"ggx"		%read{80,80} %write{2147483647,-1}
+param	string	SchlickBRDF__layer_top_scatter_mode	"R"		%read{72,76} %write{2147483647,-1}
+param	float	mix_bsdf1_mix	0.5		%meta{float,min,0} %meta{float,max,1} %meta{string,help,"Mixing weight, range [0, 1]."} %meta{string,widget,"number"}  %read{89,91} %write{2147483647,-1}
+param	float	surface1_opacity	1		%meta{string,help,"Surface cutout opacity"} %meta{string,widget,"number"}  %read{67,67} %write{2147483647,-1}
+param	int	surface1_thin_walled	0		%meta{string,help,"Option to make the surface thin-walled."} %meta{string,widget,"checkBox"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	surface2_opacity	1		%meta{string,help,"Surface cutout opacity"} %meta{string,widget,"number"}  %read{101,101} %write{2147483647,-1}
+param	int	surface2_thin_walled	0		%meta{string,help,"Option to make the surface thin-walled."} %meta{string,widget,"checkBox"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	mix_surface1_mix	0.5		%meta{float,slidermin,0} %meta{float,slidermax,1} %meta{string,widget,"number"}  %read{109,120} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{130,130}
+global	normal	N	%read{2,4} %write{2147483647,-1}
+local	color	___669_r	%read{16,30} %write{15,15}
+local	color	___669_r_sqrt	%read{20,21} %write{16,16}
+local	color	___669_n_min	%read{23,23} %write{19,19}
+local	color	___669_n_max	%read{23,23} %write{22,22}
+local	color	___669_np1	%read{26,26} %write{24,24}
+local	color	___669_nm1	%read{28,28} %write{25,25}
+local	color	___669_k2	%read{33,34} %write{31,33}
+local	color	___674_reflection_tint	%read{80,80} %write{74,75}
+local	color	___674_transmission_tint	%read{80,80} %write{78,79}
+local	closure color	null_closure	%read{54,105} %write{0,0}
+local	vector	geomprop_Nworld_out1	%read{51,87} %write{2,2}
+local	vector	geomprop_Tworld_out1	%read{51,80} %write{7,7}
+local	color	conductor_brdf1__artistic_ior_ior	%read{24,51} %write{8,23}
+local	color	conductor_brdf1__artistic_ior_extinction	%read{51,51} %write{9,34}
+local	float	roughness_dual1_out.x	%read{42,80} %write{35,42} %mystruct{roughness_dual1_out} %mystructfield{0}
+local	float	roughness_dual1_out.y	%read{50,80} %write{36,50} %mystruct{roughness_dual1_out} %mystructfield{1}
+local	closure color	conductor_brdf1_out	%read{64,64} %write{52,52}
+local	closure color	Emission_EDF_out	%read{58,99} %write{53,53}
+local	closure color	mix_edf1_bg_tmp	%read{57,57} %write{54,54}
+local	closure color	mix_edf1_out	%read{65,65} %write{59,59}
+local	closure color	surface1_out.bsdf	%read{111,111} %write{60,64} %mystruct{surface1_out} %mystructfield{0}
+local	closure color	surface1_out.edf	%read{117,117} %write{61,65} %mystruct{surface1_out} %mystructfield{1}
+local	float	surface1_out.opacity	%read{69,120} %write{62,69} %mystruct{surface1_out} %mystructfield{2}
+local	closure color	SchlickBRDF__layer_top_out	%read{93,93} %write{70,81}
+local	closure color	sheen_brdf1_out	%read{91,91} %write{83,83}
+local	closure color	subsurface_brdf1_out	%read{90,90} %write{84,87}
+local	closure color	mix_bsdf1_out	%read{93,93} %write{92,92}
+local	closure color	SchlickBRDF_out	%read{98,98} %write{93,93}
+local	closure color	surface2_out.bsdf	%read{110,110} %write{94,98} %mystruct{surface2_out} %mystructfield{0}
+local	closure color	surface2_out.edf	%read{116,116} %write{95,99} %mystruct{surface2_out} %mystructfield{1}
+local	float	surface2_out.opacity	%read{103,120} %write{96,103} %mystruct{surface2_out} %mystructfield{2}
+local	closure color	mix_surface1_out.bsdf	%read{113,125} %write{104,113} %mystruct{mix_surface1_out} %mystructfield{0}
+local	closure color	mix_surface1_out.edf	%read{119,125} %write{105,119} %mystruct{mix_surface1_out} %mystructfield{1}
+local	float	mix_surface1_out.opacity	%read{121,123} %write{106,121} %mystruct{mix_surface1_out} %mystructfield{2}
+local	float	___677_opacity_weight	%read{126,128} %write{124,124}
+const	int	$const1	0		%read{0,4} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{1,1} %write{2147483647,-1}
+const	string	$const3	"common"		%read{2,2} %write{2147483647,-1}
+temp	vector	$tmp1	%read{7,7} %write{6,6}
+const	int	$const4	2		%read{3,3} %write{2147483647,-1}
+temp	float	$tmp2	%read{6,6} %write{3,3}
+const	float	$const5	0		%read{6,124} %write{2147483647,-1}
+temp	float	$tmp3	%read{5,5} %write{4,4}
+temp	float	$tmp4	%read{6,6} %write{5,5}
+const	color	$const6	0 0 0		%read{8,78} %write{2147483647,-1}
+const	string	$const7	"mx_artistic_ior"		%read{10,10} %write{2147483647,-1}
+temp	color	$tmp5	%read{15,15} %write{11,11}
+const	float	$const8	0.99		%read{12,12} %write{2147483647,-1}
+temp	color	$tmp6	%read{14,14} %write{12,12}
+const	string	$const9	"clamp"		%read{13,122} %write{2147483647,-1}
+temp	color	$tmp7	%read{15,15} %write{14,14}
+const	float	$const10	1		%read{17,128} %write{2147483647,-1}
+temp	color	$tmp8	%read{19,19} %write{17,17}
+temp	color	$tmp9	%read{19,19} %write{18,18}
+temp	color	$tmp10	%read{22,22} %write{20,20}
+temp	color	$tmp11	%read{22,22} %write{21,21}
+temp	color	$tmp12	%read{27,27} %write{26,26}
+temp	color	$tmp13	%read{29,29} %write{27,27}
+temp	color	$tmp14	%read{29,29} %write{28,28}
+temp	color	$tmp15	%read{31,31} %write{29,29}
+temp	color	$tmp16	%read{31,31} %write{30,30}
+temp	color	$tmp17	%read{33,33} %write{32,32}
+const	string	$const11	"mx_roughness_dual"		%read{37,37} %write{2147483647,-1}
+temp	float	$tmp18	%read{40,40} %write{38,38}
+const	float	$const12	1e-08		%read{41,49} %write{2147483647,-1}
+temp	float	$tmp19	%read{41,41} %write{40,40}
+temp	int	$tmp20	%read{44,44} %write{43,43}
+temp	float	$tmp21	%read{48,48} %write{46,46}
+temp	float	$tmp22	%read{49,49} %write{48,48}
+temp	closure color	$tmp23	%read{52,52} %write{51,51}
+const	string	$const13	"thinfilm_thickness"		%read{51,80} %write{2147483647,-1}
+const	string	$const14	"thinfilm_ior"		%read{51,80} %write{2147483647,-1}
+const	string	$const15	"conductor_bsdf"		%read{51,51} %write{2147483647,-1}
+const	string	$const16	"uniform_edf"		%read{53,53} %write{2147483647,-1}
+const	string	$const17	"mix"		%read{55,114} %write{2147483647,-1}
+temp	float	$tmp24	%read{57,57} %write{56,56}
+temp	closure color	$tmp25	%read{59,59} %write{57,57}
+temp	closure color	$tmp26	%read{59,59} %write{58,58}
+const	string	$const19	"mx_surface"		%read{63,97} %write{2147483647,-1}
+temp	float	$tmp27	%read{68,68} %write{67,67}
+const	string	$const20	"mx_generalized_schlick_bsdf"		%read{71,71} %write{2147483647,-1}
+const	string	$const21	"T"		%read{72,72} %write{2147483647,-1}
+temp	int	$tmp28	%read{73,73} %write{72,72}
+const	color	$const22	1 1 1		%read{75,79} %write{2147483647,-1}
+const	string	$const23	"R"		%read{76,76} %write{2147483647,-1}
+temp	int	$tmp29	%read{77,77} %write{76,76}
+temp	closure color	$tmp30	%read{81,81} %write{80,80}
+const	string	$const24	"generalized_schlick_bsdf"		%read{80,80} %write{2147483647,-1}
+temp	closure color	$tmp31	%read{83,83} %write{82,82}
+const	string	$const25	"sheen_bsdf"		%read{82,82} %write{2147483647,-1}
+const	string	$const26	"mx_subsurface_bsdf"		%read{85,85} %write{2147483647,-1}
+temp	color	$tmp32	%read{87,87} %write{86,86}
+const	string	$const27	"subsurface_bssrdf"		%read{87,87} %write{2147483647,-1}
+temp	float	$tmp33	%read{90,90} %write{89,89}
+temp	closure color	$tmp34	%read{92,92} %write{90,90}
+temp	closure color	$tmp35	%read{92,92} %write{91,91}
+const	string	$const28	"layer"		%read{93,93} %write{2147483647,-1}
+temp	float	$tmp36	%read{102,102} %write{101,101}
+const	string	$const29	"mx_mix_surfaceshader"		%read{107,107} %write{2147483647,-1}
+temp	float	$tmp37	%read{110,110} %write{109,109}
+temp	closure color	$tmp38	%read{112,112} %write{110,110}
+temp	closure color	$tmp39	%read{112,112} %write{111,111}
+temp	float	$tmp40	%read{116,116} %write{115,115}
+temp	closure color	$tmp41	%read{118,118} %write{116,116}
+temp	closure color	$tmp42	%read{118,118} %write{117,117}
+temp	float	$tmp43	%read{124,124} %write{123,123}
+temp	closure color	$tmp44	%read{126,126} %write{125,125}
+temp	closure color	$tmp45	%read{130,130} %write{126,126}
+temp	closure color	$tmp46	%read{129,129} %write{127,127}
+const	string	$const30	"transparent"		%read{127,127} %write{2147483647,-1}
+temp	float	$tmp47	%read{129,129} %write{128,128}
+temp	closure color	$tmp48	%read{130,130} %write{129,129}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:209
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space, N);
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{209} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:210
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	functioncall	$const2 3 	%line{210} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	geomprop_Nworld_out1 $const3 geomprop_Nworld_space N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:211
+#     color conductor_brdf1__artistic_ior_ior = color(0.0);
+	compref		$tmp2 N $const4 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{211} %argrw{"wrr"}
+	compref		$tmp3 N $const1 	%argrw{"wrr"}
+	neg		$tmp4 $tmp3 	%argrw{"wr"}
+	vector		$tmp1 $tmp2 $const5 $tmp4 	%argrw{"wrrr"}
+	normalize	geomprop_Tworld_out1 $tmp1 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:212
+#     color conductor_brdf1__artistic_ior_extinction = color(0.0);
+	assign		conductor_brdf1__artistic_ior_ior $const6 	%line{212} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:213
+#     mx_artistic_ior(conductor_brdf1__artistic_ior_reflectivity, conductor_brdf1__artistic_ior_edge_color, conductor_brdf1__artistic_ior_ior, conductor_brdf1__artistic_ior_extinction);
+	assign		conductor_brdf1__artistic_ior_extinction $const6 	%line{213} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:214
+#     vector2 roughness_dual1_out = vector2(0.0, 0.0);
+	functioncall	$const7 35 	%line{214} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:23
+#     color r_sqrt = sqrt(r);
+	assign		$tmp5 $const5 	%line{23} %argrw{"wr"}
+	assign		$tmp6 $const8 	%argrw{"wr"}
+	functioncall	$const9 16 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp7 conductor_brdf1__artistic_ior_reflectivity $tmp6 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___669_r $tmp7 $tmp5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:24
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___669_r_sqrt ___669_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{24} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:25
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp8 $const10 ___669_r 	%line{25} %argrw{"wrr"}
+	add		$tmp9 $const10 ___669_r 	%argrw{"wrr"}
+	div		___669_n_min $tmp8 $tmp9 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:26
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp10 $const10 ___669_r_sqrt 	%line{26} %argrw{"wrr"}
+	sub		$tmp11 $const10 ___669_r_sqrt 	%argrw{"wrr"}
+	div		___669_n_max $tmp10 $tmp11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:27
+# 
+	mix		conductor_brdf1__artistic_ior_ior ___669_n_max ___669_n_min conductor_brdf1__artistic_ior_edge_color 	%line{27} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:29
+#     color nm1 = ior - 1.0;
+	add		___669_np1 conductor_brdf1__artistic_ior_ior $const10 	%line{29} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:30
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___669_nm1 conductor_brdf1__artistic_ior_ior $const10 	%line{30} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:31
+#     k2 = max(k2, 0.0);
+	mul		$tmp12 ___669_np1 ___669_np1 	%line{31} %argrw{"wrr"}
+	mul		$tmp13 $tmp12 ___669_r 	%argrw{"wrr"}
+	mul		$tmp14 ___669_nm1 ___669_nm1 	%argrw{"wrr"}
+	sub		$tmp15 $tmp13 $tmp14 	%argrw{"wrr"}
+	sub		$tmp16 $const10 ___669_r 	%argrw{"wrr"}
+	div		___669_k2 $tmp15 $tmp16 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:32
+#     extinction = sqrt(k2);
+	assign		$tmp17 $const5 	%line{32} %argrw{"wr"}
+	max		___669_k2 ___669_k2 $tmp17 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:33
+# }
+	sqrt		conductor_brdf1__artistic_ior_extinction ___669_k2 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:215
+#     mx_roughness_dual(roughness_dual1_roughness, roughness_dual1_out);
+	assign		roughness_dual1_out.x $const5 	%line{215} %argrw{"wr"}
+	assign		roughness_dual1_out.y $const5 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:216
+#     BSDF conductor_brdf1_out = conductor_brdf1_weight * conductor_bsdf(geomprop_Nworld_out1, geomprop_Tworld_out1, conductor_brdf1_roughness.x, conductor_brdf1_roughness.y, conductor_brdf1__artistic_ior_ior, conductor_brdf1__artistic_ior_extinction, conductor_brdf1_distribution, "thinfilm_thickness", conductor_brdf1_thinfilm_thickness, "thinfilm_ior", conductor_brdf1_thinfilm_ior);
+	functioncall	$const11 51 	%line{216} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:38
+#     if (roughness.y < 0.0)
+	mul		$tmp18 roughness_dual1_roughness.x roughness_dual1_roughness.x 	%line{38} %argrw{"wrr"}
+	functioncall	$const9 42 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp19 $tmp18 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		roughness_dual1_out.x $tmp19 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:38
+#     if (roughness.y < 0.0)
+	assign		roughness_dual1_out.x roughness_dual1_out.x 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{38} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:39
+#     {
+	lt		$tmp20 roughness_dual1_roughness.y $const5 	%line{39} %argrw{"wrr"}
+	if		$tmp20 46 51 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:41
+#     }
+	assign		roughness_dual1_out.y roughness_dual1_out.x 	%line{41} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:45
+#     }
+	mul		$tmp21 roughness_dual1_roughness.y roughness_dual1_roughness.y 	%line{45} %argrw{"wrr"}
+	functioncall	$const9 50 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp22 $tmp21 $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		roughness_dual1_out.y $tmp22 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:45
+#     }
+	assign		roughness_dual1_out.y roughness_dual1_out.y 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{45} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:217
+#     EDF Emission_EDF_out = uniform_edf(Emission_EDF_color);
+	closure		$tmp23 $const15 geomprop_Nworld_out1 geomprop_Tworld_out1 conductor_brdf1_roughness.x conductor_brdf1_roughness.y conductor_brdf1__artistic_ior_ior conductor_brdf1__artistic_ior_extinction conductor_brdf1_distribution $const13 conductor_brdf1_thinfilm_thickness $const14 conductor_brdf1_thinfilm_ior 	%line{217} %argrw{"wrrrrrrrrrrrr"}
+	mul		conductor_brdf1_out $tmp23 conductor_brdf1_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:218
+#     EDF mix_edf1_bg_tmp = null_closure;
+	closure		Emission_EDF_out $const16 Emission_EDF_color 	%line{218} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:219
+#     EDF mix_edf1_out = mix(mix_edf1_bg_tmp, Emission_EDF_out, mix_edf1_mix);
+	assign		mix_edf1_bg_tmp null_closure 	%line{219} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:220
+#     surfaceshader surface1_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const17 60 	%line{220} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp24 $const10 mix_edf1_mix 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp25 mix_edf1_bg_tmp $tmp24 	%argrw{"wrr"}
+	mul		$tmp26 Emission_EDF_out mix_edf1_mix 	%argrw{"wrr"}
+	add		mix_edf1_out $tmp25 $tmp26 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:221
+#     mx_surface(conductor_brdf1_out, mix_edf1_out, surface1_opacity, surface1_thin_walled, surface1_out);
+	assign		surface1_out.bsdf null_closure 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{221} %argrw{"wr"}
+	assign		surface1_out.edf null_closure 	%argrw{"wr"}
+	assign		surface1_out.opacity $const10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:222
+#     BSDF SchlickBRDF__layer_top_out = null_closure;
+	functioncall	$const19 70 	%line{222} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:67
+#     result.edf     = edf;
+	assign		surface1_out.bsdf conductor_brdf1_out 	%line{67} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:68
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		surface1_out.edf mix_edf1_out 	%line{68} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:69
+# }
+	functioncall	$const9 69 	%line{69} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp27 surface1_opacity $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		surface1_out.opacity $tmp27 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:69
+# }
+	assign		surface1_out.opacity surface1_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{69} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:223
+#     mx_generalized_schlick_bsdf(SchlickBRDF__layer_top_weight, SchlickBRDF__layer_top_color0, SchlickBRDF__layer_top_color82, SchlickBRDF__layer_top_color90, SchlickBRDF__layer_top_exponent, roughness_dual1_out, SchlickBRDF__layer_top_thinfilm_thickness, SchlickBRDF__layer_top_thinfilm_ior, geomprop_Nworld_out1, geomprop_Tworld_out1, SchlickBRDF__layer_top_distribution, SchlickBRDF__layer_top_scatter_mode, SchlickBRDF__layer_top_out);
+	assign		SchlickBRDF__layer_top_out null_closure 	%line{223} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:224
+#     BSDF sheen_brdf1_out = sheen_brdf1_weight * sheen_bsdf(geomprop_Nworld_out1, sheen_brdf1_color, sheen_brdf1_roughness);
+	functioncall	$const20 82 	%line{224} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:60
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp28 SchlickBRDF__layer_top_scatter_mode $const21 	%line{60} %argrw{"wrr"}
+	if		$tmp28 75 76 	%argrw{"r"}
+	assign		___674_reflection_tint $const6 	%argrw{"wr"}
+	assign		___674_reflection_tint $const22 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:61
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp29 SchlickBRDF__layer_top_scatter_mode $const23 	%line{61} %argrw{"wrr"}
+	if		$tmp29 79 80 	%argrw{"r"}
+	assign		___674_transmission_tint $const6 	%argrw{"wr"}
+	assign		___674_transmission_tint $const22 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:62
+# }
+	closure		$tmp30 $const24 geomprop_Nworld_out1 geomprop_Tworld_out1 ___674_reflection_tint ___674_transmission_tint roughness_dual1_out.x roughness_dual1_out.y SchlickBRDF__layer_top_color0 SchlickBRDF__layer_top_color90 SchlickBRDF__layer_top_exponent SchlickBRDF__layer_top_distribution $const13 SchlickBRDF__layer_top_thinfilm_thickness $const14 SchlickBRDF__layer_top_thinfilm_ior 	%line{62} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		SchlickBRDF__layer_top_out $tmp30 SchlickBRDF__layer_top_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:225
+#     BSDF subsurface_brdf1_out = null_closure;
+	closure		$tmp31 $const25 geomprop_Nworld_out1 sheen_brdf1_color sheen_brdf1_roughness 	%line{225} %argrw{"wrrrr"}
+	mul		sheen_brdf1_out $tmp31 sheen_brdf1_weight 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:226
+#     mx_subsurface_bsdf(subsurface_brdf1_weight, subsurface_brdf1_color, subsurface_brdf1_radius, subsurface_brdf1_anisotropy, geomprop_Nworld_out1, subsurface_brdf1_out);
+	assign		subsurface_brdf1_out null_closure 	%line{226} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:227
+#     BSDF mix_bsdf1_out = mix(subsurface_brdf1_out, sheen_brdf1_out, mix_bsdf1_mix);
+	functioncall	$const26 88 	%line{227} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:54
+# #endif
+	mul		$tmp32 subsurface_brdf1_weight subsurface_brdf1_color 	%line{54} %argrw{"wrr"}
+	closure		subsurface_brdf1_out $const27 geomprop_Nworld_out1 $tmp32 $const10 subsurface_brdf1_radius subsurface_brdf1_anisotropy 	%argrw{"wrrrrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:228
+#     BSDF SchlickBRDF_out = layer(SchlickBRDF__layer_top_out, mix_bsdf1_out);
+	functioncall	$const17 93 	%line{228} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp33 $const10 mix_bsdf1_mix 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp34 subsurface_brdf1_out $tmp33 	%argrw{"wrr"}
+	mul		$tmp35 sheen_brdf1_out mix_bsdf1_mix 	%argrw{"wrr"}
+	add		mix_bsdf1_out $tmp34 $tmp35 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:229
+#     surfaceshader surface2_out = surfaceshader(null_closure, null_closure, 1.0);
+	closure		SchlickBRDF_out $const28 SchlickBRDF__layer_top_out mix_bsdf1_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{229} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:230
+#     mx_surface(SchlickBRDF_out, Emission_EDF_out, surface2_opacity, surface2_thin_walled, surface2_out);
+	assign		surface2_out.bsdf null_closure 	%line{230} %argrw{"wr"}
+	assign		surface2_out.edf null_closure 	%argrw{"wr"}
+	assign		surface2_out.opacity $const10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:231
+#     surfaceshader mix_surface1_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const19 104 	%line{231} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:67
+#     result.edf     = edf;
+	assign		surface2_out.bsdf SchlickBRDF_out 	%line{67} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:68
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		surface2_out.edf Emission_EDF_out 	%line{68} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:69
+# }
+	functioncall	$const9 103 	%line{69} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp36 surface2_opacity $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		surface2_out.opacity $tmp36 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:69
+# }
+	assign		surface2_out.opacity surface2_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{69} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:232
+#     mx_mix_surfaceshader(surface1_out, surface2_out, mix_surface1_mix, mix_surface1_out);
+	assign		mix_surface1_out.bsdf null_closure 	%line{232} %argrw{"wr"}
+	assign		mix_surface1_out.edf null_closure 	%argrw{"wr"}
+	assign		mix_surface1_out.opacity $const10 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:233
+#     {
+	functioncall	$const29 122 	%line{233} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:74
+#     result.edf = mix(bg.edf, fg.edf, w);
+	functioncall	$const17 113 	%line{74} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp37 $const10 mix_surface1_mix 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp38 surface2_out.bsdf $tmp37 	%argrw{"wrr"}
+	mul		$tmp39 surface1_out.bsdf mix_surface1_mix 	%argrw{"wrr"}
+	add		mix_surface1_out.bsdf $tmp38 $tmp39 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:74
+#     result.edf = mix(bg.edf, fg.edf, w);
+	assign		mix_surface1_out.bsdf mix_surface1_out.bsdf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{74} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:75
+#     result.opacity = mix(bg.opacity, fg.opacity, w);
+	functioncall	$const17 119 	%line{75} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp40 $const10 mix_surface1_mix 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp41 surface2_out.edf $tmp40 	%argrw{"wrr"}
+	mul		$tmp42 surface1_out.edf mix_surface1_mix 	%argrw{"wrr"}
+	add		mix_surface1_out.edf $tmp41 $tmp42 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:75
+#     result.opacity = mix(bg.opacity, fg.opacity, w);
+	assign		mix_surface1_out.edf mix_surface1_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{75} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:76
+# }
+	mix		mix_surface1_out.opacity surface2_out.opacity surface1_out.opacity mix_surface1_mix 	%line{76} %argrw{"wrrr"}
+	assign		mix_surface1_out.opacity mix_surface1_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:235
+#         out = (mix_surface1_out.bsdf + mix_surface1_out.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const9 125 	%line{235} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp43 mix_surface1_out.opacity $const10 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___677_opacity_weight $tmp43 $const5 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl:236
+#     }
+	add		$tmp44 mix_surface1_out.bsdf mix_surface1_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\pbrlib\\surfaceshader\\surface_ops\\nodegraph1_out.osl"} %line{236} %argrw{"wrr"}
+	mul		$tmp45 $tmp44 ___677_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp46 $const30 	%argrw{"wr"}
+	sub		$tmp47 $const10 ___677_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp48 $tmp46 $tmp47 	%argrw{"wrr"}
+	add		out $tmp45 $tmp48 	%argrw{"wrr"}
+	end

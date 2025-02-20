@@ -1,0 +1,1533 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.13.3.0dev
+# options: -q -ID:\Work\materialx\OSL_ILM\bin\shaders -o D:\Work\materialx\bernard_MaterialX_3\build\bin\resources\Materials\Examples\UsdPreviewSurface\usd_preview_surface_brass_tiled\USD_Tiled_Brass.oso
+shader USD_Tiled_Brass	%meta{string,mtlx_category,"surfacematerial"} %meta{string,mtlx_name,"USD_Tiled_Brass"} 
+param	struct surfaceshader	backsurfaceshader			%read{2147483647,-1} %write{2147483647,-1} %struct{"surfaceshader"} %structfields{bsdf,edf,opacity} %structfieldtypes{"CCf"} %structnfields{3}
+param	closure color	backsurfaceshader.bsdf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{0}
+param	closure color	backsurfaceshader.edf			%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{1}
+param	float	backsurfaceshader.opacity	1		%read{2147483647,-1} %write{2147483647,-1} %mystruct{backsurfaceshader} %mystructfield{2}
+param	vector	displacementshader1	0 0 0		%read{2147483647,-1} %write{2147483647,-1}
+param	int	geomprop_UV0_index	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	image_color_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Images/brass_color.jpg"		%meta{string,widget,"filename"}  %read{1,1} %write{2147483647,-1}
+param	string	image_color_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{2,2} %write{2147483647,-1}
+param	color	image_color_default	0 0 0		%read{55,57} %write{2147483647,-1}
+param	struct vector2	image_color_uvtiling			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_color_uvtiling.x	1		%read{10,10} %write{2147483647,-1} %mystruct{image_color_uvtiling} %mystructfield{0} %derivs
+param	float	image_color_uvtiling.y	1		%read{11,11} %write{2147483647,-1} %mystruct{image_color_uvtiling} %mystructfield{1} %derivs
+param	struct vector2	image_color_uvoffset			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_color_uvoffset.x	0		%read{13,13} %write{2147483647,-1} %mystruct{image_color_uvoffset} %mystructfield{0} %derivs
+param	float	image_color_uvoffset.y	0		%read{14,14} %write{2147483647,-1} %mystruct{image_color_uvoffset} %mystructfield{1} %derivs
+param	struct vector2	image_color_realworldimagesize			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_color_realworldimagesize.x	1		%read{16,16} %write{2147483647,-1} %mystruct{image_color_realworldimagesize} %mystructfield{0} %derivs
+param	float	image_color_realworldimagesize.y	1		%read{17,17} %write{2147483647,-1} %mystruct{image_color_realworldimagesize} %mystructfield{1} %derivs
+param	struct vector2	image_color_realworldtilesize			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_color_realworldtilesize.x	1		%read{19,19} %write{2147483647,-1} %mystruct{image_color_realworldtilesize} %mystructfield{0} %derivs
+param	float	image_color_realworldtilesize.y	1		%read{20,20} %write{2147483647,-1} %mystruct{image_color_realworldtilesize} %mystructfield{1} %derivs
+param	string	image_color_filtertype	"linear"		%read{61,61} %write{2147483647,-1}
+param	string	image_color_framerange	""		%read{2147483647,-1} %write{2147483647,-1}
+param	int	image_color_frameoffset	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	image_color_frameendaction	"constant"		%read{2147483647,-1} %write{2147483647,-1}
+param	string	image_roughness_file	"D:/Work/materialx/bernard_MaterialX_3/build/bin/resources/Images/brass_roughness.jpg"		%meta{string,widget,"filename"}  %read{3,3} %write{2147483647,-1}
+param	string	image_roughness_file_colorspace	""		%meta{string,widget,"colorspace"}  %read{4,4} %write{2147483647,-1}
+param	float	image_roughness_default	0		%meta{string,widget,"number"}  %read{111,113} %write{2147483647,-1}
+param	struct vector2	image_roughness_uvtiling			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_roughness_uvtiling.x	1		%read{66,66} %write{2147483647,-1} %mystruct{image_roughness_uvtiling} %mystructfield{0} %derivs
+param	float	image_roughness_uvtiling.y	1		%read{67,67} %write{2147483647,-1} %mystruct{image_roughness_uvtiling} %mystructfield{1} %derivs
+param	struct vector2	image_roughness_uvoffset			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_roughness_uvoffset.x	0		%read{69,69} %write{2147483647,-1} %mystruct{image_roughness_uvoffset} %mystructfield{0} %derivs
+param	float	image_roughness_uvoffset.y	0		%read{70,70} %write{2147483647,-1} %mystruct{image_roughness_uvoffset} %mystructfield{1} %derivs
+param	struct vector2	image_roughness_realworldimagesize			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_roughness_realworldimagesize.x	1		%read{72,72} %write{2147483647,-1} %mystruct{image_roughness_realworldimagesize} %mystructfield{0} %derivs
+param	float	image_roughness_realworldimagesize.y	1		%read{73,73} %write{2147483647,-1} %mystruct{image_roughness_realworldimagesize} %mystructfield{1} %derivs
+param	struct vector2	image_roughness_realworldtilesize			%read{2147483647,-1} %write{2147483647,-1} %struct{"vector2"} %structfields{x,y} %structfieldtypes{"ff"} %structnfields{2}
+param	float	image_roughness_realworldtilesize.x	1		%read{75,75} %write{2147483647,-1} %mystruct{image_roughness_realworldtilesize} %mystructfield{0} %derivs
+param	float	image_roughness_realworldtilesize.y	1		%read{76,76} %write{2147483647,-1} %mystruct{image_roughness_realworldtilesize} %mystructfield{1} %derivs
+param	string	image_roughness_filtertype	"linear"		%read{117,117} %write{2147483647,-1}
+param	string	image_roughness_framerange	""		%read{2147483647,-1} %write{2147483647,-1}
+param	int	image_roughness_frameoffset	0		%meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	string	image_roughness_frameendaction	"constant"		%read{2147483647,-1} %write{2147483647,-1}
+param	color	SR_brass1_emissiveColor	0 0 0		%meta{color,min,0,0,0} %meta{color,slidermax,1,1,1} %meta{string,label,"Emissive Color"}  %read{503,503} %write{2147483647,-1}
+param	int	SR_brass1_useSpecularWorkflow	0		%meta{int,min,0} %meta{int,max,1} %meta{int,sensitivity,1} %meta{string,label,"Use Specular Workflow"} %meta{string,widget,"number"}  %read{251,251} %write{2147483647,-1}
+param	color	SR_brass1_specularColor	0 0 0		%meta{color,min,0,0,0} %meta{color,max,1,1,1} %meta{string,label,"Specular Color"}  %read{448,448} %write{2147483647,-1}
+param	float	SR_brass1_metallic	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Metallic"} %meta{string,widget,"number"}  %read{250,495} %write{2147483647,-1}
+param	float	SR_brass1_clearcoat	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat"} %meta{string,widget,"number"}  %read{437,437} %write{2147483647,-1}
+param	float	SR_brass1_clearcoatRoughness	0.00999999978		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Clearcoat Roughness"} %meta{string,widget,"number"}  %read{199,199} %write{2147483647,-1}
+param	float	SR_brass1_opacity	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Opacity"} %meta{string,widget,"number"}  %read{260,307} %write{2147483647,-1}
+param	int	SR_brass1_opacityMode	0		%meta{string,label,"Opacity Mode"} %meta{string,widget,"number"}  %read{340,412} %write{2147483647,-1}
+param	float	SR_brass1_opacityThreshold	0		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Opacity Threshold"} %meta{string,widget,"number"}  %read{255,293} %write{2147483647,-1}
+param	float	SR_brass1_ior	1.5		%meta{float,min,0} %meta{float,slidermin,1} %meta{float,slidermax,3} %meta{string,label,"Index of Refraction"} %meta{string,widget,"number"}  %read{193,465} %write{2147483647,-1}
+param	vector	SR_brass1_normal	0 0 1		%meta{vector,min,-1,-1,-1} %meta{vector,max,1,1,1} %meta{string,label,"Normal"}  %read{227,227} %write{2147483647,-1}
+param	float	SR_brass1_displacement	0		%meta{string,label,"Displacement"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+param	float	SR_brass1_occlusion	1		%meta{float,min,0} %meta{float,max,1} %meta{string,label,"Occlusion"} %meta{string,widget,"number"}  %read{2147483647,-1} %write{2147483647,-1}
+oparam	closure color	out			%read{2147483647,-1} %write{527,527}
+global	normal	N	%read{187,224} %write{2147483647,-1}
+global	float	u	%read{5,5} %write{2147483647,-1} %derivs
+global	float	v	%read{6,6} %write{2147483647,-1} %derivs
+local	color	___670_missingColor	%read{61,61} %write{57,57}
+local	float	___670_st.x	%read{61,61} %write{59,59} %mystruct{___670_st} %mystructfield{0} %derivs
+local	float	___670_st.y	%read{61,61} %write{60,60} %mystruct{___670_st} %mystructfield{1} %derivs
+local	float	___672_N_mult_color3_out.x	%read{13,13} %write{10,10} %mystruct{___672_N_mult_color3_out} %mystructfield{0} %derivs
+local	float	___672_N_mult_color3_out.y	%read{14,14} %write{11,11} %mystruct{___672_N_mult_color3_out} %mystructfield{1} %derivs
+local	float	___672_N_sub_color3_out.x	%read{16,16} %write{13,13} %mystruct{___672_N_sub_color3_out} %mystructfield{0} %derivs
+local	float	___672_N_sub_color3_out.y	%read{17,17} %write{14,14} %mystruct{___672_N_sub_color3_out} %mystructfield{1} %derivs
+local	float	___672_N_divtilesize_color3_out.x	%read{19,19} %write{16,16} %mystruct{___672_N_divtilesize_color3_out} %mystructfield{0} %derivs
+local	float	___672_N_divtilesize_color3_out.y	%read{20,20} %write{17,17} %mystruct{___672_N_divtilesize_color3_out} %mystructfield{1} %derivs
+local	float	___672_N_multtilesize_color3_out.x	%read{29,59} %write{19,19} %mystruct{___672_N_multtilesize_color3_out} %mystructfield{0} %derivs
+local	float	___672_N_multtilesize_color3_out.y	%read{44,60} %write{20,20} %mystruct{___672_N_multtilesize_color3_out} %mystructfield{1} %derivs
+local	color	___672_N_img_color3_out	%read{62,62} %write{21,61}
+local	color	___673_missingColor	%read{117,117} %write{113,113}
+local	float	___673_st.x	%read{117,117} %write{115,115} %mystruct{___673_st} %mystructfield{0} %derivs
+local	float	___673_st.y	%read{117,117} %write{116,116} %mystruct{___673_st} %mystructfield{1} %derivs
+local	color	___673_rgb	%read{118,118} %write{117,117}
+local	float	___675_N_mult_float_out.x	%read{69,69} %write{66,66} %mystruct{___675_N_mult_float_out} %mystructfield{0} %derivs
+local	float	___675_N_mult_float_out.y	%read{70,70} %write{67,67} %mystruct{___675_N_mult_float_out} %mystructfield{1} %derivs
+local	float	___675_N_sub_float_out.x	%read{72,72} %write{69,69} %mystruct{___675_N_sub_float_out} %mystructfield{0} %derivs
+local	float	___675_N_sub_float_out.y	%read{73,73} %write{70,70} %mystruct{___675_N_sub_float_out} %mystructfield{1} %derivs
+local	float	___675_N_divtilesize_float_out.x	%read{75,75} %write{72,72} %mystruct{___675_N_divtilesize_float_out} %mystructfield{0} %derivs
+local	float	___675_N_divtilesize_float_out.y	%read{76,76} %write{73,73} %mystruct{___675_N_divtilesize_float_out} %mystructfield{1} %derivs
+local	float	___675_N_multtilesize_float_out.x	%read{85,115} %write{75,75} %mystruct{___675_N_multtilesize_float_out} %mystructfield{0} %derivs
+local	float	___675_N_multtilesize_float_out.y	%read{100,116} %write{76,76} %mystruct{___675_N_multtilesize_float_out} %mystructfield{1} %derivs
+local	float	___675_N_img_float_out	%read{119,119} %write{77,118}
+local	int	___676_N_extract_0_index_tmp	%read{132,132} %write{130,130}
+local	float	___676_N_extract_0_out	%read{139,139} %write{132,132}
+local	int	___676_N_extract_1_index_tmp	%read{135,135} %write{133,133}
+local	float	___676_N_extract_1_out	%read{140,140} %write{135,135}
+local	int	___676_N_extract_2_index_tmp	%read{138,138} %write{136,136}
+local	float	___676_N_extract_2_out	%read{141,141} %write{138,138}
+local	float	___677_bias_in2_tmp	%read{123,123} %write{122,122}
+local	color	___677_bias_out	%read{144,144} %write{123,123}
+local	float	___677_linSeg_in2_tmp	%read{125,125} %write{124,124}
+local	color	___677_linSeg_out	%read{180,180} %write{125,125}
+local	float	___677_colorSeparate_outr	%read{148,148} %write{126,139}
+local	float	___677_colorSeparate_outg	%read{158,158} %write{127,140}
+local	float	___677_colorSeparate_outb	%read{168,168} %write{128,141}
+local	float	___677_max_in2_tmp	%read{143,143} %write{142,142}
+local	color	___677_max_out	%read{176,176} %write{144,144}
+local	float	___677_isAboveR_value2_tmp	%read{148,148} %write{145,145}
+local	float	___677_isAboveR_in1_tmp	%read{151,151} %write{146,146}
+local	float	___677_isAboveR_in2_tmp	%read{153,153} %write{147,147}
+local	float	___677_isAboveR_out	%read{177,177} %write{151,153}
+local	float	___677_isAboveG_value2_tmp	%read{158,158} %write{155,155}
+local	float	___677_isAboveG_in1_tmp	%read{161,161} %write{156,156}
+local	float	___677_isAboveG_in2_tmp	%read{163,163} %write{157,157}
+local	float	___677_isAboveG_out	%read{177,177} %write{161,163}
+local	float	___677_isAboveB_value2_tmp	%read{168,168} %write{165,165}
+local	float	___677_isAboveB_in1_tmp	%read{171,171} %write{166,166}
+local	float	___677_isAboveB_in2_tmp	%read{173,173} %write{167,167}
+local	float	___677_isAboveB_out	%read{177,177} %write{171,173}
+local	float	___677_scale_in2_tmp	%read{176,176} %write{175,175}
+local	color	___677_scale_out	%read{179,179} %write{176,176}
+local	color	___677_isAbove_out	%read{180,180} %write{177,177}
+local	float	___677_powSeg_in2_tmp	%read{179,179} %write{178,178}
+local	color	___677_powSeg_out	%read{180,180} %write{179,179}
+local	color	___677_mix_out	%read{181,181} %write{180,180}
+local	float	___678_roughness_sqr	%read{210,248} %write{202,234}
+local	float	___679_aspect	%read{210,245} %write{209,241}
+local	color	___681_r	%read{270,284} %write{269,269}
+local	color	___681_r_sqrt	%read{274,275} %write{270,270}
+local	color	___681_n_min	%read{277,277} %write{273,273}
+local	color	___681_n_max	%read{277,277} %write{276,276}
+local	color	___681_np1	%read{280,280} %write{278,278}
+local	color	___681_nm1	%read{282,282} %write{279,279}
+local	color	___681_k2	%read{287,288} %write{285,287}
+local	vector	___682_decodedValue	%read{325,332} %write{322,324}
+local	int	___686_ifgreater_10_value1_tmp	%read{340,340} %write{338,338}
+local	float	___686_ifgreater_10_in2_tmp	%read{345,345} %write{339,339}
+local	float	___686_ifgreater_10_out	%read{353,353} %write{343,345}
+local	int	___686_ifgreater_9_value1_tmp	%read{348,348} %write{347,347}
+local	float	___686_ifgreater_9_out	%read{361,361} %write{351,353}
+local	int	___686_ifgreater_8_value1_tmp	%read{356,356} %write{355,355}
+local	float	___686_ifgreater_8_out	%read{369,369} %write{359,361}
+local	int	___686_ifgreater_7_value1_tmp	%read{364,364} %write{363,363}
+local	float	___686_ifgreater_7_out	%read{377,377} %write{367,369}
+local	int	___686_ifgreater_6_value1_tmp	%read{372,372} %write{371,371}
+local	float	___686_ifgreater_6_out	%read{385,385} %write{375,377}
+local	int	___686_ifgreater_5_value1_tmp	%read{380,380} %write{379,379}
+local	float	___686_ifgreater_5_out	%read{393,393} %write{383,385}
+local	int	___686_ifgreater_4_value1_tmp	%read{388,388} %write{387,387}
+local	float	___686_ifgreater_4_out	%read{401,401} %write{391,393}
+local	int	___686_ifgreater_3_value1_tmp	%read{396,396} %write{395,395}
+local	float	___686_ifgreater_3_out	%read{409,409} %write{399,401}
+local	int	___686_ifgreater_2_value1_tmp	%read{404,404} %write{403,403}
+local	float	___686_ifgreater_2_out	%read{417,417} %write{407,409}
+local	int	___686_ifgreater_1_value1_tmp	%read{412,412} %write{411,411}
+local	float	___686_ifgreater_1_out	%read{419,419} %write{415,417}
+local	color	___687_combine_out	%read{423,423} %write{422,422}
+local	color	___688_reflection_tint	%read{436,489} %write{430,484}
+local	color	___688_transmission_tint	%read{436,489} %write{434,488}
+local	color	___689_reflection_tint	%read{465,465} %write{459,460}
+local	color	___689_transmission_tint	%read{465,465} %write{463,464}
+local	closure color	___691_null_closure	%read{426,505} %write{186,186}
+local	vector	___691_geomprop_Tworld_out1	%read{326,489} %write{191,191}
+local	float	___691_one_minus_ior_in1_tmp	%read{193,193} %write{192,192}
+local	float	___691_one_minus_ior_out	%read{300,300} %write{193,193}
+local	float	___691_one_plus_ior_in1_tmp	%read{195,195} %write{194,194}
+local	float	___691_one_plus_ior_out	%read{300,300} %write{195,195}
+local	float	___691_coat_roughness_out.x	%read{212,436} %write{196,215} %mystruct{___691_coat_roughness_out} %mystructfield{0}
+local	float	___691_coat_roughness_out.y	%read{214,436} %write{197,216} %mystruct{___691_coat_roughness_out} %mystructfield{1}
+local	string	___691_geomprop_Nworld_space_tmp	%read{219,219} %write{217,217}
+local	vector	___691_geomprop_Nworld_out1	%read{333,333} %write{219,219}
+local	vector	___691_geomprop_Bworld_out1	%read{329,329} %write{225,225}
+local	float	___691_scale_normal_in2_tmp	%read{227,227} %write{226,226}
+local	vector	___691_scale_normal_out	%read{302,302} %write{227,227}
+local	float	___691_specular_roughness_out.x	%read{244,489} %write{228,247} %mystruct{___691_specular_roughness_out} %mystructfield{0}
+local	float	___691_specular_roughness_out.y	%read{246,489} %write{229,248} %mystruct{___691_specular_roughness_out} %mystructfield{1}
+local	float	___691_inverse_metalness_in1_tmp	%read{250,250} %write{249,249}
+local	float	___691_inverse_metalness_out	%read{304,304} %write{250,250}
+local	float	___691_use_specular_workflow_float_out	%read{304,500} %write{252,252}
+local	float	___691_transmission_mix_amount_value2_tmp	%read{255,255} %write{253,253}
+local	float	___691_transmission_mix_amount_in1_tmp	%read{258,258} %write{254,254}
+local	float	___691_transmission_mix_amount_out	%read{468,470} %write{258,260}
+local	color	___691_artistic_ior_ior	%read{278,477} %write{262,277}
+local	color	___691_artistic_ior_extinction	%read{477,477} %write{263,288}
+local	color	___691_specular_color_metallic_bg_tmp	%read{290,290} %write{289,289}
+local	color	___691_specular_color_metallic_out	%read{424,489} %write{290,290}
+local	float	___691_cutout_opacity_in1_tmp	%read{296,296} %write{291,291}
+local	float	___691_cutout_opacity_in2_tmp	%read{298,298} %write{292,292}
+local	float	___691_cutout_opacity_out	%read{312,415} %write{296,298}
+local	float	___691_R_out	%read{314,314} %write{300,300}
+local	float	___691_bias_normal_in2_tmp	%read{302,302} %write{301,301}
+local	vector	___691_bias_normal_out	%read{320,323} %write{302,302}
+local	float	___691_diffuse_bsdf_weight_fg_tmp	%read{304,304} %write{303,303}
+local	float	___691_diffuse_bsdf_weight_out	%read{452,452} %write{304,304}
+local	float	___691_opacity_presence_value2_tmp	%read{307,307} %write{305,305}
+local	float	___691_opacity_presence_in1_tmp	%read{310,310} %write{306,306}
+local	float	___691_opacity_presence_out	%read{407,407} %write{310,312}
+local	float	___691_R_sq_out	%read{422,424} %write{314,314}
+local	vector	___691_surface_normal_out	%read{436,489} %write{315,335}
+local	float	___691_opacity_switch_out	%read{511,511} %write{336,419}
+local	color	___691_coat_F0_out	%read{436,436} %write{420,423}
+local	color	___691_specular_color_metallic_R_sq_out	%read{425,425} %write{424,424}
+local	color	___691_F0_out	%read{489,489} %write{425,425}
+local	closure color	___691_coat_dielectric_bsdf_out	%read{502,502} %write{426,437}
+local	closure color	___691_specular_bsdf1_out	%read{472,472} %write{438,449}
+local	float	___691_diffuse_bsdf_roughness_tmp	%read{451,451} %write{450,450}
+local	closure color	___691_diffuse_bsdf_out	%read{470,470} %write{452,452}
+local	closure color	___691_transmission_bsdf_out	%read{469,469} %write{453,466}
+local	closure color	___691_transmission_mix_out	%read{472,491} %write{471,471}
+local	closure color	___691_specular_workflow_bsdf_out	%read{500,500} %write{472,472}
+local	float	___691_metalness_metal_bsdf_weight_tmp	%read{478,478} %write{473,473}
+local	string	___691_metalness_metal_bsdf_distribution_tmp	%read{477,477} %write{474,474}
+local	float	___691_metalness_metal_bsdf_thinfilm_thickness_tmp	%read{477,477} %write{475,475}
+local	float	___691_metalness_metal_bsdf_thinfilm_ior_tmp	%read{477,477} %write{476,476}
+local	closure color	___691_metalness_metal_bsdf_out	%read{495,495} %write{478,478}
+local	closure color	___691_specular_bsdf2_out	%read{491,491} %write{479,490}
+local	closure color	___691_metalness_specular_bsdf_out	%read{494,494} %write{491,491}
+local	closure color	___691_metalness_workflow_bsdf_out	%read{499,499} %write{496,496}
+local	closure color	___691_workflow_selector_bsdf_out	%read{502,502} %write{501,501}
+local	closure color	___691_coat_bsdf_out	%read{508,508} %write{502,502}
+local	closure color	___691_emission_edf_out	%read{509,509} %write{503,503}
+local	closure color	___691_surface_constructor_out.bsdf	%read{514,514} %write{504,508} %mystruct{___691_surface_constructor_out} %mystructfield{0}
+local	closure color	___691_surface_constructor_out.edf	%read{515,515} %write{505,509} %mystruct{___691_surface_constructor_out} %mystructfield{1}
+local	float	___691_surface_constructor_out.opacity	%read{513,516} %write{506,513} %mystruct{___691_surface_constructor_out} %mystructfield{2}
+local	float	___692_opacity_weight	%read{522,524} %write{520,520}
+local	closure color	null_closure	%read{182,183} %write{0,0}
+local	string	image_color_file_.filename	%read{23,61} %write{1,1} %mystruct{image_color_file_} %mystructfield{0}
+local	string	image_color_file_.colorspace	%read{61,61} %write{2,2} %mystruct{image_color_file_} %mystructfield{1}
+local	string	image_roughness_file_.filename	%read{79,117} %write{3,3} %mystruct{image_roughness_file_} %mystructfield{0}
+local	string	image_roughness_file_.colorspace	%read{2147483647,-1} %write{4,4} %mystruct{image_roughness_file_} %mystructfield{1}
+local	float	geomprop_UV0_out1.x	%read{10,66} %write{5,5} %mystruct{geomprop_UV0_out1} %mystructfield{0} %derivs
+local	float	geomprop_UV0_out1.y	%read{11,67} %write{6,6} %mystruct{geomprop_UV0_out1} %mystructfield{1} %derivs
+local	color	image_color_out	%read{123,138} %write{7,62}
+local	float	image_roughness_out	%read{231,231} %write{63,119}
+local	color	image_color_out_cm_out	%read{268,451} %write{120,181}
+local	closure color	SR_brass1_out.bsdf	%read{521,521} %write{182,514} %mystruct{SR_brass1_out} %mystructfield{0}
+local	closure color	SR_brass1_out.edf	%read{521,521} %write{183,515} %mystruct{SR_brass1_out} %mystructfield{1}
+local	float	SR_brass1_out.opacity	%read{519,519} %write{184,516} %mystruct{SR_brass1_out} %mystructfield{2}
+local	closure color	USD_Tiled_Brass_out	%read{527,527} %write{526,526}
+const	int	$const1	0		%read{0,325} %write{2147483647,-1}
+const	color	$const2	0 0 0		%read{7,487} %write{2147483647,-1}
+const	string	$const3	"NG_tiledimage_color3"		%read{8,8} %write{2147483647,-1}
+const	string	$const4	"__operator__mul__"		%read{9,74} %write{2147483647,-1}
+const	string	$const5	"__operator__sub__"		%read{12,68} %write{2147483647,-1}
+const	string	$const6	"__operator__div__"		%read{15,71} %write{2147483647,-1}
+const	string	$const7	""		%read{23,117} %write{2147483647,-1}
+const	string	$const8	"periodic"		%read{26,117} %write{2147483647,-1}
+const	string	$const9	"mx_image_color3"		%read{22,22} %write{2147483647,-1}
+temp	int	$tmp1	%read{24,24} %write{23,23}
+temp	int	$tmp2	%read{25,39} %write{24,38}
+const	string	$const10	"constant"		%read{26,97} %write{2147483647,-1}
+temp	int	$tmp3	%read{27,27} %write{26,26}
+temp	int	$tmp4	%read{28,37} %write{27,36}
+const	float	$const11	0		%read{29,520} %write{2147483647,-1}
+temp	int	$tmp5	%read{30,30} %write{29,29}
+temp	int	$tmp6	%read{31,35} %write{30,34}
+const	float	$const12	1		%read{32,524} %write{2147483647,-1}
+temp	int	$tmp7	%read{33,33} %write{32,32}
+temp	int	$tmp8	%read{34,34} %write{33,33}
+temp	int	$tmp9	%read{36,36} %write{35,35}
+temp	int	$tmp10	%read{38,38} %write{37,37}
+temp	int	$tmp11	%read{40,54} %write{39,53}
+temp	int	$tmp12	%read{42,42} %write{41,41}
+temp	int	$tmp13	%read{43,52} %write{42,51}
+temp	int	$tmp14	%read{45,45} %write{44,44}
+temp	int	$tmp15	%read{46,50} %write{45,49}
+temp	int	$tmp16	%read{48,48} %write{47,47}
+temp	int	$tmp17	%read{49,49} %write{48,48}
+temp	int	$tmp18	%read{51,51} %write{50,50}
+temp	int	$tmp19	%read{53,53} %write{52,52}
+const	string	$const13	"mx_transform_uv"		%read{58,114} %write{2147483647,-1}
+const	string	$const14	"subimage"		%read{61,117} %write{2147483647,-1}
+const	string	$const15	"interp"		%read{61,117} %write{2147483647,-1}
+const	string	$const16	"missingcolor"		%read{61,117} %write{2147483647,-1}
+const	string	$const17	"swrap"		%read{61,117} %write{2147483647,-1}
+const	string	$const18	"twrap"		%read{61,117} %write{2147483647,-1}
+const	string	$const19	"colorspace"		%read{61,61} %write{2147483647,-1}
+const	string	$const20	"NG_tiledimage_float"		%read{64,64} %write{2147483647,-1}
+const	string	$const21	"mx_image_float"		%read{78,78} %write{2147483647,-1}
+temp	int	$tmp20	%read{80,80} %write{79,79}
+temp	int	$tmp21	%read{81,95} %write{80,94}
+temp	int	$tmp22	%read{83,83} %write{82,82}
+temp	int	$tmp23	%read{84,93} %write{83,92}
+temp	int	$tmp24	%read{86,86} %write{85,85}
+temp	int	$tmp25	%read{87,91} %write{86,90}
+temp	int	$tmp26	%read{89,89} %write{88,88}
+temp	int	$tmp27	%read{90,90} %write{89,89}
+temp	int	$tmp28	%read{92,92} %write{91,91}
+temp	int	$tmp29	%read{94,94} %write{93,93}
+temp	int	$tmp30	%read{96,110} %write{95,109}
+temp	int	$tmp31	%read{98,98} %write{97,97}
+temp	int	$tmp32	%read{99,108} %write{98,107}
+temp	int	$tmp33	%read{101,101} %write{100,100}
+temp	int	$tmp34	%read{102,106} %write{101,105}
+temp	int	$tmp35	%read{104,104} %write{103,103}
+temp	int	$tmp36	%read{105,105} %write{104,104}
+temp	int	$tmp37	%read{107,107} %write{106,106}
+temp	int	$tmp38	%read{109,109} %write{108,108}
+const	string	$const22	"NG_srgb_texture_to_lin_rec709_color3"		%read{121,121} %write{2147483647,-1}
+const	float	$const23	0.055		%read{122,122} %write{2147483647,-1}
+const	float	$const24	12.92		%read{124,124} %write{2147483647,-1}
+const	string	$const25	"NG_separate3_color3"		%read{129,129} %write{2147483647,-1}
+const	string	$const26	"mx_extract"		%read{131,137} %write{2147483647,-1}
+const	int	$const27	1		%read{133,411} %write{2147483647,-1}
+const	int	$const28	2		%read{136,403} %write{2147483647,-1}
+temp	color	$tmp39	%read{144,144} %write{143,143}
+const	float	$const29	0.04045		%read{145,165} %write{2147483647,-1}
+temp	int	$tmp40	%read{150,150} %write{148,148}
+const	string	$const30	"mx_ternary"		%read{149,413} %write{2147483647,-1}
+temp	int	$tmp41	%read{160,160} %write{158,158}
+temp	int	$tmp42	%read{170,170} %write{168,168}
+const	float	$const31	1.055		%read{175,175} %write{2147483647,-1}
+const	float	$const32	2.4		%read{178,178} %write{2147483647,-1}
+const	string	$const33	"IMP_UsdPreviewSurface_surfaceshader"		%read{185,185} %write{2147483647,-1}
+temp	vector	$tmp43	%read{191,191} %write{190,190}
+temp	float	$tmp44	%read{190,190} %write{187,187}
+temp	float	$tmp45	%read{189,189} %write{188,188}
+temp	float	$tmp46	%read{190,190} %write{189,189}
+const	string	$const34	"mx_roughness_anisotropy"		%read{198,230} %write{2147483647,-1}
+temp	float	$tmp47	%read{201,201} %write{199,199}
+const	float	$const35	1e-08		%read{202,234} %write{2147483647,-1}
+const	string	$const36	"clamp"		%read{200,518} %write{2147483647,-1}
+temp	float	$tmp48	%read{202,202} %write{201,201}
+temp	int	$tmp49	%read{204,204} %write{203,203}
+temp	float	$tmp50	%read{208,208} %write{207,207}
+const	float	$const37	0.98		%read{206,238} %write{2147483647,-1}
+temp	float	$tmp51	%read{207,207} %write{206,206}
+temp	float	$tmp52	%read{209,209} %write{208,208}
+temp	float	$tmp53	%read{211,211} %write{210,210}
+const	string	$const38	"world"		%read{217,217} %write{2147483647,-1}
+const	string	$const39	"transform"		%read{218,218} %write{2147483647,-1}
+const	string	$const40	"common"		%read{219,219} %write{2147483647,-1}
+temp	vector	$tmp54	%read{225,225} %write{224,224}
+temp	vector	$tmp55	%read{224,224} %write{223,223}
+temp	float	$tmp56	%read{223,223} %write{220,220}
+temp	float	$tmp57	%read{222,222} %write{221,221}
+temp	float	$tmp58	%read{223,223} %write{222,222}
+const	float	$const41	0.5		%read{226,301} %write{2147483647,-1}
+temp	float	$tmp59	%read{233,233} %write{231,231}
+temp	float	$tmp60	%read{234,234} %write{233,233}
+temp	int	$tmp61	%read{236,236} %write{235,235}
+temp	float	$tmp62	%read{240,240} %write{239,239}
+temp	float	$tmp63	%read{239,239} %write{238,238}
+temp	float	$tmp64	%read{241,241} %write{240,240}
+temp	float	$tmp65	%read{243,243} %write{242,242}
+temp	float	$tmp66	%read{252,252} %write{251,251}
+temp	int	$tmp67	%read{257,257} %write{255,255}
+const	string	$const42	"mx_artistic_ior"		%read{264,264} %write{2147483647,-1}
+temp	color	$tmp68	%read{269,269} %write{265,265}
+const	float	$const43	0.99		%read{266,266} %write{2147483647,-1}
+temp	color	$tmp69	%read{268,268} %write{266,266}
+temp	color	$tmp70	%read{269,269} %write{268,268}
+temp	color	$tmp71	%read{273,273} %write{271,271}
+temp	color	$tmp72	%read{273,273} %write{272,272}
+temp	color	$tmp73	%read{276,276} %write{274,274}
+temp	color	$tmp74	%read{276,276} %write{275,275}
+temp	color	$tmp75	%read{281,281} %write{280,280}
+temp	color	$tmp76	%read{283,283} %write{281,281}
+temp	color	$tmp77	%read{283,283} %write{282,282}
+temp	color	$tmp78	%read{285,285} %write{283,283}
+temp	color	$tmp79	%read{285,285} %write{284,284}
+temp	color	$tmp80	%read{287,287} %write{286,286}
+const	color	$const44	1 1 1		%read{289,488} %write{2147483647,-1}
+temp	int	$tmp81	%read{295,295} %write{293,293}
+temp	int	$tmp82	%read{309,309} %write{307,307}
+const	vector	$const45	0 0 0		%read{315,320} %write{2147483647,-1}
+const	string	$const46	"mx_normalmap_float"		%read{316,316} %write{2147483647,-1}
+temp	float	$tmp83.x	%read{327,327} %write{317,317}
+temp	float	$tmp83.y	%read{330,330} %write{318,318}
+const	string	$const47	"mx_normalmap_vector2"		%read{319,319} %write{2147483647,-1}
+temp	int	$tmp85	%read{321,321} %write{320,320}
+const	vector	$const48	0 0 1		%read{322,322} %write{2147483647,-1}
+const	float	$const49	2		%read{323,323} %write{2147483647,-1}
+temp	vector	$tmp86	%read{324,324} %write{323,323}
+temp	float	$tmp87	%read{326,326} %write{325,325}
+temp	vector	$tmp88	%read{327,327} %write{326,326}
+temp	vector	$tmp89	%read{331,331} %write{327,327}
+temp	float	$tmp90	%read{329,329} %write{328,328}
+temp	vector	$tmp91	%read{330,330} %write{329,329}
+temp	vector	$tmp92	%read{331,331} %write{330,330}
+temp	vector	$tmp93	%read{334,334} %write{331,331}
+temp	float	$tmp94	%read{333,333} %write{332,332}
+temp	vector	$tmp95	%read{334,334} %write{333,333}
+temp	vector	$tmp96	%read{335,335} %write{334,334}
+const	string	$const50	"NG_switch_floatI"		%read{337,337} %write{2147483647,-1}
+const	int	$const51	10		%read{338,338} %write{2147483647,-1}
+temp	int	$tmp97	%read{342,342} %write{340,340}
+const	int	$const52	9		%read{347,347} %write{2147483647,-1}
+temp	int	$tmp98	%read{350,350} %write{348,348}
+const	int	$const53	8		%read{355,355} %write{2147483647,-1}
+temp	int	$tmp99	%read{358,358} %write{356,356}
+const	int	$const54	7		%read{363,363} %write{2147483647,-1}
+temp	int	$tmp100	%read{366,366} %write{364,364}
+const	int	$const55	6		%read{371,371} %write{2147483647,-1}
+temp	int	$tmp101	%read{374,374} %write{372,372}
+const	int	$const56	5		%read{379,379} %write{2147483647,-1}
+temp	int	$tmp102	%read{382,382} %write{380,380}
+const	int	$const57	4		%read{387,387} %write{2147483647,-1}
+temp	int	$tmp103	%read{390,390} %write{388,388}
+const	int	$const58	3		%read{395,395} %write{2147483647,-1}
+temp	int	$tmp104	%read{398,398} %write{396,396}
+temp	int	$tmp105	%read{406,406} %write{404,404}
+temp	int	$tmp106	%read{414,414} %write{412,412}
+const	string	$const59	"NG_convert_float_color3"		%read{421,421} %write{2147483647,-1}
+const	float	$const60	5		%read{436,489} %write{2147483647,-1}
+const	float	$const61	1.5		%read{436,489} %write{2147483647,-1}
+const	string	$const62	"ggx"		%read{436,489} %write{2147483647,-1}
+const	string	$const63	"R"		%read{428,485} %write{2147483647,-1}
+const	string	$const64	"mx_generalized_schlick_bsdf"		%read{427,480} %write{2147483647,-1}
+const	string	$const65	"T"		%read{428,481} %write{2147483647,-1}
+temp	int	$tmp109	%read{429,429} %write{428,428}
+temp	int	$tmp110	%read{433,433} %write{432,432}
+temp	closure color	$tmp111	%read{437,437} %write{436,436}
+const	string	$const66	"thinfilm_thickness"		%read{436,489} %write{2147483647,-1}
+const	string	$const67	"thinfilm_ior"		%read{436,489} %write{2147483647,-1}
+const	string	$const68	"generalized_schlick_bsdf"		%read{436,489} %write{2147483647,-1}
+temp	int	$tmp114	%read{441,441} %write{440,440}
+temp	int	$tmp115	%read{445,445} %write{444,444}
+temp	closure color	$tmp116	%read{449,449} %write{448,448}
+temp	closure color	$tmp117	%read{452,452} %write{451,451}
+const	string	$const69	"oren_nayar_diffuse_bsdf"		%read{451,451} %write{2147483647,-1}
+temp	float	$tmp119.x	%read{465,465} %write{454,454}
+temp	float	$tmp119.y	%read{465,465} %write{455,455}
+const	string	$const70	"mx_dielectric_bsdf"		%read{456,456} %write{2147483647,-1}
+temp	int	$tmp120	%read{458,458} %write{457,457}
+temp	int	$tmp121	%read{462,462} %write{461,461}
+temp	closure color	$tmp122	%read{466,466} %write{465,465}
+const	string	$const71	"dielectric_bsdf"		%read{465,465} %write{2147483647,-1}
+const	string	$const72	"mix"		%read{467,497} %write{2147483647,-1}
+temp	float	$tmp123	%read{469,469} %write{468,468}
+temp	closure color	$tmp124	%read{471,471} %write{469,469}
+temp	closure color	$tmp125	%read{471,471} %write{470,470}
+const	string	$const73	"layer"		%read{472,502} %write{2147483647,-1}
+temp	closure color	$tmp126	%read{478,478} %write{477,477}
+const	string	$const74	"conductor_bsdf"		%read{477,477} %write{2147483647,-1}
+temp	int	$tmp128	%read{482,482} %write{481,481}
+temp	int	$tmp129	%read{486,486} %write{485,485}
+temp	closure color	$tmp130	%read{490,490} %write{489,489}
+temp	float	$tmp131	%read{494,494} %write{493,493}
+temp	closure color	$tmp132	%read{496,496} %write{494,494}
+temp	closure color	$tmp133	%read{496,496} %write{495,495}
+temp	float	$tmp134	%read{499,499} %write{498,498}
+temp	closure color	$tmp135	%read{501,501} %write{499,499}
+temp	closure color	$tmp136	%read{501,501} %write{500,500}
+const	string	$const75	"uniform_edf"		%read{503,503} %write{2147483647,-1}
+const	string	$const76	"mx_surface"		%read{507,507} %write{2147483647,-1}
+temp	float	$tmp137	%read{512,512} %write{511,511}
+const	string	$const77	"mx_surfacematerial"		%read{517,517} %write{2147483647,-1}
+temp	float	$tmp138	%read{520,520} %write{519,519}
+temp	closure color	$tmp139	%read{522,522} %write{521,521}
+temp	closure color	$tmp140	%read{526,526} %write{522,522}
+temp	closure color	$tmp141	%read{525,525} %write{523,523}
+const	string	$const78	"transparent"		%read{523,523} %write{2147483647,-1}
+temp	float	$tmp142	%read{525,525} %write{524,524}
+temp	closure color	$tmp143	%read{526,526} %write{525,525}
+code ___main___
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:462
+#     textureresource image_color_file_ = {image_color_file, image_color_file_colorspace};
+	assign		null_closure $const1 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{462} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:463
+#     textureresource image_roughness_file_ = {image_roughness_file, image_roughness_file_colorspace};
+	assign		image_color_file_.filename image_color_file 	%line{463} %argrw{"wr"}
+	assign		image_color_file_.colorspace image_color_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:464
+#     vector2 geomprop_UV0_out1 = vector2(u,v);
+	assign		image_roughness_file_.filename image_roughness_file 	%line{464} %argrw{"wr"}
+	assign		image_roughness_file_.colorspace image_roughness_file_colorspace 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:465
+#     color image_color_out = color(0.0);
+	assign		geomprop_UV0_out1.x u 	%line{465} %argrw{"wr"}
+	assign		geomprop_UV0_out1.y v 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:466
+#     NG_tiledimage_color3(image_color_file_, image_color_default, geomprop_UV0_out1, image_color_uvtiling, image_color_uvoffset, image_color_realworldimagesize, image_color_realworldtilesize, image_color_filtertype, image_color_framerange, image_color_frameoffset, image_color_frameendaction, image_color_out);
+	assign		image_color_out $const2 	%line{466} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:467
+#     float image_roughness_out = 0.0;
+	functioncall	$const3 63 	%line{467} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const4 12 	%line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		___672_N_mult_color3_out.x geomprop_UV0_out1.x image_color_uvtiling.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		___672_N_mult_color3_out.y geomprop_UV0_out1.y image_color_uvtiling.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const5 15 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:53
+#     return vector2(a.x - b.x, a.y - b.y);
+	sub		___672_N_sub_color3_out.x ___672_N_mult_color3_out.x image_color_uvoffset.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{53} %argrw{"wrr"}
+	sub		___672_N_sub_color3_out.y ___672_N_mult_color3_out.y image_color_uvoffset.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const6 18 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:103
+#     return vector2(a.x / b.x, a.y / b.y);
+	div		___672_N_divtilesize_color3_out.x ___672_N_sub_color3_out.x image_color_realworldimagesize.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{103} %argrw{"wrr"}
+	div		___672_N_divtilesize_color3_out.y ___672_N_sub_color3_out.y image_color_realworldimagesize.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const4 21 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		___672_N_multtilesize_color3_out.x ___672_N_divtilesize_color3_out.x image_color_realworldtilesize.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		___672_N_multtilesize_color3_out.y ___672_N_divtilesize_color3_out.y image_color_realworldtilesize.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:48
+#     mx_image_color3(file, "", default1, N_multtilesize_color3_out, "periodic", "periodic", filtertype, framerange, frameoffset, frameendaction, N_img_color3_out);
+	assign		___672_N_img_color3_out $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{48} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:49
+#     out = N_img_color3_out;
+	functioncall	$const9 62 	%line{49} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp1 image_color_file_.filename $const7 	%line{25} %argrw{"wrr"}
+	neq		$tmp2 $tmp1 $const1 	%argrw{"wrr"}
+	if		$tmp2 26 39 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp3 $const8 $const10 	%line{26} %argrw{"wrr"}
+	neq		$tmp4 $tmp3 $const1 	%argrw{"wrr"}
+	if		$tmp4 37 37 	%argrw{"r"}
+	lt		$tmp5 ___672_N_multtilesize_color3_out.x $const11 	%argrw{"wrr"}
+	neq		$tmp6 $tmp5 $const1 	%argrw{"wrr"}
+	if		$tmp6 32 35 	%argrw{"r"}
+	gt		$tmp7 ___672_N_multtilesize_color3_out.x $const12 	%argrw{"wrr"}
+	neq		$tmp8 $tmp7 $const1 	%argrw{"wrr"}
+	assign		$tmp6 $tmp8 	%argrw{"wr"}
+	neq		$tmp9 $tmp6 $const1 	%argrw{"wrr"}
+	assign		$tmp4 $tmp9 	%argrw{"wr"}
+	neq		$tmp10 $tmp4 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp2 $tmp10 	%line{25} %argrw{"wr"}
+	neq		$tmp11 $tmp2 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp11 41 54 	%line{26} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:27
+#     {
+	eq		$tmp12 $const8 $const10 	%line{27} %argrw{"wrr"}
+	neq		$tmp13 $tmp12 $const1 	%argrw{"wrr"}
+	if		$tmp13 52 52 	%argrw{"r"}
+	lt		$tmp14 ___672_N_multtilesize_color3_out.y $const11 	%argrw{"wrr"}
+	neq		$tmp15 $tmp14 $const1 	%argrw{"wrr"}
+	if		$tmp15 47 50 	%argrw{"r"}
+	gt		$tmp16 ___672_N_multtilesize_color3_out.y $const12 	%argrw{"wrr"}
+	neq		$tmp17 $tmp16 $const1 	%argrw{"wrr"}
+	assign		$tmp15 $tmp17 	%argrw{"wr"}
+	neq		$tmp18 $tmp15 $const1 	%argrw{"wrr"}
+	assign		$tmp13 $tmp18 	%argrw{"wr"}
+	neq		$tmp19 $tmp13 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:26
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp11 $tmp19 	%line{26} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:25
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp11 57 57 	%line{25} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:29
+#         return;
+	assign		___672_N_img_color3_out image_color_default 	%line{29} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:30
+#     }
+	return	%line{30}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:33
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___670_missingColor image_color_default 	%line{33} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:34
+#     out = texture(file.filename, st.x, st.y,
+	functioncall	$const13 61 	%line{34} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:20
+# }
+	assign		___670_st.x ___672_N_multtilesize_color3_out.x 	%line{20} %argrw{"wr"}
+	assign		___670_st.y ___672_N_multtilesize_color3_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:35
+#                   "subimage", layer, "interp", filtertype,
+	texture		___672_N_img_color3_out image_color_file_.filename ___670_st.x ___670_st.y $const14 $const7 $const15 image_color_filtertype $const16 ___670_missingColor $const17 $const8 $const18 $const8 $const19 image_color_file_.colorspace 	%line{35} %argrw{"wrrrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:50
+# }
+	assign		image_color_out ___672_N_img_color3_out 	%line{50} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:468
+#     NG_tiledimage_float(image_roughness_file_, image_roughness_default, geomprop_UV0_out1, image_roughness_uvtiling, image_roughness_uvoffset, image_roughness_realworldimagesize, image_roughness_realworldtilesize, image_roughness_filtertype, image_roughness_framerange, image_roughness_frameoffset, image_roughness_frameendaction, image_roughness_out);
+	assign		image_roughness_out $const11 	%line{468} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:469
+#     color image_color_out_cm_out = color(0.0);
+	functioncall	$const20 120 	%line{469} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const4 68 	%line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		___675_N_mult_float_out.x geomprop_UV0_out1.x image_roughness_uvtiling.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		___675_N_mult_float_out.y geomprop_UV0_out1.y image_roughness_uvtiling.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const5 71 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:53
+#     return vector2(a.x - b.x, a.y - b.y);
+	sub		___675_N_sub_float_out.x ___675_N_mult_float_out.x image_roughness_uvoffset.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{53} %argrw{"wrr"}
+	sub		___675_N_sub_float_out.y ___675_N_mult_float_out.y image_roughness_uvoffset.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const6 74 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:103
+#     return vector2(a.x / b.x, a.y / b.y);
+	div		___675_N_divtilesize_float_out.x ___675_N_sub_float_out.x image_roughness_realworldimagesize.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{103} %argrw{"wrr"}
+	div		___675_N_divtilesize_float_out.y ___675_N_sub_float_out.y image_roughness_realworldimagesize.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:477
+# 
+	functioncall	$const4 77 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{477} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h:78
+#     return vector2(a.x * b.x, a.y * b.y);
+	mul		___675_N_multtilesize_float_out.x ___675_N_divtilesize_float_out.x image_roughness_realworldtilesize.x 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/vector2.h"} %line{78} %argrw{"wrr"}
+	mul		___675_N_multtilesize_float_out.y ___675_N_divtilesize_float_out.y image_roughness_realworldtilesize.y 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:79
+#     mx_image_float(file, "", default1, N_multtilesize_float_out, "periodic", "periodic", filtertype, framerange, frameoffset, frameendaction, N_img_float_out);
+	assign		___675_N_img_float_out $const11 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{79} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:80
+#     out = N_img_float_out;
+	functioncall	$const21 119 	%line{80} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:56
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	eq		$tmp20 image_roughness_file_.filename $const7 	%line{56} %argrw{"wrr"}
+	neq		$tmp21 $tmp20 $const1 	%argrw{"wrr"}
+	if		$tmp21 82 95 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:57
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	eq		$tmp22 $const8 $const10 	%line{57} %argrw{"wrr"}
+	neq		$tmp23 $tmp22 $const1 	%argrw{"wrr"}
+	if		$tmp23 93 93 	%argrw{"r"}
+	lt		$tmp24 ___675_N_multtilesize_float_out.x $const11 	%argrw{"wrr"}
+	neq		$tmp25 $tmp24 $const1 	%argrw{"wrr"}
+	if		$tmp25 88 91 	%argrw{"r"}
+	gt		$tmp26 ___675_N_multtilesize_float_out.x $const12 	%argrw{"wrr"}
+	neq		$tmp27 $tmp26 $const1 	%argrw{"wrr"}
+	assign		$tmp25 $tmp27 	%argrw{"wr"}
+	neq		$tmp28 $tmp25 $const1 	%argrw{"wrr"}
+	assign		$tmp23 $tmp28 	%argrw{"wr"}
+	neq		$tmp29 $tmp23 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:56
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	assign		$tmp21 $tmp29 	%line{56} %argrw{"wr"}
+	neq		$tmp30 $tmp21 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:57
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	if		$tmp30 97 110 	%line{57} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:58
+#     {
+	eq		$tmp31 $const8 $const10 	%line{58} %argrw{"wrr"}
+	neq		$tmp32 $tmp31 $const1 	%argrw{"wrr"}
+	if		$tmp32 108 108 	%argrw{"r"}
+	lt		$tmp33 ___675_N_multtilesize_float_out.y $const11 	%argrw{"wrr"}
+	neq		$tmp34 $tmp33 $const1 	%argrw{"wrr"}
+	if		$tmp34 103 106 	%argrw{"r"}
+	gt		$tmp35 ___675_N_multtilesize_float_out.y $const12 	%argrw{"wrr"}
+	neq		$tmp36 $tmp35 $const1 	%argrw{"wrr"}
+	assign		$tmp34 $tmp36 	%argrw{"wr"}
+	neq		$tmp37 $tmp34 $const1 	%argrw{"wrr"}
+	assign		$tmp32 $tmp37 	%argrw{"wr"}
+	neq		$tmp38 $tmp32 $const1 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:57
+#         (vaddressmode == "constant" && (texcoord.y<0.0 || texcoord.y>1.0)))
+	assign		$tmp30 $tmp38 	%line{57} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:56
+#         (uaddressmode == "constant" && (texcoord.x<0.0 || texcoord.x>1.0)) ||
+	if		$tmp30 113 113 	%line{56} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:60
+#         return;
+	assign		___675_N_img_float_out image_roughness_default 	%line{60} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:61
+#     }
+	return	%line{61}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:64
+#     vector2 st = mx_transform_uv(texcoord);
+	assign		___673_missingColor image_roughness_default 	%line{64} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:65
+#     color rgb = texture(file.filename, st.x, st.y,
+	functioncall	$const13 117 	%line{65} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:20
+# }
+	assign		___673_st.x ___675_N_multtilesize_float_out.x 	%line{20} %argrw{"wr"}
+	assign		___673_st.y ___675_N_multtilesize_float_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:66
+#                         "subimage", layer, "interp", filtertype,
+	texture		___673_rgb image_roughness_file_.filename ___673_st.x ___673_st.y $const14 $const7 $const15 image_roughness_filtertype $const16 ___673_missingColor $const17 $const8 $const18 $const8 	%line{66} %argrw{"wrrrrrrrrrrrrr"} %argderivs{2,3}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:70
+# }
+	compref		___675_N_img_float_out ___673_rgb $const1 	%line{70} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:81
+# }
+	assign		image_roughness_out ___675_N_img_float_out 	%line{81} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:470
+#     NG_srgb_texture_to_lin_rec709_color3(image_color_out, image_color_out_cm_out);
+	assign		image_color_out_cm_out $const2 	%line{470} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:471
+#     surfaceshader SR_brass1_out = surfaceshader(null_closure, null_closure, 1.0);
+	functioncall	$const22 182 	%line{471} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:99
+#     color bias_out = in + bias_in2_tmp;
+	assign		___677_bias_in2_tmp $const23 	%line{99} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:100
+#     float linSeg_in2_tmp = 12.920000;
+	add		___677_bias_out image_color_out ___677_bias_in2_tmp 	%line{100} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:101
+#     color linSeg_out = in / linSeg_in2_tmp;
+	assign		___677_linSeg_in2_tmp $const24 	%line{101} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:102
+#     float colorSeparate_outr = 0.0;
+	div		___677_linSeg_out image_color_out ___677_linSeg_in2_tmp 	%line{102} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:103
+#     float colorSeparate_outg = 0.0;
+	assign		___677_colorSeparate_outr $const11 	%line{103} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:104
+#     float colorSeparate_outb = 0.0;
+	assign		___677_colorSeparate_outg $const11 	%line{104} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:105
+#     NG_separate3_color3(in, colorSeparate_outr, colorSeparate_outg, colorSeparate_outb);
+	assign		___677_colorSeparate_outb $const11 	%line{105} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:106
+#     float max_in2_tmp = 0.000000;
+	functioncall	$const25 142 	%line{106} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:86
+#     float N_extract_0_out = mx_extract(in, N_extract_0_index_tmp);
+	assign		___676_N_extract_0_index_tmp $const1 	%line{86} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:87
+#     int N_extract_1_index_tmp = 1;
+	functioncall	$const26 133 	%line{87} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_0_out image_color_out ___676_N_extract_0_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:88
+#     float N_extract_1_out = mx_extract(in, N_extract_1_index_tmp);
+	assign		___676_N_extract_1_index_tmp $const27 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{88} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:89
+#     int N_extract_2_index_tmp = 2;
+	functioncall	$const26 136 	%line{89} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_1_out image_color_out ___676_N_extract_1_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:90
+#     float N_extract_2_out = mx_extract(in, N_extract_2_index_tmp);
+	assign		___676_N_extract_2_index_tmp $const28 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{90} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:91
+#     outr = N_extract_0_out;
+	functioncall	$const26 139 	%line{91} %argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:105
+#     return in[index];
+	compref		___676_N_extract_2_out image_color_out ___676_N_extract_2_index_tmp 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{105} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:92
+#     outg = N_extract_1_out;
+	assign		___677_colorSeparate_outr ___676_N_extract_0_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{92} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:93
+#     outb = N_extract_2_out;
+	assign		___677_colorSeparate_outg ___676_N_extract_1_out 	%line{93} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:94
+# }
+	assign		___677_colorSeparate_outb ___676_N_extract_2_out 	%line{94} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:107
+#     color max_out = max(bias_out, max_in2_tmp);
+	assign		___677_max_in2_tmp $const11 	%line{107} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:108
+#     float isAboveR_value2_tmp = 0.040450;
+	assign		$tmp39 ___677_max_in2_tmp 	%line{108} %argrw{"wr"}
+	max		___677_max_out ___677_bias_out $tmp39 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:109
+#     float isAboveR_in1_tmp = 1.000000;
+	assign		___677_isAboveR_value2_tmp $const29 	%line{109} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:110
+#     float isAboveR_in2_tmp = 0.000000;
+	assign		___677_isAboveR_in1_tmp $const12 	%line{110} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:111
+#     float isAboveR_out = mx_ternary(colorSeparate_outr > isAboveR_value2_tmp, isAboveR_in1_tmp, isAboveR_in2_tmp);
+	assign		___677_isAboveR_in2_tmp $const11 	%line{111} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:112
+#     float isAboveG_value2_tmp = 0.040450;
+	gt		$tmp40 ___677_colorSeparate_outr ___677_isAboveR_value2_tmp 	%line{112} %argrw{"wrr"}
+	functioncall	$const30 155 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp40 153 155 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveR_out ___677_isAboveR_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveR_out ___677_isAboveR_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:113
+#     float isAboveG_in1_tmp = 1.000000;
+	assign		___677_isAboveG_value2_tmp $const29 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{113} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:114
+#     float isAboveG_in2_tmp = 0.000000;
+	assign		___677_isAboveG_in1_tmp $const12 	%line{114} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:115
+#     float isAboveG_out = mx_ternary(colorSeparate_outg > isAboveG_value2_tmp, isAboveG_in1_tmp, isAboveG_in2_tmp);
+	assign		___677_isAboveG_in2_tmp $const11 	%line{115} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:116
+#     float isAboveB_value2_tmp = 0.040450;
+	gt		$tmp41 ___677_colorSeparate_outg ___677_isAboveG_value2_tmp 	%line{116} %argrw{"wrr"}
+	functioncall	$const30 165 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp41 163 165 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveG_out ___677_isAboveG_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveG_out ___677_isAboveG_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:117
+#     float isAboveB_in1_tmp = 1.000000;
+	assign		___677_isAboveB_value2_tmp $const29 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{117} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:118
+#     float isAboveB_in2_tmp = 0.000000;
+	assign		___677_isAboveB_in1_tmp $const12 	%line{118} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:119
+#     float isAboveB_out = mx_ternary(colorSeparate_outb > isAboveB_value2_tmp, isAboveB_in1_tmp, isAboveB_in2_tmp);
+	assign		___677_isAboveB_in2_tmp $const11 	%line{119} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:120
+#     float scale_in2_tmp = 1.055000;
+	gt		$tmp42 ___677_colorSeparate_outb ___677_isAboveB_value2_tmp 	%line{120} %argrw{"wrr"}
+	functioncall	$const30 175 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp42 173 175 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___677_isAboveB_out ___677_isAboveB_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___677_isAboveB_out ___677_isAboveB_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:121
+#     color scale_out = max_out / scale_in2_tmp;
+	assign		___677_scale_in2_tmp $const31 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{121} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:122
+#     color isAbove_out = color( isAboveR_out,isAboveG_out,isAboveB_out );
+	div		___677_scale_out ___677_max_out ___677_scale_in2_tmp 	%line{122} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:123
+#     float powSeg_in2_tmp = 2.400000;
+	color		___677_isAbove_out ___677_isAboveR_out ___677_isAboveG_out ___677_isAboveB_out 	%line{123} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:124
+#     color powSeg_out = pow(scale_out, powSeg_in2_tmp);
+	assign		___677_powSeg_in2_tmp $const32 	%line{124} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:125
+#     color mix_out = mix(linSeg_out, powSeg_out, isAbove_out);
+	pow		___677_powSeg_out ___677_scale_out ___677_powSeg_in2_tmp 	%line{125} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:126
+#     out = mix_out;
+	mix		___677_mix_out ___677_linSeg_out ___677_powSeg_out ___677_isAbove_out 	%line{126} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:127
+# }
+	assign		image_color_out_cm_out ___677_mix_out 	%line{127} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:472
+#     IMP_UsdPreviewSurface_surfaceshader(image_color_out_cm_out, SR_brass1_emissiveColor, SR_brass1_useSpecularWorkflow, SR_brass1_specularColor, SR_brass1_metallic, image_roughness_out, SR_brass1_clearcoat, SR_brass1_clearcoatRoughness, SR_brass1_opacity, SR_brass1_opacityMode, SR_brass1_opacityThreshold, SR_brass1_ior, SR_brass1_normal, SR_brass1_displacement, SR_brass1_occlusion, SR_brass1_out);
+	assign		SR_brass1_out.bsdf null_closure 	%line{472} %argrw{"wr"}
+	assign		SR_brass1_out.edf null_closure 	%argrw{"wr"}
+	assign		SR_brass1_out.opacity $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:473
+#     MATERIAL USD_Tiled_Brass_out = mx_surfacematerial(SR_brass1_out, backsurfaceshader, displacementshader1);
+	functioncall	$const33 517 	%line{473} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:239
+#     vector geomprop_Tworld_out1 = normalize(vector(N[2], 0, -N[0]));
+	assign		___691_null_closure $const1 	%line{239} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:240
+#     float one_minus_ior_in1_tmp = 1.000000;
+	compref		$tmp44 N $const28 	%line{240} %argrw{"wrr"}
+	compref		$tmp45 N $const1 	%argrw{"wrr"}
+	neg		$tmp46 $tmp45 	%argrw{"wr"}
+	vector		$tmp43 $tmp44 $const11 $tmp46 	%argrw{"wrrr"}
+	normalize	___691_geomprop_Tworld_out1 $tmp43 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:241
+#     float one_minus_ior_out = one_minus_ior_in1_tmp - ior;
+	assign		___691_one_minus_ior_in1_tmp $const12 	%line{241} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:242
+#     float one_plus_ior_in1_tmp = 1.000000;
+	sub		___691_one_minus_ior_out ___691_one_minus_ior_in1_tmp SR_brass1_ior 	%line{242} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:243
+#     float one_plus_ior_out = one_plus_ior_in1_tmp + ior;
+	assign		___691_one_plus_ior_in1_tmp $const12 	%line{243} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:244
+#     vector2 coat_roughness_out = vector2(0.0, 0.0);
+	add		___691_one_plus_ior_out ___691_one_plus_ior_in1_tmp SR_brass1_ior 	%line{244} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:245
+#     mx_roughness_anisotropy(clearcoatRoughness, 0.000000, coat_roughness_out);
+	assign		___691_coat_roughness_out.x $const11 	%line{245} %argrw{"wr"}
+	assign		___691_coat_roughness_out.y $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:246
+#     string geomprop_Nworld_space_tmp = "world";
+	functioncall	$const34 217 	%line{246} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:132
+#     if (anisotropy > 0.0)
+	mul		$tmp47 SR_brass1_clearcoatRoughness SR_brass1_clearcoatRoughness 	%line{132} %argrw{"wrr"}
+	functioncall	$const36 203 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp48 $tmp47 $const12 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___678_roughness_sqr $tmp48 $const35 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:133
+#     {
+	gt		$tmp49 $const11 $const11 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{133} %argrw{"wrr"}
+	if		$tmp49 215 217 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:135
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const36 208 	%line{135} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp51 $const11 $const37 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp50 $tmp51 $const11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:135
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp52 $const12 $tmp50 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{135} %argrw{"wrr"}
+	sqrt		___679_aspect $tmp52 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:136
+#         result.y = roughness_sqr * aspect;
+	div		$tmp53 ___678_roughness_sqr ___679_aspect 	%line{136} %argrw{"wrr"}
+	min		___691_coat_roughness_out.x $tmp53 $const12 	%argrw{"wrr"}
+	assign		___691_coat_roughness_out.x ___691_coat_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:137
+#     }
+	mul		___691_coat_roughness_out.y ___678_roughness_sqr ___679_aspect 	%line{137} %argrw{"wrr"}
+	assign		___691_coat_roughness_out.y ___691_coat_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:141
+#         result.y = roughness_sqr;
+	assign		___691_coat_roughness_out.x ___678_roughness_sqr 	%line{141} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:142
+#     }
+	assign		___691_coat_roughness_out.y ___678_roughness_sqr 	%line{142} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:247
+#     vector geomprop_Nworld_out1 = transform(geomprop_Nworld_space_tmp, N);
+	assign		___691_geomprop_Nworld_space_tmp $const38 	%line{247} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:248
+#     vector geomprop_Bworld_out1 = normalize(cross(N, vector(N[2], 0, -N[0])));
+	functioncall	$const39 220 	%line{248} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:261
+# normal transform (string to, normal p) { return transform("common",to,p); }
+	transformn	___691_geomprop_Nworld_out1 $const40 ___691_geomprop_Nworld_space_tmp N 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{261} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:249
+#     float scale_normal_in2_tmp = 0.500000;
+	compref		$tmp56 N $const28 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{249} %argrw{"wrr"}
+	compref		$tmp57 N $const1 	%argrw{"wrr"}
+	neg		$tmp58 $tmp57 	%argrw{"wr"}
+	vector		$tmp55 $tmp56 $const11 $tmp58 	%argrw{"wrrr"}
+	cross		$tmp54 N $tmp55 	%argrw{"wrr"}
+	normalize	___691_geomprop_Bworld_out1 $tmp54 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:250
+#     vector scale_normal_out = normal1 * scale_normal_in2_tmp;
+	assign		___691_scale_normal_in2_tmp $const41 	%line{250} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:251
+#     vector2 specular_roughness_out = vector2(0.0, 0.0);
+	mul		___691_scale_normal_out SR_brass1_normal ___691_scale_normal_in2_tmp 	%line{251} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:252
+#     mx_roughness_anisotropy(roughness, 0.000000, specular_roughness_out);
+	assign		___691_specular_roughness_out.x $const11 	%line{252} %argrw{"wr"}
+	assign		___691_specular_roughness_out.y $const11 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:253
+#     float inverse_metalness_in1_tmp = 1.000000;
+	functioncall	$const34 249 	%line{253} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:132
+#     if (anisotropy > 0.0)
+	mul		$tmp59 image_roughness_out image_roughness_out 	%line{132} %argrw{"wrr"}
+	functioncall	$const36 235 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp60 $tmp59 $const12 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___678_roughness_sqr $tmp60 $const35 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:133
+#     {
+	gt		$tmp61 $const11 $const11 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{133} %argrw{"wrr"}
+	if		$tmp61 247 249 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:135
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	functioncall	$const36 240 	%line{135} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp63 $const11 $const37 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		$tmp62 $tmp63 $const11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:135
+#         result.x = min(roughness_sqr / aspect, 1.0);
+	sub		$tmp64 $const12 $tmp62 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{135} %argrw{"wrr"}
+	sqrt		___679_aspect $tmp64 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:136
+#         result.y = roughness_sqr * aspect;
+	div		$tmp65 ___678_roughness_sqr ___679_aspect 	%line{136} %argrw{"wrr"}
+	min		___691_specular_roughness_out.x $tmp65 $const12 	%argrw{"wrr"}
+	assign		___691_specular_roughness_out.x ___691_specular_roughness_out.x 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:137
+#     }
+	mul		___691_specular_roughness_out.y ___678_roughness_sqr ___679_aspect 	%line{137} %argrw{"wrr"}
+	assign		___691_specular_roughness_out.y ___691_specular_roughness_out.y 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:141
+#         result.y = roughness_sqr;
+	assign		___691_specular_roughness_out.x ___678_roughness_sqr 	%line{141} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:142
+#     }
+	assign		___691_specular_roughness_out.y ___678_roughness_sqr 	%line{142} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:254
+#     float inverse_metalness_out = inverse_metalness_in1_tmp - metallic;
+	assign		___691_inverse_metalness_in1_tmp $const12 	%line{254} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:255
+#     float use_specular_workflow_float_out = float(useSpecularWorkflow);
+	sub		___691_inverse_metalness_out ___691_inverse_metalness_in1_tmp SR_brass1_metallic 	%line{255} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:256
+#     float transmission_mix_amount_value2_tmp = 0.000000;
+	assign		$tmp66 SR_brass1_useSpecularWorkflow 	%line{256} %argrw{"wr"}
+	assign		___691_use_specular_workflow_float_out $tmp66 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:257
+#     float transmission_mix_amount_in1_tmp = 1.000000;
+	assign		___691_transmission_mix_amount_value2_tmp $const11 	%line{257} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:258
+#     float transmission_mix_amount_out = mx_ternary(opacityThreshold > transmission_mix_amount_value2_tmp, transmission_mix_amount_in1_tmp, opacity);
+	assign		___691_transmission_mix_amount_in1_tmp $const12 	%line{258} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:259
+#     color artistic_ior_ior = color(0.0);
+	gt		$tmp67 SR_brass1_opacityThreshold ___691_transmission_mix_amount_value2_tmp 	%line{259} %argrw{"wrr"}
+	functioncall	$const30 262 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp67 260 262 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___691_transmission_mix_amount_out ___691_transmission_mix_amount_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___691_transmission_mix_amount_out SR_brass1_opacity 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:260
+#     color artistic_ior_extinction = color(0.0);
+	assign		___691_artistic_ior_ior $const2 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{260} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:261
+#     mx_artistic_ior(diffuseColor, diffuseColor, artistic_ior_ior, artistic_ior_extinction);
+	assign		___691_artistic_ior_extinction $const2 	%line{261} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:262
+#     color specular_color_metallic_bg_tmp = color(1.000000, 1.000000, 1.000000);
+	functioncall	$const42 289 	%line{262} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:151
+#     color r_sqrt = sqrt(r);
+	assign		$tmp68 $const11 	%line{151} %argrw{"wr"}
+	assign		$tmp69 $const43 	%argrw{"wr"}
+	functioncall	$const36 270 	%argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:140
+# color  clamp (color x, color minval, color maxval) { return max(min(x,maxval),minval); }
+	min		$tmp70 image_color_out_cm_out $tmp69 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{140} %argrw{"wrr"}
+	max		___681_r $tmp70 $tmp68 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:152
+#     color n_min = (1.0 - r) / (1.0 + r);
+	sqrt		___681_r_sqrt ___681_r 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{152} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:153
+#     color n_max = (1.0 + r_sqrt) / (1.0 - r_sqrt);
+	sub		$tmp71 $const12 ___681_r 	%line{153} %argrw{"wrr"}
+	add		$tmp72 $const12 ___681_r 	%argrw{"wrr"}
+	div		___681_n_min $tmp71 $tmp72 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:154
+#     ior = mix(n_max, n_min, edge_color);
+	add		$tmp73 $const12 ___681_r_sqrt 	%line{154} %argrw{"wrr"}
+	sub		$tmp74 $const12 ___681_r_sqrt 	%argrw{"wrr"}
+	div		___681_n_max $tmp73 $tmp74 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:155
+# 
+	mix		___691_artistic_ior_ior ___681_n_max ___681_n_min image_color_out_cm_out 	%line{155} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:157
+#     color nm1 = ior - 1.0;
+	add		___681_np1 ___691_artistic_ior_ior $const12 	%line{157} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:158
+#     color k2 = (np1*np1 * r - nm1*nm1) / (1.0 - r);
+	sub		___681_nm1 ___691_artistic_ior_ior $const12 	%line{158} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:159
+#     k2 = max(k2, 0.0);
+	mul		$tmp75 ___681_np1 ___681_np1 	%line{159} %argrw{"wrr"}
+	mul		$tmp76 $tmp75 ___681_r 	%argrw{"wrr"}
+	mul		$tmp77 ___681_nm1 ___681_nm1 	%argrw{"wrr"}
+	sub		$tmp78 $tmp76 $tmp77 	%argrw{"wrr"}
+	sub		$tmp79 $const12 ___681_r 	%argrw{"wrr"}
+	div		___681_k2 $tmp78 $tmp79 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:160
+#     extinction = sqrt(k2);
+	assign		$tmp80 $const11 	%line{160} %argrw{"wr"}
+	max		___681_k2 ___681_k2 $tmp80 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:161
+# }
+	sqrt		___691_artistic_ior_extinction ___681_k2 	%line{161} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:263
+#     color specular_color_metallic_out = mix(specular_color_metallic_bg_tmp, diffuseColor, metallic);
+	assign		___691_specular_color_metallic_bg_tmp $const44 	%line{263} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:264
+#     float cutout_opacity_in1_tmp = 1.000000;
+	mix		___691_specular_color_metallic_out ___691_specular_color_metallic_bg_tmp image_color_out_cm_out SR_brass1_metallic 	%line{264} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:265
+#     float cutout_opacity_in2_tmp = 0.000000;
+	assign		___691_cutout_opacity_in1_tmp $const12 	%line{265} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:266
+#     float cutout_opacity_out = mx_ternary(opacity >= opacityThreshold, cutout_opacity_in1_tmp, cutout_opacity_in2_tmp);
+	assign		___691_cutout_opacity_in2_tmp $const11 	%line{266} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:267
+#     float R_out = one_minus_ior_out / one_plus_ior_out;
+	ge		$tmp81 SR_brass1_opacity SR_brass1_opacityThreshold 	%line{267} %argrw{"wrr"}
+	functioncall	$const30 300 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp81 298 300 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___691_cutout_opacity_out ___691_cutout_opacity_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___691_cutout_opacity_out ___691_cutout_opacity_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:268
+#     float bias_normal_in2_tmp = 0.500000;
+	div		___691_R_out ___691_one_minus_ior_out ___691_one_plus_ior_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{268} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:269
+#     vector bias_normal_out = scale_normal_out + bias_normal_in2_tmp;
+	assign		___691_bias_normal_in2_tmp $const41 	%line{269} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:270
+#     float diffuse_bsdf_weight_fg_tmp = 1.000000;
+	add		___691_bias_normal_out ___691_scale_normal_out ___691_bias_normal_in2_tmp 	%line{270} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:271
+#     float diffuse_bsdf_weight_out = mix(inverse_metalness_out, diffuse_bsdf_weight_fg_tmp, use_specular_workflow_float_out);
+	assign		___691_diffuse_bsdf_weight_fg_tmp $const12 	%line{271} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:272
+#     float opacity_presence_value2_tmp = 0.000000;
+	mix		___691_diffuse_bsdf_weight_out ___691_inverse_metalness_out ___691_diffuse_bsdf_weight_fg_tmp ___691_use_specular_workflow_float_out 	%line{272} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:273
+#     float opacity_presence_in1_tmp = 0.000000;
+	assign		___691_opacity_presence_value2_tmp $const11 	%line{273} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:274
+#     float opacity_presence_out = mx_ternary(opacity == opacity_presence_value2_tmp, opacity_presence_in1_tmp, cutout_opacity_out);
+	assign		___691_opacity_presence_in1_tmp $const11 	%line{274} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:275
+#     float R_sq_out = R_out * R_out;
+	eq		$tmp82 SR_brass1_opacity ___691_opacity_presence_value2_tmp 	%line{275} %argrw{"wrr"}
+	functioncall	$const30 314 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp82 312 314 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___691_opacity_presence_out ___691_opacity_presence_in1_tmp 	%argrw{"wr"}
+	return
+	assign		___691_opacity_presence_out ___691_cutout_opacity_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:276
+#     vector surface_normal_out = vector(0.0);
+	mul		___691_R_sq_out ___691_R_out ___691_R_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{276} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:277
+#     mx_normalmap_float(bias_normal_out, 1.000000, geomprop_Nworld_out1, geomprop_Tworld_out1, geomprop_Bworld_out1, surface_normal_out);
+	assign		___691_surface_normal_out $const45 	%line{277} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:278
+#     float opacity_switch_out = 0.0;
+	functioncall	$const46 336 	%line{278} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:181
+# }
+	assign		$tmp83.x $const12 	%line{181} %argrw{"wr"}
+	assign		$tmp83.y $const12 	%argrw{"wr"}
+	functioncall	$const47 336 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:167
+#     {
+	eq		$tmp85 ___691_bias_normal_out $const45 	%line{167} %argrw{"wrr"}
+	if		$tmp85 323 325 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:169
+#     }
+	assign		___682_decodedValue $const48 	%line{169} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:173
+#     }
+	mul		$tmp86 ___691_bias_normal_out $const49 	%line{173} %argrw{"wrr"}
+	sub		___682_decodedValue $tmp86 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:176
+# }
+	compref		$tmp87 ___682_decodedValue $const1 	%line{176} %argrw{"wrr"}
+	mul		$tmp88 ___691_geomprop_Tworld_out1 $tmp87 	%argrw{"wrr"}
+	mul		$tmp89 $tmp88 $tmp83.x 	%argrw{"wrr"}
+	compref		$tmp90 ___682_decodedValue $const27 	%argrw{"wrr"}
+	mul		$tmp91 ___691_geomprop_Bworld_out1 $tmp90 	%argrw{"wrr"}
+	mul		$tmp92 $tmp91 $tmp83.y 	%argrw{"wrr"}
+	add		$tmp93 $tmp89 $tmp92 	%argrw{"wrr"}
+	compref		$tmp94 ___682_decodedValue $const28 	%argrw{"wrr"}
+	mul		$tmp95 ___691_geomprop_Nworld_out1 $tmp94 	%argrw{"wrr"}
+	add		$tmp96 $tmp93 $tmp95 	%argrw{"wrr"}
+	normalize	___691_surface_normal_out $tmp96 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:279
+#     NG_switch_floatI(cutout_opacity_out, opacity_presence_out, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, opacityMode, opacity_switch_out);
+	assign		___691_opacity_switch_out $const11 	%line{279} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:280
+#     color coat_F0_out = color(0.0);
+	functioncall	$const50 420 	%line{280} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:186
+#     float ifgreater_10_in2_tmp = 0.000000;
+	assign		___686_ifgreater_10_value1_tmp $const51 	%line{186} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:187
+#     float ifgreater_10_out = mx_ternary(ifgreater_10_value1_tmp > which, in10, ifgreater_10_in2_tmp);
+	assign		___686_ifgreater_10_in2_tmp $const11 	%line{187} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:188
+#     int ifgreater_9_value1_tmp = 9;
+	gt		$tmp97 ___686_ifgreater_10_value1_tmp SR_brass1_opacityMode 	%line{188} %argrw{"wrr"}
+	functioncall	$const30 347 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp97 345 347 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_10_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_10_out ___686_ifgreater_10_in2_tmp 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:189
+#     float ifgreater_9_out = mx_ternary(ifgreater_9_value1_tmp > which, in9, ifgreater_10_out);
+	assign		___686_ifgreater_9_value1_tmp $const52 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{189} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:190
+#     int ifgreater_8_value1_tmp = 8;
+	gt		$tmp98 ___686_ifgreater_9_value1_tmp SR_brass1_opacityMode 	%line{190} %argrw{"wrr"}
+	functioncall	$const30 355 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp98 353 355 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_9_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_9_out ___686_ifgreater_10_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:191
+#     float ifgreater_8_out = mx_ternary(ifgreater_8_value1_tmp > which, in8, ifgreater_9_out);
+	assign		___686_ifgreater_8_value1_tmp $const53 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{191} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:192
+#     int ifgreater_7_value1_tmp = 7;
+	gt		$tmp99 ___686_ifgreater_8_value1_tmp SR_brass1_opacityMode 	%line{192} %argrw{"wrr"}
+	functioncall	$const30 363 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp99 361 363 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_8_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_8_out ___686_ifgreater_9_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:193
+#     float ifgreater_7_out = mx_ternary(ifgreater_7_value1_tmp > which, in7, ifgreater_8_out);
+	assign		___686_ifgreater_7_value1_tmp $const54 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{193} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:194
+#     int ifgreater_6_value1_tmp = 6;
+	gt		$tmp100 ___686_ifgreater_7_value1_tmp SR_brass1_opacityMode 	%line{194} %argrw{"wrr"}
+	functioncall	$const30 371 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp100 369 371 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_7_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_7_out ___686_ifgreater_8_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:195
+#     float ifgreater_6_out = mx_ternary(ifgreater_6_value1_tmp > which, in6, ifgreater_7_out);
+	assign		___686_ifgreater_6_value1_tmp $const55 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{195} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:196
+#     int ifgreater_5_value1_tmp = 5;
+	gt		$tmp101 ___686_ifgreater_6_value1_tmp SR_brass1_opacityMode 	%line{196} %argrw{"wrr"}
+	functioncall	$const30 379 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp101 377 379 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_6_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_6_out ___686_ifgreater_7_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:197
+#     float ifgreater_5_out = mx_ternary(ifgreater_5_value1_tmp > which, in5, ifgreater_6_out);
+	assign		___686_ifgreater_5_value1_tmp $const56 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{197} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:198
+#     int ifgreater_4_value1_tmp = 4;
+	gt		$tmp102 ___686_ifgreater_5_value1_tmp SR_brass1_opacityMode 	%line{198} %argrw{"wrr"}
+	functioncall	$const30 387 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp102 385 387 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_5_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_5_out ___686_ifgreater_6_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:199
+#     float ifgreater_4_out = mx_ternary(ifgreater_4_value1_tmp > which, in4, ifgreater_5_out);
+	assign		___686_ifgreater_4_value1_tmp $const57 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{199} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:200
+#     int ifgreater_3_value1_tmp = 3;
+	gt		$tmp103 ___686_ifgreater_4_value1_tmp SR_brass1_opacityMode 	%line{200} %argrw{"wrr"}
+	functioncall	$const30 395 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp103 393 395 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_4_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_4_out ___686_ifgreater_5_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:201
+#     float ifgreater_3_out = mx_ternary(ifgreater_3_value1_tmp > which, in3, ifgreater_4_out);
+	assign		___686_ifgreater_3_value1_tmp $const58 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{201} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:202
+#     int ifgreater_2_value1_tmp = 2;
+	gt		$tmp104 ___686_ifgreater_3_value1_tmp SR_brass1_opacityMode 	%line{202} %argrw{"wrr"}
+	functioncall	$const30 403 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp104 401 403 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_3_out $const11 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_3_out ___686_ifgreater_4_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:203
+#     float ifgreater_2_out = mx_ternary(ifgreater_2_value1_tmp > which, in2, ifgreater_3_out);
+	assign		___686_ifgreater_2_value1_tmp $const28 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{203} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:204
+#     int ifgreater_1_value1_tmp = 1;
+	gt		$tmp105 ___686_ifgreater_2_value1_tmp SR_brass1_opacityMode 	%line{204} %argrw{"wrr"}
+	functioncall	$const30 411 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp105 409 411 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_2_out ___691_opacity_presence_out 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_2_out ___686_ifgreater_3_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:205
+#     float ifgreater_1_out = mx_ternary(ifgreater_1_value1_tmp > which, in1, ifgreater_2_out);
+	assign		___686_ifgreater_1_value1_tmp $const27 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{205} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:206
+#     out = ifgreater_1_out;
+	gt		$tmp106 ___686_ifgreater_1_value1_tmp SR_brass1_opacityMode 	%line{206} %argrw{"wrr"}
+	functioncall	$const30 419 	%argrw{"r"}
+# D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h:18
+# float mx_ternary(int expr, float v1, float v2) { if (expr) return v1; else return v2; }
+	if		$tmp106 417 419 	%filename{"D:/Work/materialx/bernard_MaterialX_3/build/bin/libraries/stdlib/genosl/include/mx_funcs.h"} %line{18} %argrw{"r"}
+	assign		___686_ifgreater_1_out ___691_cutout_opacity_out 	%argrw{"wr"}
+	return
+	assign		___686_ifgreater_1_out ___686_ifgreater_2_out 	%argrw{"wr"}
+	return
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:207
+# }
+	assign		___691_opacity_switch_out ___686_ifgreater_1_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{207} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:281
+#     NG_convert_float_color3(R_sq_out, coat_F0_out);
+	assign		___691_coat_F0_out $const2 	%line{281} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:282
+#     color specular_color_metallic_R_sq_out = specular_color_metallic_out * R_sq_out;
+	functioncall	$const59 424 	%line{282} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:212
+#     out = combine_out;
+	color		___687_combine_out ___691_R_sq_out ___691_R_sq_out ___691_R_sq_out 	%line{212} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:213
+# }
+	assign		___691_coat_F0_out ___687_combine_out 	%line{213} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:283
+#     color F0_out = mix(specular_color_metallic_R_sq_out, specular_color_metallic_out, metallic);
+	mul		___691_specular_color_metallic_R_sq_out ___691_specular_color_metallic_out ___691_R_sq_out 	%line{283} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:284
+#     BSDF coat_dielectric_bsdf_out = null_closure;
+	mix		___691_F0_out ___691_specular_color_metallic_R_sq_out ___691_specular_color_metallic_out SR_brass1_metallic 	%line{284} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:285
+#     mx_generalized_schlick_bsdf(clearcoat, coat_F0_out, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, coat_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", coat_dielectric_bsdf_out);
+	assign		___691_coat_dielectric_bsdf_out ___691_null_closure 	%line{285} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:286
+#     BSDF specular_bsdf1_out = null_closure;
+	functioncall	$const64 438 	%line{286} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:218
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp109 $const63 $const65 	%line{218} %argrw{"wrr"}
+	if		$tmp109 431 432 	%argrw{"r"}
+	assign		___688_reflection_tint $const2 	%argrw{"wr"}
+	assign		___688_reflection_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:219
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp110 $const63 $const63 	%line{219} %argrw{"wrr"}
+	if		$tmp110 435 436 	%argrw{"r"}
+	assign		___688_transmission_tint $const2 	%argrw{"wr"}
+	assign		___688_transmission_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:220
+# }
+	closure		$tmp111 $const68 ___691_surface_normal_out ___691_geomprop_Tworld_out1 ___688_reflection_tint ___688_transmission_tint ___691_coat_roughness_out.x ___691_coat_roughness_out.y ___691_coat_F0_out $const44 $const60 $const62 $const66 $const11 $const67 $const61 	%line{220} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___691_coat_dielectric_bsdf_out $tmp111 SR_brass1_clearcoat 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:287
+#     mx_generalized_schlick_bsdf(1.000000, specularColor, color(1.000000, 1.000000, 1.000000), color(1.000000, 1.000000, 1.000000), 5.000000, specular_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", specular_bsdf1_out);
+	assign		___691_specular_bsdf1_out ___691_null_closure 	%line{287} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:288
+#     float diffuse_bsdf_roughness_tmp = 0.000000;
+	functioncall	$const64 450 	%line{288} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:218
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp114 $const63 $const65 	%line{218} %argrw{"wrr"}
+	if		$tmp114 443 444 	%argrw{"r"}
+	assign		___688_reflection_tint $const2 	%argrw{"wr"}
+	assign		___688_reflection_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:219
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp115 $const63 $const63 	%line{219} %argrw{"wrr"}
+	if		$tmp115 447 448 	%argrw{"r"}
+	assign		___688_transmission_tint $const2 	%argrw{"wr"}
+	assign		___688_transmission_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:220
+# }
+	closure		$tmp116 $const68 ___691_surface_normal_out ___691_geomprop_Tworld_out1 ___688_reflection_tint ___688_transmission_tint ___691_specular_roughness_out.x ___691_specular_roughness_out.y SR_brass1_specularColor $const44 $const60 $const62 $const66 $const11 $const67 $const61 	%line{220} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___691_specular_bsdf1_out $tmp116 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:289
+#     BSDF diffuse_bsdf_out = diffuse_bsdf_weight_out * oren_nayar_diffuse_bsdf(surface_normal_out, diffuseColor, diffuse_bsdf_roughness_tmp);
+	assign		___691_diffuse_bsdf_roughness_tmp $const11 	%line{289} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:290
+#     BSDF transmission_bsdf_out = null_closure;
+	closure		$tmp117 $const69 ___691_surface_normal_out image_color_out_cm_out ___691_diffuse_bsdf_roughness_tmp 	%line{290} %argrw{"wrrrr"}
+	mul		___691_diffuse_bsdf_out $tmp117 ___691_diffuse_bsdf_weight_out 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:291
+#     mx_dielectric_bsdf(1.000000, color(1.000000, 1.000000, 1.000000), ior, vector2(0.000000, 0.000000), 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "T", transmission_bsdf_out);
+	assign		___691_transmission_bsdf_out ___691_null_closure 	%line{291} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:292
+#     BSDF transmission_mix_out = mix(transmission_bsdf_out, diffuse_bsdf_out, transmission_mix_amount_out);
+	assign		$tmp119.x $const11 	%line{292} %argrw{"wr"}
+	assign		$tmp119.y $const11 	%argrw{"wr"}
+	functioncall	$const70 467 	%argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:225
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : tint;
+	eq		$tmp120 $const65 $const65 	%line{225} %argrw{"wrr"}
+	if		$tmp120 460 461 	%argrw{"r"}
+	assign		___689_reflection_tint $const2 	%argrw{"wr"}
+	assign		___689_reflection_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:226
+#     bsdf = weight * dielectric_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, ior, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp121 $const65 $const63 	%line{226} %argrw{"wrr"}
+	if		$tmp121 464 465 	%argrw{"r"}
+	assign		___689_transmission_tint $const2 	%argrw{"wr"}
+	assign		___689_transmission_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:227
+# }
+	closure		$tmp122 $const71 ___691_surface_normal_out ___691_geomprop_Tworld_out1 ___689_reflection_tint ___689_transmission_tint $tmp119.x $tmp119.y SR_brass1_ior $const62 $const66 $const11 $const67 $const61 	%line{227} %argrw{"wrrrrrrrrrrrrr"}
+	mul		___691_transmission_bsdf_out $tmp122 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:293
+#     BSDF specular_workflow_bsdf_out = layer(specular_bsdf1_out, transmission_mix_out);
+	functioncall	$const72 472 	%line{293} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp123 $const12 ___691_transmission_mix_amount_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp124 ___691_transmission_bsdf_out $tmp123 	%argrw{"wrr"}
+	mul		$tmp125 ___691_diffuse_bsdf_out ___691_transmission_mix_amount_out 	%argrw{"wrr"}
+	add		___691_transmission_mix_out $tmp124 $tmp125 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:294
+#     float metalness_metal_bsdf_weight_tmp = 1.000000;
+	closure		___691_specular_workflow_bsdf_out $const73 ___691_specular_bsdf1_out ___691_transmission_mix_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{294} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:295
+#     string metalness_metal_bsdf_distribution_tmp = "ggx";
+	assign		___691_metalness_metal_bsdf_weight_tmp $const12 	%line{295} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:296
+#     float metalness_metal_bsdf_thinfilm_thickness_tmp = 0.000000;
+	assign		___691_metalness_metal_bsdf_distribution_tmp $const62 	%line{296} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:297
+#     float metalness_metal_bsdf_thinfilm_ior_tmp = 1.500000;
+	assign		___691_metalness_metal_bsdf_thinfilm_thickness_tmp $const11 	%line{297} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:298
+#     BSDF metalness_metal_bsdf_out = metalness_metal_bsdf_weight_tmp * conductor_bsdf(surface_normal_out, geomprop_Tworld_out1, specular_roughness_out.x, specular_roughness_out.y, artistic_ior_ior, artistic_ior_extinction, metalness_metal_bsdf_distribution_tmp, "thinfilm_thickness", metalness_metal_bsdf_thinfilm_thickness_tmp, "thinfilm_ior", metalness_metal_bsdf_thinfilm_ior_tmp);
+	assign		___691_metalness_metal_bsdf_thinfilm_ior_tmp $const61 	%line{298} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:299
+#     BSDF specular_bsdf2_out = null_closure;
+	closure		$tmp126 $const74 ___691_surface_normal_out ___691_geomprop_Tworld_out1 ___691_specular_roughness_out.x ___691_specular_roughness_out.y ___691_artistic_ior_ior ___691_artistic_ior_extinction ___691_metalness_metal_bsdf_distribution_tmp $const66 ___691_metalness_metal_bsdf_thinfilm_thickness_tmp $const67 ___691_metalness_metal_bsdf_thinfilm_ior_tmp 	%line{299} %argrw{"wrrrrrrrrrrrr"}
+	mul		___691_metalness_metal_bsdf_out $tmp126 ___691_metalness_metal_bsdf_weight_tmp 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:300
+#     mx_generalized_schlick_bsdf(1.000000, F0_out, color(1.000000, 1.000000, 1.000000), specular_color_metallic_out, 5.000000, specular_roughness_out, 0.000000, 1.500000, surface_normal_out, geomprop_Tworld_out1, "ggx", "R", specular_bsdf2_out);
+	assign		___691_specular_bsdf2_out ___691_null_closure 	%line{300} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:301
+#     BSDF metalness_specular_bsdf_out = layer(specular_bsdf2_out, transmission_mix_out);
+	functioncall	$const64 491 	%line{301} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:218
+#     color transmission_tint = (scatter_mode == "R") ? color(0.0) : color(1.0);
+	eq		$tmp128 $const63 $const65 	%line{218} %argrw{"wrr"}
+	if		$tmp128 484 485 	%argrw{"r"}
+	assign		___688_reflection_tint $const2 	%argrw{"wr"}
+	assign		___688_reflection_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:219
+#     bsdf = weight * generalized_schlick_bsdf(N, U, reflection_tint, transmission_tint, roughness.x, roughness.y, color0, color90, exponent, distribution, "thinfilm_thickness", thinfilm_thickness, "thinfilm_ior", thinfilm_ior);
+	eq		$tmp129 $const63 $const63 	%line{219} %argrw{"wrr"}
+	if		$tmp129 488 489 	%argrw{"r"}
+	assign		___688_transmission_tint $const2 	%argrw{"wr"}
+	assign		___688_transmission_tint $const44 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:220
+# }
+	closure		$tmp130 $const68 ___691_surface_normal_out ___691_geomprop_Tworld_out1 ___688_reflection_tint ___688_transmission_tint ___691_specular_roughness_out.x ___691_specular_roughness_out.y ___691_F0_out ___691_specular_color_metallic_out $const60 $const62 $const66 $const11 $const67 $const61 	%line{220} %argrw{"wrrrrrrrrrrrrrrr"}
+	mul		___691_specular_bsdf2_out $tmp130 $const12 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:302
+#     BSDF metalness_workflow_bsdf_out = mix(metalness_specular_bsdf_out, metalness_metal_bsdf_out, metallic);
+	closure		___691_metalness_specular_bsdf_out $const73 ___691_specular_bsdf2_out ___691_transmission_mix_out 	%line{302} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:303
+#     BSDF workflow_selector_bsdf_out = mix(metalness_workflow_bsdf_out, specular_workflow_bsdf_out, use_specular_workflow_float_out);
+	functioncall	$const72 497 	%line{303} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp131 $const12 SR_brass1_metallic 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp132 ___691_metalness_specular_bsdf_out $tmp131 	%argrw{"wrr"}
+	mul		$tmp133 ___691_metalness_metal_bsdf_out SR_brass1_metallic 	%argrw{"wrr"}
+	add		___691_metalness_workflow_bsdf_out $tmp132 $tmp133 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:304
+#     BSDF coat_bsdf_out = layer(coat_dielectric_bsdf_out, workflow_selector_bsdf_out);
+	functioncall	$const72 502 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{304} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:164
+# closure color mix (closure color x, closure color y, float a) { return x*(1-a) + y*a; }
+	sub		$tmp134 $const12 ___691_use_specular_workflow_float_out 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{164} %argrw{"wrr"}
+	mul		$tmp135 ___691_metalness_workflow_bsdf_out $tmp134 	%argrw{"wrr"}
+	mul		$tmp136 ___691_specular_workflow_bsdf_out ___691_use_specular_workflow_float_out 	%argrw{"wrr"}
+	add		___691_workflow_selector_bsdf_out $tmp135 $tmp136 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:305
+#     EDF emission_edf_out = uniform_edf(emissiveColor);
+	closure		___691_coat_bsdf_out $const73 ___691_coat_dielectric_bsdf_out ___691_workflow_selector_bsdf_out 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{305} %argrw{"wrrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:306
+#     surfaceshader surface_constructor_out = surfaceshader(null_closure, null_closure, 1.0);
+	closure		___691_emission_edf_out $const75 SR_brass1_emissiveColor 	%line{306} %argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:307
+#     mx_surface(coat_bsdf_out, emission_edf_out, opacity_switch_out, 0, surface_constructor_out);
+	assign		___691_surface_constructor_out.bsdf ___691_null_closure 	%line{307} %argrw{"wr"}
+	assign		___691_surface_constructor_out.edf ___691_null_closure 	%argrw{"wr"}
+	assign		___691_surface_constructor_out.opacity $const12 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:308
+#     out = surface_constructor_out;
+	functioncall	$const76 514 	%line{308} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:232
+#     result.edf     = edf;
+	assign		___691_surface_constructor_out.bsdf ___691_coat_bsdf_out 	%line{232} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:233
+#     result.opacity = clamp(opacity, 0.0, 1.0);
+	assign		___691_surface_constructor_out.edf ___691_emission_edf_out 	%line{233} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:234
+# }
+	functioncall	$const36 513 	%line{234} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp137 ___691_opacity_switch_out $const12 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___691_surface_constructor_out.opacity $tmp137 $const11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:234
+# }
+	assign		___691_surface_constructor_out.opacity ___691_surface_constructor_out.opacity 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{234} %argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:309
+# }
+	assign		SR_brass1_out.bsdf ___691_surface_constructor_out.bsdf 	%line{309} %argrw{"wr"}
+	assign		SR_brass1_out.edf ___691_surface_constructor_out.edf 	%argrw{"wr"}
+	assign		SR_brass1_out.opacity ___691_surface_constructor_out.opacity 	%argrw{"wr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:474
+#     out = USD_Tiled_Brass_out;
+	functioncall	$const77 527 	%line{474} %argrw{"r"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:314
+#     return (surface.bsdf + surface.edf) * opacity_weight + transparent() * (1.0 - opacity_weight);
+	functioncall	$const36 521 	%line{314} %argrw{"r"}
+# D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h:141
+# float  clamp (float x, float minval, float maxval) { return max(min(x,maxval),minval); }
+	min		$tmp138 SR_brass1_out.opacity $const12 	%filename{"D:\\\\Work\\\\materialx\\\\OSL_ILM/shaders/stdosl.h"} %line{141} %argrw{"wrr"}
+	max		___692_opacity_weight $tmp138 $const11 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:315
+# }
+	add		$tmp139 SR_brass1_out.bsdf SR_brass1_out.edf 	%filename{"D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl"} %line{315} %argrw{"wrr"}
+	mul		$tmp140 $tmp139 ___692_opacity_weight 	%argrw{"wrr"}
+	closure		$tmp141 $const78 	%argrw{"wr"}
+	sub		$tmp142 $const12 ___692_opacity_weight 	%argrw{"wrr"}
+	mul		$tmp143 $tmp141 $tmp142 	%argrw{"wrr"}
+	add		USD_Tiled_Brass_out $tmp140 $tmp143 	%argrw{"wrr"}
+# D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\Examples\\UsdPreviewSurface\\usd_preview_surface_brass_tiled\\USD_Tiled_Brass.osl:475
+# }
+	assign		out USD_Tiled_Brass_out 	%line{475} %argrw{"wr"}
+	end

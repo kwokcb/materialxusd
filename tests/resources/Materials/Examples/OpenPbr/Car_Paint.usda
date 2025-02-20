@@ -1,0 +1,154 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/Examples\\OpenPbr\\open_pbr_carpaint.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "Car_Paint" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            color3f inputs:base_color = (0.1, 0.6, 0.9)
+            float inputs:base_diffuse_roughness
+            float inputs:base_metalness
+            float inputs:base_weight
+            color3f inputs:coat_color
+            float inputs:coat_darkening
+            float inputs:coat_ior = 1.6
+            float inputs:coat_roughness = 0.02
+            float inputs:coat_roughness_anisotropy
+            float inputs:coat_weight = 1
+            color3f inputs:emission_color
+            float inputs:emission_luminance
+            color3f inputs:fuzz_color
+            float inputs:fuzz_roughness
+            float inputs:fuzz_weight
+            float3 inputs:geometry_coat_normal
+            float3 inputs:geometry_coat_tangent
+            float3 inputs:geometry_normal
+            float inputs:geometry_opacity
+            float3 inputs:geometry_tangent
+            bool inputs:geometry_thin_walled
+            color3f inputs:specular_color
+            float inputs:specular_ior = 1.6
+            float inputs:specular_roughness = 0.3
+            float inputs:specular_roughness_anisotropy
+            float inputs:specular_weight
+            color3f inputs:subsurface_color
+            float inputs:subsurface_radius
+            color3f inputs:subsurface_radius_scale
+            float inputs:subsurface_scatter_anisotropy
+            float inputs:subsurface_weight
+            float inputs:thin_film_ior
+            float inputs:thin_film_thickness
+            float inputs:thin_film_weight
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion_abbe_number
+            float inputs:transmission_dispersion_scale
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            float inputs:transmission_weight
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/Car_Paint/open_pbr_surface_surfaceshader.outputs:surface>
+
+            def Shader "open_pbr_surface_surfaceshader" (
+                prepend references = </MaterialX/Shaders/open_pbr_surface_surfaceshader>
+            )
+            {
+                color3f inputs:base_color.connect = </MaterialX/Materials/Car_Paint.inputs:base_color>
+                float inputs:base_diffuse_roughness.connect = </MaterialX/Materials/Car_Paint.inputs:base_diffuse_roughness>
+                float inputs:base_metalness.connect = </MaterialX/Materials/Car_Paint.inputs:base_metalness>
+                float inputs:base_weight.connect = </MaterialX/Materials/Car_Paint.inputs:base_weight>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/Car_Paint.inputs:coat_color>
+                float inputs:coat_darkening.connect = </MaterialX/Materials/Car_Paint.inputs:coat_darkening>
+                float inputs:coat_ior.connect = </MaterialX/Materials/Car_Paint.inputs:coat_ior>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/Car_Paint.inputs:coat_roughness>
+                float inputs:coat_roughness_anisotropy.connect = </MaterialX/Materials/Car_Paint.inputs:coat_roughness_anisotropy>
+                float inputs:coat_weight.connect = </MaterialX/Materials/Car_Paint.inputs:coat_weight>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/Car_Paint.inputs:emission_color>
+                float inputs:emission_luminance.connect = </MaterialX/Materials/Car_Paint.inputs:emission_luminance>
+                color3f inputs:fuzz_color.connect = </MaterialX/Materials/Car_Paint.inputs:fuzz_color>
+                float inputs:fuzz_roughness.connect = </MaterialX/Materials/Car_Paint.inputs:fuzz_roughness>
+                float inputs:fuzz_weight.connect = </MaterialX/Materials/Car_Paint.inputs:fuzz_weight>
+                float3 inputs:geometry_coat_normal.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_coat_normal>
+                float3 inputs:geometry_coat_tangent.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_coat_tangent>
+                float3 inputs:geometry_normal.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_normal>
+                float inputs:geometry_opacity.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_opacity>
+                float3 inputs:geometry_tangent.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_tangent>
+                bool inputs:geometry_thin_walled.connect = </MaterialX/Materials/Car_Paint.inputs:geometry_thin_walled>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/Car_Paint.inputs:specular_color>
+                float inputs:specular_ior.connect = </MaterialX/Materials/Car_Paint.inputs:specular_ior>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/Car_Paint.inputs:specular_roughness>
+                float inputs:specular_roughness_anisotropy.connect = </MaterialX/Materials/Car_Paint.inputs:specular_roughness_anisotropy>
+                float inputs:specular_weight.connect = </MaterialX/Materials/Car_Paint.inputs:specular_weight>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/Car_Paint.inputs:subsurface_color>
+                float inputs:subsurface_radius.connect = </MaterialX/Materials/Car_Paint.inputs:subsurface_radius>
+                color3f inputs:subsurface_radius_scale.connect = </MaterialX/Materials/Car_Paint.inputs:subsurface_radius_scale>
+                float inputs:subsurface_scatter_anisotropy.connect = </MaterialX/Materials/Car_Paint.inputs:subsurface_scatter_anisotropy>
+                float inputs:subsurface_weight.connect = </MaterialX/Materials/Car_Paint.inputs:subsurface_weight>
+                float inputs:thin_film_ior.connect = </MaterialX/Materials/Car_Paint.inputs:thin_film_ior>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/Car_Paint.inputs:thin_film_thickness>
+                float inputs:thin_film_weight.connect = </MaterialX/Materials/Car_Paint.inputs:thin_film_weight>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_depth>
+                float inputs:transmission_dispersion_abbe_number.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_dispersion_abbe_number>
+                float inputs:transmission_dispersion_scale.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_dispersion_scale>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_scatter_anisotropy>
+                float inputs:transmission_weight.connect = </MaterialX/Materials/Car_Paint.inputs:transmission_weight>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "open_pbr_surface_surfaceshader"
+        {
+            uniform token info:id = "ND_open_pbr_surface_surfaceshader"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/Car_Paint>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

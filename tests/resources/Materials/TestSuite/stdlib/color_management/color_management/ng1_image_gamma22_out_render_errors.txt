@@ -1,0 +1,1 @@
+ERROR: Unknown texture optional argument: "colorspace", <string> (D:\\Work\\materialx\\bernard_MaterialX_3\\build\\bin\\resources\\Materials\\TestSuite\\stdlib\\color_management\\color_management\\ng1_image_gamma22_out.osl:35)

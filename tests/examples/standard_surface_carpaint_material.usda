@@ -3,7 +3,7 @@
     customLayerData = {
         string colorSpace = "lin_rec709"
     }
-    doc = "MaterialX content from standard_surface_carpaint.mtlx"
+    doc = "MaterialX content from ./examples/standard_surface_carpaint.mtlx"
     metersPerUnit = 1
     upAxis = "Y"
 )

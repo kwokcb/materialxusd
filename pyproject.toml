@@ -20,6 +20,9 @@ dependencies = [
     "materialx>=1.39.2"
 ]
 
+[project.scripts]
+materialxusd = "materialxusd.__main__:main"
+
 [tool.setuptools.packages.find]
 where = ["source"]
 [tool.setuptools.package-data]

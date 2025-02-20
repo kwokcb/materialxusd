@@ -29,6 +29,12 @@ Some initial utilities are provided with more coming on-line as the site / requi
     - Use material name for file name
     - Create in subfolder with name being the input MaterialX name
 
+  | | | |
+  | :--: | :--: | :--: |
+  | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png?token=GHSAT0AAAAAAC2DA34K7BXSZCU33SWDQN5UZ5XUXPA">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png?token=GHSAT0AAAAAAC2DA34KJJZPZLDRUYARA74EZ5XUY7A">Marble</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint/Car_Paint_glslfx.png?token=GHSAT0AAAAAAC2DA34KPPHYBV6S5ZC4XPNYZ5XU57Q">Car Paint</img> |
+
+
+
 - Support Utilities:
   - Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
 

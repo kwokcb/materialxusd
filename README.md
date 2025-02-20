@@ -91,3 +91,6 @@ An initial test is to run MaterialX to USD conversion against the MaterialX rend
 ### GLSL vs OSL vs GLSLFX
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 
+## Documentation
+
+See the API documentation <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>

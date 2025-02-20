@@ -58,7 +58,7 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
 Some of the example rendering of resulting USD files is shown below:
 | | | |
 | :--: | :--: | :--: |
-| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png?token=GHSAT0AAAAAAC2DA34K7BXSZCU33SWDQN5UZ5XUXPA">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png?token=GHSAT0AAAAAAC2DA34KJJZPZLDRUYARA74EZ5XUY7A">Marble</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint/Car_Paint_glslfx.png?token=GHSAT0AAAAAAC2DA34KPPHYBV6S5ZC4XPNYZ5XU57Q">Car Paint</img> |
+| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png">Marble</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> |
 
 
 and also to run against a snapshot of the MaterialX test suite  (`render_rts.sh`). The latter

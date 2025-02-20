@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['get_5fflattend_5flayer_0',['get_flattend_layer',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a6d3d7daa1f425da764fb82c1576bd4ae',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
-  ['glsl_20vs_20glslfx_1',['GLSL vs GLSLFX',['../index.html#autotoc_md5',1,'']]],
-  ['glsl_20vs_20osl_20vs_20glslfx_2',['GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md6',1,'']]],
-  ['glslfx_3',['GLSLFX',['../index.html#autotoc_md5',1,'GLSL vs GLSLFX'],['../index.html#autotoc_md6',1,'GLSL vs OSL vs GLSLFX']]]
+  ['find_5ffirst_5fvalid_5fprim_0',['find_first_valid_prim',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a3b55d09478cba5958783ec72e15b19de',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
+  ['find_5fmaterials_1',['find_materials',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a21ab45f8316717c7e1b7af6589037ae9',1,'materialxusd::materialxusd::MaterialxUSDConverter']]]
 ];

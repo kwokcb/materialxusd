@@ -31,6 +31,7 @@ var NAVTREEINDEX0 =
 "index.html#autotoc_md4":[0,1],
 "index.html#autotoc_md5":[0,1,0],
 "index.html#autotoc_md6":[0,1,1],
+"index.html#autotoc_md7":[0,2],
 "materialxusd_8py_source.html":[2,0,0,0,2],
 "materialxusd__utils_8py_source.html":[2,0,0,0,3],
 "mtlx2usd_8py_source.html":[2,0,0,0,4],

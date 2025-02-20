@@ -7,5 +7,6 @@ var index =
     [ "Tests", "index.html#autotoc_md4", [
       [ "GLSL vs GLSLFX", "index.html#autotoc_md5", null ],
       [ "GLSL vs OSL vs GLSLFX", "index.html#autotoc_md6", null ]
-    ] ]
+    ] ],
+    [ "Documentation", "index.html#autotoc_md7", null ]
 ];

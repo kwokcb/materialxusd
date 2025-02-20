@@ -356,7 +356,7 @@ code {
 
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
-<body style="background-color: rgb(32, 32, 32); color: rgb(189, 189, 189);">
+<body style="background-color: black; color: lightgrey;">
   <script>
     mermaid.initialize({
       startOnLoad: true,
@@ -366,7 +366,7 @@ code {
     });
   </script>
 <h2 id="materialx-usd-utilities">MaterialX USD Utilities</h2>
-<p>Repository of utilities related to MaterialX and USD.</p>
+<p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.</p>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
 <img src="./documents/results/usd_gltf_mtlx_desk_web.png">
 <sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub>
@@ -394,6 +394,30 @@ suite compatibility:
 </ul>
 </li>
 </ul>
+</li>
+<li>
+<p>Support Utilities:</p>
+<ul>
+<li>Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+</ul>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="installation-and-usage">Installation and Usage</h3>
+<p>Install from the root folder:</p>
+<pre class="hljs"><code><div>pip install .
+</div></code></pre>
+<p>Run using the <code>materialxusd</code> command.<br>
+Currently there is only one command from MaterialX to USD conversion which can be run using</p>
+<pre class="hljs"><code><div>materialxusd m2u
+</div></code></pre>
+<p>The tests folder has a script with some command line calls to build examples (<code>run_examples.sh</code>)</p>
+<pre class="hljs"><code><div>materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
+
+</div></code></pre>
+<p>Some of the example rendering of resulting USD files is shown below:</p>
 <table>
 <thead>
 <tr>
@@ -410,14 +434,22 @@ suite compatibility:
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Support Utilities:</p>
-<ul>
-<li>Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
-</ul>
-</li>
-</ul>
+<p>and also to run against a snapshot of the MaterialX test suite  (<code>render_rts.sh</code>). The latter<br>
+runs the commands without the need to install.</p>
+<pre class="hljs"><code><div>folders=(
+    <span class="hljs-string">"./resources/Materials/Examples"</span>
+    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/convolution"</span>
+    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/color_management"</span>
+    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/procedural"</span>
+    <span class="hljs-string">"./resources/Materials/TestSuite/pbrlib/surfaceshader"</span>
+    <span class="hljs-string">"./resources/Materials/TestSuite/nprlib"</span>
+)
+
+<span class="hljs-keyword">for</span> folder <span class="hljs-keyword">in</span> <span class="hljs-string">"<span class="hljs-variable">${folders[@]}</span>"</span>; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Rendering <span class="hljs-variable">$folder</span>"</span>
+    python ../<span class="hljs-built_in">source</span>/materialxusd/mtlx2usd.py -pp -mn -sf <span class="hljs-string">"<span class="hljs-variable">$folder</span>"</span> -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr
+<span class="hljs-keyword">done</span>
+</div></code></pre>
 <h2 id="tests">Tests</h2>
 <p>An initial test is to run MaterialX to USD conversion against the MaterialX render test suite files. Results are show below:</p>
 <h3 id="glsl-vs-glslfx">GLSL vs GLSLFX</h3>

@@ -15,7 +15,7 @@ import materialxusd as mxusd
 import materialxusd_utils as mxusd_utils
 
 ### Utilities ####
-def get_mtlx_files(input_path):
+def get_mtlx_files(input_path: str):
     mtlx_files = []
 
     if not os.path.exists(input_path):
@@ -44,7 +44,7 @@ def get_mtlx_files(input_path):
                         mtlx_files.append(os.path.join(root, file))
     return mtlx_files
 
-def print_validation_results(errors, warnings, failed_checks):
+def print_validation_results(errors:str, warnings:str, failed_checks:str):
     if errors or warnings or failed_checks:
         if errors:
             print(f"\t> Errors: {errors}")
@@ -93,7 +93,7 @@ def main():
         if args.preprocess:
             utils = mxusd_utils.MaterialXUsdUtilities()
             new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
-            doc = utils.encapsulate_top_level_nodes(input_path, new_input_path)
+            doc = utils.encapsulate_top_level_nodes_file(input_path, new_input_path)
             if doc:        
                 input_path = new_input_path
 
@@ -232,7 +232,7 @@ def main():
 
                         if args.flatten:
                             # Save the flattened stage to a new USD file
-                            flattend_path = converter.save_flattened_layer(stage, flattened_layer, output_path)
+                            flattend_path = converter.save_flattened_layer(flattened_layer, output_path)
                             print(f"\t> Flattened USD file saved to: {flattend_path}.")
 
 

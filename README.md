@@ -11,7 +11,7 @@ Some initial utilities are provided with more coming on-line as the site / requi
 
 ### Available Components
 
-- `mtlxusd.py` : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. 
+- `mtlx2usd.py` : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. 
 
   The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.
 
@@ -29,8 +29,9 @@ Some initial utilities are provided with more coming on-line as the site / requi
     - Use material name for file name
     - Create in subfolder with name being the input MaterialX name
 
-- Support Utilities:
-  - Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
+- Preprocessing Utilities:
+  - `preprocess_mtlx.py` : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
+    - Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
 
 ## Usage
 
@@ -42,27 +43,34 @@ pip install .
 ```
 
 Run using the `materialxusd` command.
-Currently there is only one command from MaterialX to USD conversion which can be run using
+Currently there are two commands for:
+- MaterialX to USD conversion which can be run using
 ```
 materialxusd m2u
 ```
-The tests folder has a script with some command line calls to build examples (`run_examples.sh`) 
+and preprocessing MaterialX documents which can be run using
+```
+materialxusd pmtlx
+```
+
+The `tests` folder has a script with some command line calls to process an examples subfolder (`run_examples.sh`) 
 
 ```
 materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
-
+materialxusd pmtlx ./examples/linepattern.mtlx # Processing
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
 ```
 
-Some of the example rendering of resulting USD files is shown below:
+Some rendering of resulting USD files are shown below:
 | | | |
 | :--: | :--: | :--: |
 | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png">Marble</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> |
 
 
-and also to run against a snapshot of the MaterialX test suite  (`render_rts.sh`). The latter
-runs the commands without the need to install.
+There is additionaly a sample script process a snapshot of the MaterialX test suite (`render_rts.sh`). 
+The runs the script commands directly as an example.
 
 ```sh
 folders=(
@@ -80,17 +88,22 @@ for folder in "${folders[@]}"; do
 done
 ```
 
-## Tests
+## Acceptance
 
-An initial test is to run MaterialX to USD conversion against the MaterialX render test suite files. Results are show below:
+An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:
 
-### GLSL vs GLSLFX
+### Gallery of Example Materials
+glTF, Standard Surface, OpenUSD material renderings
+<iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
+<p>
+
+### Comparison: GLSL vs GLSLFX
 <iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
 <p>
 
-### GLSL vs OSL vs GLSLFX
+### Comparison: GLSL vs OSL vs GLSLFX
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 
 ## Documentation
 
-See the API documentation <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>
+Python API documentation can be found here<a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>

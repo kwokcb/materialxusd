@@ -309,7 +309,7 @@ pre code {
 
  body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
-	padding: 4 12px;
+	padding: 6 12px;
 }
 
 pre {
@@ -357,7 +357,7 @@ code {
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body style="background-color: black; color: lightgrey;">
-	<script>
+  <script>
     mermaid.initialize({
       startOnLoad: true,
       theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
@@ -374,7 +374,7 @@ code {
 <h3 id="available-components">Available Components</h3>
 <ul>
 <li>
-<p><code>mtlxusd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera.</p>
+<p><code>mtlx2usd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera.</p>
 <p>The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.</p>
 <p>Options Include:</p>
 <ul>
@@ -396,9 +396,13 @@ suite compatibility:
 </ul>
 </li>
 <li>
-<p>Support Utilities:</p>
+<p>Preprocessing Utilities:</p>
 <ul>
-<li>Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+<li><code>preprocess_mtlx.py</code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
+<ul>
+<li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -408,16 +412,23 @@ suite compatibility:
 <pre class="hljs"><code><div>pip install .
 </div></code></pre>
 <p>Run using the <code>materialxusd</code> command.<br>
-Currently there is only one command from MaterialX to USD conversion which can be run using</p>
+Currently there are two commands for:</p>
+<ul>
+<li>MaterialX to USD conversion which can be run using</li>
+</ul>
 <pre class="hljs"><code><div>materialxusd m2u
 </div></code></pre>
-<p>The tests folder has a script with some command line calls to build examples (<code>run_examples.sh</code>)</p>
+<p>and preprocessing MaterialX documents which can be run using</p>
+<pre class="hljs"><code><div>materialxusd pmtlx
+</div></code></pre>
+<p>The <code>tests</code> folder has a script with some command line calls to process an examples subfolder (<code>run_examples.sh</code>)</p>
 <pre class="hljs"><code><div>materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
-
+materialxusd pmtlx ./examples/linepattern.mtlx # Processing
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
 </div></code></pre>
-<p>Some of the example rendering of resulting USD files is shown below:</p>
+<p>Some rendering of resulting USD files are shown below:</p>
 <table>
 <thead>
 <tr>
@@ -434,8 +445,8 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
 </tr>
 </tbody>
 </table>
-<p>and also to run against a snapshot of the MaterialX test suite  (<code>render_rts.sh</code>). The latter<br>
-runs the commands without the need to install.</p>
+<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>).<br>
+The runs the script commands directly as an example.</p>
 <pre class="hljs"><code><div>folders=(
     <span class="hljs-string">"./resources/Materials/Examples"</span>
     <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/convolution"</span>
@@ -450,15 +461,19 @@ runs the commands without the need to install.</p>
     python ../<span class="hljs-built_in">source</span>/materialxusd/mtlx2usd.py -pp -mn -sf <span class="hljs-string">"<span class="hljs-variable">$folder</span>"</span> -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr
 <span class="hljs-keyword">done</span>
 </div></code></pre>
-<h2 id="tests">Tests</h2>
-<p>An initial test is to run MaterialX to USD conversion against the MaterialX render test suite files. Results are show below:</p>
-<h3 id="glsl-vs-glslfx">GLSL vs GLSLFX</h3>
+<h2 id="acceptance">Acceptance</h2>
+<p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
+<h3 id="gallery-of-example-materials">Gallery of Example Materials</h3>
+<p>glTF, Standard Surface, OpenUSD material renderings</p>
+<iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
+<p>
+<h3 id="comparison-glsl-vs-glslfx">Comparison: GLSL vs GLSLFX</h3>
 <iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
 <p>
-<h3 id="glsl-vs-osl-vs-glslfx">GLSL vs OSL vs GLSLFX</h3>
+<h3 id="comparison-glsl-vs-osl-vs-glslfx">Comparison: GLSL vs OSL vs GLSLFX</h3>
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 <h2 id="documentation">Documentation</h2>
-<p>See the API documentation <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a></p>
+<p>Python API documentation can be found here<a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a></p>
 
 </body>
 </html>

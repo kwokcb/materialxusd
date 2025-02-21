@@ -15,7 +15,7 @@ class MaterialxUSDConverter:
         # TODO: Add class variables as needed
         pass
 
-    def validate_stage(self, file, verboseOutput=False):
+    def validate_stage(self, file:str, verboseOutput:bool=False):
         '''
         @brief This function validates a USD file using the ComplianceChecker.
         @param file: The path to the USD file to validate.
@@ -66,7 +66,7 @@ class MaterialxUSDConverter:
         UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
         UsdGeom.SetStageMetersPerUnit(stage, 1.0)
 
-    def find_materials(self, stage, find_first=True):
+    def find_materials(self, stage, find_first:bool=True):
         '''
         @brief This function finds the first material in the stage. Assumes MaterialX
         materials are stored under the "/MaterialX/Materials" scope.
@@ -94,7 +94,11 @@ class MaterialxUSDConverter:
 
         return found_materials
     
-    def add_skydome_light(self, stage, environment_path, root_path="/TestScene/Lights", light_name="EnvironmentLight",
+    def add_skydome_light(self, 
+                          stage, 
+                          environment_path:str, 
+                          root_path:str = "/TestScene/Lights", 
+                          light_name:str = "EnvironmentLight",
                           xform_scale=Gf.Vec3f(1.3, 1.3, 1.3), xform_rotate=Gf.Vec3f(0, 0, 0)):
         '''
         @brief This function adds a skydome light to the stage.
@@ -134,7 +138,10 @@ class MaterialxUSDConverter:
 
         return dome_light
     
-    def add_geometry_reference(self, stage, geometry_path, root_path="/TestScene/Geometry"):
+    def add_geometry_reference(self, 
+                               stage, 
+                               geometry_path:str, 
+                               root_path:str="/TestScene/Geometry"):
         '''
         @brief This function adds a geometry reference to the stage.
         @param stage: The stage to add the geometry reference.
@@ -154,7 +161,11 @@ class MaterialxUSDConverter:
                 return prim
         return None
     
-    def add_camera(self, stage, camera_path, root_path="/TestScene/Camera", geometry_path="/TestScene/Geometry"):
+    def add_camera(self, 
+                   stage, 
+                   camera_path:str, 
+                   root_path:str="/TestScene/Camera", 
+                   geometry_path:str="/TestScene/Geometry"):
         '''
         @brief This function adds a camera to the stage.
         @param stage: The stage to add the camera.
@@ -217,7 +228,12 @@ class MaterialxUSDConverter:
         # Save the USD stage        
         return camera
 
-    def mtlx_to_usd(self, input_usd_path, shaderball_path, environment_path, material_file_path, camera_path):
+    def mtlx_to_usd(self, 
+                    input_usd_path:str, 
+                    shaderball_path:str, 
+                    environment_path:str, 
+                    material_file_path:str, 
+                    camera_path:str):
         '''
         @brief This function reads the input usd file and adds the shaderball geometry and environment light
         to the scene. It also binds the first material to the shaderball geometry. The final stage is returned.
@@ -302,10 +318,9 @@ class MaterialxUSDConverter:
         '''
         return stage.Flatten()
     
-    def save_flattened_layer(self, stage, flattened_layer, output_path):
+    def save_flattened_layer(self, flattened_layer, output_path:str):
         '''
         @brief This function saves the flattened stage to a new USD file.
-        @param stage: The stage to save.
         @param flattened_layer: The flattened layer to save.
         @param output_path: The path to save the flattened stage.
         '''
@@ -314,7 +329,7 @@ class MaterialxUSDConverter:
         flattened_layer.Export(flatten_path)
         return flatten_path
     
-    def create_usdz_package(self, usdz_file_path, flattened_layer):
+    def create_usdz_package(self, usdz_file_path:str, flattened_layer):
         '''
         @brief This function creates a new USDZ package from a flattened layer.
         @param usdz_file_path: The path to the USDZ package to create.

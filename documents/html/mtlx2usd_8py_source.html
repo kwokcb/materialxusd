@@ -125,7 +125,7 @@ $(function(){initNavTree('mtlx2usd_8py_source.html',''); initResizable(true); })
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">import</span> materialxusd_utils <span class="keyword">as</span> mxusd_utils</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">def </span>get_mtlx_files(input_path):</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">def </span>get_mtlx_files(input_path: str):</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    mtlx_files = []</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> os.path.exists(input_path):</div>
@@ -154,7 +154,7 @@ $(function(){initNavTree('mtlx2usd_8py_source.html',''); initResizable(true); })
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                        mtlx_files.append(os.path.join(root, file))</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> mtlx_files</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">def </span>print_validation_results(errors, warnings, failed_checks):</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">def </span>print_validation_results(errors:str, warnings:str, failed_checks:str):</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">if</span> errors <span class="keywordflow">or</span> warnings <span class="keywordflow">or</span> failed_checks:</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">if</span> errors:</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            print(f<span class="stringliteral">&quot;\t&gt; Errors: {errors}&quot;</span>)</div>
@@ -203,7 +203,7 @@ $(function(){initNavTree('mtlx2usd_8py_source.html',''); initResizable(true); })
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">if</span> args.preprocess:</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            utils = mxusd_utils.MaterialXUsdUtilities()</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            new_input_path = input_path.replace(<span class="stringliteral">&#39;.mtlx&#39;</span>, <span class="stringliteral">&#39;_converted.mtlx&#39;</span>)</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            doc = utils.encapsulate_top_level_nodes(input_path, new_input_path)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            doc = utils.encapsulate_top_level_nodes_file(input_path, new_input_path)</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keywordflow">if</span> doc:        </div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                input_path = new_input_path</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
@@ -342,7 +342,7 @@ $(function(){initNavTree('mtlx2usd_8py_source.html',''); initResizable(true); })
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                        <span class="keywordflow">if</span> args.flatten:</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                            <span class="comment"># Save the flattened stage to a new USD file</span></div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                            flattend_path = converter.save_flattened_layer(stage, flattened_layer, output_path)</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                            flattend_path = converter.save_flattened_layer(flattened_layer, output_path)</div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                            print(f<span class="stringliteral">&quot;\t&gt; Flattened USD file saved to: {flattend_path}.&quot;</span>)</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>

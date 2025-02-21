@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['osl_20vs_20glslfx_0',['GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md6',1,'']]]
+  ['of_20example_20materials_0',['Gallery of Example Materials',['../index.html#autotoc_md5',1,'']]],
+  ['osl_20vs_20glslfx_1',['Comparison: GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md7',1,'']]]
 ];

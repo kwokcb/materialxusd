@@ -108,7 +108,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">MaterialX USD Utilities </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__d_1_2work_2materialx_2materialxusd_2_r_e_a_d_m_e"></a></p>
+<div class="textblock"><p><a class="anchor" id="md__d_1_2_work_2materialx_2materialxusd_2_r_e_a_d_m_e"></a></p>
 <p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.</p>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
 <p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" alt="" class="inline"/> <sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub></p>
@@ -116,7 +116,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <h2><a class="anchor" id="autotoc_md1"></a>
 Available Components</h2>
 <ul>
-<li><p class="startli"><code>mtlxusd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera.</p>
+<li><p class="startli"><code><a class="el" href="mtlx2usd_8py_source.html">mtlx2usd.py</a></code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera.</p>
 <p class="startli">The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.</p>
 <p class="startli">Options Include:</p><ul>
 <li>Preprocess the MaterialX file to attempt to produce valid USD shading network (See Support Utilities)</li>
@@ -133,8 +133,11 @@ Available Components</h2>
 </li>
 </ul>
 </li>
-<li>Support Utilities:<ul>
-<li>Utility to encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+<li>Preprocessing Utilities:<ul>
+<li><code><a class="el" href="preprocess__mtlx_8py_source.html">preprocess_mtlx.py</a></code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:<ul>
+<li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -143,18 +146,24 @@ Usage</h1>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Installation and Usage</h2>
 <p>Install from the root folder: </p><div class="fragment"><div class="line">pip install .</div>
-</div><!-- fragment --><p>Run using the <code>materialxusd</code> command. Currently there is only one command from MaterialX to USD conversion which can be run using </p><div class="fragment"><div class="line">materialxusd m2u</div>
-</div><!-- fragment --><p> The tests folder has a script with some command line calls to build examples (<code>run_examples.sh</code>)</p>
+</div><!-- fragment --><p>Run using the <code>materialxusd</code> command. Currently there are two commands for:</p><ul>
+<li>MaterialX to USD conversion which can be run using <div class="fragment"><div class="line">materialxusd m2u</div>
+</div><!-- fragment --> and preprocessing MaterialX documents which can be run using <div class="fragment"><div class="line">materialxusd pmtlx</div>
+</div><!-- fragment --></li>
+</ul>
+<p>The <code>tests</code> folder has a script with some command line calls to process an examples subfolder (<code>run_examples.sh</code>)</p>
 <div class="fragment"><div class="line">materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx</div>
 <div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx</div>
 <div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx</div>
-</div><!-- fragment --><p>Some of the example rendering of resulting USD files is shown below: </p><table class="markdownTable">
+<div class="line">materialxusd pmtlx ./examples/linepattern.mtlx # Processing</div>
+<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx</div>
+</div><!-- fragment --><p>Some rendering of resulting USD files are shown below: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" class="inline"/>Line Pattern   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" class="inline"/>Marble   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" class="inline"/>Car Paint   </td></tr>
 </table>
-<p>and also to run against a snapshot of the MaterialX test suite (<code>render_rts.sh</code>). The latter runs the commands without the need to install.</p>
+<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>). The runs the script commands directly as an example.</p>
 <div class="fragment"><div class="line">folders=(</div>
 <div class="line">    &quot;./resources/Materials/Examples&quot;</div>
 <div class="line">    &quot;./resources/Materials/TestSuite/stdlib/convolution&quot;</div>
@@ -169,17 +178,20 @@ Installation and Usage</h2>
 <div class="line">    python ../source/materialxusd/mtlx2usd.py -pp -mn -sf &quot;$folder&quot; -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr</div>
 <div class="line">done</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
-Tests</h1>
-<p>An initial test is to run MaterialX to USD conversion against the MaterialX render test suite files. Results are show below:</p>
+Acceptance</h1>
+<p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
 <h2><a class="anchor" id="autotoc_md5"></a>
-GLSL vs GLSLFX</h2>
-<p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"&gt;&lt;/iframe&gt; </p>
+Gallery of Example Materials</h2>
+<p>glTF, Standard Surface, OpenUSD material renderings &lt;iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"&gt;&lt;/iframe&gt; </p>
 <h2><a class="anchor" id="autotoc_md6"></a>
-GLSL vs OSL vs GLSLFX</h2>
+Comparison: GLSL vs GLSLFX</h2>
+<p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"&gt;&lt;/iframe&gt; </p>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Comparison: GLSL vs OSL vs GLSLFX</h2>
 <p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"&gt;&lt;/iframe&gt;</p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Documentation</h1>
-<p>See the API documentation <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a> </p>
+<p>Python API documentation can be found here<a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a> </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

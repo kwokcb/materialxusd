@@ -30,14 +30,23 @@ def main():
     output_path = args.output
     if not output_path:
         output_path = input_path.replace('.mtlx', '_converted.mtlx')
+
+    utils = MaterialXUsdUtilities()
+    doc = utils.create_document(input_path)
+
     nodegraph_name = args.nodegraph
     remove_original_nodes = not args.keep
     try:
-        doc = MaterialXUsdUtilities.create_document(input_path)
         #logging.info(f"Loaded MaterialX document from {input_path} {mx.prettyPrint(doc)}")
         top_level_nodes_found = MaterialXUsdUtilities.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)
-        if top_level_nodes_found:        
-            MaterialXUsdUtilities.write_document(doc, output_path)
+        if top_level_nodes_found:   
+            # Make implicit geometry streams explicit     
+            doc.setDataLibrary(utils.get_standard_libraries())
+            implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
+            logger.info(f"Added {implicit_nodes_added} implicit geometry nodes to the document")
+            doc.setDataLibrary(None)
+
+            utils.write_document(doc, output_path)
             logger.info(f"Encapsulated {top_level_nodes_found} top level nodes in {output_path}")
         else:
             logger.info(f"No top level nodes found in {input_path}")

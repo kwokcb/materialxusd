@@ -25,13 +25,13 @@
     <grid name="grid_color3" type="color3">
       <input name="uvtiling" type="vector2" value="58, 58" />
       <input name="thickness" type="float" value="0.1" />
-      <input name="texcoord" type="vector2" interfacename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
     </grid>
     <output name="out" type="color3" nodename="grid_color3" />
     <crosshatch name="crosshatch_color3" type="color3">
       <input name="uvtiling" type="vector2" value="29, 29" />
       <input name="thickness" type="float" value="0.05" />
-      <input name="texcoord" type="vector2" interfacename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
     </crosshatch>
     <output name="out2" type="color3" nodename="crosshatch_color3" />
     <max name="union_color3" type="color3">

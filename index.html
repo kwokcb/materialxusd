@@ -14,7 +14,7 @@
 body {
 	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
 	font-size: var(--vscode-markdown-font-size, 14px);
-	padding: 0 26px;
+	padding: 8 26px;
 	line-height: var(--vscode-markdown-line-height, 22px);
 	word-wrap: break-word;
 }
@@ -309,7 +309,7 @@ pre code {
 
  body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
-	padding: 6 12px;
+	padding: 0 12px;
 }
 
 pre {
@@ -378,7 +378,7 @@ code {
 <p>The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.</p>
 <p>Options Include:</p>
 <ul>
-<li>Preprocess the MaterialX file to<br>
+<li>Preprocess the MaterialX file to
 attempt to produce valid USD shading network (See Support Utilities)</li>
 <li>Input geometry (USD file)</li>
 <li>Input camera (USD file)</li>
@@ -386,7 +386,7 @@ attempt to produce valid USD shading network (See Support Utilities)</li>
 <li>Perform USD validation</li>
 <li>Export just the materials to a USD file.</li>
 <li>Render the corresponding USD file. This uses <code>usdrecord</code> currently.</li>
-<li>Misc options for output for test<br>
+<li>Misc options for output for test
 suite compatibility:
 <ul>
 <li>Use material name for file name</li>
@@ -401,6 +401,7 @@ suite compatibility:
 <li><code>preprocess_mtlx.py</code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
 <ul>
 <li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+<li>Resolve any implicit geometry stream bindings on <code>inputs</code> and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.</li>
 </ul>
 </li>
 </ul>
@@ -411,7 +412,7 @@ suite compatibility:
 <p>Install from the root folder:</p>
 <pre class="hljs"><code><div>pip install .
 </div></code></pre>
-<p>Run using the <code>materialxusd</code> command.<br>
+<p>Run using the <code>materialxusd</code> command.
 Currently there are two commands for:</p>
 <ul>
 <li>MaterialX to USD conversion which can be run using</li>
@@ -445,7 +446,7 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
 </tr>
 </tbody>
 </table>
-<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>).<br>
+<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>).
 The runs the script commands directly as an example.</p>
 <pre class="hljs"><code><div>folders=(
     <span class="hljs-string">"./resources/Materials/Examples"</span>

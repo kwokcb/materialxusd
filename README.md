@@ -32,6 +32,7 @@ Some initial utilities are provided with more coming on-line as the site / requi
 - Preprocessing Utilities:
   - `preprocess_mtlx.py` : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
     - Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
+    - Resolve any implicit geometry stream bindings on `inputs` and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.
 
 ## Usage
 

@@ -136,6 +136,7 @@ Available Components</h2>
 <li>Preprocessing Utilities:<ul>
 <li><code><a class="el" href="preprocess__mtlx_8py_source.html">preprocess_mtlx.py</a></code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:<ul>
 <li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
+<li>Resolve any implicit geometry stream bindings on <code>inputs</code> and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.</li>
 </ul>
 </li>
 </ul>

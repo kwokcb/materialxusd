@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/nprlib\\gooch_shade_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/nprlib\\gooch_shade_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -27,14 +27,14 @@ def "MaterialX"
             )
             {
                 float inputs:emission.connect = </MaterialX/Materials/default_gooch_material.inputs:emission>
-                color3f inputs:emission_color.connect = </MaterialX/Materials/default_gooch_material/top_level_nodes.outputs:out>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/default_gooch_material/root_graph.outputs:out>
                 float inputs:opacity.connect = </MaterialX/Materials/default_gooch_material.inputs:opacity>
                 float inputs:transmission.connect = </MaterialX/Materials/default_gooch_material.inputs:transmission>
                 color3f inputs:transmission_color.connect = </MaterialX/Materials/default_gooch_material.inputs:transmission_color>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -57,14 +57,14 @@ def "MaterialX"
             )
             {
                 float inputs:emission.connect = </MaterialX/Materials/redblue_gooch_material.inputs:emission>
-                color3f inputs:emission_color.connect = </MaterialX/Materials/redblue_gooch_material/top_level_nodes.outputs:out2>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/redblue_gooch_material/root_graph.outputs:out2>
                 float inputs:opacity.connect = </MaterialX/Materials/redblue_gooch_material.inputs:opacity>
                 float inputs:transmission.connect = </MaterialX/Materials/redblue_gooch_material.inputs:transmission>
                 color3f inputs:transmission_color.connect = </MaterialX/Materials/redblue_gooch_material.inputs:transmission_color>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -88,10 +88,10 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
-        def NodeGraph "top_level_nodes"
+        def NodeGraph "root_graph"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/top_level_nodes/default_gooch.outputs:out>
-            color3f outputs:out2.connect = </MaterialX/NodeGraphs/top_level_nodes/red_blue_gooch.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/root_graph/default_gooch.outputs:out>
+            color3f outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/red_blue_gooch.outputs:out>
 
             def Shader "default_gooch"
             {
@@ -120,7 +120,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/redblue_gooch_material>
@@ -135,14 +135,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

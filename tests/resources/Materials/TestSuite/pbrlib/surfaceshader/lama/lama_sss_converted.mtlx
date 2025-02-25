@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <materialx version="1.39" colorspace="acescg">
   <surface name="LamaSSSSurface" type="surfaceshader">
-    <input name="bsdf" type="BSDF" nodegraph="top_level_nodes" output="out" />
+    <input name="bsdf" type="BSDF" nodegraph="root_graph" output="out" />
   </surface>
   <surfacematerial name="LamaSSSTest" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="LamaSSSSurface" />
   </surfacematerial>
-  <nodegraph name="top_level_nodes">
+  <nodegraph name="root_graph">
     <LamaSSS name="LamaSSS" type="BSDF">
       <input name="color" type="color3" value="0.18, 0.18, 0.18" />
       <input name="sssRadius" type="color3" value="0, 0, 0" />
@@ -17,7 +17,11 @@
       <input name="sssUnitLength" type="float" value="0.00328" />
       <input name="mode" type="integer" value="0" />
       <input name="albedoInversionMethod" type="integer" value="0" />
+      <input name="normal" type="vector3" nodename="normal" />
     </LamaSSS>
     <output name="out" type="BSDF" nodename="LamaSSS" />
+    <normal name="normal" type="vector3">
+      <input name="space" type="string" value="object" />
+    </normal>
   </nodegraph>
 </materialx>

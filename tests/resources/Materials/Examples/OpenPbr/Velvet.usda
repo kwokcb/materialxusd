@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\OpenPbr\\open_pbr_velvet.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\OpenPbr\\open_pbr_velvet_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -80,11 +80,11 @@ def "MaterialX"
                 color3f inputs:fuzz_color.connect = </MaterialX/Materials/Velvet.inputs:fuzz_color>
                 float inputs:fuzz_roughness.connect = </MaterialX/Materials/Velvet.inputs:fuzz_roughness>
                 float inputs:fuzz_weight.connect = </MaterialX/Materials/Velvet.inputs:fuzz_weight>
-                float3 inputs:geometry_coat_normal.connect = </MaterialX/Materials/Velvet.inputs:geometry_coat_normal>
-                float3 inputs:geometry_coat_tangent.connect = </MaterialX/Materials/Velvet.inputs:geometry_coat_tangent>
-                float3 inputs:geometry_normal.connect = </MaterialX/Materials/Velvet.inputs:geometry_normal>
+                float3 inputs:geometry_coat_normal.connect = </MaterialX/Materials/Velvet/root_graph.outputs:out2>
+                float3 inputs:geometry_coat_tangent.connect = </MaterialX/Materials/Velvet/root_graph.outputs:out4>
+                float3 inputs:geometry_normal.connect = </MaterialX/Materials/Velvet/root_graph.outputs:out>
                 float inputs:geometry_opacity.connect = </MaterialX/Materials/Velvet.inputs:geometry_opacity>
-                float3 inputs:geometry_tangent.connect = </MaterialX/Materials/Velvet.inputs:geometry_tangent>
+                float3 inputs:geometry_tangent.connect = </MaterialX/Materials/Velvet/root_graph.outputs:out3>
                 bool inputs:geometry_thin_walled.connect = </MaterialX/Materials/Velvet.inputs:geometry_thin_walled>
                 color3f inputs:specular_color.connect = </MaterialX/Materials/Velvet.inputs:specular_color>
                 float inputs:specular_ior.connect = </MaterialX/Materials/Velvet.inputs:specular_ior>
@@ -107,6 +107,12 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/Velvet.inputs:transmission_scatter_anisotropy>
                 float inputs:transmission_weight.connect = </MaterialX/Materials/Velvet.inputs:transmission_weight>
             }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
         }
     }
 
@@ -118,13 +124,39 @@ def "MaterialX"
             token outputs:surface
         }
     }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            float3 outputs:out.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+            float3 outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+            float3 outputs:out3.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
+            float3 outputs:out4.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+        }
+    }
 }
 
 def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/Velvet>
@@ -139,14 +171,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

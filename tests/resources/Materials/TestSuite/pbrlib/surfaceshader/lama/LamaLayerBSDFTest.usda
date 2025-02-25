@@ -4,7 +4,7 @@
         string colorSpace = "acescg"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_layer_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\lama\\lama_layer_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -35,7 +35,7 @@ def "MaterialX"
                 token inputs:bsdf (
                     renderType = "BSDF"
                 )
-                token inputs:bsdf.connect = </MaterialX/Materials/LamaLayerBSDFTest/top_level_nodes.outputs:out>
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaLayerBSDFTest/root_graph.outputs:out>
                 token inputs:edf (
                     renderType = "EDF"
                 )
@@ -44,8 +44,8 @@ def "MaterialX"
                 bool inputs:thin_walled.connect = </MaterialX/Materials/LamaLayerBSDFTest.inputs:thin_walled>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -63,22 +63,24 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
-        def NodeGraph "top_level_nodes"
+        def NodeGraph "root_graph"
         {
             token outputs:out (
                 renderType = "BSDF"
             )
-            token outputs:out.connect = </MaterialX/NodeGraphs/top_level_nodes/LamaLayerBSDF.outputs:out>
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaLayerBSDF.outputs:out>
 
             def Shader "LamaConductor"
             {
                 uniform token info:id = "ND_lama_conductor"
                 float inputs:anisotropy = 0
+                float3 inputs:anisotropyDirection.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
                 float inputs:anisotropyRotation = 0
                 color3f inputs:edgeColor = (0.9979, 0.9813, 0.7523)
                 float3 inputs:extinction = (3.42, 2.35, 1.77)
                 int inputs:fresnelMode = 0
                 float3 inputs:IOR = (0.18, 0.42, 1.37)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
                 color3f inputs:reflectivity = (0.945, 0.7772, 0.3737)
                 float inputs:roughness = 0.1
                 color3f inputs:tint = (1, 1, 1)
@@ -93,8 +95,10 @@ def "MaterialX"
                 color3f inputs:absorptionColor = (1, 1, 1)
                 float inputs:absorptionRadius = 1
                 float inputs:anisotropy = 0
+                float3 inputs:direction.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
                 int inputs:fresnelMode = 0
                 float inputs:IOR = 1.5
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
                 color3f inputs:reflectionTint = (1, 1, 1)
                 float inputs:reflectivity = 0.04
                 float inputs:rotation = 0
@@ -113,16 +117,31 @@ def "MaterialX"
                 token inputs:materialBase (
                     renderType = "BSDF"
                 )
-                token inputs:materialBase.connect = </MaterialX/NodeGraphs/top_level_nodes/LamaConductor.outputs:out>
+                token inputs:materialBase.connect = </MaterialX/NodeGraphs/root_graph/LamaConductor.outputs:out>
                 token inputs:materialTop (
                     renderType = "BSDF"
                 )
-                token inputs:materialTop.connect = </MaterialX/NodeGraphs/top_level_nodes/LamaDielectric.outputs:out>
+                token inputs:materialTop.connect = </MaterialX/NodeGraphs/root_graph/LamaDielectric.outputs:out>
                 float inputs:topMix = 1
                 float inputs:topThickness = 0
                 token outputs:out (
                     renderType = "BSDF"
                 )
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
+                float3 outputs:out
             }
         }
     }
@@ -132,7 +151,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/LamaLayerBSDFTest>
@@ -147,14 +166,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

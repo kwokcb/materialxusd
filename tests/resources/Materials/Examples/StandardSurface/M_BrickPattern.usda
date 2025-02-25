@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\StandardSurface\\standard_surface_brick_procedural.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/Examples/StandardSurface\\standard_surface_brick_procedural_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -326,6 +326,8 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_tiledimage_vector3_27.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_BrickPattern/normal.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_BrickPattern/tangent.outputs:out>
                 float3 outputs:out
             }
 
@@ -340,6 +342,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_vector3"
                 asset inputs:file = @../../../Images/brick_normal.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float3 outputs:out
             }
@@ -348,6 +351,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_float"
                 asset inputs:file = @../../../Images/brick_roughness.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float outputs:out
             }
@@ -356,6 +360,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_float"
                 asset inputs:file = @../../../Images/brick_mask.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float outputs:out
             }
@@ -364,6 +369,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_float"
                 asset inputs:file = @../../../Images/brick_base_gray.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float outputs:out
             }
@@ -372,6 +378,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_float"
                 asset inputs:file = @../../../Images/brick_variation_mask.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float outputs:out
             }
@@ -380,8 +387,31 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_float"
                 asset inputs:file = @../../../Images/brick_dirt_mask.jpg@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BrickPattern/texcoord.outputs:out>
                 float2 inputs:uvtiling.connect = </MaterialX/NodeGraphs/NG_BrickPattern/node_convert_1.outputs:out>
                 float outputs:out
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "texcoord"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
             }
         }
     }
@@ -391,7 +421,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/M_BrickPattern>
@@ -406,14 +436,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

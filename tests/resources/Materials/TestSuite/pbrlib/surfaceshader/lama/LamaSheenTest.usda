@@ -4,7 +4,7 @@
         string colorSpace = "acescg"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_sheen_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\lama\\lama_sheen_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -35,7 +35,7 @@ def "MaterialX"
                 token inputs:bsdf (
                     renderType = "BSDF"
                 )
-                token inputs:bsdf.connect = </MaterialX/Materials/LamaSheenTest/top_level_nodes.outputs:out>
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaSheenTest/root_graph.outputs:out>
                 token inputs:edf (
                     renderType = "EDF"
                 )
@@ -44,8 +44,8 @@ def "MaterialX"
                 bool inputs:thin_walled.connect = </MaterialX/Materials/LamaSheenTest.inputs:thin_walled>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -63,21 +63,29 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
-        def NodeGraph "top_level_nodes"
+        def NodeGraph "root_graph"
         {
             token outputs:out (
                 renderType = "BSDF"
             )
-            token outputs:out.connect = </MaterialX/NodeGraphs/top_level_nodes/LamaSheen.outputs:out>
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaSheen.outputs:out>
 
             def Shader "LamaSheen"
             {
                 uniform token info:id = "ND_lama_sheen"
                 color3f inputs:color = (1, 1, 1)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
                 float inputs:roughness = 0.1
                 token outputs:out (
                     renderType = "BSDF"
                 )
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
             }
         }
     }
@@ -87,7 +95,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/LamaSheenTest>
@@ -102,14 +110,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

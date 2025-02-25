@@ -1,16 +1,32 @@
 <?xml version="1.0"?>
 <materialx version="1.39" colorspace="lin_rec709">
+  <nodedef name="ND_tm_retest" node="tm_retest">
+    <input name="texture_file" type="filename" uniform="true" />
+    <output name="out" type="color3" />
+  </nodedef>
   <nodegraph name="NG_tm_retest" nodedef="ND_tm_retest">
     <image name="b_image" type="color3">
       <input name="file" type="filename" interfacename="texture_file" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
     </image>
     <output name="out" type="color3" nodename="b_image" />
+    <texcoord name="texcoord" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
   </nodegraph>
+  <nodedef name="ND_tm_test" node="tm_test">
+    <input name="texture_file" type="filename" uniform="true" />
+    <output name="out" type="color3" />
+  </nodedef>
   <nodegraph name="NG_tm_test" nodedef="ND_tm_test">
     <image name="b_image" type="color3">
       <input name="file" type="filename" interfacename="texture_file" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
     </image>
     <output name="out" type="color3" nodename="b_image" />
+    <texcoord name="texcoord" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
   </nodegraph>
   <nodegraph name="nodegraph1">
     <tm_test name="bl" type="color3">
@@ -23,8 +39,12 @@
     <output name="tmtestout2" type="color3" nodename="bl1" />
     <image name="tr1" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
     </image>
     <output name="troutput" type="color3" nodename="tr1" />
+    <texcoord name="texcoord" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
   </nodegraph>
   <standard_surface name="shaderref1" type="surfaceshader">
     <input name="base_color" type="color3" output="tmtestout" nodegraph="nodegraph1" />
@@ -34,14 +54,4 @@
   <surfacematerial name="Filename_CM_Test" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shaderref1" />
   </surfacematerial>
-  <nodegraph name="top_level_nodes">
-    <nodedef name="ND_tm_retest" node="tm_retest">
-      <input name="texture_file" type="filename" uniform="true" />
-      <output name="out" type="color3" />
-    </nodedef>
-    <nodedef name="ND_tm_test" node="tm_test">
-      <input name="texture_file" type="filename" uniform="true" />
-      <output name="out" type="color3" />
-    </nodedef>
-  </nodegraph>
 </materialx>

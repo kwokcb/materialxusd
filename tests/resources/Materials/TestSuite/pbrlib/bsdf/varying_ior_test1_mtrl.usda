@@ -1,0 +1,195 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\bsdf\\varying_ior_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "NodeGraphs"
+    {
+        def NodeGraph "ND_foo_surface"
+        {
+            float inputs:ior = 1.33
+            float2 inputs:roughness = (0.1, 0.1)
+            token outputs:out
+
+            def Shader "dielectric_btdf_1"
+            {
+                uniform token info:id = "ND_dielectric_bsdf"
+                float inputs:ior.connect = </MaterialX/NodeGraphs/ND_foo_surface.inputs:ior>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_foo_surface/normal.outputs:out>
+                float2 inputs:roughness.connect = </MaterialX/NodeGraphs/ND_foo_surface.inputs:roughness>
+                string inputs:scatter_mode = "T"
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/ND_foo_surface/tangent.outputs:out>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "dielectric_brdf_1__layer_top"
+            {
+                uniform token info:id = "ND_dielectric_bsdf"
+                float inputs:ior.connect = </MaterialX/NodeGraphs/ND_foo_surface.inputs:ior>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_foo_surface/normal.outputs:out>
+                float2 inputs:roughness.connect = </MaterialX/NodeGraphs/ND_foo_surface.inputs:roughness>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/ND_foo_surface/tangent.outputs:out>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "dielectric_brdf_1"
+            {
+                uniform token info:id = "ND_layer_bsdf"
+                token inputs:base (
+                    renderType = "BSDF"
+                )
+                token inputs:base.connect = </MaterialX/NodeGraphs/ND_foo_surface/dielectric_btdf_1.outputs:out>
+                token inputs:top (
+                    renderType = "BSDF"
+                )
+                token inputs:top.connect = </MaterialX/NodeGraphs/ND_foo_surface/dielectric_brdf_1__layer_top.outputs:out>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+        }
+
+        def NodeGraph "root_graph"
+        {
+            float outputs:out.connect = </MaterialX/NodeGraphs/root_graph/texcoord1_x.outputs:out>
+
+            def Shader "texcoord1"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                float2 outputs:out
+            }
+
+            def Shader "texcoord1_x"
+            {
+                uniform token info:id = "ND_extract_vector2"
+                float2 inputs:in.connect = </MaterialX/NodeGraphs/root_graph/texcoord1.outputs:out>
+                int inputs:index = 0
+                float outputs:out
+            }
+
+            def Shader "constant1"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 1.7
+                float outputs:out
+            }
+        }
+    }
+
+    def "Materials"
+    {
+        def Material "varying_ior_test1_mtrl" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:ior
+            float2 inputs:roughness
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/varying_ior_test1_mtrl/varying_ior_test1.outputs:surface>
+
+            def Shader "varying_ior_test1" (
+                prepend references = </MaterialX/Shaders/varying_ior_test1>
+            )
+            {
+                float inputs:ior.connect = </MaterialX/Materials/varying_ior_test1_mtrl/root_graph.outputs:out>
+                float2 inputs:roughness.connect = </MaterialX/Materials/varying_ior_test1_mtrl.inputs:roughness>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+
+        def Material "varying_ior_test2_mtrl" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:ior = 2.3
+            float2 inputs:roughness
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/varying_ior_test2_mtrl/varying_ior_test2.outputs:surface>
+
+            def Shader "varying_ior_test2" (
+                prepend references = </MaterialX/Shaders/varying_ior_test2>
+            )
+            {
+                float inputs:ior.connect = </MaterialX/Materials/varying_ior_test2_mtrl.inputs:ior>
+                float2 inputs:roughness.connect = </MaterialX/Materials/varying_ior_test2_mtrl.inputs:roughness>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "varying_ior_test1"
+        {
+            uniform token info:id = "ND_foo_surface"
+            token outputs:surface
+        }
+
+        def Shader "varying_ior_test2"
+        {
+            uniform token info:id = "ND_foo_surface"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/varying_ior_test1_mtrl>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

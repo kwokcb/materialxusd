@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <materialx version="1.39" colorspace="acescg">
   <surface name="LamaConductorSurface" type="surfaceshader">
-    <input name="bsdf" type="BSDF" nodegraph="top_level_nodes" output="out" />
+    <input name="bsdf" type="BSDF" nodegraph="root_graph" output="out" />
   </surface>
   <surfacematerial name="LamaConductorTest" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="LamaConductorSurface" />
   </surfacematerial>
-  <nodegraph name="top_level_nodes">
+  <nodegraph name="root_graph">
     <LamaConductor name="LamaConductor" type="BSDF">
       <input name="tint" type="color3" value="1, 1, 1" />
       <input name="fresnelMode" type="integer" value="0" />
@@ -17,7 +17,16 @@
       <input name="roughness" type="float" value="0.1" />
       <input name="anisotropy" type="float" value="0.0" />
       <input name="anisotropyRotation" type="float" value="0.0" />
+      <input name="normal" type="vector3" nodename="normal" />
+      <input name="anisotropyDirection" type="vector3" nodename="tangent" />
     </LamaConductor>
     <output name="out" type="BSDF" nodename="LamaConductor" />
+    <normal name="normal" type="vector3">
+      <input name="space" type="string" value="object" />
+    </normal>
+    <tangent name="tangent" type="vector3">
+      <input name="space" type="string" value="object" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
   </nodegraph>
 </materialx>

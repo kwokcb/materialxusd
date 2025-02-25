@@ -15,7 +15,7 @@ try:
 except ImportError:
     print("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
     exit(1)
-    
+
 ### Utilities ####
 def get_mtlx_files(input_path: str):
     mtlx_files = []
@@ -27,7 +27,7 @@ def get_mtlx_files(input_path: str):
     if os.path.isdir(input_path):
         for root, dirs, files in os.walk(input_path):
             for file in files:
-                if file.endswith(".mtlx"):
+                if file.endswith(".mtlx") and not file.endswith("_converted.mtlx"):
                     mtlx_files.append(os.path.join(root, file))
 
     else:

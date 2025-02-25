@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <nodegraph name="height_to_normal_cm">
+    <image name="b_image" type="color3">
+      <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
+    </image>
+    <extract name="extract1" type="float">
+      <input name="in" type="color3" nodename="b_image" />
+      <input name="index" type="integer" value="1" />
+    </extract>
+    <heighttonormal name="impl_heighttonormalmap" type="vector3">
+      <input name="in" type="float" nodename="extract1" />
+      <input name="scale" type="float" value="1.0" />
+    </heighttonormal>
+    <output name="out" type="vector3" nodename="impl_heighttonormalmap" />
+    <texcoord name="texcoord" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+  </nodegraph>
+  <nodegraph name="normalmap_cm">
+    <image name="b_image" type="color3">
+      <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
+      <input name="texcoord" type="vector2" nodename="texcoord" />
+    </image>
+    <convert name="c3tov3" type="vector3">
+      <input name="in" type="color3" nodename="b_image" />
+    </convert>
+    <normalmap name="impl_normalmap" type="vector3">
+      <input name="in" type="vector3" nodename="c3tov3" />
+      <input name="scale" type="float" value="1.5" />
+      <input name="normal" type="vector3" nodename="normal" />
+      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="bitangent" type="vector3" nodename="bitangent" />
+    </normalmap>
+    <output name="out" type="vector3" nodename="impl_normalmap" />
+    <texcoord name="texcoord" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+    <normal name="normal" type="vector3">
+      <input name="space" type="string" value="object" />
+    </normal>
+    <tangent name="tangent" type="vector3">
+      <input name="space" type="string" value="object" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <bitangent name="bitangent" type="vector3">
+      <input name="space" type="string" value="object" />
+      <input name="index" type="integer" value="0" />
+    </bitangent>
+  </nodegraph>
+</materialx>

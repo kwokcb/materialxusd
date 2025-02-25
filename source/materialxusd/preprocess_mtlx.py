@@ -15,7 +15,7 @@ def main():
     argparser = argparse.ArgumentParser(description='Prepare a MaterialX document for conversion to USD')
     argparser.add_argument('input', type=str, help='Input MaterialX document')
     argparser.add_argument('-o', '--output', type=str, default='', help='Output MaterialX document. Default is input name with "_converted" appended.')
-    argparser.add_argument('-ng', '--nodegraph', type=str, default='top_level_nodes', help='Name of the new nodegraph to encapsulate the top level nodes. Default is "top_level_nodes"')
+    argparser.add_argument('-ng', '--nodegraph', type=str, default='root_graph', help='Name of the new nodegraph to encapsulate the top level nodes. Default is "top_level_nodes"')
     argparser.add_argument('-k', '--keep', action='store_true', help='Keep the original top level nodes from the document. Default is True')
     args = argparser.parse_args()
 
@@ -30,19 +30,29 @@ def main():
     output_path = args.output
     if not output_path:
         output_path = input_path.replace('.mtlx', '_converted.mtlx')
+
+    utils = MaterialXUsdUtilities()
+    doc = utils.create_document(input_path)
+
     nodegraph_name = args.nodegraph
     remove_original_nodes = not args.keep
     try:
-        doc = MaterialXUsdUtilities.create_document(input_path)
-        #logging.info(f"Loaded MaterialX document from {input_path} {mx.prettyPrint(doc)}")
         top_level_nodes_found = MaterialXUsdUtilities.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)
-        if top_level_nodes_found:        
-            MaterialXUsdUtilities.write_document(doc, output_path)
-            logger.info(f"Encapsulated {top_level_nodes_found} top level nodes in {output_path}")
-        else:
-            logger.info(f"No top level nodes found in {input_path}")
+        if top_level_nodes_found > 0:
+            logger.info(f"> Encapsulated {top_level_nodes_found} top level nodes.")
+
+        # Make implicit geometry streams explicit     
+        doc.setDataLibrary(utils.get_standard_libraries())
+        implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
+        if implicit_nodes_added > 0:
+            logger.info(f"> Added {implicit_nodes_added} implicit geometry nodes.")
+        doc.setDataLibrary(None)
+
+        if implicit_nodes_added > 0 or top_level_nodes_found > 0:
+            utils.write_document(doc, output_path)
+            logger.info(f"> Wrote modified document to {output_path}")
     except Exception as e:
-        logger.error(f"Failed to encapsulate top level nodes. Error: {e}")
+        logger.error(f"> Failed to preprocess document. Error: {e}")
 
 if __name__ == '__main__':
     main()

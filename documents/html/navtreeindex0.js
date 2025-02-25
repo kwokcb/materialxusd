@@ -18,6 +18,8 @@ var NAVTREEINDEX0 =
 "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#acb391ba3086b6911a8701476d3ba69ed":[1,0,0,0,0,9],
 "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#ad78b837d1ca3071b4b4d68f78a815bf0":[1,0,0,0,0,8],
 "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html":[1,0,0,1,0],
+"classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aadfbb34633aacafb0c2a9b05116165cc":[1,0,0,1,0,0],
+"classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aecffc179fd921ca0a420a53b7d675cf9":[1,0,0,1,0,1],
 "dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html":[2,0,0],
 "dir_ea8c3eeab7c061791d54346a3ac24a00.html":[2,0,0,0],
 "files.html":[2,0],

@@ -10,6 +10,28 @@ class MaterialXUsdUtilities:
     '''
     @brief A collection of support utilities for working with MaterialX and USD.
     '''
+
+    def __init__(self):
+        self._stdlib, self._libFiles = self.load_standard_libraries()
+
+    def load_standard_libraries(self):
+        '''Load standard MaierialX libraries.
+        @return: The standard library and the list of library files.
+        '''
+        stdlib = mx.createDocument()
+        libFiles = mx.loadLibraries(mx.getDefaultDataLibraryFolders(), mx.getDefaultDataSearchPath(), stdlib)
+        return stdlib, libFiles
+    
+    def get_standard_libraries(self):
+        '''
+        @brief Get standard MaierialX libraries.
+        @return: The standard library and the list of library files.
+        '''
+        return self._stdlib
+
+    '''
+    @brief A collection of support utilities for working with MaterialX and USD.
+    '''
     @staticmethod
     def create_document(path: str):
         '''
@@ -18,7 +40,7 @@ class MaterialXUsdUtilities:
         @return The MaterialX document if successful, None otherwise.
         '''
         doc = mx.createDocument()
-        mx.readFromXmlFile(doc, path)
+        mx.readFromXmlFile(doc, mx.FilePath(path))
         return doc
     
     @staticmethod
@@ -30,6 +52,66 @@ class MaterialXUsdUtilities:
         @return True if successful, False otherwise.
         '''
         return mx.writeToXmlFile(doc, path)
+
+    @staticmethod
+    def add_explicit_geometry_stream(graph: mx.GraphElement):
+        
+        graph_default_nodes = {}
+
+        for node in graph.getNodes():
+            if node.hasSourceUri() or (node.getCategory() in ["nodedef"]):
+                continue
+
+            nodedef = node.getNodeDef(node.getType())
+            #print('Node:', node.getName(), 'NodeDef:', nodedef.getName() if nodedef else "None")
+            if not nodedef:
+                continue
+
+            for nodedef_input in nodedef.getInputs():
+                node_input = node.getInput(nodedef_input.getName())
+                # Skip if is a connected input
+                if node_input:
+                    if node_input.getInterfaceName() or node_input.getNodeName() or node_input.getNodeGraphString():
+                        continue
+
+                # Skip if no defaultgeomprop
+                defaultgeomprop = nodedef_input.getDefaultGeomProp()
+                if not defaultgeomprop:
+                    continue
+
+                # Fix this up to get information from the defaultgromprop e.g.
+                # - texcoord <geompropdef name="UV0" type="vector2" geomprop="texcoord" index="0">
+                defaultgeomprop_name = defaultgeomprop.getName()
+                defaultgeomprop_prop = defaultgeomprop.getGeomProp()
+                defaultgeomprop_type = defaultgeomprop.getType()
+                defaultgeomprop_index = defaultgeomprop.getIndex()
+
+                if not node_input:
+                    node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())
+                if defaultgeomprop_name not in graph_default_nodes:
+                    upstream_default_node = graph.addNode(defaultgeomprop_prop, 
+                                                            graph.createValidChildName(defaultgeomprop_prop), 
+                                                            defaultgeomprop_type)
+                    upstream_default_node.addInputsFromNodeDef()
+                    index_input = upstream_default_node.getInput("index")
+                    if index_input:
+                        index_input.setValue(defaultgeomprop_index, 'integer')
+
+                    print(f'  > Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
+                    graph_default_nodes[defaultgeomprop_name] = upstream_default_node
+                else:
+                    upstream_default_node = graph_default_nodes[defaultgeomprop_name]
+                    #print('Use upstream node for defaultgromprop:', nodedef_input.getName(), defaultgeomprop)
+                node_input.setNodeName(upstream_default_node.getName())
+
+        implicit_nodes_added = len(graph_default_nodes)
+        if  graph.getCategory() not in "nodegraph":
+            for child_graph in graph.getNodeGraphs():
+                if child_graph.hasSourceUri():
+                    continue
+                implicit_nodes_added += MaterialXUsdUtilities.add_explicit_geometry_stream(child_graph)                        
+
+        return implicit_nodes_added
 
     @staticmethod
     def encapsulate_top_level_nodes(doc: mx.Document, nodegraph_name:str="top_level_nodes", remove_original:bool=True):
@@ -55,7 +137,7 @@ class MaterialXUsdUtilities:
             if (
                 elem.getName()
                 and (elem.getType() not in ["material", "surfaceshader"])
-                and elem.getCategory() not in ["nodegraph"]
+                and elem.getCategory() not in ["nodegraph", "nodedef"]
             ):
                 #print("Finding top level nodes: ", elem.getName(), elem.getType())
                 top_level_nodes.append(elem)

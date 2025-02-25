@@ -91,11 +91,20 @@ def main():
         # for the subfolder path to render to
         subfolder_path = input_path
         if args.preprocess:
+            print("> Pre-processing MaterialX file: ", input_path)
             utils = mxusd_utils.MaterialXUsdUtilities()
+            doc = utils.create_document(input_path)
+
+            doc.setDataLibrary(utils.get_standard_libraries())
+            implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
+            print(f"  > Added {implicit_nodes_added} implicit geometry nodes to the document")
+            doc.setDataLibrary(None)                
+            num_top_level_nodes = utils.encapsulate_top_level_nodes(doc, 'root_graph')
+            print(f"  > Encapsulated {num_top_level_nodes} top level nodes.")
             new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
-            doc = utils.encapsulate_top_level_nodes_file(input_path, new_input_path)
-            if doc:        
-                input_path = new_input_path
+            utils.write_document(doc, new_input_path)
+            print(f"  > Saved converted MaterialX document to: {new_input_path}")
+            input_path = new_input_path
 
         material_file_path = ''
         if args.material:

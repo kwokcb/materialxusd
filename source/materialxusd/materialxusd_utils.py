@@ -40,7 +40,7 @@ class MaterialXUsdUtilities:
         @return The MaterialX document if successful, None otherwise.
         '''
         doc = mx.createDocument()
-        mx.readFromXmlFile(doc, path)
+        mx.readFromXmlFile(doc, mx.FilePath(path))
         return doc
     
     @staticmethod

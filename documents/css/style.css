@@ -1,0 +1,266 @@
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.greyhover {
+  text-decoration: none;
+}
+
+.greyhover:hover {
+  text-decoration: none;
+  cursor: pointer;
+  background: rgb(239, 239, 239);
+}
+
+.nav-item,
+.dropdown-item {
+  font-size: 100%;
+}
+
+.col-form-label-sm,
+.form-control,
+.card-body {
+  font-size: 100%;
+}
+
+.card-text,
+.form-group,
+.btn {
+  font-size: 100%;
+}
+
+body,
+.form-control,
+.col-form-label-sm,
+.card-body,
+.btn {
+  font-family: 'Roboto', sans-serif;
+}
+
+.custom {
+  background-color: rgb(255, 253, 245);
+}
+
+.custom_colorbox {
+  min-width: 1em;
+  min-height: 1em;
+  width: 2.5em;
+  height: 2.5em;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/l/font?kit=KFOmCnqEu92Fr1Me4GZNCzcPbOHTt6tqXl2TMWgtUADtbNE0FwjR60ub0BtuliV9nzY5opeRF6O-FnZsaJLetvV-9mXgaxv7xBV8jmt2chWZ7OuZw6siU4A&skey=a0a0114a1dcab3ac&v=v30') format('woff2');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmWUlvBh0_IsHA06hvWViQJH84UwXqadI5GH6rkU6c1RhjmSh-mjE8oYqOCqC7EXNvZZ3Tj85H82LlaBb0yRZ5iW51bwqE7-6exqgvXI1IEVo&skey=c06e7213f788649e&v=v30') format('woff2');
+}
+
+
+.feature-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: .75rem;
+}
+
+.icon-link>.bi {
+  margin-top: .125rem;
+  margin-left: .125rem;
+  fill: currentcolor;
+  transition: transform .25s ease-in-out;
+}
+
+.icon-link:hover>.bi {
+  transform: translate(.25rem);
+}
+
+.icon-square {
+  width: 3rem;
+  height: 3rem;
+  border-radius: .75rem;
+}
+
+.text-shadow-1 {
+  text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25);
+}
+
+aa .text-shadow-2 {
+  text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25);
+}
+
+.text-shadow-3 {
+  text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25);
+}
+
+.card-cover {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.feature-icon-small {
+  width: 3rem;
+  height: 3rem;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 1rem;
+}
+
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  bottom: 2rem;
+  z-index: 8;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+  height: 10rem;
+}
+
+/* Model viewer */
+model-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: 256;
+  background-color: #7d7d7d;
+}
+
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.social-icons {
+  list-style: none;
+  padding: 0;
+}
+
+.social-icons li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.social-icons li a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #333;
+  color: #fff;
+}
+
+
+/* Custom styles for input range thumb */
+input[type="range"]::-webkit-slider-thumb {
+  /* background-color: #7d7d7d; */
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+  
+  /* Change thumb color in Webkit browsers (Chrome, Safari) */
+  width: 20%
+  /* Set the width of the thumb */
+  /* height: 16px; */
+  /* Set the height of the thumb */
+  transform: translateY(0%);
+}
+
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #ccc;
+  /* Track color in Webkit browsers */
+}
+
+input[type="range"]::-moz-range-thumb {
+  /* background-color: #7d7d7d; */
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+
+  /* Change thumb color in Mozilla Firefox */
+  width: 20%;
+  /* Set the width of the thumb */
+  /* height: 16px; */
+  /* Set the height of the thumb */
+  transform: translateY(0%);
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #ccc;
+  /* Track color in Mozilla Firefox */
+}
+
+input[type="range"]:active::-ms-thumb {
+  /* background-color: #7d7d7d; */
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+
+  /* Change thumb color in Microsoft Edge */
+  width: 20%;
+  /* Set the width of the thumb */
+  /* height: 16px; */
+  /* Set the height of the thumb */
+  transform: translateY(0%);
+}
+
+input[type="range"]::-ms-track {
+  background-color: #ccc;
+  /* Track color in Microsoft Edge */
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  /* background-color: #7d7d7d; */
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+
+  /* Change thumb color in Webkit browsers (Chrome, Safari) */
+}
+
+input[type="range"]::-moz-range-thumb {
+  /* background-color: #7d7d7d; */
+  background: white;
+  border: 2px solid black;
+  cursor: pointer;
+  /* Change thumb color in Mozilla Firefox */
+}
+
+input[type="range"]:active::-ms-thumb {
+   /* background-color: #7d7d7d; */
+   background: white;
+   border: 2px solid black;
+   cursor: pointer;
+  /* Change thumb color in Microsoft Edge */
+}
+
+.inverted-svg {
+  filter: invert(1);
+}

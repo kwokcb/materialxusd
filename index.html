@@ -1,405 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>README.md</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
-<style>
-/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-body {
-	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
-	font-size: var(--vscode-markdown-font-size, 14px);
-	padding: 8 26px;
-	line-height: var(--vscode-markdown-line-height, 22px);
-	word-wrap: break-word;
-}
-
-#code-csp-warning {
-	position: fixed;
-	top: 0;
-	right: 0;
-	color: white;
-	margin: 16px;
-	text-align: center;
-	font-size: 12px;
-	font-family: sans-serif;
-	background-color:#444444;
-	cursor: pointer;
-	padding: 6px;
-	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
-}
-
-#code-csp-warning:hover {
-	text-decoration: none;
-	background-color:#007acc;
-	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
-}
-
-body.scrollBeyondLastLine {
-	margin-bottom: calc(100vh - 22px);
-}
-
-body.showEditorSelection .code-line {
-	position: relative;
-}
-
-body.showEditorSelection .code-active-line:before,
-body.showEditorSelection .code-line:hover:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -12px;
-	height: 100%;
-}
-
-body.showEditorSelection li.code-active-line:before,
-body.showEditorSelection li.code-line:hover:before {
-	left: -30px;
-}
-
-.vscode-light.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.15);
-}
-
-.vscode-light.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.40);
-}
-
-.vscode-light.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-.vscode-dark.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.4);
-}
-
-.vscode-dark.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.60);
-}
-
-.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-.vscode-high-contrast.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 160, 0, 0.7);
-}
-
-.vscode-high-contrast.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 160, 0, 1);
-}
-
-.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-img {
-	max-width: 100%;
-	max-height: 100%;
-}
-
-a {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-a:focus,
-input:focus,
-select:focus,
-textarea:focus {
-	outline: 1px solid -webkit-focus-ring-color;
-	outline-offset: -1px;
-}
-
-hr {
-	border: 0;
-	height: 2px;
-	border-bottom: 2px solid;
-}
-
-h1 {
-	padding-bottom: 0.3em;
-	line-height: 1.2;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-h1, h2, h3 {
-	font-weight: normal;
-}
-
-table {
-	border-collapse: collapse;
-}
-
-table > thead > tr > th {
-	text-align: left;
-	border-bottom: 1px solid;
-}
-
-table > thead > tr > th,
-table > thead > tr > td,
-table > tbody > tr > th,
-table > tbody > tr > td {
-	padding: 5px 10px;
-}
-
-table > tbody > tr + tr > td {
-	border-top: 1px solid;
-}
-
-blockquote {
-	margin: 0 7px 0 5px;
-	padding: 0 16px 0 10px;
-	border-left-width: 5px;
-	border-left-style: solid;
-}
-
-code {
-	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
-	font-size: 1em;
-	line-height: 1.357em;
-}
-
-body.wordWrap pre {
-	white-space: pre-wrap;
-}
-
-pre:not(.hljs),
-pre.hljs code > div {
-	padding: 16px;
-	border-radius: 3px;
-	overflow: auto;
-}
-
-pre code {
-	color: var(--vscode-editor-foreground);
-	tab-size: 4;
-}
-
-/** Theming */
-
-.vscode-light pre {
-	background-color: rgba(220, 220, 220, 0.4);
-}
-
-.vscode-dark pre {
-	background-color: rgba(10, 10, 10, 0.4);
-}
-
-.vscode-high-contrast pre {
-	background-color: rgb(0, 0, 0);
-}
-
-.vscode-high-contrast h1 {
-	border-color: rgb(0, 0, 0);
-}
-
-.vscode-light table > thead > tr > th {
-	border-color: rgba(0, 0, 0, 0.69);
-}
-
-.vscode-dark table > thead > tr > th {
-	border-color: rgba(255, 255, 255, 0.69);
-}
-
-.vscode-light h1,
-.vscode-light hr,
-.vscode-light table > tbody > tr + tr > td {
-	border-color: rgba(0, 0, 0, 0.18);
-}
-
-.vscode-dark h1,
-.vscode-dark hr,
-.vscode-dark table > tbody > tr + tr > td {
-	border-color: rgba(255, 255, 255, 0.18);
-}
-
-</style>
-
-<style>
-/* Tomorrow Theme */
-/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-
-/* Tomorrow Comment */
-.hljs-comment,
-.hljs-quote {
-	color: #8e908c;
-}
-
-/* Tomorrow Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-regexp,
-.hljs-deletion {
-	color: #c82829;
-}
-
-/* Tomorrow Orange */
-.hljs-number,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params,
-.hljs-meta,
-.hljs-link {
-	color: #f5871f;
-}
-
-/* Tomorrow Yellow */
-.hljs-attribute {
-	color: #eab700;
-}
-
-/* Tomorrow Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-addition {
-	color: #718c00;
-}
-
-/* Tomorrow Blue */
-.hljs-title,
-.hljs-section {
-	color: #4271ae;
-}
-
-/* Tomorrow Purple */
-.hljs-keyword,
-.hljs-selector-tag {
-	color: #8959a8;
-}
-
-.hljs {
-	display: block;
-	overflow-x: auto;
-	color: #4d4d4c;
-	padding: 0.5em;
-}
-
-.hljs-emphasis {
-	font-style: italic;
-}
-
-.hljs-strong {
-	font-weight: bold;
-}
-</style>
-
-<style>
-/*
- * Markdown PDF CSS
- */
-
- body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
-	padding: 0 12px;
-}
-
-pre {
-	background-color: #f8f8f8;
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-	overflow-x: auto;
-	white-space: pre-wrap;
-	overflow-wrap: break-word;
-}
-
-pre:not(.hljs) {
-	padding: 23px;
-	line-height: 19px;
-}
-
-blockquote {
-	background: rgba(127, 127, 127, 0.1);
-	border-color: rgba(0, 122, 204, 0.5);
-}
-
-.emoji {
-	height: 1.4em;
-}
-
-code {
-	font-size: 14px;
-	line-height: 19px;
-}
-
-/* for inline code */
-:not(pre):not(.hljs) > code {
-	color: #C9AE75; /* Change the old color so it seems less like an error */
-	font-size: inherit;
-}
-
-/* Page Break : use <div class="page"/> to insert page break
--------------------------------------------------------- */
-.page {
-	page-break-after: always;
-}
-
-</style>
-
-<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
-</head>
-<body style="background-color: black; color: lightgrey;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Authors: Bernard Kwok and Matthew Kwok. Root site for MaterialX
+  related resources, libraries and tools. This includes interaction with 
+  related Open Standards: OpenUSD, Khronos glTF, and OpenColorIO.">
+
+  <!-- Google tag (gtag.js) 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7404418VP"></script>
   <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
-          ? 'dark'
-          : 'default'
-    });
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-J7404418VP');
   </script>
-<h2 id="materialx-usd-utilities">MaterialX USD Utilities</h2>
+  -->
+
+  <style>
+    model-viewer {
+      width: 256px;
+      height: 256px;
+      background-color: #7d7d7d;
+    }
+
+    .custom-gradient {
+	  	background: repeating-radial-gradient(circle, hsl(204, 100%, 8%), #290027 100%);	}
+
+      .custom-gradient2 {
+	  	background: repeating-radial-gradient(circle, hsl(204, 94%, 20%), #96018f 100%);	}
+
+    .clickable-image {
+      transition: transform 0.3s;
+    }
+    
+    .clickable-image:hover {
+      transform: scale(1.10);
+      cursor: pointer;
+      border: rgb(206, 175, 0) solid 1px;
+    }    
+  </style>
+
+  <!-- <link rel="icon" href="./documents/images/logo3d_icon.png" type="image/x-icon" /> -->
+  <!--
+  <link rel="icon" href="./documents/images/logo3d_2_small.png" type="image/x-icon" />
+  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.0/css/brands.min.css"> 
+  <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/blogs/blog-3/assets/css/blog-3.css">
+
+  <link rel="stylesheet" href="./documents/css/style.css">
+
+
+  
+
+  <link rel="icon" type="images" href="./documents/images/toon_sphere.png" type="image/x-icon" class="img-fluid">
+
+</head>
+
+<body>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.min.js"></script> -->
+  <!-- <script src="./documents/js/ui_helpers.js"></script> -->
+  
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> -->
+    
+  <!-- Navigation_Area-->
+<nav class="navbar sticky-top navbar-expand-lg bg-dark-subtle" data-bs-theme="dark">
+    <div class="container-md container-fluid">
+        <a class="navbar-brand" href="https://kwokcb.github.io/MaterialXLab/">
+            <h5 class=""><img src="././documents/icons/MX_LAB.svg" alt="MaterialXLab"
+                    class="d-inline-block align-text-center" width="96px"></h5>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenuContent"
+            aria-controls="mainMenuContent" aria-expanded="false" aria-label="Toggle top menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainMenuContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="./index.html" role="button">
+                        Home
+                    </a>
+                </li>
+         
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">Documentation</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./documents/html/index.html">API Documentation</a></li>
+                        <li><a class="dropdown-item" href="./tests/glsl_vs_glslfx.html">MaterialX glsl vs USD glslfx</a></li>
+                        <li><a class="dropdown-item" href="./tests/glsl_vs_osl_glslfx.html">GLSL vs OSL vs USD glslfx</a></li>
+                    </ul>
+                </li>
+                
+                <!--INDEX_ITEM-->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  <!-- Section Information -->
+  <section class="py-0 px-0 g-0">
+    <div class="container-fluid p-4">
+      <h2>MaterialX USD Utilities</h2>
 <p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.</p>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
-<img src="./documents/results/usd_gltf_mtlx_desk_web.png">
-<sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub>
+<p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" width=100%>
+<sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub></p>
 <p>Some initial utilities are provided with more coming on-line as the site / requirements progress.</p>
-<h3 id="available-components">Available Components</h3>
+<h3>Available Components</h3>
 <ul>
 <li>
-<p><code>mtlx2usd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera.</p>
+<p><code>mtlx2usd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. </p>
 <p>The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.</p>
-<p>Options Include:</p>
-<ul>
-<li>Preprocess the MaterialX file to
-attempt to produce valid USD shading network (See Support Utilities)</li>
-<li>Input geometry (USD file)</li>
-<li>Input camera (USD file)</li>
-<li>Skydome like (A latlong HDR file)</li>
-<li>Perform USD validation</li>
-<li>Export just the materials to a USD file.</li>
-<li>Render the corresponding USD file. This uses <code>usdrecord</code> currently.</li>
-<li>Misc options for output for test
-suite compatibility:
-<ul>
-<li>Use material name for file name</li>
-<li>Create in subfolder with name being the input MaterialX name</li>
-</ul>
-</li>
-</ul>
+<p>Options Include:
+- Preprocess the MaterialX file to
+attempt to produce valid USD shading network (See Support Utilities)
+- Input geometry (USD file)
+- Input camera (USD file)
+- Skydome like (A latlong HDR file)
+- Perform USD validation
+- Export just the materials to a USD file.
+- Render the corresponding USD file. This uses <code>usdrecord</code> currently.
+- Misc options for output for test
+  suite compatibility:
+  - Use material name for file name
+  - Create in subfolder with name being the input MaterialX name</p>
 </li>
 <li>
 <p>Preprocessing Utilities:</p>
 <ul>
-<li><code>preprocess_mtlx.py</code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
-<ul>
+<li><code>preprocess_mtlx.py</code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:<ul>
 <li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
 <li>Resolve any implicit geometry stream bindings on <code>inputs</code> and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.</li>
 </ul>
@@ -407,74 +140,108 @@ suite compatibility:
 </ul>
 </li>
 </ul>
-<h2 id="usage">Usage</h2>
-<h3 id="installation-and-usage">Installation and Usage</h3>
+<h2>Usage</h2>
+<h3>Installation and Usage</h3>
 <p>Install from the root folder:</p>
-<pre class="hljs"><code><div>pip install .
-</div></code></pre>
+<div class="codehilite"><pre><span></span><code>pip install .
+</code></pre></div>
+
 <p>Run using the <code>materialxusd</code> command.
-Currently there are two commands for:</p>
-<ul>
-<li>MaterialX to USD conversion which can be run using</li>
-</ul>
-<pre class="hljs"><code><div>materialxusd m2u
-</div></code></pre>
+Currently there are two commands for:
+- MaterialX to USD conversion which can be run using</p>
+<div class="codehilite"><pre><span></span><code>materialxusd m2u
+</code></pre></div>
+
 <p>and preprocessing MaterialX documents which can be run using</p>
-<pre class="hljs"><code><div>materialxusd pmtlx
-</div></code></pre>
-<p>The <code>tests</code> folder has a script with some command line calls to process an examples subfolder (<code>run_examples.sh</code>)</p>
-<pre class="hljs"><code><div>materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
+<div class="codehilite"><pre><span></span><code>materialxusd pmtlx
+</code></pre></div>
+
+<p>The <code>tests</code> folder has a script with some command line calls to process an examples subfolder (<code>run_examples.sh</code>) </p>
+<div class="codehilite"><pre><span></span><code>materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
 materialxusd pmtlx ./examples/linepattern.mtlx # Processing
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
-</div></code></pre>
+</code></pre></div>
+
 <p>Some rendering of resulting USD files are shown below:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center"></th>
-<th style="text-align:center"></th>
-<th style="text-align:center"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png">Line Pattern</img></td>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png">Marble</img></td>
-<td style="text-align:center"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img></td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width=100%>Line Pattern</img></td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width=100%>Marble</img></td>
+<td style="text-align: center;"><img width=100% src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img></td>
 </tr>
 </tbody>
 </table>
-<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>).
+<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>). 
 The runs the script commands directly as an example.</p>
-<pre class="hljs"><code><div>folders=(
-    <span class="hljs-string">"./resources/Materials/Examples"</span>
-    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/convolution"</span>
-    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/color_management"</span>
-    <span class="hljs-string">"./resources/Materials/TestSuite/stdlib/procedural"</span>
-    <span class="hljs-string">"./resources/Materials/TestSuite/pbrlib/surfaceshader"</span>
-    <span class="hljs-string">"./resources/Materials/TestSuite/nprlib"</span>
-)
+<div class="codehilite"><pre><span></span><code><span class="nv">folders</span><span class="o">=(</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/Examples&quot;</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/TestSuite/stdlib/convolution&quot;</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/TestSuite/stdlib/color_management&quot;</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/TestSuite/stdlib/procedural&quot;</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/TestSuite/pbrlib/surfaceshader&quot;</span>
+<span class="w">    </span><span class="s2">&quot;./resources/Materials/TestSuite/nprlib&quot;</span>
+<span class="o">)</span>
 
-<span class="hljs-keyword">for</span> folder <span class="hljs-keyword">in</span> <span class="hljs-string">"<span class="hljs-variable">${folders[@]}</span>"</span>; <span class="hljs-keyword">do</span>
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Rendering <span class="hljs-variable">$folder</span>"</span>
-    python ../<span class="hljs-built_in">source</span>/materialxusd/mtlx2usd.py -pp -mn -sf <span class="hljs-string">"<span class="hljs-variable">$folder</span>"</span> -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr
-<span class="hljs-keyword">done</span>
-</div></code></pre>
-<h2 id="acceptance">Acceptance</h2>
+<span class="k">for</span><span class="w"> </span>folder<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">folders</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Rendering </span><span class="nv">$folder</span><span class="s2">&quot;</span>
+<span class="w">    </span>python<span class="w"> </span>../source/materialxusd/mtlx2usd.py<span class="w"> </span>-pp<span class="w"> </span>-mn<span class="w"> </span>-sf<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$folder</span><span class="s2">&quot;</span><span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>./data/sphere.usd<span class="w"> </span>-c<span class="w"> </span>./data/camera_sphere.usda<span class="w"> </span>-e<span class="w"> </span>./data/san_giuseppe_bridge.hdr
+<span class="k">done</span>
+</code></pre></div>
+
+<h3>Documentation</h3>
+<p>Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a></p>
+<h2>Acceptance</h2>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
-<h3 id="gallery-of-example-materials">Gallery of Example Materials</h3>
+<h3>Gallery of Example Materials</h3>
 <p>glTF, Standard Surface, OpenUSD material renderings</p>
 <iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
-<p>
-<h3 id="comparison-glsl-vs-glslfx">Comparison: GLSL vs GLSLFX</h3>
+<p></p>
+
+<h3>Comparison: GLSL vs GLSLFX</h3>
 <iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
-<p>
-<h3 id="comparison-glsl-vs-osl-vs-glslfx">Comparison: GLSL vs OSL vs GLSLFX</h3>
+<p></p>
+
+<h3>Comparison: GLSL vs OSL vs GLSLFX</h3>
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
-<h2 id="documentation">Documentation</h2>
-<p>Python API documentation can be found here<a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a></p>
+    </div>
+  </section>
+
+  <script>
+    document.body.setAttribute('data-bs-theme', 'dark');
+  </script>
+
+    <footer class="bg-dark-subtle footer text-white py-2 pt-2" data-bs-theme="dark">
+    <div class="container">
+      <ul class="social-icons">
+        <button class="btn btn-outline" type="button">
+          <a href="https://github.com/kwokcb/materialxusd" target="_blank"><b class="fa-brands fa-github fa-2x"
+              style="color: #ffffff;"></b></a>
+        </button>
+        <button class="btn btn-outline " type="button">
+          <a href="https://www.linkedin.com/in/bernard-kwok/" target="_blank"><b class="fa-brands fa-linkedin-in fa-2x"
+              style="color: #0082ca;"></b></a>
+        </button>
+      </ul>
+      <p>
+        <a class="bg-dark p-2 right" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+            <img alt="Creative Commons License" style="border-width:0"
+                src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+                <a href="https://kwokcb.github.io/nanmuconsulting/" target="_blank">
+        &copy; 2022-2025 NanMu Consulting.</a>
+      </p>      
+    </div>
+  </footer>
 
 </body>
+
 </html>

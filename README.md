@@ -4,7 +4,7 @@ This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a>
 
 This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:
 
-<img src="./documents/results/usd_gltf_mtlx_desk_web.png">
+<img src="./documents/results/usd_gltf_mtlx_desk_web.png" width=100%>
 <sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub>
 
 Some initial utilities are provided with more coming on-line as the site / requirements progress.
@@ -39,6 +39,7 @@ Some initial utilities are provided with more coming on-line as the site / requi
 ### Installation and Usage
 
 Install from the root folder:
+
 ```
 pip install .
 ```
@@ -46,10 +47,12 @@ pip install .
 Run using the `materialxusd` command.
 Currently there are two commands for:
 - MaterialX to USD conversion which can be run using
+
 ```
 materialxusd m2u
 ```
 and preprocessing MaterialX documents which can be run using
+
 ```
 materialxusd pmtlx
 ```
@@ -65,15 +68,16 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
 ```
 
 Some rendering of resulting USD files are shown below:
+
 | | | |
 | :--: | :--: | :--: |
-| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png">Marble</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> |
+| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width=100%>Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width=100%>Marble</img> | <img width=100% src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> |
 
 
 There is additionaly a sample script process a snapshot of the MaterialX test suite (`render_rts.sh`). 
 The runs the script commands directly as an example.
 
-```sh
+```bash
 folders=(
     "./resources/Materials/Examples"
     "./resources/Materials/TestSuite/stdlib/convolution"
@@ -89,22 +93,26 @@ for folder in "${folders[@]}"; do
 done
 ```
 
+### Documentation
+
+Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>
 ## Acceptance
 
 An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:
 
 ### Gallery of Example Materials
+
 glTF, Standard Surface, OpenUSD material renderings
+
 <iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
-<p>
+<p></p>
 
 ### Comparison: GLSL vs GLSLFX
+
 <iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
-<p>
+<p></p>
 
 ### Comparison: GLSL vs OSL vs GLSLFX
+
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 
-## Documentation
-
-Python API documentation can be found here<a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>

@@ -207,52 +207,52 @@ Protected Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   57</span>    <span class="keyword">def </span>add_explicit_geometry_stream(graph: mx.GraphElement):</div>
 <div class="line"><span class="lineno">   58</span>        </div>
 <div class="line"><span class="lineno">   59</span>        graph_default_nodes = {}</div>
-<div class="line"><span class="lineno">   60</span>        <span class="comment">#for child in graph.getChildren():</span></div>
-<div class="line"><span class="lineno">   61</span>        <span class="comment">#    if child.hasSourceUri() or (child.getCategory() in [&quot;nodedef&quot;]):</span></div>
-<div class="line"><span class="lineno">   62</span>        <span class="comment">#        continue</span></div>
-<div class="line"><span class="lineno">   63</span>        <span class="comment">#    if child.getCategory == &quot;texcoord&quot;:</span></div>
-<div class="line"><span class="lineno">   64</span>        <span class="comment">#        texcoordNodes.append(child)</span></div>
-<div class="line"><span class="lineno">   65</span> </div>
-<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> graph.getNodes():</div>
-<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">if</span> node.hasSourceUri() <span class="keywordflow">or</span> (node.getCategory() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodedef&quot;</span>]):</div>
+<div class="line"><span class="lineno">   60</span> </div>
+<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> graph.getNodes():</div>
+<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">if</span> node.hasSourceUri() <span class="keywordflow">or</span> (node.getCategory() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodedef&quot;</span>]):</div>
+<div class="line"><span class="lineno">   63</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>            nodedef = node.getNodeDef(node.getType())</div>
+<div class="line"><span class="lineno">   66</span>            <span class="comment">#print(&#39;Node:&#39;, node.getName(), &#39;NodeDef:&#39;, nodedef.getName() if nodedef else &quot;None&quot;)</span></div>
+<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodedef:</div>
 <div class="line"><span class="lineno">   68</span>                <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">   69</span> </div>
-<div class="line"><span class="lineno">   70</span>            nodedef = node.getNodeDef(node.getType())</div>
-<div class="line"><span class="lineno">   71</span>            <span class="comment">#print(&#39;Node:&#39;, node.getName(), &#39;NodeDef:&#39;, nodedef.getName() if nodedef else &quot;None&quot;)</span></div>
-<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodedef:</div>
-<div class="line"><span class="lineno">   73</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">   74</span> </div>
-<div class="line"><span class="lineno">   75</span>            <span class="keywordflow">for</span> nodedef_input <span class="keywordflow">in</span> nodedef.getInputs():</div>
-<div class="line"><span class="lineno">   76</span>                node_input = node.getInput(nodedef_input.getName())</div>
-<div class="line"><span class="lineno">   77</span>                <span class="comment"># Skip if is a connected input</span></div>
-<div class="line"><span class="lineno">   78</span>                <span class="keywordflow">if</span> node_input:</div>
-<div class="line"><span class="lineno">   79</span>                    <span class="keywordflow">if</span> node_input.getInterfaceName() <span class="keywordflow">or</span> node_input.getNodeName() <span class="keywordflow">or</span> node_input.getNodeGraphString():</div>
-<div class="line"><span class="lineno">   80</span>                        <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">for</span> nodedef_input <span class="keywordflow">in</span> nodedef.getInputs():</div>
+<div class="line"><span class="lineno">   71</span>                node_input = node.getInput(nodedef_input.getName())</div>
+<div class="line"><span class="lineno">   72</span>                <span class="comment"># Skip if is a connected input</span></div>
+<div class="line"><span class="lineno">   73</span>                <span class="keywordflow">if</span> node_input:</div>
+<div class="line"><span class="lineno">   74</span>                    <span class="keywordflow">if</span> node_input.getInterfaceName() <span class="keywordflow">or</span> node_input.getNodeName() <span class="keywordflow">or</span> node_input.getNodeGraphString():</div>
+<div class="line"><span class="lineno">   75</span>                        <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>                <span class="comment"># Skip if no defaultgeomprop</span></div>
+<div class="line"><span class="lineno">   78</span>                defaultgeomprop = nodedef_input.getDefaultGeomProp()</div>
+<div class="line"><span class="lineno">   79</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> defaultgeomprop:</div>
+<div class="line"><span class="lineno">   80</span>                    <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">   81</span> </div>
-<div class="line"><span class="lineno">   82</span>                <span class="comment"># Skip if no defaultgeomprop</span></div>
-<div class="line"><span class="lineno">   83</span>                defaultgeomprop = nodedef_input.getDefaultGeomProp()</div>
-<div class="line"><span class="lineno">   84</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> defaultgeomprop:</div>
-<div class="line"><span class="lineno">   85</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">   86</span> </div>
-<div class="line"><span class="lineno">   87</span>                <span class="comment"># Fix this up to get information from the defaultgromprop e.g.</span></div>
-<div class="line"><span class="lineno">   88</span>                <span class="comment"># - texcoord &lt;geompropdef name=&quot;UV0&quot; type=&quot;vector2&quot; geomprop=&quot;texcoord&quot; index=&quot;0&quot;&gt;</span></div>
-<div class="line"><span class="lineno">   89</span>                defaultgeomprop_name = defaultgeomprop.getName()</div>
-<div class="line"><span class="lineno">   90</span>                <span class="keywordflow">if</span> defaultgeomprop_name <span class="keywordflow">in</span> [<span class="stringliteral">&quot;UV0&quot;</span>]:</div>
-<div class="line"><span class="lineno">   91</span>                    defaultgeomprop_prop = defaultgeomprop.getGeomProp()</div>
-<div class="line"><span class="lineno">   92</span>                    defaultgeomprop_type = defaultgeomprop.getType()</div>
-<div class="line"><span class="lineno">   93</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> node_input:</div>
-<div class="line"><span class="lineno">   94</span>                        node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())</div>
-<div class="line"><span class="lineno">   95</span>                    <span class="keywordflow">if</span> defaultgeomprop_name <span class="keywordflow">not</span> <span class="keywordflow">in</span> graph_default_nodes:</div>
-<div class="line"><span class="lineno">   96</span>                        <span class="comment">#print(&#39;Add upstream node for defaultgromprop:&#39;, nodedef_input.getName(), defaultgeomprop)</span></div>
-<div class="line"><span class="lineno">   97</span>                        upstream_default_node = graph.addNode(defaultgeomprop_prop, </div>
-<div class="line"><span class="lineno">   98</span>                                                              graph.createValidChildName(defaultgeomprop_prop), </div>
-<div class="line"><span class="lineno">   99</span>                                                              defaultgeomprop_type)</div>
-<div class="line"><span class="lineno">  100</span>                        upstream_default_node.addInputsFromNodeDef()</div>
-<div class="line"><span class="lineno">  101</span>                        graph_default_nodes[defaultgeomprop_name] = upstream_default_node</div>
-<div class="line"><span class="lineno">  102</span>                    <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  103</span>                        upstream_default_node = graph_default_nodes[defaultgeomprop_name]</div>
-<div class="line"><span class="lineno">  104</span>                        <span class="comment">#print(&#39;Use upstream node for defaultgromprop:&#39;, nodedef_input.getName(), defaultgeomprop)</span></div>
-<div class="line"><span class="lineno">  105</span>                    node_input.setNodeName(upstream_default_node.getName())</div>
+<div class="line"><span class="lineno">   82</span>                <span class="comment"># Fix this up to get information from the defaultgromprop e.g.</span></div>
+<div class="line"><span class="lineno">   83</span>                <span class="comment"># - texcoord &lt;geompropdef name=&quot;UV0&quot; type=&quot;vector2&quot; geomprop=&quot;texcoord&quot; index=&quot;0&quot;&gt;</span></div>
+<div class="line"><span class="lineno">   84</span>                defaultgeomprop_name = defaultgeomprop.getName()</div>
+<div class="line"><span class="lineno">   85</span>                defaultgeomprop_prop = defaultgeomprop.getGeomProp()</div>
+<div class="line"><span class="lineno">   86</span>                defaultgeomprop_type = defaultgeomprop.getType()</div>
+<div class="line"><span class="lineno">   87</span>                defaultgeomprop_index = defaultgeomprop.getIndex()</div>
+<div class="line"><span class="lineno">   88</span> </div>
+<div class="line"><span class="lineno">   89</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> node_input:</div>
+<div class="line"><span class="lineno">   90</span>                    node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())</div>
+<div class="line"><span class="lineno">   91</span>                <span class="keywordflow">if</span> defaultgeomprop_name <span class="keywordflow">not</span> <span class="keywordflow">in</span> graph_default_nodes:</div>
+<div class="line"><span class="lineno">   92</span>                    upstream_default_node = graph.addNode(defaultgeomprop_prop, </div>
+<div class="line"><span class="lineno">   93</span>                                                            graph.createValidChildName(defaultgeomprop_prop), </div>
+<div class="line"><span class="lineno">   94</span>                                                            defaultgeomprop_type)</div>
+<div class="line"><span class="lineno">   95</span>                    upstream_default_node.addInputsFromNodeDef()</div>
+<div class="line"><span class="lineno">   96</span>                    index_input = upstream_default_node.getInput(<span class="stringliteral">&quot;index&quot;</span>)</div>
+<div class="line"><span class="lineno">   97</span>                    <span class="keywordflow">if</span> index_input:</div>
+<div class="line"><span class="lineno">   98</span>                        index_input.setValue(defaultgeomprop_index, <span class="stringliteral">&#39;integer&#39;</span>)</div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span>                    print(f<span class="stringliteral">&#39;  &gt; Added upstream node &quot;{upstream_default_node.getNamePath()}&quot; : {upstream_default_node}&#39;</span>)</div>
+<div class="line"><span class="lineno">  101</span>                    graph_default_nodes[defaultgeomprop_name] = upstream_default_node</div>
+<div class="line"><span class="lineno">  102</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  103</span>                    upstream_default_node = graph_default_nodes[defaultgeomprop_name]</div>
+<div class="line"><span class="lineno">  104</span>                    <span class="comment">#print(&#39;Use upstream node for defaultgromprop:&#39;, nodedef_input.getName(), defaultgeomprop)</span></div>
+<div class="line"><span class="lineno">  105</span>                node_input.setNodeName(upstream_default_node.getName())</div>
 <div class="line"><span class="lineno">  106</span> </div>
 <div class="line"><span class="lineno">  107</span>        implicit_nodes_added = len(graph_default_nodes)</div>
 <div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span>  graph.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> <span class="stringliteral">&quot;nodegraph&quot;</span>:</div>

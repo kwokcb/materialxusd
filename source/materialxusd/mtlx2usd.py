@@ -101,10 +101,12 @@ def main():
             doc.setDataLibrary(None)                
             num_top_level_nodes = utils.encapsulate_top_level_nodes(doc, 'root_graph')
             print(f"  > Encapsulated {num_top_level_nodes} top level nodes.")
-            new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
-            utils.write_document(doc, new_input_path)
-            print(f"  > Saved converted MaterialX document to: {new_input_path}")
-            input_path = new_input_path
+
+            if num_top_level_nodes > 0 or implicit_nodes_added > 0:
+                new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
+                utils.write_document(doc, new_input_path)
+                print(f"  > Saved converted MaterialX document to: {new_input_path}")
+                input_path = new_input_path
 
         material_file_path = ''
         if args.material:

@@ -268,6 +268,7 @@ def main(args=None):
     parser.add_argument('-l1', '--lang1', dest='lang1', action='store', help='First target language for comparison. Default is glsl', default="glsl")
     parser.add_argument('-l2', '--lang2', dest='lang2', action='store', help='Second target language for comparison. Default is osl', default="osl")
     parser.add_argument('-l3', '--lang3', dest='lang3', action='store', help='Third target language for comparison. Default is empty', default="")
+    parser.add_argument('-hr', '--http_root', dest='http_root', type=str, default='https://kwokcb.github.io/materialxusd/tests')
 
     args = parser.parse_args(args)
 
@@ -292,16 +293,16 @@ def main(args=None):
     '''
     fh.write(html_content)    
 
-    if args.inputdir1 == ".":
-        args.inputdir1 = os.getcwd()
+    #if args.inputdir1 == ".":
+    #    args.inputdir1 = os.getcwd()
 
     if args.inputdir2 == ".":
-        args.inputdir2 = os.getcwd()
+        args.inputdir2 = "."#os.getcwd()
     elif args.inputdir2 == "":
         args.inputdir2 = args.inputdir1
 
     if args.inputdir3 == ".":
-        args.inputdir3 = os.getcwd()
+        args.inputdir3 = "."#os.getcwd()
     elif args.inputdir3 == "":
         args.inputdir3 = args.inputdir1
 
@@ -403,10 +404,7 @@ def main(args=None):
                 save_histogram_difference(fullPath1, fullPath3, histPath2)
 
             def prependFileUri(filepath: str) -> str:
-                if os.path.isabs(filepath):
-                    return 'file:///' + filepath
-                else:
-                    return filepath
+                return filepath.replace('.', args.http_root, 1)
 
             fh.write("<tr class='row'>\n")
             if fullPath1:

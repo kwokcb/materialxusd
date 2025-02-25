@@ -1,25 +1,25 @@
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:156: warning: Member find_first_camera(self, stage) (function) of class materialxusd.materialxusd.MaterialxUSDConverter is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:171: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.add_camera(self, stage, str camera_path, str root_path="/TestScene/Camera", str geometry_path="/TestScene/Geometry") is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:160: warning: Member find_first_camera(self, stage) (function) of class materialxusd.materialxusd.MaterialxUSDConverter is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:175: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.add_camera(self, stage, str camera_path, str root_path="/TestScene/Camera", str geometry_path="/TestScene/Geometry") is not documented:
   parameter 'geometry_path'
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:147: warning: argument 'shaderball_path' of command @param is not found in the argument list of materialxusd.materialxusd.MaterialxUSDConverter::add_geometry_reference(self, stage, str geometry_path, str root_path="/TestScene/Geometry")
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:71: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.find_materials(self, stage, bool find_first=True) is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:151: warning: argument 'shaderball_path' of command @param is not found in the argument list of materialxusd.materialxusd.MaterialxUSDConverter::add_geometry_reference(self, stage, str geometry_path, str root_path="/TestScene/Geometry")
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:71: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.find_materials(self, stage, bool find_first=True) is not documented:
   parameter 'find_first'
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:239: warning: argument 'material_path' of command @param is not found in the argument list of materialxusd.materialxusd.MaterialxUSDConverter::mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path)
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd.py:239: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path) is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:243: warning: argument 'material_path' of command @param is not found in the argument list of materialxusd.materialxusd.MaterialxUSDConverter::mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:243: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path) is not documented:
   parameter 'material_file_path'
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:14: warning: Member __init__(self) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:57: warning: Member add_explicit_geometry_stream(mx.GraphElement graph) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:119: warning: argument 'input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:119: warning: argument 'new_input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:119: warning: argument 'remove_original_nodes' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:119: warning: The following parameters of materialxusd.materialxusd_utils.MaterialXUsdUtilities.encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True) are not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:14: warning: Member __init__(self) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:57: warning: Member add_explicit_geometry_stream(mx.GraphElement graph) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'new_input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'remove_original_nodes' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: The following parameters of materialxusd.materialxusd_utils.MaterialXUsdUtilities.encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True) are not documented:
   parameter 'doc'
   parameter 'remove_original'
-/Users/bernardkwok/work/materialxusd/README.md:98: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:98: warning: Unsupported xml/html tag </iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:102: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:102: warning: Unsupported xml/html tag </iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:106: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:106: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:98: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:98: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:102: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:102: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:106: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:106: warning: Unsupported xml/html tag </iframe> found

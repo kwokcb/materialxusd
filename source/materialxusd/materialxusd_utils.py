@@ -79,6 +79,12 @@ class MaterialXUsdUtilities:
                 if not defaultgeomprop:
                     continue
 
+                # Firewall. USD does not appear to handle bitangent properly so
+                # skip it for now.
+                if defaultgeomprop.getGeomProp() == "bitangent":
+                    print(f'  > WARNING: Skipping adding explicit bitangent node for "{node.getNamePath()}"')
+                    continue
+
                 # Fix this up to get information from the defaultgromprop e.g.
                 # - texcoord <geompropdef name="UV0" type="vector2" geomprop="texcoord" index="0">
                 defaultgeomprop_name = defaultgeomprop.getName()
@@ -130,7 +136,7 @@ class MaterialXUsdUtilities:
         # Find all children of document which are no material or shader nodes.
         top_level_nodes = []
         top_level_connections = []
-        for elem in doc.getChildren():
+        for elem in doc.getNodes():
             # skips elements that are part of the stdlib
             if elem.hasSourceUri():
                 continue

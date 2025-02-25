@@ -1,18 +1,20 @@
 # @brief: This script converts MaterialX file to usda file and adds inscene elements which
 # use the material. Currently only the first material is bound to a single geometry
-try:
-    from pxr import Usd, Sdf, UsdShade, UsdGeom, Gf, UsdLux, UsdUtils
-except ImportError:
-    print("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
-    exit(1)
 import argparse
 import os
 import sys
 import zipfile
 import subprocess
 
+import MaterialX as mx
 import materialxusd as mxusd
 import materialxusd_utils as mxusd_utils
+
+try:
+    from pxr import Usd, Sdf, UsdShade, UsdGeom, Gf, UsdLux, UsdUtils
+except ImportError:
+    print("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
+    exit(1)
 
 ### Utilities ####
 def get_mtlx_files(input_path: str):
@@ -25,7 +27,7 @@ def get_mtlx_files(input_path: str):
     if os.path.isdir(input_path):
         for root, dirs, files in os.walk(input_path):
             for file in files:
-                if file.endswith(".mtlx"):
+                if file.endswith(".mtlx") and not file.endswith("_converted.mtlx"):
                     mtlx_files.append(os.path.join(root, file))
 
     else:

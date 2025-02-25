@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <surfacematerial name="Pearl" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="open_pbr_surface_surfaceshader" />
+  </surfacematerial>
+  <open_pbr_surface name="open_pbr_surface_surfaceshader" type="surfaceshader">
+    <input name="base_color" type="color3" value="0.8, 0.75, 0.7" />
+    <input name="specular_roughness" type="float" value="0.35" />
+    <input name="specular_ior" type="float" value="1.5" />
+    <input name="subsurface_weight" type="float" value="1.0" />
+    <input name="subsurface_color" type="color3" value="0.8, 0.75, 0.7" />
+    <input name="subsurface_radius_scale" type="color3" value="0.3, 0.5, 0.3" />
+    <input name="coat_weight" type="float" value="1" />
+    <input name="coat_roughness" type="float" value="0.15" />
+    <input name="coat_ior" type="float" value="1.68" />
+    <input name="thin_film_weight" type="float" value="1.0" />
+    <input name="thin_film_thickness" type="float" value="0.420" />
+    <input name="thin_film_ior" type="float" value="2" />
+    <input name="geometry_normal" type="vector3" nodegraph="root_graph" output="out" />
+    <input name="geometry_coat_normal" type="vector3" nodegraph="root_graph" output="out2" />
+    <input name="geometry_tangent" type="vector3" nodegraph="root_graph" output="out3" />
+    <input name="geometry_coat_tangent" type="vector3" nodegraph="root_graph" output="out4" />
+  </open_pbr_surface>
+  <nodegraph name="root_graph">
+    <normal name="normal" type="vector3">
+      <input name="space" type="string" value="object" />
+    </normal>
+    <output name="out" type="vector3" nodename="normal" />
+    <output name="out2" type="vector3" nodename="normal" />
+    <tangent name="tangent" type="vector3">
+      <input name="space" type="string" value="object" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <output name="out3" type="vector3" nodename="tangent" />
+    <output name="out4" type="vector3" nodename="tangent" />
+  </nodegraph>
+</materialx>

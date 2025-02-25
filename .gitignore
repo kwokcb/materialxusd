@@ -2,3 +2,5 @@ build/
 utilities_internal/
 source/materialxusd.egg-info/
 source/materialxusd/__pycache__/
+tests/examples/fabric_test.zip
+tests/examples/fabric_test/

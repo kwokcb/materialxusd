@@ -115,7 +115,9 @@ class MaterialxUSDConverter:
         xformable = UsdGeom.Xformable(skydome_prim)
 
         # Scale drawing of skydome
-        scale_op = xformable.AddScaleOp(UsdGeom.XformOp.PrecisionFloat)
+        scale_op = xformable.GetScaleOp()
+        if not scale_op:
+            scale_op = xformable.AddScaleOp(UsdGeom.XformOp.PrecisionFloat)
         scale_value = xform_scale 
         scale_op.Set(scale_value)
 
@@ -130,7 +132,9 @@ class MaterialxUSDConverter:
 
         # Rotate the light as needed.
         xformable = UsdGeom.Xformable(dome_light)
-        xform_op = xformable.AddXformOp(UsdGeom.XformOp.TypeRotateXYZ, UsdGeom.XformOp.PrecisionFloat)
+        xform_op = xformable.GetXformOp(UsdGeom.XformOp.TypeRotateXYZ)
+        if not xform_op:
+            xform_op = xformable.AddXformOp(UsdGeom.XformOp.TypeRotateXYZ, UsdGeom.XformOp.PrecisionFloat)
         xform_op.Set(xform_rotate)
 
         # Set the xformOpOrder
@@ -149,7 +153,7 @@ class MaterialxUSDConverter:
         @param shaderball_path: The path to the shaderball geometry file.
         @param root_path: The root path to add the geometry reference.
         '''
-        geom_prim = stage.DefinePrim(root_path, "Xform")
+        geom_prim = stage.DefinePrim(root_path, "Xform")        
         geom_prim.GetReferences().AddReference(geometry_path)
         return geom_prim
     

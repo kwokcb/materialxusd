@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\usd_normal_map_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\usd_normal_map_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -46,7 +46,7 @@ def "MaterialX"
                 color3f inputs:emissiveColor.connect = </MaterialX/Materials/N_material.inputs:emissiveColor>
                 float inputs:ior.connect = </MaterialX/Materials/N_material.inputs:ior>
                 float inputs:metallic.connect = </MaterialX/Materials/N_material.inputs:metallic>
-                float3 inputs:normal.connect = </MaterialX/Materials/N_material/top_level_nodes.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/Materials/N_material/root_graph.outputs:out>
                 float inputs:occlusion.connect = </MaterialX/Materials/N_material.inputs:occlusion>
                 float inputs:opacity.connect = </MaterialX/Materials/N_material.inputs:opacity>
                 int inputs:opacityMode.connect = </MaterialX/Materials/N_material.inputs:opacityMode>
@@ -56,8 +56,8 @@ def "MaterialX"
                 int inputs:useSpecularWorkflow.connect = </MaterialX/Materials/N_material.inputs:useSpecularWorkflow>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -75,9 +75,9 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
-        def NodeGraph "top_level_nodes"
+        def NodeGraph "root_graph"
         {
-            float3 outputs:out.connect = </MaterialX/NodeGraphs/top_level_nodes/N_normalmap.outputs:out>
+            float3 outputs:out.connect = </MaterialX/NodeGraphs/root_graph/N_normalmap.outputs:out>
 
             def Shader "N_texcoord"
             {
@@ -88,7 +88,7 @@ def "MaterialX"
             def Shader "N_multiply"
             {
                 uniform token info:id = "ND_multiply_vector2"
-                float2 inputs:in1.connect = </MaterialX/NodeGraphs/top_level_nodes/N_texcoord.outputs:out>
+                float2 inputs:in1.connect = </MaterialX/NodeGraphs/root_graph/N_texcoord.outputs:out>
                 float2 inputs:in2 = (8, 8)
                 float2 outputs:out
             }
@@ -99,7 +99,7 @@ def "MaterialX"
                 asset inputs:file = @resources/Images/mesh_wire_norm.png@ (
                     colorSpace = "none"
                 )
-                float2 inputs:st.connect = </MaterialX/NodeGraphs/top_level_nodes/N_multiply.outputs:out>
+                float2 inputs:st.connect = </MaterialX/NodeGraphs/root_graph/N_multiply.outputs:out>
                 float outputs:a
                 float outputs:b
                 float outputs:g
@@ -110,14 +110,31 @@ def "MaterialX"
             def Shader "N_convert"
             {
                 uniform token info:id = "ND_convert_color3_vector3"
-                color3f inputs:in.connect = </MaterialX/NodeGraphs/top_level_nodes/N_texture_normal.outputs:rgb>
+                color3f inputs:in.connect = </MaterialX/NodeGraphs/root_graph/N_texture_normal.outputs:rgb>
                 float3 outputs:out
             }
 
             def Shader "N_normalmap"
             {
                 uniform token info:id = "ND_normalmap_vector2"
-                float3 inputs:in.connect = </MaterialX/NodeGraphs/top_level_nodes/N_convert.outputs:out>
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/root_graph/N_convert.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
                 float3 outputs:out
             }
         }
@@ -128,7 +145,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/N_material>
@@ -143,14 +160,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

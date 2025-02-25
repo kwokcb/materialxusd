@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_carpaint.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_carpaint_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -57,7 +57,7 @@ def "MaterialX"
                 float inputs:attenuation_distance.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:attenuation_distance>
                 color3f inputs:base_color.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:base_color>
                 float inputs:clearcoat.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:clearcoat>
-                float3 inputs:clearcoat_normal.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:clearcoat_normal>
+                float3 inputs:clearcoat_normal.connect = </MaterialX/Materials/PBR_Car_Paint/root_graph.outputs:out2>
                 float inputs:clearcoat_roughness.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:clearcoat_roughness>
                 color3f inputs:emissive.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:emissive>
                 float inputs:emissive_strength.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:emissive_strength>
@@ -66,16 +66,22 @@ def "MaterialX"
                 float inputs:iridescence_ior.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:iridescence_ior>
                 float inputs:iridescence_thickness.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:iridescence_thickness>
                 float inputs:metallic.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:metallic>
-                float3 inputs:normal.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:normal>
+                float3 inputs:normal.connect = </MaterialX/Materials/PBR_Car_Paint/root_graph.outputs:out>
                 float inputs:occlusion.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:occlusion>
                 float inputs:roughness.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:roughness>
                 color3f inputs:sheen_color.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:sheen_color>
                 float inputs:sheen_roughness.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:sheen_roughness>
                 float inputs:specular.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:specular>
                 color3f inputs:specular_color.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:specular_color>
-                float3 inputs:tangent.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:tangent>
+                float3 inputs:tangent.connect = </MaterialX/Materials/PBR_Car_Paint/root_graph.outputs:out3>
                 float inputs:thickness.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:thickness>
                 float inputs:transmission.connect = </MaterialX/Materials/PBR_Car_Paint.inputs:transmission>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
             }
         }
     }
@@ -88,13 +94,38 @@ def "MaterialX"
             token outputs:surface
         }
     }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            float3 outputs:out.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+            float3 outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+            float3 outputs:out3.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+
+            def Shader "tangent"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "object"
+                float3 outputs:out
+            }
+        }
+    }
 }
 
 def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/PBR_Car_Paint>
@@ -109,14 +140,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

@@ -102,7 +102,7 @@ class MaterialXUsdUtilities:
                     else:
                         upstream_default_node = graph_default_nodes[defaultgeomprop_name]
                         #print('Use upstream node for defaultgromprop:', nodedef_input.getName(), defaultgeomprop)
-                    node_input.setInterfaceName(upstream_default_node.getName())
+                    node_input.setNodeName(upstream_default_node.getName())
 
         implicit_nodes_added = len(graph_default_nodes)
         if  graph.getCategory() not in "nodegraph":

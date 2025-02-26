@@ -124,4 +124,6 @@ glTF, Standard Surface, OpenUSD material renderings
 
 ## Design
 
+An overview of the current package design is shown below. Boxes / lines which are dotted are optional logic which may be executed as desired.
+
 <img src="./documents/images/design.png" width=100%>

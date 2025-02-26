@@ -54,6 +54,96 @@ class MaterialXUsdUtilities:
         return mx.writeToXmlFile(doc, path)
 
     @staticmethod
+    def add_downstream_materials(doc: mx.Document):
+        '''
+        @brief Add downstream materials to the MaterialX graph.
+        '''
+        # if the document has a material skip        
+        material_count = len(doc.getMaterialNodes())
+        if material_count:
+            return 0
+        
+        nodegraphs = doc.getNodeGraphs()
+        if not nodegraphs:
+            return 0
+        
+        for graph in nodegraphs:
+            if graph.hasSourceUri():
+                continue
+
+            graph_outputs = graph.getOutputs()
+            if not graph_outputs:
+                continue
+
+            # Use does not support these nodes so need to do it the hard way....
+            usd_supports_convert_to_surface_shader = False
+
+            downstream_ports = graph.getDownstreamPorts()
+            if not downstream_ports:
+                # Add a material per output
+                # 
+                is_multi_output = len(graph_outputs) > 1    
+                for output in graph_outputs:
+                    outputName = output.getName()
+                    outputType = output.getType()
+                    print(f'Scan: {graph.getName()} output: {outputName} type: {outputType}')
+
+                    if outputType in [ 'float', 'vector2', 'vector3', 'vector4', 'integer', 'boolean', 'color3', 'color4' ]:
+
+                        if usd_supports_convert_to_surface_shader:
+                            # Create a new material node
+                            shaderNodeName = doc.createValidChildName('shader_' + graph.getName() + '_' + outputName)                
+                            materialNodeName = doc.createValidChildName('material_' + graph.getName() + '_' + outputName)
+
+                            convertDefinition = 'ND_convert_' + outputType + '_color3'
+                            convertNode = doc.getNodeDef(convertDefinition)
+                            if not convertNode:
+                                print("> Failed to find conversion definition: %s" % convertDefinition)
+                            else:
+                                shaderNode = doc.addNodeInstance(convertNode, shaderNodeName)
+                                shaderNode.removeAttribute('nodedef')
+                                newInput = shaderNode.addInput('in', outputType)
+                                newInput.setNodeGraphString(graph.getName())
+                                newInput.removeAttribute('value')
+                                #if is_multi_output:
+                                # ISSUE: USD does not handle nodegraph without an explicit output propoerly
+                                # so always added in the output string !
+                                newInput.setOutputString(outputName)    
+                                materialNode = doc.addMaterialNode(materialNodeName, shaderNode)
+
+                                if materialNode:
+                                    material_count += 1
+
+                        else:
+                            # For now only handle color3 output
+                            if outputType != 'color3':
+                                print(f'> Skipping unsupported output type: {outputType}')
+                                continue
+                            # Otherwise add a convert node and connect it to the current upstream node
+                            # and then add in a new output whhich is of type color3
+
+                            shaderNodeName = doc.createValidChildName('shader_' + graph.getName() + '_' + outputName)                
+                            materialNodeName = doc.createValidChildName('material_' + graph.getName() + '_' + outputName)
+
+                            unlitDefinition = 'ND_surface_unlit'
+                            unlitNode = doc.getNodeDef(unlitDefinition)
+                            shaderNode = doc.addNodeInstance(unlitNode, shaderNodeName)
+                            shaderNode.removeAttribute('nodedef')
+                            newInput = shaderNode.addInput('emission_color', outputType)
+                            newInput.setNodeGraphString(graph.getName())
+                            newInput.removeAttribute('value')
+                            #if is_multi_output:
+                            # ISSUE: USD does not handle nodegraph without an explicit output propoerly
+                            # so always added in the output string !
+                            newInput.setOutputString(outputName)    
+                            materialNode = doc.addMaterialNode(materialNodeName, shaderNode)
+
+                            if materialNode:
+                                material_count += 1
+            
+        return material_count            
+
+    @staticmethod
     def add_explicit_geometry_stream(graph: mx.GraphElement):
         '''
         @brief Add explicit geometry stream nodes for inputs with defaultgeomprop specified

@@ -42,7 +42,7 @@ def get_mtlx_files(input_path: str):
             print('> Extracted zip file to: ', output_path)
             for root, dirs, files in os.walk(output_path):
                 for file in files:
-                    if file.endswith(".mtlx"):
+                    if file.endswith(".mtlx") and not file.endswith("_converted.mtlx"):
                         mtlx_files.append(os.path.join(root, file))
     return mtlx_files
 
@@ -100,11 +100,14 @@ def main():
             doc.setDataLibrary(utils.get_standard_libraries())
             implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
             print(f"  > Added {implicit_nodes_added} implicit geometry nodes to the document")
-            doc.setDataLibrary(None)                
             num_top_level_nodes = utils.encapsulate_top_level_nodes(doc, 'root_graph')
             print(f"  > Encapsulated {num_top_level_nodes} top level nodes.")
 
-            if num_top_level_nodes > 0 or implicit_nodes_added > 0:
+            materials_added = utils.add_downstream_materials(doc)
+            print('> Added downstream materials: ', materials_added)
+            doc.setDataLibrary(None)                
+
+            if materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
                 new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
                 utils.write_document(doc, new_input_path)
                 print(f"  > Saved converted MaterialX document to: {new_input_path}")

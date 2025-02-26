@@ -54,15 +54,43 @@ class MaterialXUsdUtilities:
         return mx.writeToXmlFile(doc, path)
 
     @staticmethod
+    def add_materials_for_shaders(doc: mx.Document):
+        '''
+        @brief Add materials for shaders in the MaterialX document.
+        @param doc The MaterialX document.
+        @return The number of materials added.
+        '''  
+        # If has materials skip
+        materials = doc.getMaterialNodes()
+        if len(materials):
+            return 0
+        
+        material_count = 0
+    
+        surfaceshader_nodes = doc.getChildren()
+        for surfaceshader_node in surfaceshader_nodes:
+            if surfaceshader_node.getCategory() not in ['surfaceshader']:
+                continue
+            downstream_ports = surfaceshader_node.getDownstreamPorts()
+            if not downstream_ports:
+                # Add a material for the shader
+                material_name = doc.createValidChildName('material_' + surfaceshader_node.getName())
+                material_node = doc.addMaterialNode(material_name, surfaceshader_node)
+                if material_node:
+                    material_count += 1
+        
+        return material_count
+
+    @staticmethod
     def add_downstream_materials(doc: mx.Document):
         '''
         @brief Add downstream materials to the MaterialX graph.
         '''
-        # if the document has a material skip        
+        # If has materials skip
         material_count = len(doc.getMaterialNodes())
-        if material_count:
+        if material_count > 0:
             return 0
-        
+
         nodegraphs = doc.getNodeGraphs()
         if not nodegraphs:
             return 0
@@ -235,7 +263,7 @@ class MaterialXUsdUtilities:
                     if space_input:
                         space_input.setValue(defaultgeomprop_space, 'string')
 
-                    print(f'  > Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
+                    #print(f'    > Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
                     graph_default_nodes[defaultgeomprop_name] = upstream_default_node
                 else:
                     upstream_default_node = graph_default_nodes[defaultgeomprop_name]

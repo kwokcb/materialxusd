@@ -97,14 +97,17 @@ def main():
             utils = mxusd_utils.MaterialXUsdUtilities()
             doc = utils.create_document(input_path)
 
+            shader_materials_added = utils.add_materials_for_shaders(doc)
+            print(f"  > Added {shader_materials_added} shader materials to the document")
+
             doc.setDataLibrary(utils.get_standard_libraries())
             implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
-            print(f"  > Added {implicit_nodes_added} implicit geometry nodes to the document")
+            print(f"  > Added {implicit_nodes_added} explicit geometry nodes to the document")
             num_top_level_nodes = utils.encapsulate_top_level_nodes(doc, 'root_graph')
             print(f"  > Encapsulated {num_top_level_nodes} top level nodes.")
 
             materials_added = utils.add_downstream_materials(doc)
-            print('> Added downstream materials: ', materials_added)
+            print(f'  > Added {materials_added} downstream materials.')
             doc.setDataLibrary(None)                
 
             if materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:

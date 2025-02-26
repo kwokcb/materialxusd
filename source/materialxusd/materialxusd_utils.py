@@ -84,61 +84,78 @@ class MaterialXUsdUtilities:
                 # 
                 is_multi_output = len(graph_outputs) > 1    
                 for output in graph_outputs:
-                    outputName = output.getName()
-                    outputType = output.getType()
-                    print(f'Scan: {graph.getName()} output: {outputName} type: {outputType}')
+                    output_name = output.getName()
+                    output_type = output.getType()
 
-                    if outputType in [ 'float', 'vector2', 'vector3', 'vector4', 'integer', 'boolean', 'color3', 'color4' ]:
+                    if output_type in [ 'float', 'vector2', 'vector3', 'vector4', 'integer', 'boolean', 'color3', 'color4' ]:
 
                         if usd_supports_convert_to_surface_shader:
                             # Create a new material node
-                            shaderNodeName = doc.createValidChildName('shader_' + graph.getName() + '_' + outputName)                
-                            materialNodeName = doc.createValidChildName('material_' + graph.getName() + '_' + outputName)
+                            shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
+                            materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
 
-                            convertDefinition = 'ND_convert_' + outputType + '_color3'
-                            convertNode = doc.getNodeDef(convertDefinition)
-                            if not convertNode:
-                                print("> Failed to find conversion definition: %s" % convertDefinition)
+                            convert_definition = 'ND_convert_' + output_type + '_color3'
+                            convert_node = doc.getNodeDef(convert_definition)
+                            if not convert_node:
+                                print("> Failed to find conversion definition: %s" % convert_definition)
                             else:
-                                shaderNode = doc.addNodeInstance(convertNode, shaderNodeName)
-                                shaderNode.removeAttribute('nodedef')
-                                newInput = shaderNode.addInput('in', outputType)
-                                newInput.setNodeGraphString(graph.getName())
-                                newInput.removeAttribute('value')
+                                shadernode = doc.addNodeInstance(convert_node, shadernode_name)
+                                shadernode.removeAttribute('nodedef')
+                                new_input = shadernode.addInput('in', output_type)
+                                new_input.setNodeGraphString(graph.getName())
+                                new_input.removeAttribute('value')
                                 #if is_multi_output:
                                 # ISSUE: USD does not handle nodegraph without an explicit output propoerly
                                 # so always added in the output string !
-                                newInput.setOutputString(outputName)    
-                                materialNode = doc.addMaterialNode(materialNodeName, shaderNode)
+                                new_input.setOutputString(output_name)    
+                                materialnode = doc.addMaterialNode(materialnode_name, shadernode)
 
-                                if materialNode:
+                                if materialnode:
                                     material_count += 1
 
                         else:
+                            print(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
+                            
                             # For now only handle color3 output
-                            if outputType != 'color3':
-                                print(f'> Skipping unsupported output type: {outputType}')
-                                continue
+                            if output_type != 'color3' and output_type != 'float':
+                                #continue
+                            #elif output_type != 'color3':
+                                # Add a convert from output_type to color3
+
                             # Otherwise add a convert node and connect it to the current upstream node
                             # and then add in a new output whhich is of type color3
 
-                            shaderNodeName = doc.createValidChildName('shader_' + graph.getName() + '_' + outputName)                
-                            materialNodeName = doc.createValidChildName('material_' + graph.getName() + '_' + outputName)
+                                convert_definition = 'ND_convert_' + output_type + '_color3'
+                                convert_nodedef = doc.getNodeDef(convert_definition)
+                                if not convert_nodedef:
+                                    print("> Failed to find conversion definition: %s" % convert_definition)
+                                    continue
+                                convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName('convert'))                                                               
 
+                                new_output = graph.addOutput('color3', graph.createValidChildName('out'))
+                                new_output.setNodeName(convert_node.getName())
+                                output_name = new_output.getName()
+                                
+                            shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
+                            materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
                             unlitDefinition = 'ND_surface_unlit'
                             unlitNode = doc.getNodeDef(unlitDefinition)
-                            shaderNode = doc.addNodeInstance(unlitNode, shaderNodeName)
-                            shaderNode.removeAttribute('nodedef')
-                            newInput = shaderNode.addInput('emission_color', outputType)
-                            newInput.setNodeGraphString(graph.getName())
-                            newInput.removeAttribute('value')
+                            shadernode = doc.addNodeInstance(unlitNode, shadernode_name)
+                            shadernode.removeAttribute('nodedef')
+                            new_input = None
+                            if output_type == 'color3':
+                                new_input = shadernode.addInput('emission_color', output_type)
+                            else:
+                                new_input = shadernode.addInput('emission', output_type)
+                            new_input.setNodeGraphString(graph.getName())
+                            new_input.removeAttribute('value')
                             #if is_multi_output:
                             # ISSUE: USD does not handle nodegraph without an explicit output propoerly
                             # so always added in the output string !
-                            newInput.setOutputString(outputName)    
-                            materialNode = doc.addMaterialNode(materialNodeName, shaderNode)
+                            new_input.setOutputString(output_name)    
+                            materialnode = doc.addMaterialNode(materialnode_name, shadernode)
 
-                            if materialNode:
+                            if materialnode:
                                 material_count += 1
             
         return material_count            

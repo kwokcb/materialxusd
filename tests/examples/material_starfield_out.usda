@@ -42,11 +42,47 @@ def "MaterialX"
             {
             }
         }
+
+        def Material "material_starfield_out_float" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out_float/shader_starfield_out_float.outputs:surface>
+
+            def Shader "shader_starfield_out_float" (
+                prepend references = </MaterialX/Shaders/shader_starfield_out_float>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out_float/starfield.outputs:out_float>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out_float.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out_float.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out_float.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out_float.inputs:transmission_color>
+            }
+
+            def "starfield" (
+                prepend references = </MaterialX/NodeGraphs/starfield>
+            )
+            {
+            }
+        }
     }
 
     def "Shaders"
     {
         def Shader "shader_starfield_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "shader_starfield_out_float"
         {
             uniform token info:id = "ND_surface_unlit"
             token outputs:surface
@@ -58,6 +94,7 @@ def "MaterialX"
         def NodeGraph "starfield"
         {
             color3f outputs:out.connect = </MaterialX/NodeGraphs/starfield/convert_float_color3.outputs:out>
+            float outputs:out_float.connect = </MaterialX/NodeGraphs/starfield/clamp_float.outputs:out>
 
             def Shader "viewDir"
             {

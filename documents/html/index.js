@@ -9,5 +9,6 @@ var index =
       [ "Gallery of Example Materials", "index.html#autotoc_md6", null ],
       [ "Comparison: GLSL vs GLSLFX", "index.html#autotoc_md7", null ],
       [ "Comparison: GLSL vs OSL vs GLSLFX", "index.html#autotoc_md8", null ]
-    ] ]
+    ] ],
+    [ "Design", "index.html#autotoc_md9", null ]
 ];

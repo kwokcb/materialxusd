@@ -116,3 +116,6 @@ glTF, Standard Surface, OpenUSD material renderings
 
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 
+## Design
+
+<img src="./documents/images/design.png" width=100%>

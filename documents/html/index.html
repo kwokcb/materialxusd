@@ -111,7 +111,10 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="textblock"><p><a class="anchor" id="md__d_1_2_work_2materialx_2materialxusd_2_r_e_a_d_m_e"></a></p>
 <p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.</p>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
-<p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" alt="" width="100%" class="inline"/> <sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub></p>
+<p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" alt="" width="100%" class="inline"/></p>
+<blockquote class="doxtable">
+<p>&zwj;Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&amp;material=6e933741-eeb3-4956-b756-0b44f08aa6cf">AMD GPUOpen library</a>. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right) </p>
+</blockquote>
 <p>Some initial utilities are provided with more coming on-line as the site / requirements progress.</p>
 <h2><a class="anchor" id="autotoc_md1"></a>
 Available Components</h2>
@@ -155,19 +158,26 @@ Installation and Usage</h2>
 </div><!-- fragment --><p> and preprocessing MaterialX documents which can be run using</p>
 <div class="fragment"><div class="line">materialxusd pmtlx</div>
 </div><!-- fragment --><p>The <code>tests</code> folder has a script with some command line calls to process an examples subfolder (<code>run_examples.sh</code>)</p>
-<div class="fragment"><div class="line">materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx</div>
-<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx</div>
-<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx</div>
-<div class="line">materialxusd pmtlx ./examples/linepattern.mtlx # Processing</div>
-<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx</div>
+<div class="fragment"><div class="line">echo Convert sample MaterialX files to USD and render</div>
+<div class="line">materialxusd m2u -pp -v -sf -mn ./examples/no_materials.mtlx </div>
+<div class="line">materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx </div>
+<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx </div>
+<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx </div>
+<div class="line">echo Preprocess and convert sample MaterialX files to USD</div>
+<div class="line">materialxusd pmtlx ./examples/linepattern_orig.mtlx</div>
+<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx</div>
+<div class="line">echo Convert ZIP file </div>
+<div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip</div>
 </div><!-- fragment --><p>Some rendering of resulting USD files are shown below:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th></tr>
+<th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="100%" class="inline"/>Line Pattern   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="100%" class="inline"/>Marble   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="100%" class="inline"/>Car Paint   </td></tr>
+<td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="100%" class="inline"/>Line Pattern   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="100%" class="inline"/>Marble    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="100%" class="inline"/>Car Paint   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png" alt="" width="100%" class="inline"/>Wood Tile (Downloaded GPUOpen Zip)   </td></tr>
 </table>
-<p>There is additionaly a sample script process a snapshot of the MaterialX test suite (<code>render_rts.sh</code>). The runs the script commands directly as an example.</p>
+<p>There is additionally a sample script that will traverse a local copy of the MaterialX test suite (<code>render_rts.sh</code>). The script calls the package's Python commands directly.</p>
 <div class="fragment"><div class="line">folders=(</div>
 <div class="line">    &quot;./resources/Materials/Examples&quot;</div>
 <div class="line">    &quot;./resources/Materials/TestSuite/stdlib/convolution&quot;</div>

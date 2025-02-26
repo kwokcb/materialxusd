@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/shaderball.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\\TH_Cathedral_Floor_Tiles_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -209,8 +209,8 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_image_vector3_9.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/Tworld.outputs:out>
                 float3 outputs:out
             }
 
@@ -260,18 +260,18 @@ def "MaterialX"
                 float outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -282,7 +282,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/shaderball.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/TH_Cathedral_Floor_Tiles>
@@ -297,14 +297,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
     )
     {
     }

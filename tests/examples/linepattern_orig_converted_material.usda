@@ -357,7 +357,7 @@ def "MaterialX"
             def Shader "grid_color3"
             {
                 uniform token info:id = "ND_grid_color3"
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float inputs:thickness = 0.1
                 float2 inputs:uvtiling = (58, 58)
                 color3f outputs:out
@@ -366,7 +366,7 @@ def "MaterialX"
             def Shader "crosshatch_color3"
             {
                 uniform token info:id = "ND_crosshatch_color3"
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float inputs:thickness = 0.05
                 float2 inputs:uvtiling = (29, 29)
                 color3f outputs:out
@@ -380,7 +380,7 @@ def "MaterialX"
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0

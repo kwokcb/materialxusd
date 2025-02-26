@@ -49,8 +49,8 @@
     </texcoord>
     <normalmap name="node_normalmap" type="vector3">
       <input name="in" type="vector3" nodename="node_image_vector3_9" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <image name="node_image_vector3_9" type="vector3" GLSLFX_usage="normal" expose="true">
       <input name="texcoord" type="vector2" nodename="node_multiply_5" />
@@ -78,11 +78,11 @@
     <constant name="uv" type="float">
       <input name="value" type="float" value="2.0" />
     </constant>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>

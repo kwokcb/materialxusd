@@ -21,6 +21,7 @@
       <input name="in" type="float" nodename="clamp_float" />
     </convert>
     <output name="out" type="color3" nodename="convert_float_color3" />
-    <output name="out_float" type="float" nodename="clamp_float"/>
+    <output name="out_float" type="float" nodename="clamp_float"/> 
+    <output name="out_viewDir" type="vector3" nodename="viewDir"/>
   </nodegraph>
 </materialx>

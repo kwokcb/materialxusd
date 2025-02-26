@@ -43,7 +43,7 @@ def "MaterialX"
             }
         }
 
-        def Material "material_starfield_color3" (
+        def Material "material_starfield_out_cvt_color3" (
             prepend apiSchemas = ["MaterialXConfigAPI"]
         )
         {
@@ -64,11 +64,11 @@ def "MaterialX"
     {
         def NodeGraph "starfield"
         {
-            token outputs:color3 (
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/starfield/convert_float_color3.outputs:out>
+            token outputs:out_cvt_color3 (
                 renderType = "out2"
             )
-            token outputs:color3.connect = </MaterialX/NodeGraphs/starfield/convert.outputs:out>
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/starfield/convert_float_color3.outputs:out>
+            token outputs:out_cvt_color3.connect = </MaterialX/NodeGraphs/starfield/convert.outputs:out>
             float3 outputs:out_viewDir.connect = </MaterialX/NodeGraphs/starfield/viewDir.outputs:out>
 
             def Shader "viewDir"
@@ -132,7 +132,7 @@ def Xform "TestScene"
         prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
     )
     {
-        rel material:binding = </MaterialX/Materials/material_starfield_color3>
+        rel material:binding = </MaterialX/Materials/material_starfield_out_cvt_color3>
     }
 
     def Xform "Lights"

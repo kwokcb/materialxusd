@@ -130,11 +130,29 @@ class MaterialXUsdUtilities:
                                 if not convert_nodedef:
                                     print("> Failed to find conversion definition: %s" % convert_definition)
                                     continue
-                                convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName('convert'))                                                               
 
-                                new_output = graph.addOutput('color3', graph.createValidChildName('out'))
+                                convert_input = None
+                                convert_upstream = None
+                                if len(output.getNodeName()) > 0:
+                                    convert_upstream = output.getNodeName()
+                                elif output.hasInterfaceName():
+                                    convert_upstream = output.getInterfaceName()
+                                if not convert_upstream:
+                                    print("> Failed to find upstream node for output: %s" % output.getName())
+                                    continue
+
+                                convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName(f'convert_{convert_upstream}'))                                                               
+                                convert_node.removeAttribute('nodedef')
+                                convert_input = convert_node.addInput('in', output_type)
+                                if len(output.getNodeName()) > 0:
+                                    convert_input.setNodeName(output.getNodeName())
+                                elif output.hasInterfaceName():
+                                    convert_input.setInterfaceName(output.getInterfaceName())
+
+                                new_output = graph.addOutput(graph.createValidChildName(f'out_{convert_node.getName()}'), 'color3')
                                 new_output.setNodeName(convert_node.getName())
                                 output_name = new_output.getName()
+                                output_type = 'color3'
                                 
                             shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
                             materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)

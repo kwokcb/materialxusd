@@ -5,6 +5,8 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.m
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx 
 echo Preprocess and convert sample MaterialX files to USD
 materialxusd pmtlx ./examples/linepattern_orig.mtlx
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx 
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx
+echo Convert ZIP file 
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
 
 

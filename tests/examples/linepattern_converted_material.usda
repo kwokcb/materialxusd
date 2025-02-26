@@ -66,7 +66,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/test_grid.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/test_grid/top_level_nodes.outputs:out>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_grid/root_graph.outputs:out>
                 float inputs:coat.connect = </MaterialX/Materials/test_grid.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/test_grid.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_grid.inputs:coat_affect_roughness>
@@ -109,8 +109,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_grid.inputs:transmission_scatter_anisotropy>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -170,7 +170,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/test_crosshatch.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/test_crosshatch/top_level_nodes.outputs:out2>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_crosshatch/root_graph.outputs:out2>
                 float inputs:coat.connect = </MaterialX/Materials/test_crosshatch.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_affect_roughness>
@@ -213,8 +213,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_scatter_anisotropy>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -274,7 +274,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/test_union.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/test_union/top_level_nodes.outputs:out3>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_union/root_graph.outputs:out3>
                 float inputs:coat.connect = </MaterialX/Materials/test_union.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/test_union.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_union.inputs:coat_affect_roughness>
@@ -317,8 +317,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_union.inputs:transmission_scatter_anisotropy>
             }
 
-            def "top_level_nodes" (
-                prepend references = </MaterialX/NodeGraphs/top_level_nodes>
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
             )
             {
             }
@@ -348,11 +348,11 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
-        def NodeGraph "top_level_nodes"
+        def NodeGraph "root_graph"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/top_level_nodes/grid_color3.outputs:out>
-            color3f outputs:out2.connect = </MaterialX/NodeGraphs/top_level_nodes/crosshatch_color3.outputs:out>
-            color3f outputs:out3.connect = </MaterialX/NodeGraphs/top_level_nodes/union_color3.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/root_graph/grid_color3.outputs:out>
+            color3f outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/crosshatch_color3.outputs:out>
+            color3f outputs:out3.connect = </MaterialX/NodeGraphs/root_graph/union_color3.outputs:out>
 
             def Shader "texcoord_vector3"
             {
@@ -364,7 +364,7 @@ def "MaterialX"
             def Shader "grid_color3"
             {
                 uniform token info:id = "ND_grid_color3"
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/top_level_nodes/texcoord_vector3.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord_vector3.outputs:out>
                 float inputs:thickness = 0.1
                 float2 inputs:uvtiling = (58, 58)
                 color3f outputs:out
@@ -373,7 +373,7 @@ def "MaterialX"
             def Shader "crosshatch_color3"
             {
                 uniform token info:id = "ND_crosshatch_color3"
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/top_level_nodes/texcoord_vector3.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord_vector3.outputs:out>
                 float inputs:thickness = 0.05
                 float2 inputs:uvtiling = (29, 29)
                 color3f outputs:out
@@ -382,8 +382,8 @@ def "MaterialX"
             def Shader "union_color3"
             {
                 uniform token info:id = "ND_max_color3"
-                color3f inputs:in1.connect = </MaterialX/NodeGraphs/top_level_nodes/grid_color3.outputs:out>
-                color3f inputs:in2.connect = </MaterialX/NodeGraphs/top_level_nodes/crosshatch_color3.outputs:out>
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/root_graph/grid_color3.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/root_graph/crosshatch_color3.outputs:out>
                 color3f outputs:out
             }
         }

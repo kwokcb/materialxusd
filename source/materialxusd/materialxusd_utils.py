@@ -55,6 +55,12 @@ class MaterialXUsdUtilities:
 
     @staticmethod
     def add_explicit_geometry_stream(graph: mx.GraphElement):
+        '''
+        @brief Add explicit geometry stream nodes for inputs with defaultgeomprop specified
+        in nodes definition. Do this for unconnected inputs only.
+        @param graph The MaterialX graph element.
+        @return The number of implicit nodes added.
+        '''
         
         graph_default_nodes = {}
 
@@ -91,17 +97,23 @@ class MaterialXUsdUtilities:
                 defaultgeomprop_prop = defaultgeomprop.getGeomProp()
                 defaultgeomprop_type = defaultgeomprop.getType()
                 defaultgeomprop_index = defaultgeomprop.getIndex()
+                defaultgeomprop_space = defaultgeomprop.getSpace()
 
                 if not node_input:
                     node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())
                 if defaultgeomprop_name not in graph_default_nodes:
                     upstream_default_node = graph.addNode(defaultgeomprop_prop, 
-                                                            graph.createValidChildName(defaultgeomprop_prop), 
+                                                            graph.createValidChildName(defaultgeomprop_name), 
                                                             defaultgeomprop_type)
                     upstream_default_node.addInputsFromNodeDef()
+
+                    # Set space and set index
                     index_input = upstream_default_node.getInput("index")
                     if index_input:
                         index_input.setValue(defaultgeomprop_index, 'integer')
+                    space_input = upstream_default_node.getInput("space")  
+                    if space_input:
+                        space_input.setValue(defaultgeomprop_space, 'string')
 
                     print(f'  > Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
                     graph_default_nodes[defaultgeomprop_name] = upstream_default_node

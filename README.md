@@ -5,7 +5,8 @@ This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a>
 This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:
 
 <img src="./documents/results/usd_gltf_mtlx_desk_web.png" width=100%>
-<sub>Figure: MaterialX material downloaded from AMD GPU library. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</sub>
+
+> Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&material=6e933741-eeb3-4956-b756-0b44f08aa6cf"> AMD GPUOpen library</a>. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)
 
 Some initial utilities are provided with more coming on-line as the site / requirements progress.
 
@@ -60,22 +61,27 @@ materialxusd pmtlx
 The `tests` folder has a script with some command line calls to process an examples subfolder (`run_examples.sh`) 
 
 ```
-materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx
-materialxusd pmtlx ./examples/linepattern.mtlx # Processing
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_converted.mtlx
+echo Convert sample MaterialX files to USD and render
+materialxusd m2u -pp -v -sf -mn ./examples/no_materials.mtlx 
+materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx 
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx 
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx 
+echo Preprocess and convert sample MaterialX files to USD
+materialxusd pmtlx ./examples/linepattern_orig.mtlx
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx
+echo Convert ZIP file 
+materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
 ```
 
 Some rendering of resulting USD files are shown below:
 
-| | | |
-| :--: | :--: | :--: |
-| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width=100%>Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width=100%>Marble</img> | <img width=100% src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> |
+| | | 
+| :--: | :--: | 
+| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width=100%>Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width=100%>Marble</img> |
+| <img width=100% src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> | <img width=100% src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png">Wood Tile (Downloaded GPUOpen Zip)</img>
 
 
-There is additionaly a sample script process a snapshot of the MaterialX test suite (`render_rts.sh`). 
-The runs the script commands directly as an example.
+There is additionally a sample script that will traverse a local copy of the MaterialX test suite (`render_rts.sh`). The script calls the package's Python commands directly.
 
 ```bash
 folders=(
@@ -116,3 +122,6 @@ glTF, Standard Surface, OpenUSD material renderings
 
 <iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
 
+## Design
+
+<img src="./documents/images/design.png" width=100%>

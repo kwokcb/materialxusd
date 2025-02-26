@@ -8,18 +8,17 @@ D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:243: warning:
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:243: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path) is not documented:
   parameter 'material_file_path'
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:14: warning: Member __init__(self) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:57: warning: Member add_explicit_geometry_stream(mx.GraphElement graph) (function) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:15: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'new_input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: argument 'remove_original_nodes' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:125: warning: The following parameters of materialxusd.materialxusd_utils.MaterialXUsdUtilities.encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True) are not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:137: warning: argument 'input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:137: warning: argument 'new_input_path' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:137: warning: argument 'remove_original_nodes' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:137: warning: The following parameters of materialxusd.materialxusd_utils.MaterialXUsdUtilities.encapsulate_top_level_nodes(mx.Document doc, str nodegraph_name="top_level_nodes", bool remove_original=True) are not documented:
   parameter 'doc'
   parameter 'remove_original'
-D:/Work/materialx/materialxusd/README.md:107: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:107: warning: Unsupported xml/html tag </iframe> found
-D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag </iframe> found
-D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:113: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:113: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:118: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:118: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:123: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:123: warning: Unsupported xml/html tag </iframe> found

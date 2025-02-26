@@ -3,7 +3,7 @@
   <nodegraph name="height_to_normal_cm">
     <image name="b_image" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <extract name="extract1" type="float">
       <input name="in" type="color3" nodename="b_image" />
@@ -14,14 +14,18 @@
       <input name="scale" type="float" value="1.0" />
     </heighttonormal>
     <output name="out" type="vector3" nodename="impl_heighttonormalmap" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
+    <convert name="convert_impl_heighttonormalmap" type="color3">
+      <input name="in" type="vector3" nodename="impl_heighttonormalmap" />
+    </convert>
+    <output name="out_convert_impl_heighttonormalmap" type="color3" nodename="convert_impl_heighttonormalmap" />
   </nodegraph>
   <nodegraph name="normalmap_cm">
     <image name="b_image" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <convert name="c3tov3" type="vector3">
       <input name="in" type="color3" nodename="b_image" />
@@ -29,24 +33,35 @@
     <normalmap name="impl_normalmap" type="vector3">
       <input name="in" type="vector3" nodename="c3tov3" />
       <input name="scale" type="float" value="1.5" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
-      <input name="bitangent" type="vector3" nodename="bitangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="out" type="vector3" nodename="impl_normalmap" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
-    <bitangent name="bitangent" type="vector3">
-      <input name="space" type="string" value="object" />
-      <input name="index" type="integer" value="0" />
-    </bitangent>
+    <convert name="convert_impl_normalmap" type="color3">
+      <input name="in" type="vector3" nodename="impl_normalmap" />
+    </convert>
+    <output name="out_convert_impl_normalmap" type="color3" nodename="convert_impl_normalmap" />
   </nodegraph>
+  <surface_unlit name="shader_height_to_normal_cm_out_convert_impl_heighttonormalmap" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="height_to_normal_cm" output="out_convert_impl_heighttonormalmap" />
+  </surface_unlit>
+  <surfacematerial name="material_height_to_normal_cm_out_convert_impl_heighttonormalmap" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_height_to_normal_cm_out_convert_impl_heighttonormalmap" />
+  </surfacematerial>
+  <surface_unlit name="shader_normalmap_cm_out_convert_impl_normalmap" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="normalmap_cm" output="out_convert_impl_normalmap" />
+  </surface_unlit>
+  <surfacematerial name="material_normalmap_cm_out_convert_impl_normalmap" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_normalmap_cm_out_convert_impl_normalmap" />
+  </surfacematerial>
 </materialx>

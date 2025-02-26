@@ -7,10 +7,10 @@
   <nodegraph name="NG_tm_retest" nodedef="ND_tm_retest">
     <image name="b_image" type="color3">
       <input name="file" type="filename" interfacename="texture_file" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <output name="out" type="color3" nodename="b_image" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -21,10 +21,10 @@
   <nodegraph name="NG_tm_test" nodedef="ND_tm_test">
     <image name="b_image" type="color3">
       <input name="file" type="filename" interfacename="texture_file" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <output name="out" type="color3" nodename="b_image" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -39,10 +39,10 @@
     <output name="tmtestout2" type="color3" nodename="bl1" />
     <image name="tr1" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <output name="troutput" type="color3" nodename="tr1" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

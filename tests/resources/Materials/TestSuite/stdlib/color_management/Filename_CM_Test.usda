@@ -24,11 +24,11 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 asset inputs:file.connect = </MaterialX/NodeGraphs/ND_tm_retest.inputs:texture_file>
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_retest/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_retest/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -47,11 +47,11 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 asset inputs:file.connect = </MaterialX/NodeGraphs/ND_tm_test.inputs:texture_file>
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_test/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_test/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -71,11 +71,11 @@ def "MaterialX"
                 asset inputs:file = @resources/Images/grid.png@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/nodegraph1/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/nodegraph1/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0

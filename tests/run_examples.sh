@@ -8,5 +8,6 @@ materialxusd pmtlx ./examples/linepattern_orig.mtlx
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx
 echo Convert ZIP file 
 materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
-
+echo Handle documents without materials
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/starfield.mtlx -r 
 

@@ -116,14 +116,9 @@ class MaterialXUsdUtilities:
                         else:
                             print(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
                             
-                            # For now only handle color3 output
+                            # If not color3 or float add a convert node and connect it to the current upstream node
+                            # and then add in a new output which is of type color3
                             if output_type != 'color3' and output_type != 'float':
-                                #continue
-                            #elif output_type != 'color3':
-                                # Add a convert from output_type to color3
-
-                            # Otherwise add a convert node and connect it to the current upstream node
-                            # and then add in a new output whhich is of type color3
 
                                 convert_definition = 'ND_convert_' + output_type + '_color3'
                                 convert_nodedef = doc.getNodeDef(convert_definition)

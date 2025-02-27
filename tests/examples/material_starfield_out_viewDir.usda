@@ -1,0 +1,221 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./examples/starfield_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "material_starfield_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out/shader_starfield_out.outputs:surface>
+
+            def Shader "shader_starfield_out" (
+                prepend references = </MaterialX/Shaders/shader_starfield_out>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out/starfield.outputs:out>
+                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out.inputs:transmission_color>
+            }
+
+            def "starfield" (
+                prepend references = </MaterialX/NodeGraphs/starfield>
+            )
+            {
+            }
+        }
+
+        def Material "material_starfield_out_float" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out_float/shader_starfield_out_float.outputs:surface>
+
+            def Shader "shader_starfield_out_float" (
+                prepend references = </MaterialX/Shaders/shader_starfield_out_float>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out_float/starfield.outputs:out_float>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out_float.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out_float.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out_float.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out_float.inputs:transmission_color>
+            }
+
+            def "starfield" (
+                prepend references = </MaterialX/NodeGraphs/starfield>
+            )
+            {
+            }
+        }
+
+        def Material "material_starfield_out_viewDir" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out_viewDir/shader_starfield_out_viewDir.outputs:surface>
+
+            def Shader "shader_starfield_out_viewDir" (
+                prepend references = </MaterialX/Shaders/shader_starfield_out_viewDir>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out_viewDir/starfield.outputs:out_viewDir>
+                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:transmission_color>
+            }
+
+            def "starfield" (
+                prepend references = </MaterialX/NodeGraphs/starfield>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "shader_starfield_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "shader_starfield_out_float"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "shader_starfield_out_viewDir"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "starfield"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/starfield/convert_float_color3.outputs:out>
+            float outputs:out_float.connect = </MaterialX/NodeGraphs/starfield/clamp_float.outputs:out>
+            color3f outputs:out_viewDir.connect = </MaterialX/NodeGraphs/starfield/convert_viewDir.outputs:out>
+
+            def Shader "viewDir"
+            {
+                uniform token info:id = "ND_viewdirection_vector3"
+                float3 outputs:out
+            }
+
+            def Shader "multiply_vector3FA"
+            {
+                uniform token info:id = "ND_multiply_vector3FA"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/starfield/viewDir.outputs:out>
+                float inputs:in2 = 260
+                float3 outputs:out
+            }
+
+            def Shader "noise3d_float"
+            {
+                uniform token info:id = "ND_noise3d_float"
+                float3 inputs:position.connect = </MaterialX/NodeGraphs/starfield/multiply_vector3FA.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "contrast_float"
+            {
+                uniform token info:id = "ND_contrast_float"
+                float inputs:amount = 5
+                float inputs:in.connect = </MaterialX/NodeGraphs/starfield/noise3d_float.outputs:out>
+                float inputs:pivot = 0.8
+                float outputs:out
+            }
+
+            def Shader "clamp_float"
+            {
+                uniform token info:id = "ND_clamp_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/starfield/contrast_float.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "convert_float_color3"
+            {
+                uniform token info:id = "ND_convert_float_color3"
+                float inputs:in.connect = </MaterialX/NodeGraphs/starfield/clamp_float.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "convert_viewDir"
+            {
+                uniform token info:id = "ND_convert_vector3_color3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/starfield/viewDir.outputs:out>
+                color3f outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\work\materialx\materialxusd\tests\data\shaderball.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/material_starfield_out_viewDir>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera.usda@
+    )
+    {
+    }
+}
+

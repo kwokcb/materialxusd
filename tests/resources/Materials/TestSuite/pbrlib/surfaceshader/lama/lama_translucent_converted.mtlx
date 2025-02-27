@@ -11,11 +11,11 @@
       <input name="color" type="color3" value="0.18, 0.18, 0.18" />
       <input name="roughness" type="float" value="0.0" />
       <input name="energyCompensation" type="float" value="1.0" />
-      <input name="normal" type="vector3" nodename="normal" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </LamaTranslucent>
     <output name="out" type="BSDF" nodename="LamaTranslucent" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
   </nodegraph>
 </materialx>

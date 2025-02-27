@@ -3,8 +3,8 @@
   <nodegraph name="edge_brighten">
     <facingratio name="facingratio_float" type="float">
       <input name="invert" type="boolean" value="true" />
-      <input name="viewdirection" type="vector3" nodename="viewdirection" />
-      <input name="normal" type="vector3" nodename="normal" />
+      <input name="viewdirection" type="vector3" nodename="Vworld" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </facingratio>
     <power name="power_float" type="float">
       <input name="in1" type="float" nodename="facingratio_float" />
@@ -16,11 +16,17 @@
       <input name="mix" type="float" nodename="power_float" />
     </mix>
     <output name="out" type="color3" nodename="mix_color3" />
-    <viewdirection name="viewdirection" type="vector3">
+    <viewdirection name="Vworld" type="vector3">
       <input name="space" type="string" value="world" />
     </viewdirection>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
   </nodegraph>
+  <surface_unlit name="shader_edge_brighten_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="edge_brighten" output="out" />
+  </surface_unlit>
+  <surfacematerial name="material_edge_brighten_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_edge_brighten_out" />
+  </surfacematerial>
 </materialx>

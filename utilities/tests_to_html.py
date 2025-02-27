@@ -378,8 +378,11 @@ def main(args=None):
             histPath1 = None
             histPath2 = None
 
-            if not os.path.exists(fullPath1) or not os.path.exists(fullPath2):
-                skippedComparisons.append((fullPath1, fullPath2))
+            path1Exists = os.path.exists(fullPath1) 
+            parth2Exists = os.path.exists(fullPath2)
+            if not path1Exists or not parth2Exists:
+                skippedComparisons.append([f'{fullPath1} : {path1Exists}', 
+                                           f'{fullPath2} : {parth2Exists}'])
                 continue
 
             if curPath != path1:

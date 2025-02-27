@@ -4,7 +4,7 @@
         string colorSpace = "acescg"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\lama\\lama_generalized_schlick_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_generalized_schlick_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -76,11 +76,11 @@ def "MaterialX"
                 color3f inputs:absorptionColor = (1, 1, 1)
                 float inputs:absorptionRadius = 1
                 float inputs:anisotropy = -1
-                float3 inputs:anisotropyDirection.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
+                float3 inputs:anisotropyDirection.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
                 float inputs:anisotropyRotation = 0
                 int inputs:fresnelMode = 0
                 float3 inputs:IOR = (1.5, 1.5, 1.5)
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
                 color3f inputs:reflectionTint = (1, 1, 1)
                 color3f inputs:reflectivity = (0.04, 0.04, 0.04)
                 color3f inputs:reflectivity90 = (1, 1, 1)
@@ -94,18 +94,18 @@ def "MaterialX"
                 )
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -116,7 +116,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/LamaGeneralizedSchlickTest>
@@ -131,14 +131,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

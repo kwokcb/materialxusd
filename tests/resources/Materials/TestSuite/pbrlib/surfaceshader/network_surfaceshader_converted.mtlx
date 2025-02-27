@@ -7,13 +7,13 @@
   <nodegraph name="NG_network_surface" nodedef="ND_network_surface">
     <tiledimage name="base_color_image" type="color3">
       <input name="file" type="filename" interfacename="base_color_filename" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <standard_surface name="standard_surface" type="surfaceshader">
       <input name="base_color" type="color3" nodename="base_color_image" />
     </standard_surface>
     <output name="out" type="surfaceshader" nodename="standard_surface" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

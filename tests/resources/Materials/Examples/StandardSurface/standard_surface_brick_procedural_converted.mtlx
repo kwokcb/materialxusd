@@ -89,8 +89,8 @@
     </multiply>
     <normalmap name="node_normalmap_3" type="vector3">
       <input name="in" type="vector3" nodename="node_tiledimage_vector3_27" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <convert name="node_convert_1" type="vector2">
       <input name="in" type="float" interfacename="uvtiling" />
@@ -98,44 +98,44 @@
     <tiledimage name="node_tiledimage_vector3_27" type="vector3">
       <input name="file" type="filename" value="brick_normal.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_22" type="float">
       <input name="file" type="filename" value="brick_roughness.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_10" type="float">
       <input name="file" type="filename" value="brick_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_7" type="float">
       <input name="file" type="filename" value="brick_base_gray.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_26" type="float">
       <input name="file" type="filename" value="brick_variation_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_24" type="float">
       <input name="file" type="filename" value="brick_dirt_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <output name="base_color_output" type="color3" nodename="node_clamp_0" />
     <output name="specular_roughness_output" type="float" nodename="node_multiply_1" />
     <output name="normal_output" type="vector3" nodename="node_normalmap_3" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

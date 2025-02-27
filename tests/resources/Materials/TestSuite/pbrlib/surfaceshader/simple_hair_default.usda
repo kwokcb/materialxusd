@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\chiang_hair_surfaceshader_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\chiang_hair_surfaceshader_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -63,9 +63,9 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_chiang_hair_bsdf"
                 float3 inputs:absorption_coefficient.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/mix_melanin_basecolor.outputs:out>
-                float3 inputs:curve_direction.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/tangent.outputs:out>
+                float3 inputs:curve_direction.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/Tworld.outputs:out>
                 float inputs:cuticle_angle.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:cuticleAngle>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/normal.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/Nworld.outputs:out>
                 float2 inputs:roughness_R.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_R>
                 float2 inputs:roughness_TRT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_TRT>
                 float2 inputs:roughness_TT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_TT>
@@ -77,18 +77,18 @@ def "MaterialX"
                 )
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -147,7 +147,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/simple_hair_default>
@@ -162,14 +162,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/color_management\\filename_cm_test_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/color_management\\filename_cm_test_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -24,11 +24,11 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 asset inputs:file.connect = </MaterialX/NodeGraphs/ND_tm_retest.inputs:texture_file>
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_retest/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_retest/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -47,11 +47,11 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 asset inputs:file.connect = </MaterialX/NodeGraphs/ND_tm_test.inputs:texture_file>
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_test/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_tm_test/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -71,11 +71,11 @@ def "MaterialX"
                 asset inputs:file = @resources/Images/grid.png@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/nodegraph1/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/nodegraph1/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -217,7 +217,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/Filename_CM_Test>
@@ -232,14 +232,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

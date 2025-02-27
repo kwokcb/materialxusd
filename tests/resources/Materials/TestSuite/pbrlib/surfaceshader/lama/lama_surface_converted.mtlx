@@ -11,20 +11,20 @@
       <input name="roughness" type="float" value="0.1" />
       <input name="anisotropy" type="float" value="0.0" />
       <input name="anisotropyRotation" type="float" value="0.0" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="anisotropyDirection" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="anisotropyDirection" type="vector3" nodename="Tworld" />
     </LamaConductor>
     <LamaDiffuse name="LamaDiffuse" type="BSDF">
       <input name="color" type="color3" value="0.1, 0.2, 0.3" />
       <input name="roughness" type="float" value="0.5" />
       <input name="energyCompensation" type="float" value="1.0" />
-      <input name="normal" type="vector3" nodename="normal" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </LamaDiffuse>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>

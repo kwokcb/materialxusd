@@ -4,7 +4,7 @@
         string colorSpace = "acescg"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\lama\\lama_emission_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_emission_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -86,7 +86,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/LamaEmissionTest>
@@ -101,14 +101,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

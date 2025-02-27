@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <materialx version="1.39">
+  <nodedef name="ND_checker_float" node="checker">
+    <input name="scale" type="vector2" value="8.0, 8.0" />
+    <output name="out" type="float" />
+  </nodedef>
   <nodegraph name="NG_checker_float" nodedef="ND_checker_float">
     <texcoord name="texcoord1" type="vector2">
       <input name="index" type="integer" value="0" />
@@ -105,10 +109,10 @@
     </surfacematerial>
     <output name="out" type="material" nodename="material" />
   </nodegraph>
-  <nodegraph name="top_level_nodes">
-    <nodedef name="ND_checker_float" node="checker">
-      <input name="scale" type="vector2" value="8.0, 8.0" />
-      <output name="out" type="float" />
-    </nodedef>
-  </nodegraph>
+  <surface_unlit name="shader_NG_checker_float_out" type="surfaceshader">
+    <input name="emission" type="float" nodegraph="NG_checker_float" output="out" />
+  </surface_unlit>
+  <surfacematerial name="material_NG_checker_float_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_NG_checker_float_out" />
+  </surfacematerial>
 </materialx>

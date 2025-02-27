@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_boombox_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_boombox_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -106,8 +106,8 @@ def "MaterialX"
             float outputs:out5.connect = </MaterialX/NodeGraphs/root_graph/image_orm_channels.outputs:outz>
             float outputs:out6.connect = </MaterialX/NodeGraphs/root_graph/image_orm_channels.outputs:outy>
             float outputs:out7.connect = </MaterialX/NodeGraphs/root_graph/image_orm_channels.outputs:outx>
-            float3 outputs:out8.connect = </MaterialX/NodeGraphs/root_graph/tangent.outputs:out>
-            float3 outputs:out9.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+            float3 outputs:out8.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
+            float3 outputs:out9.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
 
             def Shader "image_basecolor"
             {
@@ -115,7 +115,7 @@ def "MaterialX"
                 asset inputs:file = @boombox/BoomBox_baseColor.png@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float outputs:outa
                 color3f outputs:outcolor
             }
@@ -124,7 +124,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_gltf_image_vector3_vector3_1_0"
                 asset inputs:file = @boombox/BoomBox_occlusionRoughnessMetallic.png@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -132,7 +132,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_gltf_normalmap_vector3_1_0"
                 asset inputs:file = @boombox/BoomBox_normal.png@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -142,7 +142,7 @@ def "MaterialX"
                 asset inputs:file = @boombox/BoomBox_emissive.png@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -155,25 +155,25 @@ def "MaterialX"
                 float outputs:outz
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -184,7 +184,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/Material_boombox>
@@ -199,14 +199,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

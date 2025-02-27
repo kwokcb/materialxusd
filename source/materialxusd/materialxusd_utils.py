@@ -112,7 +112,7 @@ class MaterialXUsdUtilities:
             if not graph_outputs:
                 continue
 
-            print('------- Scan graph', graph.getName())
+            print('    > Scan graph: ', graph.getName())
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
@@ -137,8 +137,9 @@ class MaterialXUsdUtilities:
             #            break
             #    if not match:
             #        downstream_port_count += 1
-                        
-            print('------- Downstream port:', ",".join( [port.getNamePath() for port in downstream_ports]))
+
+            if downstream_ports:                       
+                print('        > Downstream port:', ",".join( [port.getNamePath() for port in downstream_ports]))
             if len(downstream_ports) == 0:
                 # Add a material per output
                 # 
@@ -153,9 +154,21 @@ class MaterialXUsdUtilities:
                     output_name = output.getName()
                     output_type = output.getType()
 
-                    print('------- Scane output', output_name, output_type)
+                    print('        > Scan output:', output_name, '. type:', output_type)
 
-                    if output_type in supported_output_types:
+                    # Special case for surfaceshader outputs. Just add in a downstream material
+                    if output_type == 'surfaceshader':
+                        # Add a material for the shader
+                        material_name = doc.createValidChildName(graph.getName() + '_' + output_name)
+                        material_node = doc.addMaterialNode(material_name)
+                        if material_node:
+                            print(f"        > Added material node: {material_node.getName()}, for graph shader output: {output_name}")
+                            material_node_input = material_node.addInput(output_type, output_type)
+                            material_node_input.setNodeGraphString(graph.getName())
+                            material_node_input.setOutputString(output_name)
+                            material_count += 1
+
+                    elif output_type in supported_output_types:
 
                         if usd_supports_convert_to_surface_shader:
                             # Create a new material node
@@ -165,7 +178,7 @@ class MaterialXUsdUtilities:
                             convert_definition = 'ND_convert_' + output_type + '_color3'
                             convert_node = doc.getNodeDef(convert_definition)
                             if not convert_node:
-                                print("> Failed to find conversion definition: %s" % convert_definition)
+                                print("        > Failed to find conversion definition: %s" % convert_definition)
                             else:
                                 shadernode = doc.addNodeInstance(convert_node, shadernode_name)
                                 shadernode.removeAttribute('nodedef')
@@ -191,7 +204,7 @@ class MaterialXUsdUtilities:
                                 convert_definition = 'ND_convert_' + output_type + '_color3'
                                 convert_nodedef = doc.getNodeDef(convert_definition)
                                 if not convert_nodedef:
-                                    print("> Failed to find conversion definition: %s" % convert_definition)
+                                    print("        > Failed to find conversion definition: %s" % convert_definition)
                                     continue
 
                                 # Find upstream node or interface input

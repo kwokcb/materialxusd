@@ -242,11 +242,11 @@ class MaterialxUSDConverter:
         try:
             stage = Usd.Stage.Open(input_usd_path)
         except Exception as e:
-            print(f"Error: Could not open file at {input_usd_path}. Error: {e}")
+            print(f"> Error: Could not open file at {input_usd_path}. Error: {e}")
             return stage, None, None, None, None
         
         if not stage:
-            print(f"Error: Could not open file at {input_usd_path}")
+            print(f"> Error: Could not open file at {input_usd_path}")
             return stage, None, None, None, None
         
         # Set the required validation attributes

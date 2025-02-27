@@ -46,7 +46,7 @@ def get_mtlx_files(input_path: str):
                         mtlx_files.append(os.path.join(root, file))
     return mtlx_files
 
-def print_validation_results(errors:str, warnings:str, failed_checks:str):
+def print_validation_results(output_path:str, errors:str, warnings:str, failed_checks:str):
     if errors or warnings or failed_checks:
         if errors:
             print(f"\t> Errors: {errors}")
@@ -55,7 +55,7 @@ def print_validation_results(errors:str, warnings:str, failed_checks:str):
         if failed_checks:
             print(f"\t> Failed checks: {failed_checks}")
     else:
-        print("\t> Document is valid.")
+        print(f'\t> Document "{output_path}" is valid.')
 
 def main():
     # Set up command-line argument parsing
@@ -209,9 +209,9 @@ def main():
                 print(f"\t> Save USD file to: {output_path}.")
 
                 if validate_output:
-                    print(f"\t> Validating document: {output_path}")
+                    #print(f"\t> Validating document: {output_path}")
                     errors, warnings, failed_checks = converter.validate_stage(output_path)
-                    print_validation_results(errors, warnings, failed_checks)
+                    print_validation_results(output_path, errors, warnings, failed_checks)
 
                 #if not found_material:
                 #    print("> Warning: No materials found in the MaterialX document. Continuing to next file.")

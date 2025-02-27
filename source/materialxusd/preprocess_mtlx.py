@@ -46,9 +46,12 @@ def main():
         implicit_nodes_added = utils.add_explicit_geometry_stream(doc)
         if implicit_nodes_added > 0:
             logger.info(f"> Added {implicit_nodes_added} implicit geometry nodes.")
+
+        materials_added = utils.add_downstream_materials(doc)
+        print(f'  > Added {materials_added} downstream materials.')
         doc.setDataLibrary(None)
 
-        if implicit_nodes_added > 0 or top_level_nodes_found > 0:
+        if materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:
             utils.write_document(doc, output_path)
             logger.info(f"> Wrote modified document to {output_path}")
     except Exception as e:

@@ -107,21 +107,53 @@ class MaterialXUsdUtilities:
             if graph.hasSourceUri():
                 continue
 
+
             graph_outputs = graph.getOutputs()
             if not graph_outputs:
                 continue
+
+            print('------- Scan graph', graph.getName())
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
 
             downstream_ports = graph.getDownstreamPorts()
-            if not downstream_ports:
+            for output in graph_outputs:
+                # See if output name path is in downstream ports
+                match = False
+                for port in downstream_ports:
+                    if port.getNamePath() == output.getNamePath():
+                        match = True
+                        break
+                if match:
+                    downstream_ports.remove(port)
+
+            #downstream_port_count = 0
+            #for port in downstream_ports:
+            #    match = False
+            #    for output in graph_outputs:
+            #        if port.getName() == output.getName():
+            #            match = True                       
+            #            break
+            #    if not match:
+            #        downstream_port_count += 1
+                        
+            print('------- Downstream port:', ",".join( [port.getNamePath() for port in downstream_ports]))
+            if len(downstream_ports) == 0:
                 # Add a material per output
                 # 
                 is_multi_output = len(graph_outputs) > 1    
                 for output in graph_outputs:
+                    #if downstream_ports:
+                    #    for port in downstream_ports:
+                    #        if port.getNamePath() == output.getNamePath():
+                    #            print('---- SKIP OUTPUT :', output.getNamePath())
+                    #            continue
+                        
                     output_name = output.getName()
                     output_type = output.getType()
+
+                    print('------- Scane output', output_name, output_type)
 
                     if output_type in supported_output_types:
 

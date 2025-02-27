@@ -111,6 +111,10 @@ def main():
             doc.setDataLibrary(None)                
 
             if materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
+                valid, errors = doc.validate()
+                if not valid:
+                    print(f"  >>>>>> Validation errors: {errors}")
+
                 new_input_path = input_path.replace('.mtlx', '_converted.mtlx')
                 utils.write_document(doc, new_input_path)
                 print(f"  > Saved converted MaterialX document to: {new_input_path}")

@@ -1,0 +1,64 @@
+#usda 1.0
+(
+    doc = "MaterialX content from ./examples/nodegraph_surfaceshader_converted.mtlx"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "lighting1_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity = 1
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/lighting1_out/surface1.outputs:surface>
+
+            def Shader "surface1" (
+                prepend references = </MaterialX/Shaders/surface1>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/lighting1_out.inputs:bsdf>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/lighting1_out.inputs:edf>
+                float inputs:opacity.connect = </MaterialX/Materials/lighting1_out.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/lighting1_out.inputs:thin_walled>
+            }
+
+            def "NodeGraphs" (
+                prepend references = </MaterialX/NodeGraphs>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "surface1"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+    }
+}
+

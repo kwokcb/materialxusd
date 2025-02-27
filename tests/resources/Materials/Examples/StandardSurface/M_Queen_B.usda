@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples/StandardSurface/standard_surface_chess_set_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\StandardSurface\\standard_surface_chess_set_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -2886,7 +2886,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/M_Queen_B>
@@ -2901,14 +2901,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

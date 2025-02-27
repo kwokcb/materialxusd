@@ -12,6 +12,9 @@ class MaterialXUsdUtilities:
     '''
 
     def __init__(self):
+        '''
+        @brief Constructor.
+        '''
         self._stdlib, self._libFiles = self.load_standard_libraries()
 
     def load_standard_libraries(self):
@@ -56,8 +59,8 @@ class MaterialXUsdUtilities:
     @staticmethod
     def add_materials_for_shaders(doc: mx.Document):
         '''
-        @brief Add materials for shaders in the MaterialX document.
-        @param doc The MaterialX document.
+        @brief Add materials for shaders at the root level of a MaterialX document. Nodegraphs are not considered as this is not supported by USD. 
+        @param doc The MaterialX document. 
         @return The number of materials added.
         '''  
         # If has materials skip
@@ -85,6 +88,8 @@ class MaterialXUsdUtilities:
     def add_downstream_materials(doc: mx.Document):
         '''
         @brief Add downstream materials to the MaterialX graph.
+        @param doc The MaterialX document.
+        @return The number of materials added.
         '''
         # If has materials skip
         material_count = len(doc.getMaterialNodes())
@@ -95,6 +100,9 @@ class MaterialXUsdUtilities:
         if not nodegraphs:
             return 0
         
+        # Only support these types of graph outputs
+        supported_output_types = [ 'float', 'vector2', 'vector3', 'vector4', 'integer', 'boolean', 'color3', 'color4' ]
+
         for graph in nodegraphs:
             if graph.hasSourceUri():
                 continue
@@ -115,7 +123,7 @@ class MaterialXUsdUtilities:
                     output_name = output.getName()
                     output_type = output.getType()
 
-                    if output_type in [ 'float', 'vector2', 'vector3', 'vector4', 'integer', 'boolean', 'color3', 'color4' ]:
+                    if output_type in supported_output_types:
 
                         if usd_supports_convert_to_surface_shader:
                             # Create a new material node
@@ -154,7 +162,7 @@ class MaterialXUsdUtilities:
                                     print("> Failed to find conversion definition: %s" % convert_definition)
                                     continue
 
-                                convert_input = None
+                                # Find upstream node or interface input
                                 convert_upstream = None
                                 if len(output.getNodeName()) > 0:
                                     convert_upstream = output.getNodeName()
@@ -164,6 +172,7 @@ class MaterialXUsdUtilities:
                                     print("> Failed to find upstream node for output: %s" % output.getName())
                                     continue
 
+                                # Insert convert node
                                 convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName(f'convert_{convert_upstream}'))                                                               
                                 convert_node.removeAttribute('nodedef')
                                 convert_input = convert_node.addInput('in', output_type)
@@ -174,18 +183,19 @@ class MaterialXUsdUtilities:
 
                                 # Overwrite the upstream connection on the output
                                 # and change it's type
-                                #new_output = graph.addOutput(graph.createValidChildName(f'out_{convert_node.getName()}'), 'color3')
                                 output.setNodeName(convert_node.getName())                                
-                                #output_name = new_output.getName()
                                 output.setType('color3')
                                 output_type = 'color3'
-                                
+                            
+                            # Create downstream (umlit) shader
                             shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
                             materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
                             unlitDefinition = 'ND_surface_unlit'
                             unlitNode = doc.getNodeDef(unlitDefinition)
                             shadernode = doc.addNodeInstance(unlitNode, shadernode_name)
                             shadernode.removeAttribute('nodedef')
+
+                            # Connect upstream output to shader input (based on type)
                             new_input = None
                             if output_type == 'color3':
                                 new_input = shadernode.addInput('emission_color', output_type)
@@ -196,7 +206,9 @@ class MaterialXUsdUtilities:
                             #if is_multi_output:
                             # ISSUE: USD does not handle nodegraph without an explicit output propoerly
                             # so always added in the output string !
-                            new_input.setOutputString(output_name)    
+                            new_input.setOutputString(output_name)   
+
+                            # Add downstream material node connected to shadernode 
                             materialnode = doc.addMaterialNode(materialnode_name, shadernode)
 
                             if materialnode:
@@ -287,10 +299,9 @@ class MaterialXUsdUtilities:
         """
         @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes
         to outputs on a new nodegraph.
-        @param input_path The path to the MaterialX document.
-        @param new_input_path The path to write the modified MaterialX document.
+        @param doc The MaterialX document.
         @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is 'top_level_nodes'.
-        @param remove_original_nodes If True, remove the original top level nodes from the document. Default is True.
+        @param remove_original If True, remove the original top level nodes from the document. Default is True.
         @return The number of top level nodes found
         """
         connections_made = 0

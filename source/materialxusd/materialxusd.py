@@ -71,6 +71,7 @@ class MaterialxUSDConverter:
         @brief This function finds the first material in the stage. Assumes MaterialX
         materials are stored under the "/MaterialX/Materials" scope.
         @param stage: The stage to search for the first material.
+        @param find_first: If True, only the first material found is returned. Default is True.
         @return: The first material found in the stage. If no material is found, None is returned.
         '''
         found_materials = []
@@ -95,7 +96,7 @@ class MaterialxUSDConverter:
         return found_materials
     
     def add_skydome_light(self, 
-                          stage, 
+                          stage: Usd.Stage, 
                           environment_path:str, 
                           root_path:str = "/TestScene/Lights", 
                           light_name:str = "EnvironmentLight",
@@ -143,21 +144,25 @@ class MaterialxUSDConverter:
         return dome_light
     
     def add_geometry_reference(self, 
-                               stage, 
-                               geometry_path:str, 
-                               root_path:str="/TestScene/Geometry"):
+                               stage: Usd.Stage, 
+                               geometry_path : str, 
+                               root_path : str="/TestScene/Geometry"):
         '''
         @brief This function adds a geometry reference to the stage.
         @param stage: The stage to add the geometry reference.
         @param geometry_path: The path to the geometry file.
-        @param shaderball_path: The path to the shaderball geometry file.
         @param root_path: The root path to add the geometry reference.
         '''
         geom_prim = stage.DefinePrim(root_path, "Xform")        
         geom_prim.GetReferences().AddReference(geometry_path)
         return geom_prim
     
-    def find_first_camera(self, stage):
+    def find_first_camera(self, stage : Usd.Stage):
+        '''
+        @brief This function finds the first camera in the stage.
+        @param stage: The stage to search for the first camera.
+        @return: The first camera found in the stage. If no camera is found, None is returned.
+        '''
         # Traverse the stage's prims
         for prim in stage.Traverse():
             # Check if the prim is a UsdGeomCamera
@@ -166,15 +171,16 @@ class MaterialxUSDConverter:
         return None
     
     def add_camera(self, 
-                   stage, 
-                   camera_path:str, 
-                   root_path:str="/TestScene/Camera", 
-                   geometry_path:str="/TestScene/Geometry"):
+                   stage : Usd.Stage, 
+                   camera_path : str, 
+                   root_path : str="/TestScene/Camera", 
+                   geometry_path : str="/TestScene/Geometry"):
         '''
         @brief This function adds a camera to the stage.
         @param stage: The stage to add the camera.
         @param camera_path: The path to the camera file.
         @param root_path: The root path to add the camera.
+        @param geometry_path: The path to the geometry file.
         '''
         if camera_path:
             camera = stage.DefinePrim(root_path, "Xform")
@@ -233,18 +239,18 @@ class MaterialxUSDConverter:
         return camera
 
     def mtlx_to_usd(self, 
-                    input_usd_path:str, 
-                    shaderball_path:str, 
-                    environment_path:str, 
-                    material_file_path:str, 
-                    camera_path:str):
+                    input_usd_path : str, 
+                    shaderball_path : str, 
+                    environment_path : str, 
+                    material_file_path : str, 
+                    camera_path : str):
         '''
         @brief This function reads the input usd file and adds the shaderball geometry and environment light
         to the scene. It also binds the first material to the shaderball geometry. The final stage is returned.
         @param input_usd_path: Path to the input usd file
         @param shaderball_path: Path to the shaderball geometry file
         @param environment_path: Path to the environment light file
-        @param material_path: Path to the material file. If specified will save the material file.
+        @param material_file_path: Path to the material file. If specified will save the material file.
         @param camera_path: Path to the camera file
         @return: The final stage with all the elements added
         '''

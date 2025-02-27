@@ -1,13 +1,13 @@
 echo Convert sample MaterialX files to USD and render
-materialxusd m2u -pp -v -sf -mn ./examples/no_materials.mtlx 
-materialxusd m2u -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx 
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx 
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern.mtlx 
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn ./examples/no_materials.mtlx 
+python ../source/materialxusd/mtlx2usd.py -pp -v -f -sf -mn -r -m ./examples/standard_surface_carpaint.sphere.mtlx 
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -r -m ./examples/standard_surface_marble_solid.mtlx 
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -r -m ./examples/linepattern.mtlx 
 echo Preprocess and convert sample MaterialX files to USD
 materialxusd pmtlx ./examples/linepattern_orig.mtlx
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -r -m ./examples/linepattern_orig_converted.mtlx
 echo Convert ZIP file 
-materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
 echo Handle documents without materials
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/starfield.mtlx -r 
 

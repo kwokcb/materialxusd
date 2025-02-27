@@ -172,9 +172,12 @@ class MaterialXUsdUtilities:
                                 elif output.hasInterfaceName():
                                     convert_input.setInterfaceName(output.getInterfaceName())
 
-                                new_output = graph.addOutput(graph.createValidChildName(f'out_{convert_node.getName()}'), 'color3')
-                                new_output.setNodeName(convert_node.getName())
-                                output_name = new_output.getName()
+                                # Overwrite the upstream connection on the output
+                                # and change it's type
+                                #new_output = graph.addOutput(graph.createValidChildName(f'out_{convert_node.getName()}'), 'color3')
+                                output.setNodeName(convert_node.getName())                                
+                                #output_name = new_output.getName()
+                                output.setType('color3')
                                 output_type = 'color3'
                                 
                             shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                

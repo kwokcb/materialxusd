@@ -22,11 +22,10 @@
     </convert>
     <output name="out" type="color3" nodename="convert_float_color3" />
     <output name="out_float" type="float" nodename="clamp_float" />
-    <output name="out_viewDir" type="vector3" nodename="viewDir" />
+    <output name="out_viewDir" type="color3" nodename="convert_viewDir" />
     <convert name="convert_viewDir" type="color3">
       <input name="in" type="vector3" nodename="viewDir" />
     </convert>
-    <output name="out_convert_viewDir" type="color3" nodename="convert_viewDir" />
   </nodegraph>
   <surface_unlit name="shader_starfield_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="starfield" output="out" />
@@ -40,10 +39,10 @@
   <surfacematerial name="material_starfield_out_float" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out_float" />
   </surfacematerial>
-  <surface_unlit name="shader_starfield_out_convert_viewDir" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="starfield" output="out_convert_viewDir" />
+  <surface_unlit name="shader_starfield_out_viewDir" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="starfield" output="out_viewDir" />
   </surface_unlit>
-  <surfacematerial name="material_starfield_out_convert_viewDir" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out_convert_viewDir" />
+  <surfacematerial name="material_starfield_out_viewDir" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out_viewDir" />
   </surfacematerial>
 </materialx>

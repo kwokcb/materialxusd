@@ -72,7 +72,7 @@ def "MaterialX"
             }
         }
 
-        def Material "material_starfield_out_convert_viewDir" (
+        def Material "material_starfield_out_viewDir" (
             prepend apiSchemas = ["MaterialXConfigAPI"]
         )
         {
@@ -82,17 +82,17 @@ def "MaterialX"
             float inputs:opacity
             float inputs:transmission
             color3f inputs:transmission_color
-            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir/shader_starfield_out_convert_viewDir.outputs:surface>
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_starfield_out_viewDir/shader_starfield_out_viewDir.outputs:surface>
 
-            def Shader "shader_starfield_out_convert_viewDir" (
-                prepend references = </MaterialX/Shaders/shader_starfield_out_convert_viewDir>
+            def Shader "shader_starfield_out_viewDir" (
+                prepend references = </MaterialX/Shaders/shader_starfield_out_viewDir>
             )
             {
-                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir.inputs:emission>
-                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir/starfield.outputs:out_convert_viewDir>
-                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir.inputs:opacity>
-                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir.inputs:transmission>
-                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out_convert_viewDir.inputs:transmission_color>
+                float inputs:emission.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_starfield_out_viewDir/starfield.outputs:out_viewDir>
+                float inputs:opacity.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_starfield_out_viewDir.inputs:transmission_color>
             }
 
             def "starfield" (
@@ -117,7 +117,7 @@ def "MaterialX"
             token outputs:surface
         }
 
-        def Shader "shader_starfield_out_convert_viewDir"
+        def Shader "shader_starfield_out_viewDir"
         {
             uniform token info:id = "ND_surface_unlit"
             token outputs:surface
@@ -129,9 +129,8 @@ def "MaterialX"
         def NodeGraph "starfield"
         {
             color3f outputs:out.connect = </MaterialX/NodeGraphs/starfield/convert_float_color3.outputs:out>
-            color3f outputs:out_convert_viewDir.connect = </MaterialX/NodeGraphs/starfield/convert_viewDir.outputs:out>
             float outputs:out_float.connect = </MaterialX/NodeGraphs/starfield/clamp_float.outputs:out>
-            float3 outputs:out_viewDir.connect = </MaterialX/NodeGraphs/starfield/viewDir.outputs:out>
+            color3f outputs:out_viewDir.connect = </MaterialX/NodeGraphs/starfield/convert_viewDir.outputs:out>
 
             def Shader "viewDir"
             {

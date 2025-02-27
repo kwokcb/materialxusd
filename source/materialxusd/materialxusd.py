@@ -95,12 +95,7 @@ class MaterialxUSDConverter:
 
         return found_materials
     
-    def add_skydome_light(self, 
-                          stage: Usd.Stage, 
-                          environment_path:str, 
-                          root_path:str = "/TestScene/Lights", 
-                          light_name:str = "EnvironmentLight",
-                          xform_scale=Gf.Vec3f(1.3, 1.3, 1.3), xform_rotate=Gf.Vec3f(0, 0, 0)):
+    def add_skydome_light(self, stage: Usd.Stage, environment_path:str, root_path:str = "/TestScene/Lights", light_name:str = "EnvironmentLight", xform_scale=Gf.Vec3f(1.3, 1.3, 1.3), xform_rotate=Gf.Vec3f(0, 0, 0)):
         '''
         @brief This function adds a skydome light to the stage.
         @param stage: The stage to add the skydome light.
@@ -143,10 +138,7 @@ class MaterialxUSDConverter:
 
         return dome_light
     
-    def add_geometry_reference(self, 
-                               stage: Usd.Stage, 
-                               geometry_path : str, 
-                               root_path : str="/TestScene/Geometry"):
+    def add_geometry_reference(self, stage: Usd.Stage, geometry_path : str, root_path : str="/TestScene/Geometry"):
         '''
         @brief This function adds a geometry reference to the stage.
         @param stage: The stage to add the geometry reference.
@@ -170,11 +162,7 @@ class MaterialxUSDConverter:
                 return prim
         return None
     
-    def add_camera(self, 
-                   stage : Usd.Stage, 
-                   camera_path : str, 
-                   root_path : str="/TestScene/Camera", 
-                   geometry_path : str="/TestScene/Geometry"):
+    def add_camera(self, stage : Usd.Stage, camera_path : str, root_path : str="/TestScene/Camera", geometry_path : str="/TestScene/Geometry"):
         '''
         @brief This function adds a camera to the stage.
         @param stage: The stage to add the camera.
@@ -238,12 +226,7 @@ class MaterialxUSDConverter:
         # Save the USD stage        
         return camera
 
-    def mtlx_to_usd(self, 
-                    input_usd_path : str, 
-                    shaderball_path : str, 
-                    environment_path : str, 
-                    material_file_path : str, 
-                    camera_path : str):
+    def mtlx_to_usd(self, input_usd_path : str, shaderball_path : str, environment_path : str, material_file_path : str, camera_path : str):
         '''
         @brief This function reads the input usd file and adds the shaderball geometry and environment light
         to the scene. It also binds the first material to the shaderball geometry. The final stage is returned.

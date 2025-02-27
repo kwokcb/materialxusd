@@ -366,8 +366,7 @@ class MaterialXUsdUtilities:
         return top_level_nodes_found
 
     @staticmethod
-    def encapsulate_top_level_nodes_file(input_path:str, new_input_path:str, nodegraph_name:str='top_level_nodes', 
-                                        remove_original_nodes:bool =True):
+    def encapsulate_top_level_nodes_file(input_path:str, new_input_path:str, nodegraph_name:str='top_level_nodes', remove_original_nodes:bool =True):
         '''
         @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes 
         to outputs on a new nodegraph.

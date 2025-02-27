@@ -749,28 +749,28 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The modified MaterialX document if top level connections were found, None otherwise. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00369">369</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  370</span>                                        remove_original_nodes:bool =<span class="keyword">True</span>):</div>
-<div class="line"><span class="lineno">  371</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  372</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes </span></div>
-<div class="line"><span class="lineno">  373</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
-<div class="line"><span class="lineno">  374</span><span class="stringliteral">        @param input_path The path to the MaterialX document.</span></div>
-<div class="line"><span class="lineno">  375</span><span class="stringliteral">        @param new_input_path The path to write the modified MaterialX document.</span></div>
-<div class="line"><span class="lineno">  376</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
-<div class="line"><span class="lineno">  377</span><span class="stringliteral">        @param remove_original_nodes If True, remove the original top level nodes from the document. Default is True.</span></div>
-<div class="line"><span class="lineno">  378</span><span class="stringliteral">        @return The modified MaterialX document if top level connections were found, None otherwise.</span></div>
-<div class="line"><span class="lineno">  379</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  380</span>        doc = MaterialXUsdUtilities.create_document(input_path)</div>
-<div class="line"><span class="lineno">  381</span>        top_level_nodes_found = MaterialXUsdUtilities.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)        </div>
-<div class="line"><span class="lineno">  382</span>        <span class="keywordflow">if</span> top_level_nodes_found:            </div>
-<div class="line"><span class="lineno">  383</span>            print(f<span class="stringliteral">&#39;&gt; Encapsulated {top_level_nodes_found} top level nodes in a new nodegraph.&#39;</span>)</div>
-<div class="line"><span class="lineno">  384</span>            <span class="keywordflow">if</span> new_input_path:</div>
-<div class="line"><span class="lineno">  385</span>                print(f<span class="stringliteral">&#39;&gt; Writing modified MaterialX document to: {new_input_path}&#39;</span>)</div>
-<div class="line"><span class="lineno">  386</span>                MaterialXUsdUtilities.write_document(doc, new_input_path)</div>
-<div class="line"><span class="lineno">  387</span>            <span class="keywordflow">return</span> doc </div>
-<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  389</span> </div>
+<div class="fragment"><div class="line"><span class="lineno">  369</span>    <span class="keyword">def </span>encapsulate_top_level_nodes_file(input_path:str, new_input_path:str, nodegraph_name:str=<span class="stringliteral">&#39;top_level_nodes&#39;</span>, remove_original_nodes:bool =<span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  370</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  371</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes </span></div>
+<div class="line"><span class="lineno">  372</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
+<div class="line"><span class="lineno">  373</span><span class="stringliteral">        @param input_path The path to the MaterialX document.</span></div>
+<div class="line"><span class="lineno">  374</span><span class="stringliteral">        @param new_input_path The path to write the modified MaterialX document.</span></div>
+<div class="line"><span class="lineno">  375</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
+<div class="line"><span class="lineno">  376</span><span class="stringliteral">        @param remove_original_nodes If True, remove the original top level nodes from the document. Default is True.</span></div>
+<div class="line"><span class="lineno">  377</span><span class="stringliteral">        @return The modified MaterialX document if top level connections were found, None otherwise.</span></div>
+<div class="line"><span class="lineno">  378</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  379</span>        doc = MaterialXUsdUtilities.create_document(input_path)</div>
+<div class="line"><span class="lineno">  380</span>        top_level_nodes_found = MaterialXUsdUtilities.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)        </div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">if</span> top_level_nodes_found:            </div>
+<div class="line"><span class="lineno">  382</span>            print(f<span class="stringliteral">&#39;&gt; Encapsulated {top_level_nodes_found} top level nodes in a new nodegraph.&#39;</span>)</div>
+<div class="line"><span class="lineno">  383</span>            <span class="keywordflow">if</span> new_input_path:</div>
+<div class="line"><span class="lineno">  384</span>                print(f<span class="stringliteral">&#39;&gt; Writing modified MaterialX document to: {new_input_path}&#39;</span>)</div>
+<div class="line"><span class="lineno">  385</span>                MaterialXUsdUtilities.write_document(doc, new_input_path)</div>
+<div class="line"><span class="lineno">  386</span>            <span class="keywordflow">return</span> doc </div>
+<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  388</span> </div>
+<div class="line"><span class="lineno">  389</span>        </div>
 <div class="line"><span class="lineno">  390</span>        </div>
-<div class="line"><span class="lineno">  391</span>        </div>
 </div><!-- fragment -->
 </div>
 </div>

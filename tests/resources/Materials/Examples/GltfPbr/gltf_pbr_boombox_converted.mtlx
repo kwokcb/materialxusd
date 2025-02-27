@@ -17,22 +17,22 @@
   <nodegraph name="root_graph">
     <gltf_colorimage name="image_basecolor" type="multioutput">
       <input name="file" type="filename" value="BoomBox_baseColor.png" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_colorimage>
     <output name="out" type="color3" nodename="image_basecolor" output="outcolor" />
     <output name="out2" type="float" nodename="image_basecolor" output="outa" />
     <gltf_image name="image_orm" type="vector3">
       <input name="file" type="filename" value="BoomBox_occlusionRoughnessMetallic.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <gltf_normalmap name="image_normal" type="vector3">
       <input name="file" type="filename" value="BoomBox_normal.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_normalmap>
     <output name="out3" type="vector3" nodename="image_normal" />
     <gltf_image name="image_emission" type="color3">
       <input name="file" type="filename" value="BoomBox_emissive.png" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <output name="out4" type="color3" nodename="image_emission" />
     <separate3 name="image_orm_channels" type="multioutput">
@@ -41,17 +41,17 @@
     <output name="out5" type="float" nodename="image_orm_channels" output="outz" />
     <output name="out6" type="float" nodename="image_orm_channels" output="outy" />
     <output name="out7" type="float" nodename="image_orm_channels" output="outx" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
-    <output name="out8" type="vector3" nodename="tangent" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <output name="out8" type="vector3" nodename="Tworld" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <output name="out9" type="vector3" nodename="normal" />
+    <output name="out9" type="vector3" nodename="Nworld" />
   </nodegraph>
 </materialx>

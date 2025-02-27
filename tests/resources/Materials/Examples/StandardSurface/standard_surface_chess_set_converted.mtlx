@@ -3,37 +3,37 @@
   <nodegraph name="NG_BishopBlack">
     <image name="diffuse2" type="color3">
       <input name="file" type="filename" value="chess_set/bishop_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic2" type="float">
       <input name="file" type="filename" value="chess_set/bishop_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness2" type="float">
       <input name="file" type="filename" value="chess_set/bishop_black_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal2" type="vector3">
       <input name="file" type="filename" value="chess_set/bishop_black_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap4" type="vector3">
       <input name="in" type="vector3" nodename="normal2" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse2" />
     <output name="metalness_output" type="float" nodename="metallic2" />
     <output name="roughness_output" type="float" nodename="roughness2" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -53,37 +53,37 @@
   <nodegraph name="NG_BishopWhite">
     <image name="diffuse3" type="color3">
       <input name="file" type="filename" value="chess_set/bishop_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic3" type="float">
       <input name="file" type="filename" value="chess_set/bishop_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness3" type="float">
       <input name="file" type="filename" value="chess_set/bishop_white_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal3" type="vector3">
       <input name="file" type="filename" value="chess_set/bishop_white_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap5" type="vector3">
       <input name="in" type="vector3" nodename="normal3" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse3" />
     <output name="metalness_output" type="float" nodename="metallic3" />
     <output name="roughness_output" type="float" nodename="roughness3" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap5" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -103,37 +103,37 @@
   <nodegraph name="NG_CastleBlack">
     <image name="diffuse6" type="color3">
       <input name="file" type="filename" value="chess_set/castle_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic6" type="float">
       <input name="file" type="filename" value="chess_set/castle_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness6" type="float">
       <input name="file" type="filename" value="chess_set/castle_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal6" type="vector3">
       <input name="file" type="filename" value="chess_set/castle_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap8" type="vector3">
       <input name="in" type="vector3" nodename="normal6" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse6" />
     <output name="metalness_output" type="float" nodename="metallic6" />
     <output name="roughness_output" type="float" nodename="roughness6" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap8" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -153,37 +153,37 @@
   <nodegraph name="NG_CastleWhite">
     <image name="diffuse7" type="color3">
       <input name="file" type="filename" value="chess_set/castle_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic7" type="float">
       <input name="file" type="filename" value="chess_set/castle_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness7" type="float">
       <input name="file" type="filename" value="chess_set/castle_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal7" type="vector3">
       <input name="file" type="filename" value="chess_set/castle_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap9" type="vector3">
       <input name="in" type="vector3" nodename="normal7" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse7" />
     <output name="metalness_output" type="float" nodename="metallic7" />
     <output name="roughness_output" type="float" nodename="roughness7" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap9" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -203,37 +203,37 @@
   <nodegraph name="NG_ChessBoard">
     <image name="mtlximage13" type="color3">
       <input name="file" type="filename" value="chess_set/chessboard_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage16" type="float">
       <input name="file" type="filename" value="chess_set/chessboard_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage17" type="float">
       <input name="file" type="filename" value="chess_set/chessboard_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage15" type="vector3">
       <input name="file" type="filename" value="chess_set/chessboard_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap12" type="vector3">
       <input name="in" type="vector3" nodename="mtlximage15" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="mtlximage13" />
     <output name="metalness_output" type="float" nodename="mtlximage16" />
     <output name="roughness_output" type="float" nodename="mtlximage17" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap12" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -253,42 +253,42 @@
   <nodegraph name="NG_KingBlack">
     <image name="mtlximage1" type="color3">
       <input name="file" type="filename" value="chess_set/king_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage2" type="float">
       <input name="file" type="filename" value="chess_set/king_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage4" type="float">
       <input name="file" type="filename" value="chess_set/king_black_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage3" type="float">
       <input name="file" type="filename" value="chess_set/king_shared_scattering.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage6" type="vector3">
       <input name="file" type="filename" value="chess_set/king_black_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap1" type="vector3">
       <input name="in" type="vector3" nodename="mtlximage6" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="mtlximage1" />
     <output name="metalness_output" type="float" nodename="mtlximage2" />
     <output name="roughness_output" type="float" nodename="mtlximage4" />
     <output name="subsurface_output" type="float" nodename="mtlximage3" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap1" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -308,42 +308,42 @@
   <nodegraph name="NG_KingWhite">
     <image name="mtlximage7" type="color3">
       <input name="file" type="filename" value="chess_set/king_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage10" type="float">
       <input name="file" type="filename" value="chess_set/king_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage11" type="float">
       <input name="file" type="filename" value="chess_set/king_white_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage8" type="float">
       <input name="file" type="filename" value="chess_set/king_shared_scattering.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage9" type="vector3">
       <input name="file" type="filename" value="chess_set/king_white_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap11" type="vector3">
       <input name="in" type="vector3" nodename="mtlximage9" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="mtlximage7" />
     <output name="metalness_output" type="float" nodename="mtlximage10" />
     <output name="roughness_output" type="float" nodename="mtlximage11" />
     <output name="subsurface_output" type="float" nodename="mtlximage8" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap11" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -363,32 +363,32 @@
   <nodegraph name="NG_KnightBlack">
     <image name="diffuse4" type="color3">
       <input name="file" type="filename" value="chess_set/knight_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness4" type="float">
       <input name="file" type="filename" value="chess_set/knight_black_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal4" type="vector3">
       <input name="file" type="filename" value="chess_set/knight_black_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap6" type="vector3">
       <input name="in" type="vector3" nodename="normal4" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse4" />
     <output name="roughness_output" type="float" nodename="roughness4" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap6" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -407,32 +407,32 @@
   <nodegraph name="NG_KnightWhite">
     <image name="diffuse5" type="color3">
       <input name="file" type="filename" value="chess_set/knight_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness5" type="float">
       <input name="file" type="filename" value="chess_set/knight_white_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal5" type="vector3">
       <input name="file" type="filename" value="chess_set/knight_white_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap7" type="vector3">
       <input name="in" type="vector3" nodename="normal5" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse5" />
     <output name="roughness_output" type="float" nodename="roughness5" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap7" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -451,37 +451,37 @@
   <nodegraph name="NG_PawnBodyBlack">
     <image name="diffuse9" type="color3">
       <input name="file" type="filename" value="chess_set/pawn_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic9" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness9" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal9" type="vector3">
       <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap13" type="vector3">
       <input name="in" type="vector3" nodename="normal9" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse9" />
     <output name="metalness_output" type="float" nodename="metallic9" />
     <output name="roughness_output" type="float" nodename="roughness9" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap13" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -501,37 +501,37 @@
   <nodegraph name="NG_PawnBodyWhite">
     <image name="diffuse8" type="color3">
       <input name="file" type="filename" value="chess_set/pawn_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic8" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness8" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal8" type="vector3">
       <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap10" type="vector3">
       <input name="in" type="vector3" nodename="normal8" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse8" />
     <output name="metalness_output" type="float" nodename="metallic8" />
     <output name="roughness_output" type="float" nodename="roughness8" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap10" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -551,27 +551,27 @@
   <nodegraph name="NG_PawnTopBlack">
     <image name="mtlximage19" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage18" type="vector3">
       <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap14" type="vector3">
       <input name="in" type="vector3" nodename="mtlximage18" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="roughness_output" type="float" nodename="mtlximage19" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap14" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -592,27 +592,27 @@
   <nodegraph name="NG_PawnTopWhite">
     <image name="mtlximage21" type="float">
       <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage20" type="vector3">
       <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap15" type="vector3">
       <input name="in" type="vector3" nodename="mtlximage20" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="roughness_output" type="float" nodename="mtlximage21" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap15" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -633,42 +633,42 @@
   <nodegraph name="NG_QueenBlack">
     <image name="diffuse" type="color3">
       <input name="file" type="filename" value="chess_set/queen_black_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic" type="float">
       <input name="file" type="filename" value="chess_set/queen_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness" type="float">
       <input name="file" type="filename" value="chess_set/queen_black_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="sss" type="float">
       <input name="file" type="filename" value="chess_set/queen_shared_scattering.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal" type="vector3">
       <input name="file" type="filename" value="chess_set/queen_black_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap2" type="vector3">
       <input name="in" type="vector3" nodename="normal" />
-      <input name="normal" type="vector3" nodename="normal2" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse" />
     <output name="metalness_output" type="float" nodename="metallic" />
     <output name="roughness_output" type="float" nodename="roughness" />
     <output name="subsurface_output" type="float" nodename="sss" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap2" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal2" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
@@ -688,42 +688,42 @@
   <nodegraph name="NG_QueenWhite">
     <image name="diffuse1" type="color3">
       <input name="file" type="filename" value="chess_set/queen_white_base_color.jpg" colorspace="srgb_texture" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic1" type="float">
       <input name="file" type="filename" value="chess_set/queen_shared_metallic.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness1" type="float">
       <input name="file" type="filename" value="chess_set/queen_white_roughness.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="sss1" type="float">
       <input name="file" type="filename" value="chess_set/queen_shared_scattering.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal1" type="vector3">
       <input name="file" type="filename" value="chess_set/queen_white_normal.jpg" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap3" type="vector3">
       <input name="in" type="vector3" nodename="normal1" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <output name="base_color_output" type="color3" nodename="diffuse1" />
     <output name="metalness_output" type="float" nodename="metallic1" />
     <output name="roughness_output" type="float" nodename="roughness1" />
     <output name="subsurface_output" type="float" nodename="sss1" />
     <output name="normal_output" type="vector3" nodename="mtlxnormalmap3" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>

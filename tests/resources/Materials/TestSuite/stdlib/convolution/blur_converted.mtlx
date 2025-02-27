@@ -3,7 +3,7 @@
   <nodegraph name="blur_color3">
     <image name="image1" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <blur name="blur_color3" type="color3">
       <input name="in" type="color3" nodename="image1" />
@@ -11,14 +11,14 @@
       <input name="filtertype" type="string" value="gaussian" />
     </blur>
     <output name="out" type="color3" nodename="blur_color3" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
   <nodegraph name="blur_color4">
     <tiledimage name="tiledimage1" type="color4">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <blur name="blur_color4" type="color4">
       <input name="in" type="color4" nodename="tiledimage1" />
@@ -26,14 +26,14 @@
       <input name="filtertype" type="string" value="gaussian" />
     </blur>
     <output name="out" type="color4" nodename="blur_color4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
   <nodegraph name="blur_float">
     <image name="image1" type="float">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <blur name="blur_float" type="float">
       <input name="in" type="float" nodename="image1" />
@@ -41,14 +41,14 @@
       <input name="filtertype" type="string" value="box" />
     </blur>
     <output name="out" type="float" nodename="blur_float" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
   <nodegraph name="blur_vector2">
     <tiledimage name="tiledimage1" type="vector2">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <blur name="blur_vector2" type="vector2">
       <input name="in" type="vector2" nodename="tiledimage1" />
@@ -56,14 +56,14 @@
       <input name="filtertype" type="string" value="box" />
     </blur>
     <output name="out" type="vector2" nodename="blur_vector2" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
   <nodegraph name="blur_vector3">
     <tiledimage name="tiledimage1" type="vector3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <blur name="blur_vector3" type="vector3">
       <input name="in" type="vector3" nodename="tiledimage1" />
@@ -71,14 +71,14 @@
       <input name="filtertype" type="string" value="box" />
     </blur>
     <output name="out" type="vector3" nodename="blur_vector3" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
   <nodegraph name="blur_vector4">
     <tiledimage name="tiledimage1" type="vector4">
       <input name="file" type="filename" value="resources/Images/grid.png" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <blur name="blur_vector4" type="vector4">
       <input name="in" type="vector4" nodename="tiledimage1" />
@@ -86,7 +86,7 @@
       <input name="filtertype" type="string" value="box" />
     </blur>
     <output name="out" type="vector4" nodename="blur_vector4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

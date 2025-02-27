@@ -17,11 +17,11 @@
       <input name="sssUnitLength" type="float" value="0.00328" />
       <input name="mode" type="integer" value="0" />
       <input name="albedoInversionMethod" type="integer" value="0" />
-      <input name="normal" type="vector3" nodename="normal" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </LamaSSS>
     <output name="out" type="BSDF" nodename="LamaSSS" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
   </nodegraph>
 </materialx>

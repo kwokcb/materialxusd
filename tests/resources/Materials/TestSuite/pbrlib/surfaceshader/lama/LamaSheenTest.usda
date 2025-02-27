@@ -4,7 +4,7 @@
         string colorSpace = "acescg"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\lama\\lama_sheen_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader/lama/lama_sheen_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -74,17 +74,17 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_lama_sheen"
                 color3f inputs:color = (1, 1, 1)
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/normal.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
                 float inputs:roughness = 0.1
                 token outputs:out (
                     renderType = "BSDF"
                 )
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -95,7 +95,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/LamaSheenTest>
@@ -110,14 +110,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
     )
     {
     }

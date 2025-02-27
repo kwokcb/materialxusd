@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/TestSuite/pbrlib\\surfaceshader\\network_surfaceshader_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader/network_surfaceshader_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -19,11 +19,11 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_tiledimage_color3"
                 asset inputs:file.connect = </MaterialX/NodeGraphs/ND_network_surface.inputs:base_color_filename>
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_network_surface/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ND_network_surface/UV0.outputs:out>
                 color3f outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
@@ -65,7 +65,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/N_surfacematerial>
@@ -80,14 +80,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
     )
     {
     }

@@ -5,7 +5,7 @@
     <tiledimage name="tiledimage" type="float">
       <input name="file" type="filename" uniform="true" interfacename="file" />
       <input name="uvtiling" type="vector2" value="10, 10" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <heighttonormal name="heighttonormal" type="vector3">
       <input name="in" type="float" nodename="tiledimage" />
@@ -13,9 +13,8 @@
     </heighttonormal>
     <normalmap name="normalmap" type="vector3">
       <input name="in" type="vector3" nodename="heighttonormal" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
-      <input name="bitangent" type="vector3" nodename="bitangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <standard_surface name="standard_surface" type="surfaceshader">
       <input name="normal" type="vector3" nodename="normalmap" />
@@ -34,19 +33,15 @@
     <output name="vector3_out" type="vector3" nodename="heighttonormal" />
     <output name="surface1_out" type="surfaceshader" nodename="standard_surface" />
     <output name="surface2_out" type="surfaceshader" nodename="UsdPreviewSurface" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
-    <bitangent name="bitangent" type="vector3">
-      <input name="space" type="string" value="object" />
-      <input name="index" type="integer" value="0" />
-    </bitangent>
   </nodegraph>
 </materialx>

@@ -25,22 +25,22 @@
     <tiledcircles name="tiledcircles_color3" type="color3">
       <input name="uvtiling" type="vector2" value="29, 29" />
       <input name="size" type="float" value="0.8" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledcircles>
     <output name="out" type="color3" nodename="tiledcircles_color3" />
     <tiledcloverleafs name="tiledcloverleafs_color3" type="color3">
       <input name="uvtiling" type="vector2" value="29, 29" />
       <input name="size" type="float" value="0.8" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledcloverleafs>
     <output name="out2" type="color3" nodename="tiledcloverleafs_color3" />
     <tiledhexagons name="tiledhexagons_color3" type="color3">
       <input name="uvtiling" type="vector2" value="29, 29" />
       <input name="size" type="float" value="0.7" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledhexagons>
     <output name="out3" type="color3" nodename="tiledhexagons_color3" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

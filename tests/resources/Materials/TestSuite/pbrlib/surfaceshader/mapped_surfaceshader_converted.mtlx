@@ -6,10 +6,10 @@
       <input name="valuetr" type="color3" value="0.1, 0, 0" />
       <input name="valuebl" type="color3" value="1, 0, 0" />
       <input name="valuebr" type="color3" value="0.1, 0, 0" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </ramp4>
     <output name="out" type="color3" nodename="ramp4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -19,10 +19,10 @@
       <input name="valuetr" type="color3" value="0, 0.1, 0" />
       <input name="valuebl" type="color3" value="0, 1, 0" />
       <input name="valuebr" type="color3" value="0, 0.1, 0" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </ramp4>
     <output name="out" type="color3" nodename="ramp4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -45,10 +45,10 @@
       <input name="realworldtilesize" type="vector2" value="100, 50" unit="centimeter" unittype="distance" />
       <input name="uvtiling" type="vector2" value="2, 3" />
       <input name="uvoffset" type="vector2" value="0.2, 0.2" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <output name="out" type="float" nodename="tiledimage" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -58,10 +58,10 @@
       <input name="valuetr" type="color3" value="0, 0, 0.1" />
       <input name="valuebl" type="color3" value="0, 0, 1" />
       <input name="valuebr" type="color3" value="0, 0, 0.1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </ramp4>
     <output name="out" type="color3" nodename="ramp4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -71,10 +71,10 @@
       <input name="valuetr" type="color3" value="0, 0, 0" />
       <input name="valuebl" type="color3" value="1, 1, 0" />
       <input name="valuebr" type="color3" value="1, 1, 1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </ramp4>
     <output name="out" type="color3" nodename="ramp4" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
@@ -120,23 +120,23 @@
     <input name="file" type="filename" value="" />
     <normalmap name="normalmap" type="vector3">
       <input name="in" type="vector3" nodename="tiledimage" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="tangent" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
     <tiledimage name="tiledimage" type="vector3">
       <input name="file" type="filename" value="resources/Images/mesh_wire_norm.png" />
       <input name="uvtiling" type="vector2" value="10, 10" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <output name="out" type="vector3" nodename="normalmap" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

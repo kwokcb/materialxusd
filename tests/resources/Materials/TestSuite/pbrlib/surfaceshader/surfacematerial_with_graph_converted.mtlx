@@ -33,14 +33,14 @@
       <input name="valuetr" type="color3" value="1, 0, 0" />
       <input name="valuebl" type="color3" value="0, 1, 0" />
       <input name="valuebr" type="color3" value="0, 1, 1" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </ramp4>
     <standard_surface name="SR_White" type="surfaceshader" />
     <surfacematerial name="M_White" type="material">
       <input name="surfaceshader" type="surfaceshader" nodename="SR_White" />
     </surfacematerial>
     <output name="out" type="material" nodename="M_White" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

@@ -13,14 +13,13 @@
       <input name="in" type="float" nodename="extract1" />
       <input name="scale" type="float" value="1.0" />
     </heighttonormal>
-    <output name="out" type="vector3" nodename="impl_heighttonormalmap" />
+    <output name="out" type="color3" nodename="convert_impl_heighttonormalmap" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
     <convert name="convert_impl_heighttonormalmap" type="color3">
       <input name="in" type="vector3" nodename="impl_heighttonormalmap" />
     </convert>
-    <output name="out_convert_impl_heighttonormalmap" type="color3" nodename="convert_impl_heighttonormalmap" />
   </nodegraph>
   <nodegraph name="normalmap_cm">
     <image name="b_image" type="color3">
@@ -36,7 +35,7 @@
       <input name="normal" type="vector3" nodename="Nworld" />
       <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
-    <output name="out" type="vector3" nodename="impl_normalmap" />
+    <output name="out" type="color3" nodename="convert_impl_normalmap" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
@@ -50,18 +49,17 @@
     <convert name="convert_impl_normalmap" type="color3">
       <input name="in" type="vector3" nodename="impl_normalmap" />
     </convert>
-    <output name="out_convert_impl_normalmap" type="color3" nodename="convert_impl_normalmap" />
   </nodegraph>
-  <surface_unlit name="shader_height_to_normal_cm_out_convert_impl_heighttonormalmap" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="height_to_normal_cm" output="out_convert_impl_heighttonormalmap" />
+  <surface_unlit name="shader_height_to_normal_cm_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="height_to_normal_cm" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_height_to_normal_cm_out_convert_impl_heighttonormalmap" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_height_to_normal_cm_out_convert_impl_heighttonormalmap" />
+  <surfacematerial name="material_height_to_normal_cm_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_height_to_normal_cm_out" />
   </surfacematerial>
-  <surface_unlit name="shader_normalmap_cm_out_convert_impl_normalmap" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="normalmap_cm" output="out_convert_impl_normalmap" />
+  <surface_unlit name="shader_normalmap_cm_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="normalmap_cm" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_normalmap_cm_out_convert_impl_normalmap" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_normalmap_cm_out_convert_impl_normalmap" />
+  <surfacematerial name="material_normalmap_cm_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_normalmap_cm_out" />
   </surfacematerial>
 </materialx>

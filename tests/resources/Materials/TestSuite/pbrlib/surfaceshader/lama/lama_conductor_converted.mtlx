@@ -17,15 +17,15 @@
       <input name="roughness" type="float" value="0.1" />
       <input name="anisotropy" type="float" value="0.0" />
       <input name="anisotropyRotation" type="float" value="0.0" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="anisotropyDirection" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="anisotropyDirection" type="vector3" nodename="Tworld" />
     </LamaConductor>
     <output name="out" type="BSDF" nodename="LamaConductor" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>

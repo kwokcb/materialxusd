@@ -1,0 +1,233 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/color_management/color3_vec3_cm_test_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "material_height_to_normal_cm_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_height_to_normal_cm_out/shader_height_to_normal_cm_out.outputs:surface>
+
+            def Shader "shader_height_to_normal_cm_out" (
+                prepend references = </MaterialX/Shaders/shader_height_to_normal_cm_out>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_height_to_normal_cm_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_height_to_normal_cm_out/height_to_normal_cm.outputs:out>
+                float inputs:opacity.connect = </MaterialX/Materials/material_height_to_normal_cm_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_height_to_normal_cm_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_height_to_normal_cm_out.inputs:transmission_color>
+            }
+
+            def "height_to_normal_cm" (
+                prepend references = </MaterialX/NodeGraphs/height_to_normal_cm>
+            )
+            {
+            }
+        }
+
+        def Material "material_normalmap_cm_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_normalmap_cm_out/shader_normalmap_cm_out.outputs:surface>
+
+            def Shader "shader_normalmap_cm_out" (
+                prepend references = </MaterialX/Shaders/shader_normalmap_cm_out>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_normalmap_cm_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_normalmap_cm_out/normalmap_cm.outputs:out>
+                float inputs:opacity.connect = </MaterialX/Materials/material_normalmap_cm_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_normalmap_cm_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_normalmap_cm_out.inputs:transmission_color>
+            }
+
+            def "normalmap_cm" (
+                prepend references = </MaterialX/NodeGraphs/normalmap_cm>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "shader_height_to_normal_cm_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "shader_normalmap_cm_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "height_to_normal_cm"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/height_to_normal_cm/convert_impl_heighttonormalmap.outputs:out>
+
+            def Shader "b_image"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "srgb_texture"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/height_to_normal_cm/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "extract1"
+            {
+                uniform token info:id = "ND_extract_color3"
+                color3f inputs:in.connect = </MaterialX/NodeGraphs/height_to_normal_cm/b_image.outputs:out>
+                int inputs:index = 1
+                float outputs:out
+            }
+
+            def Shader "impl_heighttonormalmap"
+            {
+                uniform token info:id = "ND_heighttonormal_vector3"
+                float inputs:in.connect = </MaterialX/NodeGraphs/height_to_normal_cm/extract1.outputs:out>
+                float inputs:scale = 1
+                float3 outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+
+            def Shader "convert_impl_heighttonormalmap"
+            {
+                uniform token info:id = "ND_convert_vector3_color3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/height_to_normal_cm/impl_heighttonormalmap.outputs:out>
+                color3f outputs:out
+            }
+        }
+
+        def NodeGraph "normalmap_cm"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/normalmap_cm/convert_impl_normalmap.outputs:out>
+
+            def Shader "b_image"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "srgb_texture"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/normalmap_cm/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "c3tov3"
+            {
+                uniform token info:id = "ND_convert_color3_vector3"
+                color3f inputs:in.connect = </MaterialX/NodeGraphs/normalmap_cm/b_image.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "impl_normalmap"
+            {
+                uniform token info:id = "ND_normalmap_float"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/normalmap_cm/c3tov3.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/normalmap_cm/Nworld.outputs:out>
+                float inputs:scale = 1.5
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/normalmap_cm/Tworld.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "convert_impl_normalmap"
+            {
+                uniform token info:id = "ND_convert_vector3_color3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/normalmap_cm/impl_normalmap.outputs:out>
+                color3f outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/material_height_to_normal_cm_out>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
+    )
+    {
+    }
+}
+

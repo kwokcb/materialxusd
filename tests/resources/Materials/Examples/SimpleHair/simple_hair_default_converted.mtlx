@@ -44,18 +44,18 @@
       <input name="roughness_TRT" type="vector2" nodename="spec_roughness" output="roughness_TRT" />
       <input name="cuticle_angle" type="float" interfacename="cuticleAngle" />
       <input name="absorption_coefficient" type="vector3" nodename="mix_melanin_basecolor" />
-      <input name="normal" type="vector3" nodename="normal" />
-      <input name="curve_direction" type="vector3" nodename="tangent" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="curve_direction" type="vector3" nodename="Tworld" />
     </chiang_hair_bsdf>
     <surface name="surface_shader" type="surfaceshader">
       <input name="bsdf" type="BSDF" nodename="chiang_bsdf" />
     </surface>
     <output name="out" type="surfaceshader" nodename="surface_shader" />
-    <normal name="normal" type="vector3">
-      <input name="space" type="string" value="object" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
     </normal>
-    <tangent name="tangent" type="vector3">
-      <input name="space" type="string" value="object" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>

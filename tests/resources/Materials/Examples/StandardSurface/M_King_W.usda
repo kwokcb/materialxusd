@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: D:/Work/materialx/materialxusd/tests/resources/Materials/Examples/StandardSurface\\standard_surface_chess_set_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples/StandardSurface/standard_surface_chess_set_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -1682,7 +1682,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/bishop_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -1690,7 +1690,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/bishop_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1698,7 +1698,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/bishop_black_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1706,7 +1706,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/bishop_black_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -1714,30 +1714,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_BishopBlack/normal2.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_BishopBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_BishopBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_BishopBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_BishopBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -1755,7 +1755,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/bishop_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -1763,7 +1763,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/bishop_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1771,7 +1771,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/bishop_white_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1779,7 +1779,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/bishop_white_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -1787,30 +1787,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_BishopWhite/normal3.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_BishopWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_BishopWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_BishopWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_BishopWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -1828,7 +1828,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/castle_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -1836,7 +1836,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/castle_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1844,7 +1844,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/castle_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1852,7 +1852,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/castle_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -1860,30 +1860,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_CastleBlack/normal6.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_CastleBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_CastleBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_CastleBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_CastleBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -1901,7 +1901,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/castle_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -1909,7 +1909,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/castle_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1917,7 +1917,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/castle_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1925,7 +1925,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/castle_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -1933,30 +1933,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_CastleWhite/normal7.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_CastleWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_CastleWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_CastleWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_CastleWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -1974,7 +1974,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/chessboard_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -1982,7 +1982,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/chessboard_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1990,7 +1990,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/chessboard_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -1998,7 +1998,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/chessboard_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2006,30 +2006,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_ChessBoard/mtlximage15.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_ChessBoard/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_ChessBoard/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_ChessBoard/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_ChessBoard/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2048,7 +2048,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/king_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2056,7 +2056,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2064,7 +2064,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_black_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2072,7 +2072,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_shared_scattering.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2080,7 +2080,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/king_black_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2088,30 +2088,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_KingBlack/mtlximage6.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KingBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KingBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KingBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KingBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2130,7 +2130,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/king_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2138,7 +2138,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2146,7 +2146,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_white_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2154,7 +2154,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/king_shared_scattering.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2162,7 +2162,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/king_white_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2170,30 +2170,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_KingWhite/mtlximage9.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KingWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KingWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KingWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KingWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2210,7 +2210,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/knight_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2218,7 +2218,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/knight_black_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2226,7 +2226,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/knight_black_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2234,30 +2234,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_KnightBlack/normal4.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KnightBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KnightBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KnightBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KnightBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2274,7 +2274,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/knight_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2282,7 +2282,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/knight_white_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2290,7 +2290,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/knight_white_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2298,30 +2298,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_KnightWhite/normal5.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KnightWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KnightWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_KnightWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_KnightWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2339,7 +2339,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/pawn_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2347,7 +2347,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2355,7 +2355,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2363,7 +2363,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/pawn_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2371,30 +2371,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/normal9.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2412,7 +2412,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/pawn_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2420,7 +2420,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2428,7 +2428,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2436,7 +2436,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/pawn_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2444,30 +2444,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/normal8.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2481,7 +2481,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2489,7 +2489,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/pawn_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2497,30 +2497,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/mtlximage18.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2534,7 +2534,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2542,7 +2542,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/pawn_shared_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2550,30 +2550,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/mtlximage20.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2592,7 +2592,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/queen_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2600,7 +2600,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2608,7 +2608,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_black_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2616,7 +2616,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_shared_scattering.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2624,7 +2624,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/queen_black_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2632,30 +2632,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_QueenBlack/normal.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_QueenBlack/normal2.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_QueenBlack/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_QueenBlack/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_QueenBlack/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal2"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2674,7 +2674,7 @@ def "MaterialX"
                 asset inputs:file = @chess_set/queen_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 color3f outputs:out
             }
 
@@ -2682,7 +2682,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_shared_metallic.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2690,7 +2690,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_white_roughness.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2698,7 +2698,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_float"
                 asset inputs:file = @chess_set/queen_shared_scattering.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
 
@@ -2706,7 +2706,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 asset inputs:file = @chess_set/queen_white_normal.jpg@
-                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/texcoord.outputs:out>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float3 outputs:out
             }
 
@@ -2714,30 +2714,30 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_normalmap_vector2"
                 float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_QueenWhite/normal1.outputs:out>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_QueenWhite/normal.outputs:out>
-                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_QueenWhite/tangent.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_QueenWhite/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_QueenWhite/Tworld.outputs:out>
                 float3 outputs:out
             }
 
-            def Shader "texcoord"
+            def Shader "UV0"
             {
                 uniform token info:id = "ND_texcoord_vector2"
                 int inputs:index = 0
                 float2 outputs:out
             }
 
-            def Shader "normal"
+            def Shader "Nworld"
             {
                 uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
 
-            def Shader "tangent"
+            def Shader "Tworld"
             {
                 uniform token info:id = "ND_tangent_vector3"
                 int inputs:index = 0
-                string inputs:space = "object"
+                string inputs:space = "world"
                 float3 outputs:out
             }
         }
@@ -2886,7 +2886,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/M_King_W>
@@ -2901,14 +2901,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
     )
     {
     }

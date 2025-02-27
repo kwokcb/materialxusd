@@ -4,16 +4,16 @@
     <tiledimage name="image_color" type="color3">
       <input name="file" type="filename" value="brass_color.jpg" colorspace="srgb_texture" />
       <input name="uvtiling" type="vector2" value="1.0, 1.0" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="image_roughness" type="float">
       <input name="file" type="filename" value="brass_roughness.jpg" />
       <input name="uvtiling" type="vector2" value="1.0, 1.0" />
-      <input name="texcoord" type="vector2" nodename="texcoord" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <output name="out_color" type="color3" nodename="image_color" />
     <output name="out_roughness" type="float" nodename="image_roughness" />
-    <texcoord name="texcoord" type="vector2">
+    <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>

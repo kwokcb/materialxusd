@@ -137,7 +137,7 @@ class MaterialXUsdUtilities:
             if not graph_outputs:
                 continue
 
-            self.logger.info('    > Scan graph: ', graph.getName())
+            self.logger.info(f'    > Scan graph: {graph.getName()}')
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
@@ -203,7 +203,7 @@ class MaterialXUsdUtilities:
                             convert_definition = 'ND_convert_' + output_type + '_color3'
                             convert_node = doc.getNodeDef(convert_definition)
                             if not convert_node:
-                                self.logger.info("        > Failed to find conversion definition: %s" % convert_definition)
+                                self.logger.info(f'        > Failed to find conversion definition: {convert_definition}')
                             else:
                                 shadernode = doc.addNodeInstance(convert_node, shadernode_name)
                                 shadernode.removeAttribute('nodedef')
@@ -321,7 +321,7 @@ class MaterialXUsdUtilities:
                 # Firewall. USD does not appear to handle bitangent properly so
                 # skip it for now.
                 if defaultgeomprop.getGeomProp() == "bitangent":
-                    self.logger.info(f'  > WARNING: Skipping adding explicit bitangent node for "{node.getNamePath()}"')
+                    #self.logger.info(f'  > WARNING: Skipping adding explicit bitangent node for: "{node.getNamePath()}"')
                     continue
 
                 # Fix this up to get information from the defaultgromprop e.g.

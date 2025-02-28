@@ -225,8 +225,22 @@ class MaterialxUSDConverter:
 
         # Save the USD stage        
         return camera
+    
+    def add_asset_info(self, stage : Usd.Stage, asset_info_string : str):
+        '''
+        @brief This function adds asset information to the stage.
+        @param stage: The stage to add the asset information.
+        @param asset_info_string: The asset information string to add.
+        '''
+        # Split the asset info string by ":" to get list of paths
+        asset_info_list = asset_info_string.split(":")
+        if not asset_info_list:
+            return
+        root_layer = stage.GetRootLayer()
+        root_layer.assetInfo = {"searchPath": Sdf.AssetPathArray(asset_info_list)}
+        print('------------------- asset_info_string:', asset_info_string, asset_info_list, root_layer)
 
-    def mtlx_to_usd(self, input_usd_path : str, shaderball_path : str, environment_path : str, material_file_path : str, camera_path : str):
+    def mtlx_to_usd(self, input_usd_path : str, shaderball_path : str, environment_path : str, material_file_path : str, camera_path : str, asset_info_string : str):
         '''
         @brief This function reads the input usd file and adds the shaderball geometry and environment light
         to the scene. It also binds the first material to the shaderball geometry. The final stage is returned.
@@ -235,6 +249,7 @@ class MaterialxUSDConverter:
         @param environment_path: Path to the environment light file
         @param material_file_path: Path to the material file. If specified will save the material file.
         @param camera_path: Path to the camera file
+        @param asset_info_string: The asset information string to add.
         @return: The final stage with all the elements added
         '''
         # Open the input USDA file
@@ -251,6 +266,9 @@ class MaterialxUSDConverter:
         
         # Set the required validation attributes
         self.set_required_validation_attributes(stage)
+
+        # Set the asset information
+        self.add_asset_info(stage, asset_info_string)
 
         if material_file_path:
             # Save the material file

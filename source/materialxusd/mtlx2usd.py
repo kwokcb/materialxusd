@@ -74,6 +74,7 @@ def main():
     parser.add_argument("-mn", "--useMaterialName", action="store_true", help="Set output file to material name.")
     parser.add_argument("-sf", "--subfolder", action="store_true", help="Save output to subfolder named <input materialx file> w/o extension.")
     parser.add_argument("-pp", "--preprocess", action="store_true", help="Attempt to pre-process the MaterialX file.")
+    parser.add_argument("-ap", "--assetPaths", default=".", help="Colon separated list paths for asset resolving. ")
 
     # Parse arguments
     args = parser.parse_args()
@@ -150,8 +151,15 @@ def main():
             if not os.path.exists(abs_camera_path):
                 print(f"> Camera file not found at {abs_camera_path}")
         
+        asset_info_string = args.assetPaths
+
         converter = mxusd.MaterialxUSDConverter()
-        stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, abs_geometry_path, abs_environment_path, material_file_path, abs_camera_path)
+        stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, 
+                                                                                                abs_geometry_path, 
+                                                                                                abs_environment_path, 
+                                                                                                material_file_path, 
+                                                                                                abs_camera_path,
+                                                                                                asset_info_string)
 
         if stage:
             output_folder, input_file = os.path.split(input_path)

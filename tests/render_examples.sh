@@ -1,1 +1,1 @@
-run_examples -r
+./run_examples.sh -r

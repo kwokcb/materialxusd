@@ -22,8 +22,7 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO)
-    #logger = logging.getLogger(__name__)    
-    logger = logging.getLogger('prprocess_mtlx')    
+    logger = logging.getLogger('prep_mtlx')    
 
     input_path = args.input
     if not os.path.exists(input_path):

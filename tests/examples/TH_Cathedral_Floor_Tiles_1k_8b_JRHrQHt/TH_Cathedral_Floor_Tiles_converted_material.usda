@@ -159,7 +159,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 color3f inputs:default = (0, 0, 0)
-                asset inputs:file = @textures/TH_Cathedral_Floor_Tiles_baseColor.png@ (
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_baseColor.png@ (
                     colorSpace = "srgb_texture"
                 )
                 string inputs:filtertype = "linear"
@@ -185,7 +185,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 float3 inputs:default = (0, 0, 0)
-                asset inputs:file = @textures/TH_Cathedral_Floor_Tiles_roughness.png@
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_roughness.png@
                 string inputs:filtertype = "linear"
                 string inputs:frameendaction = "constant"
                 int inputs:frameoffset = 0
@@ -217,7 +217,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 float3 inputs:default = (0, 0, 0)
-                asset inputs:file = @textures/TH_Cathedral_Floor_Tiles_normal.png@
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_normal.png@
                 string inputs:filtertype = "linear"
                 string inputs:frameendaction = "constant"
                 int inputs:frameoffset = 0

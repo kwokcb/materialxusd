@@ -4,7 +4,7 @@ import argparse
 import os
 import sys
 import zipfile
-import subprocess
+import logging
 
 import MaterialX as mx
 import materialxusd as mxusd
@@ -31,7 +31,7 @@ def get_mtlx_files(input_path: str):
                     mtlx_files.append(os.path.join(root, file))
 
     else:
-        if input_path.endswith(".mtlx"):
+        if input_path.endswith(".mtlx") and not input_path.endswith("_converted.mtlx"):
             mtlx_files.append(input_path)
         elif input_path.endswith(".zip"):
             # Unzip the file and get all mtlx files
@@ -74,10 +74,13 @@ def main():
     parser.add_argument("-mn", "--useMaterialName", action="store_true", help="Set output file to material name.")
     parser.add_argument("-sf", "--subfolder", action="store_true", help="Save output to subfolder named <input materialx file> w/o extension.")
     parser.add_argument("-pp", "--preprocess", action="store_true", help="Attempt to pre-process the MaterialX file.")
-    parser.add_argument("-ap", "--assetPaths", default=".", help="Colon separated list paths for asset resolving. ")
+    parser.add_argument("-ip", "--imagepaths", default="", help="Comma separated list of search paths for image path resolving. ")
 
     # Parse arguments
     args = parser.parse_args()
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('mltx2usd')
 
     # if input is a folder then get all .mtlx files under the folder recursively
     input_paths = get_mtlx_files(args.input_file)
@@ -109,9 +112,24 @@ def main():
 
             materials_added = utils.add_downstream_materials(doc)
             print(f'  > Added {materials_added} downstream materials.')
-            doc.setDataLibrary(None)                
+            doc.setDataLibrary(None)      
 
-            if materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
+            # Resolve image file paths
+            # Include absolute path of the input file's folder
+            resolved_image_paths = False
+            image_paths = args.imagepaths.split(',') if args.imagepaths else []
+            image_paths.append(os.path.dirname(os.path.abspath(input_path)))
+            if image_paths:
+                beforeDoc = mx.prettyPrint(doc)             
+                mx_image_search_path = utils.create_FileSearchPath(image_paths)
+                utils.resolve_image_file_paths(doc, mx_image_search_path)
+                afterDoc = mx.prettyPrint(doc)
+                if beforeDoc != afterDoc:
+                    resolved_image_paths = True
+                    logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
+                resolved_image_paths = True            
+
+            if resolved_image_paths or materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
                 valid, errors = doc.validate()
                 if not valid:
                     print(f"  >>>>>> Validation errors: {errors}")
@@ -151,15 +169,12 @@ def main():
             if not os.path.exists(abs_camera_path):
                 print(f"> Camera file not found at {abs_camera_path}")
         
-        asset_info_string = args.assetPaths
-
         converter = mxusd.MaterialxUSDConverter()
         stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, 
                                                                                                 abs_geometry_path, 
                                                                                                 abs_environment_path, 
                                                                                                 material_file_path, 
-                                                                                                abs_camera_path,
-                                                                                                asset_info_string)
+                                                                                                abs_camera_path)
 
         if stage:
             output_folder, input_file = os.path.split(input_path)

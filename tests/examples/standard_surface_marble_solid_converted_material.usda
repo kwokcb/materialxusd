@@ -3,7 +3,7 @@
     customLayerData = {
         string colorSpace = "lin_rec709"
     }
-    doc = "MaterialX content from ./examples/standard_surface_marble_solid.mtlx"
+    doc = "MaterialX content from ./examples/standard_surface_marble_solid_converted.mtlx"
     metersPerUnit = 1
     upAxis = "Y"
 )

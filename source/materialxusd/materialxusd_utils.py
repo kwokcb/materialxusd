@@ -112,7 +112,7 @@ class MaterialXUsdUtilities:
             if not graph_outputs:
                 continue
 
-            print('    > Scan graph: ', graph.getName())
+            #print('    > Scan graph: ', graph.getName())
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
@@ -138,8 +138,8 @@ class MaterialXUsdUtilities:
             #    if not match:
             #        downstream_port_count += 1
 
-            if downstream_ports:                       
-                print('        > Downstream port:', ",".join( [port.getNamePath() for port in downstream_ports]))
+            #if downstream_ports:                       
+                #print('        > Downstream port:', ",".join( [port.getNamePath() for port in downstream_ports]))
             if len(downstream_ports) == 0:
                 # Add a material per output
                 # 
@@ -154,7 +154,7 @@ class MaterialXUsdUtilities:
                     output_name = output.getName()
                     output_type = output.getType()
 
-                    print('        > Scan output:', output_name, '. type:', output_type)
+                    #print('        > Scan output:', output_name, '. type:', output_type)
 
                     # Special case for surfaceshader outputs. Just add in a downstream material
                     if output_type == 'surfaceshader':
@@ -162,7 +162,7 @@ class MaterialXUsdUtilities:
                         material_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                         material_node = doc.addMaterialNode(material_name)
                         if material_node:
-                            print(f"        > Added material node: {material_node.getName()}, for graph shader output: {output_name}")
+                            #print(f"        > Added material node: {material_node.getName()}, for graph shader output: {output_name}")
                             material_node_input = material_node.addInput(output_type, output_type)
                             material_node_input.setNodeGraphString(graph.getName())
                             material_node_input.setOutputString(output_name)
@@ -195,7 +195,7 @@ class MaterialXUsdUtilities:
                                     material_count += 1
 
                         else:
-                            print(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
+                            #print(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
                             
                             # If not color3 or float add a convert node and connect it to the current upstream node
                             # and then add in a new output which is of type color3
@@ -296,7 +296,7 @@ class MaterialXUsdUtilities:
                 # Firewall. USD does not appear to handle bitangent properly so
                 # skip it for now.
                 if defaultgeomprop.getGeomProp() == "bitangent":
-                    print(f'  > WARNING: Skipping adding explicit bitangent node for "{node.getNamePath()}"')
+                    #print(f'  > WARNING: Skipping adding explicit bitangent node for "{node.getNamePath()}"')
                     continue
 
                 # Fix this up to get information from the defaultgromprop e.g.
@@ -329,6 +329,7 @@ class MaterialXUsdUtilities:
                     upstream_default_node = graph_default_nodes[defaultgeomprop_name]
                     #print('Use upstream node for defaultgromprop:', nodedef_input.getName(), defaultgeomprop)
                 node_input.setNodeName(upstream_default_node.getName())
+                node_input.removeAttribute('value')
 
         implicit_nodes_added = len(graph_default_nodes)
         if  graph.getCategory() not in "nodegraph":

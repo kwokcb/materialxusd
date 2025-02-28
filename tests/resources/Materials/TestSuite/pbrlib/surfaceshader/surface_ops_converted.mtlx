@@ -9,13 +9,13 @@
       <input name="color" type="color3" value="0.18, 0.18, 0.18" />
       <input name="radius" type="color3" value="1.0, 1.0, 1.0" />
       <input name="anisotropy" type="float" value="0.0" />
-      <input name="normal" type="vector3" value="0.0, 0.0, 0.0" nodename="Nworld" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </subsurface_bsdf>
     <sheen_bsdf name="sheen_brdf1" type="BSDF">
       <input name="weight" type="float" value="1.0" />
       <input name="color" type="color3" value="1.0, 1.0, 1.0" />
       <input name="roughness" type="float" value="0.3" />
-      <input name="normal" type="vector3" value="0.0, 0.0, 0.0" nodename="Nworld" />
+      <input name="normal" type="vector3" nodename="Nworld" />
     </sheen_bsdf>
     <mix name="mix_edf1" type="EDF">
       <input name="fg" type="EDF" nodename="Emission_EDF" />
@@ -49,8 +49,8 @@
     <conductor_bsdf name="conductor_brdf1" type="BSDF">
       <input name="weight" type="float" value="1.0" />
       <input name="roughness" type="vector2" value="0.0, 0.0" />
-      <input name="normal" type="vector3" value="0.0, 0.0, 0.0" nodename="Nworld" />
-      <input name="tangent" type="vector3" value="0.0, 0.0, 0.0" nodename="Tworld" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
       <input name="distribution" type="string" value="ggx" />
       <input name="ior" type="color3" nodename="conductor_brdf1__artistic_ior" output="ior" />
       <input name="extinction" type="color3" nodename="conductor_brdf1__artistic_ior" output="extinction" />
@@ -61,8 +61,8 @@
       <input name="color90" type="color3" value="1.0, 1.0, 1.0" />
       <input name="exponent" type="float" value="5.0" />
       <input name="roughness" type="vector2" nodename="roughness_dual1" />
-      <input name="normal" type="vector3" value="0.0, 0.0, 0.0" nodename="Nworld" />
-      <input name="tangent" type="vector3" value="0.0, 0.0, 0.0" nodename="Tworld" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+      <input name="tangent" type="vector3" nodename="Tworld" />
       <input name="distribution" type="string" value="ggx" />
     </generalized_schlick_bsdf>
     <artistic_ior name="conductor_brdf1__artistic_ior" type="multioutput">
@@ -83,4 +83,7 @@
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
+  <surfacematerial name="nodegraph1_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="nodegraph1" output="out" />
+  </surfacematerial>
 </materialx>

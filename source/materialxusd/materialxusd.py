@@ -282,24 +282,24 @@ class MaterialxUSDConverter:
             if test_geom_prim and first_material:
                 material_binding_api = UsdShade.MaterialBindingAPI.Apply(test_geom_prim)
                 material_binding_api.Bind(UsdShade.Material(first_material))
-                print(f"   > Geometry reference '{shaderball_path} added under: {test_scene_prim.GetPath()}.")
+                #print(f"   > Geometry reference '{shaderball_path} added under: {test_scene_prim.GetPath()}.")
 
         # Add lighting with reference to light environment file
         # -----------------------------------------
         dome_light = None
         if environment_path:
             dome_light = self.add_skydome_light(stage, environment_path, LIGHTS_ROOT, SKYDOME_LIGHT_NAME)
-            if dome_light:
-                print(f"   > Light '{environment_path}' added at path: {dome_light.GetPath()}.")
+            #if dome_light:
+                #print(f"   > Light '{environment_path}' added at path: {dome_light.GetPath()}.")
 
         # Add camera reference
         # -----------------------------------------
         camera_prim = self.add_camera(stage, camera_path)
-        if camera_prim:
-            if camera_path:
-                print(f"   > Camera '{camera_path}' added at path: {camera_prim.GetPath()}.")
-            else:
-                print(f"   > Camera added at path: {camera_prim.GetPath()}.")
+        #if camera_prim:
+            #if camera_path:
+            #    print(f"   > Camera '{camera_path}' added at path: {camera_prim.GetPath()}.")
+            #else:
+            #    print(f"   > Camera added at path: {camera_prim.GetPath()}.")
 
         return stage, found_materials, test_geom_prim, dome_light, camera_prim
     

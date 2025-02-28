@@ -16,4 +16,7 @@
       <input name="space" type="string" value="world" />
     </normal>
   </nodegraph>
+  <surfacematerial name="lighting1_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="lighting1" output="out" />
+  </surfacematerial>
 </materialx>

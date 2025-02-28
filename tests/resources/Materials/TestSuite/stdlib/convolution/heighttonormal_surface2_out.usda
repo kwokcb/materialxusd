@@ -1,0 +1,333 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/convolution/heighttonormal_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "material_heighttonormal_vector3_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_heighttonormal_vector3_out/shader_heighttonormal_vector3_out.outputs:surface>
+
+            def Shader "shader_heighttonormal_vector3_out" (
+                prepend references = </MaterialX/Shaders/shader_heighttonormal_vector3_out>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_heighttonormal_vector3_out/heighttonormal.outputs:vector3_out>
+                float inputs:opacity.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:transmission_color>
+            }
+
+            def "heighttonormal" (
+                prepend references = </MaterialX/NodeGraphs/heighttonormal>
+            )
+            {
+            }
+        }
+
+        def Material "heighttonormal_surface1_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base
+            color3f inputs:base_color
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color
+            float inputs:specular_IOR
+            float inputs:specular_rotation
+            float inputs:specular_roughness
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/heighttonormal_surface1_out/standard_surface.outputs:surface>
+
+            def Shader "standard_surface" (
+                prepend references = </MaterialX/Shaders/standard_surface>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:base_color>
+                float inputs:coat.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/heighttonormal_surface1_out.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "NodeGraphs" (
+                prepend references = </MaterialX/NodeGraphs>
+            )
+            {
+            }
+        }
+
+        def Material "heighttonormal_surface2_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:clearcoat
+            float inputs:clearcoatRoughness
+            color3f inputs:diffuseColor
+            float inputs:displacement
+            color3f inputs:emissiveColor
+            float inputs:ior
+            float inputs:metallic
+            float3 inputs:normal
+            float inputs:occlusion
+            float inputs:opacity
+            int inputs:opacityMode
+            float inputs:opacityThreshold
+            float inputs:roughness
+            color3f inputs:specularColor
+            int inputs:useSpecularWorkflow
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/heighttonormal_surface2_out/UsdPreviewSurface.outputs:surface>
+
+            def Shader "UsdPreviewSurface" (
+                prepend references = </MaterialX/Shaders/UsdPreviewSurface>
+            )
+            {
+                float inputs:clearcoat.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:clearcoat>
+                float inputs:clearcoatRoughness.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:clearcoatRoughness>
+                color3f inputs:diffuseColor.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:diffuseColor>
+                float inputs:displacement.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:displacement>
+                color3f inputs:emissiveColor.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:emissiveColor>
+                float inputs:ior.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:ior>
+                float inputs:metallic.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:metallic>
+                float3 inputs:normal.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:normal>
+                float inputs:occlusion.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:occlusion>
+                float inputs:opacity.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:opacity>
+                int inputs:opacityMode.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:opacityMode>
+                float inputs:opacityThreshold.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:opacityThreshold>
+                float inputs:roughness.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:roughness>
+                color3f inputs:specularColor.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:specularColor>
+                int inputs:useSpecularWorkflow.connect = </MaterialX/Materials/heighttonormal_surface2_out.inputs:useSpecularWorkflow>
+            }
+
+            def "NodeGraphs" (
+                prepend references = </MaterialX/NodeGraphs>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "shader_heighttonormal_vector3_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "standard_surface"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+
+        def Shader "UsdPreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "heighttonormal"
+        {
+            asset inputs:file = @resources/Images/plain_heightmap.png@
+            token outputs:surface1_out
+            token outputs:surface2_out
+            color3f outputs:vector3_out.connect = </MaterialX/NodeGraphs/heighttonormal/convert_heighttonormal.outputs:out>
+
+            def Shader "tiledimage"
+            {
+                uniform token info:id = "ND_tiledimage_float"
+                asset inputs:file.connect = </MaterialX/NodeGraphs/heighttonormal.inputs:file>
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/heighttonormal/UV0.outputs:out>
+                float2 inputs:uvtiling = (10, 10)
+                float outputs:out
+            }
+
+            def Shader "heighttonormal"
+            {
+                uniform token info:id = "ND_heighttonormal_vector3"
+                float inputs:in.connect = </MaterialX/NodeGraphs/heighttonormal/tiledimage.outputs:out>
+                float inputs:scale = 0.2
+                float3 outputs:out
+            }
+
+            def Shader "normalmap"
+            {
+                uniform token info:id = "ND_normalmap_vector2"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/heighttonormal/heighttonormal.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/heighttonormal/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/heighttonormal/Tworld.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "scale"
+            {
+                uniform token info:id = "ND_multiply_vector3FA"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/heighttonormal/heighttonormal.outputs:out>
+                float inputs:in2 = 2
+                float3 outputs:out
+            }
+
+            def Shader "bias"
+            {
+                uniform token info:id = "ND_add_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/heighttonormal/scale.outputs:out>
+                float3 inputs:in2 = (-1, -1, -1)
+                float3 outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "convert_heighttonormal"
+            {
+                uniform token info:id = "ND_convert_vector3_color3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/heighttonormal/heighttonormal.outputs:out>
+                color3f outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/heighttonormal_surface2_out>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
+    )
+    {
+    }
+}
+

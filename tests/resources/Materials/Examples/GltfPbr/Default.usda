@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_default_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples/GltfPbr/gltf_pbr_default_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -25,7 +25,7 @@ def "MaterialX"
             float inputs:attenuation_distance = 100000
             color3f inputs:base_color = (1, 1, 1)
             float inputs:clearcoat = 0
-            float3 inputs:clearcoat_normal = (0, 0, 1)
+            float3 inputs:clearcoat_normal
             float inputs:clearcoat_roughness = 0
             color3f inputs:emissive = (0, 0, 0)
             float inputs:emissive_strength = 1
@@ -34,7 +34,7 @@ def "MaterialX"
             float inputs:iridescence_ior = 1.3
             float inputs:iridescence_thickness = 300
             float inputs:metallic = 1
-            float3 inputs:normal = (0, 0, 1)
+            float3 inputs:normal
             float inputs:occlusion = 0
             float inputs:roughness = 1
             color3f inputs:sheen_color = (0, 0, 0)
@@ -125,7 +125,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/Default>
@@ -140,14 +140,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
     )
     {
     }

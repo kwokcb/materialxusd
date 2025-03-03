@@ -121,43 +121,43 @@
   <surface_unlit name="shader_blur_color3_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_color3" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_color3_out" type="material">
+  <surfacematerial name="blur_color3_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color3_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_color4_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_color4" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_color4_out" type="material">
+  <surfacematerial name="blur_color4_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color4_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_float_out" type="surfaceshader">
     <input name="emission" type="float" nodegraph="blur_float" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_float_out" type="material">
+  <surfacematerial name="blur_float_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_float_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_vector2_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_vector2" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_vector2_out" type="material">
+  <surfacematerial name="blur_vector2_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector2_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_vector3_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_vector3" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_vector3_out" type="material">
+  <surfacematerial name="blur_vector3_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector3_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_vector4_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_vector4" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_vector4_out" type="material">
+  <surfacematerial name="blur_vector4_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector4_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_cellnoise_out" type="surfaceshader">
     <input name="emission" type="float" nodegraph="blur_cellnoise" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_blur_cellnoise_out" type="material">
+  <surfacematerial name="blur_cellnoise_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_cellnoise_out" />
   </surfacematerial>
 </materialx>

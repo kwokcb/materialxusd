@@ -50,7 +50,7 @@
   <surface_unlit name="shader_heighttonormal_vector3_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="heighttonormal" output="vector3_out" />
   </surface_unlit>
-  <surfacematerial name="material_heighttonormal_vector3_out" type="material">
+  <surfacematerial name="heighttonormal_vector3_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_heighttonormal_vector3_out" />
   </surfacematerial>
   <surfacematerial name="heighttonormal_surface1_out" type="material">

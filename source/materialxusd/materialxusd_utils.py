@@ -259,7 +259,7 @@ class MaterialXUsdUtilities:
                             
                             # Create downstream (umlit) shader
                             shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
-                            materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
+                            materialnode_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                             unlitDefinition = 'ND_surface_unlit'
                             unlitNode = doc.getNodeDef(unlitDefinition)
                             shadernode = doc.addNodeInstance(unlitNode, shadernode_name)

@@ -306,7 +306,7 @@ def Xform "TestScene"
         prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
-        rel material:binding = </MaterialX/Materials/heighttonormal_surface2_out>
+        rel material:binding = </MaterialX/Materials/heighttonormal_vector3_out>
     }
 
     def Xform "Lights"

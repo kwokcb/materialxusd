@@ -1,0 +1,178 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/Examples\\SimpleHair\\simple_hair_default_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "NodeGraphs"
+    {
+        def NodeGraph "ND_simple_hair_shader"
+        {
+            float inputs:azimuthalRoughness = 0.1
+            color3f inputs:baseColor = (1, 1, 1)
+            float inputs:cuticleAngle = 0.5
+            float inputs:ior = 1.55
+            float inputs:longitudinalRoughness = 0.1
+            float inputs:melaninConcentration = 0.5
+            float inputs:melaninMix = 1
+            float inputs:melaninRedness = 0.5
+            color3f inputs:tint_R = (1, 1, 1)
+            color3f inputs:tint_TRT = (1, 1, 1)
+            color3f inputs:tint_TT = (1, 1, 1)
+            token outputs:out
+
+            def Shader "absorption_from_melanin"
+            {
+                uniform token info:id = "ND_deon_hair_absorption_from_melanin"
+                float inputs:melanin_concentration.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:melaninConcentration>
+                float inputs:melanin_redness.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:melaninRedness>
+                float3 outputs:absorption
+            }
+
+            def Shader "absorption_from_color"
+            {
+                uniform token info:id = "ND_chiang_hair_absorption_from_color"
+                color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:baseColor>
+                float3 outputs:absorption
+            }
+
+            def Shader "mix_melanin_basecolor"
+            {
+                uniform token info:id = "ND_mix_vector3"
+                float3 inputs:bg.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/absorption_from_color.outputs:absorption>
+                float3 inputs:fg.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/absorption_from_melanin.outputs:absorption>
+                float inputs:mix.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:melaninMix>
+                float3 outputs:out
+            }
+
+            def Shader "spec_roughness"
+            {
+                uniform token info:id = "ND_chiang_hair_roughness"
+                float inputs:azimuthal.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:azimuthalRoughness>
+                float inputs:longitudinal.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:longitudinalRoughness>
+                float2 outputs:roughness_R
+                float2 outputs:roughness_TRT
+                float2 outputs:roughness_TT
+            }
+
+            def Shader "chiang_bsdf"
+            {
+                uniform token info:id = "ND_chiang_hair_bsdf"
+                float3 inputs:absorption_coefficient.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/mix_melanin_basecolor.outputs:out>
+                float3 inputs:curve_direction.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/Tworld.outputs:out>
+                float inputs:cuticle_angle.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:cuticleAngle>
+                float inputs:ior.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:ior>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/Nworld.outputs:out>
+                float2 inputs:roughness_R.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_R>
+                float2 inputs:roughness_TRT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_TRT>
+                float2 inputs:roughness_TT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader/spec_roughness.outputs:roughness_TT>
+                color3f inputs:tint_R.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:tint_R>
+                color3f inputs:tint_TRT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:tint_TRT>
+                color3f inputs:tint_TT.connect = </MaterialX/NodeGraphs/ND_simple_hair_shader.inputs:tint_TT>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
+    }
+
+    def "Materials"
+    {
+        def Material "simple_hair_default" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:azimuthalRoughness = 0.1
+            color3f inputs:baseColor = (1, 1, 1)
+            float inputs:cuticleAngle = 0.5
+            float inputs:ior = 1.55
+            float inputs:longitudinalRoughness = 0.1
+            float inputs:melaninConcentration = 0.5
+            float inputs:melaninMix = 1
+            float inputs:melaninRedness = 0.5
+            color3f inputs:tint_R = (1, 1, 1)
+            color3f inputs:tint_TRT = (1, 1, 1)
+            color3f inputs:tint_TT = (1, 1, 1)
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/simple_hair_default/SR_default.outputs:surface>
+
+            def Shader "SR_default" (
+                prepend references = </MaterialX/Shaders/SR_default>
+            )
+            {
+                float inputs:azimuthalRoughness.connect = </MaterialX/Materials/simple_hair_default.inputs:azimuthalRoughness>
+                color3f inputs:baseColor.connect = </MaterialX/Materials/simple_hair_default.inputs:baseColor>
+                float inputs:cuticleAngle.connect = </MaterialX/Materials/simple_hair_default.inputs:cuticleAngle>
+                float inputs:ior.connect = </MaterialX/Materials/simple_hair_default.inputs:ior>
+                float inputs:longitudinalRoughness.connect = </MaterialX/Materials/simple_hair_default.inputs:longitudinalRoughness>
+                float inputs:melaninConcentration.connect = </MaterialX/Materials/simple_hair_default.inputs:melaninConcentration>
+                float inputs:melaninMix.connect = </MaterialX/Materials/simple_hair_default.inputs:melaninMix>
+                float inputs:melaninRedness.connect = </MaterialX/Materials/simple_hair_default.inputs:melaninRedness>
+                color3f inputs:tint_R.connect = </MaterialX/Materials/simple_hair_default.inputs:tint_R>
+                color3f inputs:tint_TRT.connect = </MaterialX/Materials/simple_hair_default.inputs:tint_TRT>
+                color3f inputs:tint_TT.connect = </MaterialX/Materials/simple_hair_default.inputs:tint_TT>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "SR_default"
+        {
+            uniform token info:id = "ND_simple_hair_shader"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/simple_hair_default>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

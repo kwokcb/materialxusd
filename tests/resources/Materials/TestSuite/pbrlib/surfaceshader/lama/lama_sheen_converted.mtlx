@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="acescg">
+  <surface name="LamaSheenSurface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="root_graph" output="out" />
+  </surface>
+  <surfacematerial name="LamaSheenTest" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="LamaSheenSurface" />
+  </surfacematerial>
+  <nodegraph name="root_graph">
+    <LamaSheen name="LamaSheen" type="BSDF">
+      <input name="color" type="color3" value="1, 1, 1" />
+      <input name="roughness" type="float" value="0.1" />
+      <input name="normal" type="vector3" nodename="Nworld" />
+    </LamaSheen>
+    <output name="out" type="BSDF" nodename="LamaSheen" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+  </nodegraph>
+</materialx>

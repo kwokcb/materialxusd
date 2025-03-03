@@ -1,0 +1,155 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\shader_ops_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "NodeGraphs"
+    {
+        def NodeGraph "ND_checker_float"
+        {
+            float2 inputs:scale = (8, 8)
+            float outputs:out.connect = </MaterialX/NodeGraphs/ND_checker_float/mod1.outputs:out>
+
+            def Shader "texcoord1"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+
+            def Shader "mult1"
+            {
+                uniform token info:id = "ND_multiply_vector2"
+                float2 inputs:in1.connect = </MaterialX/NodeGraphs/ND_checker_float/texcoord1.outputs:out>
+                float2 inputs:in2.connect = </MaterialX/NodeGraphs/ND_checker_float.inputs:scale>
+                float2 outputs:out
+            }
+
+            def Shader "mult1_x"
+            {
+                uniform token info:id = "ND_extract_vector2"
+                float2 inputs:in.connect = </MaterialX/NodeGraphs/ND_checker_float/mult1.outputs:out>
+                int inputs:index = 0
+                float outputs:out
+            }
+
+            def Shader "mult1_y"
+            {
+                uniform token info:id = "ND_extract_vector2"
+                float2 inputs:in.connect = </MaterialX/NodeGraphs/ND_checker_float/mult1.outputs:out>
+                int inputs:index = 1
+                float outputs:out
+            }
+
+            def Shader "floor1"
+            {
+                uniform token info:id = "ND_floor_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_checker_float/mult1_x.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "floor2"
+            {
+                uniform token info:id = "ND_floor_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_checker_float/mult1_y.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "add1"
+            {
+                uniform token info:id = "ND_add_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_checker_float/floor1.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_checker_float/floor2.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "mod1"
+            {
+                uniform token info:id = "ND_modulo_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_checker_float/add1.outputs:out>
+                float inputs:in2 = 2
+                float outputs:out
+            }
+        }
+    }
+
+    def "Materials"
+    {
+        def Material "material_NG_checker_float_out" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_NG_checker_float_out/shader_NG_checker_float_out.outputs:surface>
+
+            def Shader "shader_NG_checker_float_out" (
+                prepend references = </MaterialX/Shaders/shader_NG_checker_float_out>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/material_NG_checker_float_out/ND_checker_float.outputs:out>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/material_NG_checker_float_out.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/material_NG_checker_float_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/material_NG_checker_float_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_NG_checker_float_out.inputs:transmission_color>
+            }
+
+            def "ND_checker_float" (
+                prepend references = </MaterialX/NodeGraphs/ND_checker_float>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "shader_NG_checker_float_out"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/material_NG_checker_float_out>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

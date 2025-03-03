@@ -1,0 +1,425 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/procedural\\linepattern_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "test_grid" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base = 1
+            color3f inputs:base_color
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color
+            float inputs:specular_IOR
+            float inputs:specular_rotation
+            float inputs:specular_roughness
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/test_grid/SR_test_grid.outputs:surface>
+
+            def Shader "SR_test_grid" (
+                prepend references = </MaterialX/Shaders/SR_test_grid>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/test_grid.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_grid/root_graph.outputs:out>
+                float inputs:coat.connect = </MaterialX/Materials/test_grid.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/test_grid.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_grid.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/test_grid.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/test_grid.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/test_grid.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/test_grid.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/test_grid.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/test_grid.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/test_grid.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/test_grid.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/test_grid.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/test_grid.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/test_grid.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/test_grid.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/test_grid.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/test_grid.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/test_grid.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/test_grid.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/test_grid.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/test_grid.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/test_grid.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/test_grid.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/test_grid.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/test_grid.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/test_grid.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/test_grid.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/test_grid.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/test_grid.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/test_grid.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/test_grid.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/test_grid.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/test_grid.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/test_grid.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/test_grid.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/test_grid.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/test_grid.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/test_grid.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/test_grid.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_grid.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+
+        def Material "test_crosshatch" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base = 1
+            color3f inputs:base_color
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color
+            float inputs:specular_IOR
+            float inputs:specular_rotation
+            float inputs:specular_roughness
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/test_crosshatch/SR_test_crosshatch.outputs:surface>
+
+            def Shader "SR_test_crosshatch" (
+                prepend references = </MaterialX/Shaders/SR_test_crosshatch>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/test_crosshatch.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_crosshatch/root_graph.outputs:out2>
+                float inputs:coat.connect = </MaterialX/Materials/test_crosshatch.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/test_crosshatch.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/test_crosshatch.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/test_crosshatch.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/test_crosshatch.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/test_crosshatch.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/test_crosshatch.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/test_crosshatch.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/test_crosshatch.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/test_crosshatch.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/test_crosshatch.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/test_crosshatch.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/test_crosshatch.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/test_crosshatch.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/test_crosshatch.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/test_crosshatch.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/test_crosshatch.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/test_crosshatch.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/test_crosshatch.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/test_crosshatch.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/test_crosshatch.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/test_crosshatch.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_crosshatch.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+
+        def Material "test_union" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base = 1
+            color3f inputs:base_color
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color
+            float inputs:specular_IOR
+            float inputs:specular_rotation
+            float inputs:specular_roughness
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/test_union/SR_test_union.outputs:surface>
+
+            def Shader "SR_test_union" (
+                prepend references = </MaterialX/Shaders/SR_test_union>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/test_union.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/test_union/root_graph.outputs:out3>
+                float inputs:coat.connect = </MaterialX/Materials/test_union.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/test_union.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/test_union.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/test_union.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/test_union.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/test_union.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/test_union.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/test_union.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/test_union.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/test_union.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/test_union.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/test_union.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/test_union.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/test_union.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/test_union.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/test_union.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/test_union.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/test_union.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/test_union.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/test_union.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/test_union.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/test_union.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/test_union.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/test_union.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/test_union.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/test_union.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/test_union.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/test_union.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/test_union.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/test_union.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/test_union.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/test_union.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/test_union.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/test_union.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/test_union.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/test_union.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/test_union.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/test_union.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/test_union.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/test_union.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "SR_test_grid"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+
+        def Shader "SR_test_crosshatch"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+
+        def Shader "SR_test_union"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/root_graph/grid_color3.outputs:out>
+            color3f outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/crosshatch_color3.outputs:out>
+            color3f outputs:out3.connect = </MaterialX/NodeGraphs/root_graph/union_color3.outputs:out>
+
+            def Shader "grid_color3"
+            {
+                uniform token info:id = "ND_grid_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float inputs:thickness = 0.1
+                float2 inputs:uvtiling = (58, 58)
+                color3f outputs:out
+            }
+
+            def Shader "crosshatch_color3"
+            {
+                uniform token info:id = "ND_crosshatch_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float inputs:thickness = 0.05
+                float2 inputs:uvtiling = (29, 29)
+                color3f outputs:out
+            }
+
+            def Shader "union_color3"
+            {
+                uniform token info:id = "ND_max_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/root_graph/grid_color3.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/root_graph/crosshatch_color3.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/test_crosshatch>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

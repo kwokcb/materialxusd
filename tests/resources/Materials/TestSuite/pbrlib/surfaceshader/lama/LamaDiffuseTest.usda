@@ -1,0 +1,126 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "acescg"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_diffuse_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "LamaDiffuseTest" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/LamaDiffuseTest/LamaDiffuseSurface.outputs:surface>
+
+            def Shader "LamaDiffuseSurface" (
+                prepend references = </MaterialX/Shaders/LamaDiffuseSurface>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaDiffuseTest/root_graph.outputs:out>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/LamaDiffuseTest.inputs:edf>
+                float inputs:opacity.connect = </MaterialX/Materials/LamaDiffuseTest.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/LamaDiffuseTest.inputs:thin_walled>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "LamaDiffuseSurface"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            token outputs:out (
+                renderType = "BSDF"
+            )
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaDiffuse.outputs:out>
+
+            def Shader "LamaDiffuse"
+            {
+                uniform token info:id = "ND_lama_diffuse"
+                color3f inputs:color = (0.18, 0.18, 0.18)
+                float inputs:energyCompensation = 1
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
+                float inputs:roughness = 0.5
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/LamaDiffuseTest>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

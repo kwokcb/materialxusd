@@ -18,7 +18,7 @@
     </multiply>
     <image name="node_image_color3_0" type="color3" GLSLFX_usage="baseColor" expose="true">
       <input name="texcoord" type="vector2" nodename="node_multiply_5" />
-      <input name="file" type="filename" colorspace="srgb_texture" value="textures/TH_Cathedral_Floor_Tiles_baseColor.png" />
+      <input name="file" type="filename" colorspace="srgb_texture" value="D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_baseColor.png" />
       <input name="layer" type="string" value="" />
       <input name="default" type="color3" value=" 0.000000, 0.000000, 0.000000" />
       <input name="uaddressmode" type="string" value="periodic" />
@@ -34,7 +34,7 @@
     </extract>
     <image name="node_image_vector3_8" type="vector3" GLSLFX_usage="roughness" expose="true">
       <input name="texcoord" type="vector2" nodename="node_multiply_5" />
-      <input name="file" type="filename" value="textures/TH_Cathedral_Floor_Tiles_roughness.png" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_roughness.png" />
       <input name="layer" type="string" value="" />
       <input name="default" type="vector3" value=" 0.000000, 0.000000, 0.000000" />
       <input name="uaddressmode" type="string" value="periodic" />
@@ -54,7 +54,7 @@
     </normalmap>
     <image name="node_image_vector3_9" type="vector3" GLSLFX_usage="normal" expose="true">
       <input name="texcoord" type="vector2" nodename="node_multiply_5" />
-      <input name="file" type="filename" value="textures/TH_Cathedral_Floor_Tiles_normal.png" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_normal.png" />
       <input name="layer" type="string" value="" />
       <input name="default" type="vector3" value=" 0.000000, 0.000000, 0.000000" />
       <input name="uaddressmode" type="string" value="periodic" />

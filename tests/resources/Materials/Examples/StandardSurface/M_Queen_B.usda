@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\StandardSurface\\standard_surface_chess_set_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\StandardSurface\\standard_surface_chess_set_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -1679,7 +1679,7 @@ def "MaterialX"
             def Shader "diffuse2"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/bishop_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
@@ -1689,7 +1689,7 @@ def "MaterialX"
             def Shader "metallic2"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/bishop_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -1697,7 +1697,7 @@ def "MaterialX"
             def Shader "roughness2"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/bishop_black_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -1705,7 +1705,7 @@ def "MaterialX"
             def Shader "normal2"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/bishop_black_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -1752,7 +1752,7 @@ def "MaterialX"
             def Shader "diffuse3"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/bishop_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
@@ -1762,7 +1762,7 @@ def "MaterialX"
             def Shader "metallic3"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/bishop_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -1770,7 +1770,7 @@ def "MaterialX"
             def Shader "roughness3"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/bishop_white_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -1778,7 +1778,7 @@ def "MaterialX"
             def Shader "normal3"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/bishop_white_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_BishopWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -1825,7 +1825,7 @@ def "MaterialX"
             def Shader "diffuse6"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/castle_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
@@ -1835,7 +1835,7 @@ def "MaterialX"
             def Shader "metallic6"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/castle_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -1843,7 +1843,7 @@ def "MaterialX"
             def Shader "roughness6"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/castle_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -1851,7 +1851,7 @@ def "MaterialX"
             def Shader "normal6"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/castle_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -1898,7 +1898,7 @@ def "MaterialX"
             def Shader "diffuse7"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/castle_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
@@ -1908,7 +1908,7 @@ def "MaterialX"
             def Shader "metallic7"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/castle_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -1916,7 +1916,7 @@ def "MaterialX"
             def Shader "roughness7"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/castle_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -1924,7 +1924,7 @@ def "MaterialX"
             def Shader "normal7"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/castle_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_CastleWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -1971,7 +1971,7 @@ def "MaterialX"
             def Shader "mtlximage13"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/chessboard_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
@@ -1981,7 +1981,7 @@ def "MaterialX"
             def Shader "mtlximage16"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/chessboard_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float outputs:out
             }
@@ -1989,7 +1989,7 @@ def "MaterialX"
             def Shader "mtlximage17"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/chessboard_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float outputs:out
             }
@@ -1997,7 +1997,7 @@ def "MaterialX"
             def Shader "mtlximage15"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/chessboard_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_ChessBoard/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2045,7 +2045,7 @@ def "MaterialX"
             def Shader "mtlximage1"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/king_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
@@ -2055,7 +2055,7 @@ def "MaterialX"
             def Shader "mtlximage2"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2063,7 +2063,7 @@ def "MaterialX"
             def Shader "mtlximage4"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_black_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2071,7 +2071,7 @@ def "MaterialX"
             def Shader "mtlximage3"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_shared_scattering.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_scattering.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2079,7 +2079,7 @@ def "MaterialX"
             def Shader "mtlximage6"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/king_black_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2127,7 +2127,7 @@ def "MaterialX"
             def Shader "mtlximage7"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/king_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
@@ -2137,7 +2137,7 @@ def "MaterialX"
             def Shader "mtlximage10"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2145,7 +2145,7 @@ def "MaterialX"
             def Shader "mtlximage11"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_white_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2153,7 +2153,7 @@ def "MaterialX"
             def Shader "mtlximage8"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/king_shared_scattering.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_scattering.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2161,7 +2161,7 @@ def "MaterialX"
             def Shader "mtlximage9"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/king_white_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KingWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2207,7 +2207,7 @@ def "MaterialX"
             def Shader "diffuse4"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/knight_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
@@ -2217,7 +2217,7 @@ def "MaterialX"
             def Shader "roughness4"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/knight_black_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2225,7 +2225,7 @@ def "MaterialX"
             def Shader "normal4"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/knight_black_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2271,7 +2271,7 @@ def "MaterialX"
             def Shader "diffuse5"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/knight_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
@@ -2281,7 +2281,7 @@ def "MaterialX"
             def Shader "roughness5"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/knight_white_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2289,7 +2289,7 @@ def "MaterialX"
             def Shader "normal5"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/knight_white_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_KnightWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2336,7 +2336,7 @@ def "MaterialX"
             def Shader "diffuse9"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/pawn_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
@@ -2346,7 +2346,7 @@ def "MaterialX"
             def Shader "metallic9"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2354,7 +2354,7 @@ def "MaterialX"
             def Shader "roughness9"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2362,7 +2362,7 @@ def "MaterialX"
             def Shader "normal9"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/pawn_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2409,7 +2409,7 @@ def "MaterialX"
             def Shader "diffuse8"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/pawn_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
@@ -2419,7 +2419,7 @@ def "MaterialX"
             def Shader "metallic8"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2427,7 +2427,7 @@ def "MaterialX"
             def Shader "roughness8"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2435,7 +2435,7 @@ def "MaterialX"
             def Shader "normal8"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/pawn_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnBodyWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2480,7 +2480,7 @@ def "MaterialX"
             def Shader "mtlximage19"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2488,7 +2488,7 @@ def "MaterialX"
             def Shader "mtlximage18"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/pawn_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2533,7 +2533,7 @@ def "MaterialX"
             def Shader "mtlximage21"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/pawn_shared_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2541,7 +2541,7 @@ def "MaterialX"
             def Shader "mtlximage20"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/pawn_shared_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_PawnTopWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2589,7 +2589,7 @@ def "MaterialX"
             def Shader "diffuse"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/queen_black_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
@@ -2599,7 +2599,7 @@ def "MaterialX"
             def Shader "metallic"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2607,7 +2607,7 @@ def "MaterialX"
             def Shader "roughness"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_black_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2615,7 +2615,7 @@ def "MaterialX"
             def Shader "sss"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_shared_scattering.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_scattering.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float outputs:out
             }
@@ -2623,7 +2623,7 @@ def "MaterialX"
             def Shader "normal"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/queen_black_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenBlack/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2671,7 +2671,7 @@ def "MaterialX"
             def Shader "diffuse1"
             {
                 uniform token info:id = "ND_image_color3"
-                asset inputs:file = @chess_set/queen_white_base_color.jpg@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_base_color.jpg@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
@@ -2681,7 +2681,7 @@ def "MaterialX"
             def Shader "metallic1"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_shared_metallic.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_metallic.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2689,7 +2689,7 @@ def "MaterialX"
             def Shader "roughness1"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_white_roughness.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_roughness.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2697,7 +2697,7 @@ def "MaterialX"
             def Shader "sss1"
             {
                 uniform token info:id = "ND_image_float"
-                asset inputs:file = @chess_set/queen_shared_scattering.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_scattering.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float outputs:out
             }
@@ -2705,7 +2705,7 @@ def "MaterialX"
             def Shader "normal1"
             {
                 uniform token info:id = "ND_image_vector3"
-                asset inputs:file = @chess_set/queen_white_normal.jpg@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_normal.jpg@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_QueenWhite/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -2886,7 +2886,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/M_Queen_B>
@@ -2901,14 +2901,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

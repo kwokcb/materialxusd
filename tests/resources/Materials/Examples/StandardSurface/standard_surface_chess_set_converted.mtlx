@@ -2,19 +2,19 @@
 <materialx version="1.39" colorspace="lin_rec709">
   <nodegraph name="NG_BishopBlack">
     <image name="diffuse2" type="color3">
-      <input name="file" type="filename" value="chess_set/bishop_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic2" type="float">
-      <input name="file" type="filename" value="chess_set/bishop_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness2" type="float">
-      <input name="file" type="filename" value="chess_set/bishop_black_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal2" type="vector3">
-      <input name="file" type="filename" value="chess_set/bishop_black_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_black_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap4" type="vector3">
@@ -52,19 +52,19 @@
   </surfacematerial>
   <nodegraph name="NG_BishopWhite">
     <image name="diffuse3" type="color3">
-      <input name="file" type="filename" value="chess_set/bishop_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic3" type="float">
-      <input name="file" type="filename" value="chess_set/bishop_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness3" type="float">
-      <input name="file" type="filename" value="chess_set/bishop_white_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal3" type="vector3">
-      <input name="file" type="filename" value="chess_set/bishop_white_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\bishop_white_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap5" type="vector3">
@@ -102,19 +102,19 @@
   </surfacematerial>
   <nodegraph name="NG_CastleBlack">
     <image name="diffuse6" type="color3">
-      <input name="file" type="filename" value="chess_set/castle_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic6" type="float">
-      <input name="file" type="filename" value="chess_set/castle_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness6" type="float">
-      <input name="file" type="filename" value="chess_set/castle_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal6" type="vector3">
-      <input name="file" type="filename" value="chess_set/castle_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap8" type="vector3">
@@ -152,19 +152,19 @@
   </surfacematerial>
   <nodegraph name="NG_CastleWhite">
     <image name="diffuse7" type="color3">
-      <input name="file" type="filename" value="chess_set/castle_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic7" type="float">
-      <input name="file" type="filename" value="chess_set/castle_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness7" type="float">
-      <input name="file" type="filename" value="chess_set/castle_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal7" type="vector3">
-      <input name="file" type="filename" value="chess_set/castle_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\castle_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap9" type="vector3">
@@ -202,19 +202,19 @@
   </surfacematerial>
   <nodegraph name="NG_ChessBoard">
     <image name="mtlximage13" type="color3">
-      <input name="file" type="filename" value="chess_set/chessboard_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage16" type="float">
-      <input name="file" type="filename" value="chess_set/chessboard_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage17" type="float">
-      <input name="file" type="filename" value="chess_set/chessboard_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage15" type="vector3">
-      <input name="file" type="filename" value="chess_set/chessboard_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\chessboard_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap12" type="vector3">
@@ -252,23 +252,23 @@
   </surfacematerial>
   <nodegraph name="NG_KingBlack">
     <image name="mtlximage1" type="color3">
-      <input name="file" type="filename" value="chess_set/king_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage2" type="float">
-      <input name="file" type="filename" value="chess_set/king_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage4" type="float">
-      <input name="file" type="filename" value="chess_set/king_black_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage3" type="float">
-      <input name="file" type="filename" value="chess_set/king_shared_scattering.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_scattering.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage6" type="vector3">
-      <input name="file" type="filename" value="chess_set/king_black_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_black_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap1" type="vector3">
@@ -307,23 +307,23 @@
   </surfacematerial>
   <nodegraph name="NG_KingWhite">
     <image name="mtlximage7" type="color3">
-      <input name="file" type="filename" value="chess_set/king_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage10" type="float">
-      <input name="file" type="filename" value="chess_set/king_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage11" type="float">
-      <input name="file" type="filename" value="chess_set/king_white_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage8" type="float">
-      <input name="file" type="filename" value="chess_set/king_shared_scattering.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_shared_scattering.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage9" type="vector3">
-      <input name="file" type="filename" value="chess_set/king_white_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\king_white_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap11" type="vector3">
@@ -362,15 +362,15 @@
   </surfacematerial>
   <nodegraph name="NG_KnightBlack">
     <image name="diffuse4" type="color3">
-      <input name="file" type="filename" value="chess_set/knight_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness4" type="float">
-      <input name="file" type="filename" value="chess_set/knight_black_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal4" type="vector3">
-      <input name="file" type="filename" value="chess_set/knight_black_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_black_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap6" type="vector3">
@@ -406,15 +406,15 @@
   </surfacematerial>
   <nodegraph name="NG_KnightWhite">
     <image name="diffuse5" type="color3">
-      <input name="file" type="filename" value="chess_set/knight_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness5" type="float">
-      <input name="file" type="filename" value="chess_set/knight_white_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal5" type="vector3">
-      <input name="file" type="filename" value="chess_set/knight_white_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\knight_white_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap7" type="vector3">
@@ -450,19 +450,19 @@
   </surfacematerial>
   <nodegraph name="NG_PawnBodyBlack">
     <image name="diffuse9" type="color3">
-      <input name="file" type="filename" value="chess_set/pawn_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic9" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness9" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal9" type="vector3">
-      <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap13" type="vector3">
@@ -500,19 +500,19 @@
   </surfacematerial>
   <nodegraph name="NG_PawnBodyWhite">
     <image name="diffuse8" type="color3">
-      <input name="file" type="filename" value="chess_set/pawn_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic8" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness8" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal8" type="vector3">
-      <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap10" type="vector3">
@@ -550,11 +550,11 @@
   </surfacematerial>
   <nodegraph name="NG_PawnTopBlack">
     <image name="mtlximage19" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage18" type="vector3">
-      <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap14" type="vector3">
@@ -591,11 +591,11 @@
   </surfacematerial>
   <nodegraph name="NG_PawnTopWhite">
     <image name="mtlximage21" type="float">
-      <input name="file" type="filename" value="chess_set/pawn_shared_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="mtlximage20" type="vector3">
-      <input name="file" type="filename" value="chess_set/pawn_shared_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\pawn_shared_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap15" type="vector3">
@@ -632,23 +632,23 @@
   </surfacematerial>
   <nodegraph name="NG_QueenBlack">
     <image name="diffuse" type="color3">
-      <input name="file" type="filename" value="chess_set/queen_black_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic" type="float">
-      <input name="file" type="filename" value="chess_set/queen_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness" type="float">
-      <input name="file" type="filename" value="chess_set/queen_black_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="sss" type="float">
-      <input name="file" type="filename" value="chess_set/queen_shared_scattering.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_scattering.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal" type="vector3">
-      <input name="file" type="filename" value="chess_set/queen_black_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_black_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap2" type="vector3">
@@ -687,23 +687,23 @@
   </surfacematerial>
   <nodegraph name="NG_QueenWhite">
     <image name="diffuse1" type="color3">
-      <input name="file" type="filename" value="chess_set/queen_white_base_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_base_color.jpg" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="metallic1" type="float">
-      <input name="file" type="filename" value="chess_set/queen_shared_metallic.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_metallic.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="roughness1" type="float">
-      <input name="file" type="filename" value="chess_set/queen_white_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_roughness.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="sss1" type="float">
-      <input name="file" type="filename" value="chess_set/queen_shared_scattering.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_shared_scattering.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <image name="normal1" type="vector3">
-      <input name="file" type="filename" value="chess_set/queen_white_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\StandardSurface\chess_set\queen_white_normal.jpg" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
     <normalmap name="mtlxnormalmap3" type="vector3">

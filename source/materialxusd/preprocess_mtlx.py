@@ -12,15 +12,17 @@ import logging
 from materialxusd_utils import MaterialXUsdUtilities
 
 def main():
-    argparser = argparse.ArgumentParser(description='Prepare a MaterialX document for conversion to USD')
-    argparser.add_argument('input', type=str, help='Input MaterialX document')
-    argparser.add_argument('-o', '--output', type=str, default='', help='Output MaterialX document. Default is input name with "_converted" appended.')
-    argparser.add_argument('-ng', '--nodegraph', type=str, default='root_graph', help='Name of the new nodegraph to encapsulate the top level nodes. Default is "top_level_nodes"')
-    argparser.add_argument('-k', '--keep', action='store_true', help='Keep the original top level nodes from the document. Default is True')
-    args = argparser.parse_args()
+    parser = argparse.ArgumentParser(description='Prepare a MaterialX document for conversion to USD')
+    parser.add_argument('input', type=str, help='Input MaterialX document')
+    parser.add_argument('-o', '--output', type=str, default='', help='Output MaterialX document. Default is input name with "_converted" appended.')
+    parser.add_argument('-ng', '--nodegraph', type=str, default='root_graph', help='Name of the new nodegraph to encapsulate the top level nodes. Default is "top_level_nodes"')
+    parser.add_argument('-k', '--keep', action='store_true', help='Keep the original top level nodes from the document. Default is True')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Print verbose output')
+    parser.add_argument("-ip", "--imagepaths", default="", help="Comma separated list of search paths for image path resolving. ")
+    args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('prep_mtlx')    
 
     input_path = args.input
     if not os.path.exists(input_path):
@@ -37,7 +39,7 @@ def main():
     nodegraph_name = args.nodegraph
     remove_original_nodes = not args.keep
     try:
-        top_level_nodes_found = MaterialXUsdUtilities.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)
+        top_level_nodes_found = utils.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)
         if top_level_nodes_found > 0:
             logger.info(f"> Encapsulated {top_level_nodes_found} top level nodes.")
 
@@ -48,10 +50,26 @@ def main():
             logger.info(f"> Added {implicit_nodes_added} implicit geometry nodes.")
 
         materials_added = utils.add_downstream_materials(doc)
-        print(f'  > Added {materials_added} downstream materials.')
+        if materials_added:
+            logger.info(f'> Added {materials_added} downstream materials.')
         doc.setDataLibrary(None)
 
-        if materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:
+        # Resolve image file paths
+        # Include absolute path of the input file's folder
+        resolved_image_paths = False
+        image_paths = args.imagepaths.split(',') if args.imagepaths else []
+        image_paths.append(os.path.dirname(os.path.abspath(input_path)))
+        if image_paths:
+            beforeDoc = mx.prettyPrint(doc)             
+            mx_image_search_path = utils.create_FileSearchPath(image_paths)
+            utils.resolve_image_file_paths(doc, mx_image_search_path)
+            afterDoc = mx.prettyPrint(doc)
+            if beforeDoc != afterDoc:
+                resolved_image_paths = True
+                logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
+            resolved_image_paths = True            
+
+        if resolved_image_paths or materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:
             utils.write_document(doc, output_path)
             logger.info(f"> Wrote modified document to {output_path}")
     except Exception as e:

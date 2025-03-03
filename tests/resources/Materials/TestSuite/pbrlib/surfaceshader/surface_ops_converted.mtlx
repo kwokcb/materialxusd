@@ -83,4 +83,7 @@
       <input name="index" type="integer" value="0" />
     </tangent>
   </nodegraph>
+  <surfacematerial name="nodegraph1_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="nodegraph1" output="out" />
+  </surfacematerial>
 </materialx>

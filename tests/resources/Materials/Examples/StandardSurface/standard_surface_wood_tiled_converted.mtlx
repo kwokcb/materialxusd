@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <materialx version="1.39" colorspace="lin_rec709">
-  <nodegraph name="NG_wood1" fileprefix="../../../Images/">
+  <nodegraph name="NG_wood1">
     <tiledimage name="image_color" type="color3">
-      <input name="file" type="filename" value="wood_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\wood_color.jpg" colorspace="srgb_texture" />
       <input name="uvtiling" type="vector2" value="4.0, 4.0" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="image_roughness" type="float">
-      <input name="file" type="filename" value="wood_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\wood_roughness.jpg" />
       <input name="uvtiling" type="vector2" value="4.0, 4.0" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>

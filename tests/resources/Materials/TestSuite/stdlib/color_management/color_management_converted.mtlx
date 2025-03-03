@@ -203,4 +203,70 @@
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
+  <surfacematerial name="ng1_image_lin_rec709_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_lin_rec709_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_gamma18_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_gamma18_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_gamma22_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_gamma22_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_gamma24_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_gamma24_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_acescg_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_acescg_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_g22_ap1_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_g22_ap1_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_srgb_texture_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_srgb_texture_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_adobergb_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_adobergb_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_lin_adobergb_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_lin_adobergb_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_srgb_displayp3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_srgb_displayp3_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_image_lin_displayp3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="image_lin_displayp3_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_lin_rec709_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_lin_rec709_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_gamma18_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_gamma18_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_gamma22_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_gamma22_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_gamma24_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_gamma24_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_acescg_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_acescg_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_g22_ap1_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_g22_ap1_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_srgb_texture_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_srgb_texture_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_adobergb_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_adobergb_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_lin_adobergb_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_lin_adobergb_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_srgb_displayp3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_srgb_displayp3_out" />
+  </surfacematerial>
+  <surfacematerial name="ng1_color_lin_displayp3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodegraph="ng1" output="color_lin_displayp3_out" />
+  </surfacematerial>
 </materialx>

@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_boombox_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/Examples\\GltfPbr\\gltf_pbr_boombox_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -112,7 +112,7 @@ def "MaterialX"
             def Shader "image_basecolor"
             {
                 uniform token info:id = "ND_gltf_colorimage"
-                asset inputs:file = @boombox/BoomBox_baseColor.png@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_baseColor.png@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
@@ -123,7 +123,7 @@ def "MaterialX"
             def Shader "image_orm"
             {
                 uniform token info:id = "ND_gltf_image_vector3_vector3_1_0"
-                asset inputs:file = @boombox/BoomBox_occlusionRoughnessMetallic.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_occlusionRoughnessMetallic.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -131,7 +131,7 @@ def "MaterialX"
             def Shader "image_normal"
             {
                 uniform token info:id = "ND_gltf_normalmap_vector3_1_0"
-                asset inputs:file = @boombox/BoomBox_normal.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_normal.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -139,7 +139,7 @@ def "MaterialX"
             def Shader "image_emission"
             {
                 uniform token info:id = "ND_gltf_image_color3_color3_1_0"
-                asset inputs:file = @boombox/BoomBox_emissive.png@ (
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_emissive.png@ (
                     colorSpace = "srgb_texture"
                 )
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
@@ -184,7 +184,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/Material_boombox>
@@ -199,14 +199,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

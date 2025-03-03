@@ -18,7 +18,7 @@ class MaterialXUsdUtilities:
         '''
         self._stdlib, self._libFiles = self.load_standard_libraries()
         logging.basicConfig(level=logging.INFO)
-        self.logger = logging.getLogger('MaterialXUsdUtilities')
+        self.logger = logging.getLogger('MXUSDUTIL')
 
     def load_standard_libraries(self):
         '''Load standard MaierialX libraries.
@@ -65,7 +65,7 @@ class MaterialXUsdUtilities:
         @param search_paths A list of string paths.
         @return The MaterialX file search path.
         '''
-        #self.logger.info(f'  > Creating file search path: {search_paths}')
+        #self.logger.info(f'> Creating file search path: {search_paths}')
         search_path = mx.FileSearchPath()
         for path in search_paths:
             search_path.append(path)
@@ -137,7 +137,7 @@ class MaterialXUsdUtilities:
             if not graph_outputs:
                 continue
 
-            self.logger.info(f'    > Scan graph: {graph.getName()}')
+            self.logger.info(f'>> Scan graph: {graph.getName()}')
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
@@ -164,7 +164,7 @@ class MaterialXUsdUtilities:
             #        downstream_port_count += 1
 
             if downstream_ports:                       
-                self.logger.info('        > Downstream port:' + ",".join( [port.getNamePath() for port in downstream_ports]))
+                self.logger.info('>>> Downstream port:' + ",".join( [port.getNamePath() for port in downstream_ports]))
             if len(downstream_ports) == 0:
                 # Add a material per output
                 # 
@@ -179,7 +179,7 @@ class MaterialXUsdUtilities:
                     output_name = output.getName()
                     output_type = output.getType()
 
-                    self.logger.info(f'        > Scan output: {output_name}. type: {output_type}')
+                    self.logger.info(f'>>> Scan output: {output_name}. type: {output_type}')
 
                     # Special case for surfaceshader outputs. Just add in a downstream material
                     if output_type == 'surfaceshader':
@@ -187,7 +187,7 @@ class MaterialXUsdUtilities:
                         material_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                         material_node = doc.addMaterialNode(material_name)
                         if material_node:
-                            self.logger.info(f"        > Added material node: {material_node.getName()}, for graph shader output: {output_name}")
+                            self.logger.info(f">>>> Added material node: {material_node.getName()}, for graph shader output: {output_name}")
                             material_node_input = material_node.addInput(output_type, output_type)
                             material_node_input.setNodeGraphString(graph.getName())
                             material_node_input.setOutputString(output_name)
@@ -197,13 +197,13 @@ class MaterialXUsdUtilities:
 
                         if usd_supports_convert_to_surface_shader:
                             # Create a new material node
-                            shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
-                            materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
+                            shadernode_name = doc.createValidChildName('SHD_' + graph.getName() + '_' + output_name)                
+                            materialnode_name = doc.createValidChildName('MAT' + graph.getName() + '_' + output_name)
 
                             convert_definition = 'ND_convert_' + output_type + '_color3'
                             convert_node = doc.getNodeDef(convert_definition)
                             if not convert_node:
-                                self.logger.info(f'        > Failed to find conversion definition: {convert_definition}')
+                                self.logger.info(f'>>>> Failed to find conversion definition: {convert_definition}')
                             else:
                                 shadernode = doc.addNodeInstance(convert_node, shadernode_name)
                                 shadernode.removeAttribute('nodedef')
@@ -229,7 +229,7 @@ class MaterialXUsdUtilities:
                                 convert_definition = 'ND_convert_' + output_type + '_color3'
                                 convert_nodedef = doc.getNodeDef(convert_definition)
                                 if not convert_nodedef:
-                                    self.logger.info("        > Failed to find conversion definition: %s" % convert_definition)
+                                    self.logger.info(">>>> Failed to find conversion definition: %s" % convert_definition)
                                     continue
 
                                 # Find upstream node or interface input
@@ -321,7 +321,7 @@ class MaterialXUsdUtilities:
                 # Firewall. USD does not appear to handle bitangent properly so
                 # skip it for now.
                 if defaultgeomprop.getGeomProp() == "bitangent":
-                    #self.logger.info(f'  > WARNING: Skipping adding explicit bitangent node for: "{node.getNamePath()}"')
+                    #self.logger.info(f'> WARNING: Skipping adding explicit bitangent node for: "{node.getNamePath()}"')
                     continue
 
                 # Fix this up to get information from the defaultgromprop e.g.
@@ -348,7 +348,7 @@ class MaterialXUsdUtilities:
                     if space_input:
                         space_input.setValue(defaultgeomprop_space, 'string')
 
-                    #self.logger.info(f'    > Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
+                    #self.logger.info(f'> Added upstream node "{upstream_default_node.getNamePath()}" : {upstream_default_node}')
                     graph_default_nodes[defaultgeomprop_name] = upstream_default_node
                 else:
                     upstream_default_node = graph_default_nodes[defaultgeomprop_name]

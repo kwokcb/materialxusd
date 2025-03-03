@@ -1,7 +1,8 @@
+import logging
 try:
     from pxr import Usd, Sdf, UsdShade, UsdGeom, Gf, UsdLux, UsdUtils
 except ImportError:
-    print("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
+    self.logger.info("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
     exit(1)
 
 class MaterialxUSDConverter:
@@ -12,8 +13,9 @@ class MaterialxUSDConverter:
         '''
         @brief Constructor for the MaterialxUSDConverter class.
         '''
-        # TODO: Add class variables as needed
-        pass
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger('MX2USD')
+
 
     def validate_stage(self, file:str, verboseOutput:bool=False):
         '''
@@ -79,12 +81,12 @@ class MaterialxUSDConverter:
         # Find the first material under the "MaterialX/Materials" scope
         materialx_prim = stage.GetPrimAtPath("/MaterialX")
         if not materialx_prim:
-            print("> Warning: Could not find /MaterialX scope in the USDA file.")
+            self.logger.info("> Warning: Could not find /MaterialX scope in the USDA file.")
             return found_materials
 
         materials_prim = materialx_prim.GetPrimAtPath("Materials")
         if not materials_prim:
-            print("> Warning: Could not find /MaterialX/Materials scope in the USDA file.")
+            self.logger.info("> Warning: Could not find /MaterialX/Materials scope in the USDA file.")
             return found_materials
 
         for child_prim in materials_prim.GetAllChildren():
@@ -242,11 +244,11 @@ class MaterialxUSDConverter:
         try:
             stage = Usd.Stage.Open(input_usd_path)
         except Exception as e:
-            print(f"> Error: Could not open file at {input_usd_path}. Error: {e}")
+            self.logger.info(f"> Error: Could not open file at {input_usd_path}. Error: {e}")
             return stage, None, None, None, None
         
         if not stage:
-            print(f"> Error: Could not open file at {input_usd_path}")
+            self.logger.info(f"> Error: Could not open file at {input_usd_path}")
             return stage, None, None, None, None
         
         # Set the required validation attributes
@@ -254,13 +256,13 @@ class MaterialxUSDConverter:
 
         if material_file_path:
             # Save the material file
-            print(f"   > Saving MaterialX content to: {material_file_path}")
+            self.logger.info(f"> Saving MaterialX content to: {material_file_path}")
             stage.GetRootLayer().documentation = f"MaterialX content from {input_usd_path}"
             stage.GetRootLayer().Export(material_file_path)
 
         found_materials = self.find_materials(stage, False)
         #if not found_materials:
-        #    print("Warning: No materials found under /MaterialX/Materials.")
+        #    self.logger.info("Warning: No materials found under /MaterialX/Materials.")
             #return stage, found_materials, None, None, None
         first_material = found_materials[0] if found_materials else None
 
@@ -282,7 +284,7 @@ class MaterialxUSDConverter:
             if test_geom_prim and first_material:
                 material_binding_api = UsdShade.MaterialBindingAPI.Apply(test_geom_prim)
                 material_binding_api.Bind(UsdShade.Material(first_material))
-                print(f"   > Geometry reference '{shaderball_path} added under: {test_scene_prim.GetPath()}.")
+                self.logger.info(f"> Geometry reference '{shaderball_path} added under: {test_scene_prim.GetPath()}.")
 
         # Add lighting with reference to light environment file
         # -----------------------------------------
@@ -290,16 +292,16 @@ class MaterialxUSDConverter:
         if environment_path:
             dome_light = self.add_skydome_light(stage, environment_path, LIGHTS_ROOT, SKYDOME_LIGHT_NAME)
             if dome_light:
-                print(f"   > Light '{environment_path}' added at path: {dome_light.GetPath()}.")
+                self.logger.info(f"> Light '{environment_path}' added at path: {dome_light.GetPath()}.")
 
         # Add camera reference
         # -----------------------------------------
         camera_prim = self.add_camera(stage, camera_path)
         if camera_prim:
             if camera_path:
-                print(f"   > Camera '{camera_path}' added at path: {camera_prim.GetPath()}.")
+                self.logger.info(f"> Camera '{camera_path}' added at path: {camera_prim.GetPath()}.")
             else:
-                print(f"   > Camera added at path: {camera_prim.GetPath()}.")
+                self.logger.info(f"> Camera added at path: {camera_prim.GetPath()}.")
 
         return stage, found_materials, test_geom_prim, dome_light, camera_prim
     

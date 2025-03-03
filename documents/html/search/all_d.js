@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['validate_5fstage_0',['validate_stage',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a10a5feb126760ee19ed36dc51583f0e5',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
-  ['vs_20glslfx_1',['vs GLSLFX',['../index.html#autotoc_md7',1,'Comparison: GLSL vs GLSLFX'],['../index.html#autotoc_md8',1,'Comparison: GLSL vs OSL vs GLSLFX']]],
-  ['vs_20osl_20vs_20glslfx_2',['Comparison: GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md8',1,'']]]
+  ['usage_0',['Usage',['../index.html#autotoc_md3',1,'Installation and Usage'],['../index.html#autotoc_md2',1,'Usage']]],
+  ['usd_20utilities_1',['MaterialX USD Utilities',['../index.html',1,'']]],
+  ['utilities_2',['MaterialX USD Utilities',['../index.html',1,'']]]
 ];

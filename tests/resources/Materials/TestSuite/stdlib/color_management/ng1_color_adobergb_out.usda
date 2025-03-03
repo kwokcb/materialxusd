@@ -4,7 +4,7 @@
         string colorSpace = "lin_rec709"
     }
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/color_management\\color_management_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/color_management/color_management_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -67,7 +67,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_rec709_out/ng1.outputs:out>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:coat_affect_roughness>
@@ -110,8 +110,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_lin_rec709_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -171,7 +171,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma18_out/ng1.outputs:out2>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:coat_affect_roughness>
@@ -214,8 +214,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_gamma18_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -275,7 +275,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma22_out/ng1.outputs:out3>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:coat_affect_roughness>
@@ -318,8 +318,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_gamma22_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -379,7 +379,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_gamma24_out/ng1.outputs:out4>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:coat_affect_roughness>
@@ -422,8 +422,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_gamma24_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -483,7 +483,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_acescg_out/ng1.outputs:out5>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:coat_affect_roughness>
@@ -526,8 +526,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_acescg_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -587,7 +587,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_g22_ap1_out/ng1.outputs:out6>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:coat_affect_roughness>
@@ -630,8 +630,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_g22_ap1_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -691,7 +691,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_srgb_texture_out/ng1.outputs:out7>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:coat_affect_roughness>
@@ -734,8 +734,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_srgb_texture_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -795,7 +795,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_adobergb_out/ng1.outputs:out8>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:coat_affect_roughness>
@@ -838,8 +838,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_adobergb_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -899,7 +899,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out/ng1.outputs:out9>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:coat_affect_roughness>
@@ -942,8 +942,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_lin_adobergb_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1003,7 +1003,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out/ng1.outputs:out10>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:coat_affect_roughness>
@@ -1046,8 +1046,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_srgb_displayp3_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1107,7 +1107,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out/ng1.outputs:out11>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:coat_affect_roughness>
@@ -1150,8 +1150,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_image_lin_displayp3_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1211,7 +1211,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_rec709_out/ng1.outputs:out12>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:coat_affect_roughness>
@@ -1254,8 +1254,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_lin_rec709_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1315,7 +1315,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma18_out/ng1.outputs:out13>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:coat_affect_roughness>
@@ -1358,8 +1358,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_gamma18_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1419,7 +1419,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma22_out/ng1.outputs:out14>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:coat_affect_roughness>
@@ -1462,8 +1462,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_gamma22_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1523,7 +1523,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_gamma24_out/ng1.outputs:out15>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:coat_affect_roughness>
@@ -1566,8 +1566,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_gamma24_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1627,7 +1627,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_acescg_out/ng1.outputs:out16>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:coat_affect_roughness>
@@ -1670,8 +1670,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_acescg_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1731,7 +1731,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_g22_ap1_out/ng1.outputs:out17>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:coat_affect_roughness>
@@ -1774,8 +1774,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_g22_ap1_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1835,7 +1835,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_srgb_texture_out/ng1.outputs:out18>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:coat_affect_roughness>
@@ -1878,8 +1878,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_srgb_texture_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -1939,7 +1939,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_adobergb_out/ng1.outputs:out19>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:coat_affect_roughness>
@@ -1982,8 +1982,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_adobergb_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -2043,7 +2043,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out/ng1.outputs:out20>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:coat_affect_roughness>
@@ -2086,8 +2086,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_lin_adobergb_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -2147,7 +2147,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out/ng1.outputs:out21>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:coat_affect_roughness>
@@ -2190,8 +2190,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_srgb_displayp3_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -2251,7 +2251,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out/ng1.outputs:out22>
                 float inputs:coat.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:coat_affect_roughness>
@@ -2294,8 +2294,8 @@ def "MaterialX"
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ng1_color_lin_displayp3_out.inputs:transmission_scatter_anisotropy>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "ng1" (
+                prepend references = </MaterialX/NodeGraphs/ng1>
             )
             {
             }
@@ -2439,6 +2439,320 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
+        def NodeGraph "ng1"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/ng1/image_lin_rec709.outputs:out>
+            color3f outputs:out2.connect = </MaterialX/NodeGraphs/ng1/image_gamma18.outputs:out>
+            color3f outputs:out3.connect = </MaterialX/NodeGraphs/ng1/image_gamma22.outputs:out>
+            color3f outputs:out4.connect = </MaterialX/NodeGraphs/ng1/image_gamma24.outputs:out>
+            color3f outputs:out5.connect = </MaterialX/NodeGraphs/ng1/image_acescg.outputs:out>
+            color3f outputs:out6.connect = </MaterialX/NodeGraphs/ng1/image_g22_ap1.outputs:out>
+            color3f outputs:out7.connect = </MaterialX/NodeGraphs/ng1/image_srgb_texture.outputs:out>
+            color3f outputs:out8.connect = </MaterialX/NodeGraphs/ng1/image_adobergb.outputs:out>
+            color3f outputs:out9.connect = </MaterialX/NodeGraphs/ng1/image_lin_adobergb.outputs:out>
+            color3f outputs:out10.connect = </MaterialX/NodeGraphs/ng1/image_srgb_displayp3.outputs:out>
+            color3f outputs:out11.connect = </MaterialX/NodeGraphs/ng1/image_lin_displayp3.outputs:out>
+            color3f outputs:out12.connect = </MaterialX/NodeGraphs/ng1/color_lin_rec709_color3.outputs:out>
+            color3f outputs:out13.connect = </MaterialX/NodeGraphs/ng1/color_gamma18_color3.outputs:out>
+            color3f outputs:out14.connect = </MaterialX/NodeGraphs/ng1/color_gamma22_color3.outputs:out>
+            color3f outputs:out15.connect = </MaterialX/NodeGraphs/ng1/color_gamma24_color3.outputs:out>
+            color3f outputs:out16.connect = </MaterialX/NodeGraphs/ng1/color_acescg_color3.outputs:out>
+            color3f outputs:out17.connect = </MaterialX/NodeGraphs/ng1/color_g22_ap1_color3.outputs:out>
+            color3f outputs:out18.connect = </MaterialX/NodeGraphs/ng1/color_srgb_texture_color3.outputs:out>
+            color3f outputs:out19.connect = </MaterialX/NodeGraphs/ng1/color_adobergb_color3.outputs:out>
+            color3f outputs:out20.connect = </MaterialX/NodeGraphs/ng1/color_lin_adobergb_color3.outputs:out>
+            color3f outputs:out21.connect = </MaterialX/NodeGraphs/ng1/color_srgb_displayp3_color3.outputs:out>
+            color3f outputs:out22.connect = </MaterialX/NodeGraphs/ng1/color_lin_displayp3_color3.outputs:out>
+
+            def Shader "image_lin_rec709"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_gamma18"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "gamma18"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_gamma22"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "gamma22"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_gamma24"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "gamma24"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_acescg"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "acescg"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_g22_ap1"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "g22_ap1"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_srgb_texture"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "srgb_texture"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_adobergb"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "adobergb"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_lin_adobergb"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "lin_adobergb"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_srgb_displayp3"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "srgb_displayp3"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "image_lin_displayp3"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @resources/Images/grid.png@ (
+                    colorSpace = "lin_displayp3"
+                )
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/ng1/UV0.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_lin_rec709"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1)
+                color4f outputs:out
+            }
+
+            def Shader "color_lin_rec709_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_lin_rec709.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_gamma18"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "gamma18"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_gamma18_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_gamma18.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_gamma22"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "gamma22"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_gamma22_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_gamma22.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_gamma24"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "gamma24"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_gamma24_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_gamma24.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_acescg"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "acescg"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_acescg_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_acescg.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_g22_ap1"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "g22_ap1"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_g22_ap1_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_g22_ap1.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_srgb_texture"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "srgb_texture"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_srgb_texture_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_srgb_texture.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_adobergb"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "adobergb"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_adobergb_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_adobergb.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_lin_adobergb"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "lin_adobergb"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_lin_adobergb_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_lin_adobergb.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_srgb_displayp3"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "srgb_displayp3"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_srgb_displayp3_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_srgb_displayp3.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "color_lin_displayp3"
+            {
+                uniform token info:id = "ND_constant_color4"
+                color4f inputs:value = (0.5, 0, 0, 1) (
+                    colorSpace = "lin_displayp3"
+                )
+                color4f outputs:out
+            }
+
+            def Shader "color_lin_displayp3_color3"
+            {
+                uniform token info:id = "ND_convert_color4_color3"
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/ng1/color_lin_displayp3.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
     }
 }
 

@@ -10,7 +10,7 @@ def "MaterialX"
 {
     def "Materials"
     {
-        def Material "material_heighttonormal_vector3_out" (
+        def Material "heighttonormal_vector3_out" (
             prepend apiSchemas = ["MaterialXConfigAPI"]
         )
         {
@@ -20,17 +20,17 @@ def "MaterialX"
             float inputs:opacity
             float inputs:transmission
             color3f inputs:transmission_color
-            token outputs:mtlx:surface.connect = </MaterialX/Materials/material_heighttonormal_vector3_out/shader_heighttonormal_vector3_out.outputs:surface>
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/heighttonormal_vector3_out/shader_heighttonormal_vector3_out.outputs:surface>
 
             def Shader "shader_heighttonormal_vector3_out" (
                 prepend references = </MaterialX/Shaders/shader_heighttonormal_vector3_out>
             )
             {
-                float inputs:emission.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:emission>
-                color3f inputs:emission_color.connect = </MaterialX/Materials/material_heighttonormal_vector3_out/heighttonormal.outputs:vector3_out>
-                float inputs:opacity.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:opacity>
-                float inputs:transmission.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:transmission>
-                color3f inputs:transmission_color.connect = </MaterialX/Materials/material_heighttonormal_vector3_out.inputs:transmission_color>
+                float inputs:emission.connect = </MaterialX/Materials/heighttonormal_vector3_out.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/heighttonormal_vector3_out/heighttonormal.outputs:vector3_out>
+                float inputs:opacity.connect = </MaterialX/Materials/heighttonormal_vector3_out.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/heighttonormal_vector3_out.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/heighttonormal_vector3_out.inputs:transmission_color>
             }
 
             def "heighttonormal" (

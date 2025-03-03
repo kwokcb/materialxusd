@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['usage_0',['Usage',['../index.html#autotoc_md3',1,'Installation and Usage'],['../index.html#autotoc_md2',1,'Usage']]],
-  ['usd_20utilities_1',['MaterialX USD Utilities',['../index.html',1,'']]],
-  ['utilities_2',['MaterialX USD Utilities',['../index.html',1,'']]]
+  ['save_5fflattened_5flayer_0',['save_flattened_layer',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#acb391ba3086b6911a8701476d3ba69ed',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
+  ['set_5frequired_5fvalidation_5fattributes_1',['set_required_validation_attributes',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a2f6c82097cd55cf859abba5732ee58e1',1,'materialxusd::materialxusd::MaterialxUSDConverter']]]
 ];

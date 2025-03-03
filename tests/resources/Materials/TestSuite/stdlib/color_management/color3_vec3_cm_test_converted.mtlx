@@ -53,13 +53,13 @@
   <surface_unlit name="shader_height_to_normal_cm_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="height_to_normal_cm" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_height_to_normal_cm_out" type="material">
+  <surfacematerial name="height_to_normal_cm_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_height_to_normal_cm_out" />
   </surfacematerial>
   <surface_unlit name="shader_normalmap_cm_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="normalmap_cm" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_normalmap_cm_out" type="material">
+  <surfacematerial name="normalmap_cm_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_normalmap_cm_out" />
   </surfacematerial>
 </materialx>

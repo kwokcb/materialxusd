@@ -112,7 +112,7 @@
   <surface_unlit name="shader_NG_checker_float_out" type="surfaceshader">
     <input name="emission" type="float" nodegraph="NG_checker_float" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_NG_checker_float_out" type="material">
+  <surfacematerial name="NG_checker_float_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_NG_checker_float_out" />
   </surfacematerial>
 </materialx>

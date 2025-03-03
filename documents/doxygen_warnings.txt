@@ -1,8 +1,12 @@
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:18: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/source/materialxusd/materialxusd_utils.py:18: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-/Users/bernardkwok/work/materialxusd/README.md:112: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:112: warning: Unsupported xml/html tag </iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:117: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:117: warning: Unsupported xml/html tag </iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:122: warning: Unsupported xml/html tag <iframe> found
-/Users/bernardkwok/work/materialxusd/README.md:122: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:17: warning: Member logger (variable) of class materialxusd.materialxusd.MaterialxUSDConverter is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:21: warning: Member logger (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:116: warning: The following parameter of materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_downstream_materials(self, mx.Document doc, logger=None) is not documented:
+  parameter 'logger'
+D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:122: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:122: warning: Unsupported xml/html tag </iframe> found

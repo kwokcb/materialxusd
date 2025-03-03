@@ -179,18 +179,54 @@ class MaterialXUsdUtilities:
                     output_name = output.getName()
                     output_type = output.getType()
 
-                    self.logger.info(f'>>> Scan output: {output_name}. type: {output_type}')
+                    #self.logger.info(f'>>> Scan output: {output_name}. type: {output_type}')
 
                     # Special case for surfaceshader outputs. Just add in a downstream material
                     if output_type == 'surfaceshader':
+                        graph_parent = graph.getParent()
+                        connected_ss = output.getConnectedNode()
+                        if not graph_parent or not connected_ss:
+                            continue
+
+                        self.logger.info(f'>>>> Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}')
+
+                        shadernode_name = graph_parent.createValidChildName(connected_ss.getName())
+                        shadernode_nodedef = connected_ss.getNodeDef()
+                        shadernode = graph_parent.addNodeInstance(shadernode_nodedef, shadernode_name)
+                        shadernode.copyContentFrom(connected_ss)
+
+                        # For every connected input on the surfaceshader node
+                        # create a nodegraph output
+                        for ss_input in connected_ss.getInputs():
+                            ss_input_input = ss_input.getNodeName() if ss_input.getNodeName() else ss_input.getInterfaceName()
+                            if not ss_input_input:
+                                continue
+                            ss_input_type = ss_input.getType()
+                            ss_input_output = graph.addOutput(graph.createValidChildName('out'), ss_input_type)
+                            ss_input_output.setNodeName(ss_input_input)
+                            if ss_input.getOutputString():
+                                ss_input_output.setOutputString(ss_input.getOutputString())
+
+                            # Connect new graph output to new shader node's input to 
+                            shadernode_input = shadernode.getInput(ss_input.getName())
+                            if shadernode_input:
+                                shadernode_input.removeAttribute('nodename')
+                                shadernode_input.setNodeGraphString(graph.getName())
+                                shadernode_input.setOutputString(ss_input_output.getName())
+                        
+                        # Should do this after scanning all surfaceshader nodes...
+                        graph.removeNode(connected_ss.getName())
+                        graph.removeOutput(output_name)
+
                         # Add a material for the shader
                         material_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                         material_node = doc.addMaterialNode(material_name)
                         if material_node:
                             self.logger.info(f">>>> Added material node: {material_node.getName()}, for graph shader output: {output_name}")
                             material_node_input = material_node.addInput(output_type, output_type)
-                            material_node_input.setNodeGraphString(graph.getName())
-                            material_node_input.setOutputString(output_name)
+                            #material_node_input.setNodeGraphString(graph.getName())
+                            #material_node_input.setOutputString(output_name)
+                            material_node_input.setNodeName(shadernode_name)
                             material_count += 1
 
                     elif output_type in supported_output_types:
@@ -259,7 +295,7 @@ class MaterialXUsdUtilities:
                             
                             # Create downstream (umlit) shader
                             shadernode_name = doc.createValidChildName('shader_' + graph.getName() + '_' + output_name)                
-                            materialnode_name = doc.createValidChildName('material_' + graph.getName() + '_' + output_name)
+                            materialnode_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                             unlitDefinition = 'ND_surface_unlit'
                             unlitNode = doc.getNodeDef(unlitDefinition)
                             shadernode = doc.addNodeInstance(unlitNode, shadernode_name)

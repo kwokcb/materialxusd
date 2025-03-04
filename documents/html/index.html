@@ -140,10 +140,15 @@ Available Components</h2>
 <li><code><a class="el" href="preprocess__mtlx_8py_source.html">preprocess_mtlx.py</a></code> : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:<ul>
 <li>Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.</li>
 <li>Resolve any implicit geometry stream bindings on <code>inputs</code> and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.</li>
+<li>Add a material node per surface shader which is not connected to any downstream material. USD only examines materials and not shaders so these are skipped during conversion.</li>
+<li>Extract out any surface shaders inside a nodegraph to be outside the graph as this is considered invalid by USD.</li>
+<li>If a surface shader input is connected to a nodegraph, add in an explicit <code>output</code> qualifier. Seems <code>out</code> is assumed to be the name of the output when there is no explicit qualifier which can be incorrect.</li>
+<li>Flatten all image asset references using the existing MaterialX utilities for path resolve. This is needed as the MaterialX render tests have assumed search paths which are not explicitly defined &ndash; thus requiring the paths to be passed in as part of preprocessing.</li>
 </ul>
 </li>
 </ul>
 </li>
+<li>Note that nodes graphs with child nodes that are the same name as the parent graph, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Usage</h1>

@@ -2,11 +2,12 @@ D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:17: warning: 
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:21: warning: Member logger (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:116: warning: The following parameter of materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_downstream_materials(self, mx.Document doc, logger=None) is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:146: warning: The following parameter of materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_downstream_materials(self, mx.Document doc, logger=None) is not documented:
   parameter 'logger'
-D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:112: warning: Unsupported xml/html tag </iframe> found
-D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:117: warning: Unsupported xml/html tag </iframe> found
-D:/Work/materialx/materialxusd/README.md:122: warning: Unsupported xml/html tag <iframe> found
-D:/Work/materialx/materialxusd/README.md:122: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:116: warning: argument 'logger' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::add_materials_for_shaders(self, mx.Document doc)
+D:/Work/materialx/materialxusd/README.md:123: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:123: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:128: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:128: warning: Unsupported xml/html tag </iframe> found
+D:/Work/materialx/materialxusd/README.md:133: warning: Unsupported xml/html tag <iframe> found
+D:/Work/materialx/materialxusd/README.md:133: warning: Unsupported xml/html tag </iframe> found

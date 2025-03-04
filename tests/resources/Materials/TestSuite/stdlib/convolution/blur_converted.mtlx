@@ -1,49 +1,49 @@
 <?xml version="1.0"?>
 <materialx version="1.39">
-  <nodegraph name="blur_color3_graph">
+  <nodegraph name="blur_color3">
     <image name="image1" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
-    <blur name="blur_color3" type="color3">
+    <blur name="blur_color3_node" type="color3">
       <input name="in" type="color3" nodename="image1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="gaussian" />
     </blur>
-    <output name="out" type="color3" nodename="blur_color3" />
+    <output name="out" type="color3" nodename="blur_color3_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
   </nodegraph>
-  <nodegraph name="blur_color4_graph">
+  <nodegraph name="blur_color4">
     <tiledimage name="tiledimage1" type="color4">
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
-    <blur name="blur_color4" type="color4">
+    <blur name="blur_color4_node" type="color4">
       <input name="in" type="color4" nodename="tiledimage1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="gaussian" />
     </blur>
-    <output name="out" type="color3" nodename="convert_blur_color4" />
+    <output name="out" type="color3" nodename="convert_blur_color4_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <convert name="convert_blur_color4" type="color3">
-      <input name="in" type="color4" nodename="blur_color4" />
+    <convert name="convert_blur_color4_node" type="color3">
+      <input name="in" type="color4" nodename="blur_color4_node" />
     </convert>
   </nodegraph>
-  <nodegraph name="blur_float_graph">
+  <nodegraph name="blur_float">
     <image name="image1" type="float">
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </image>
-    <blur name="blur_float" type="float">
+    <blur name="blur_float_node" type="float">
       <input name="in" type="float" nodename="image1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="box" />
     </blur>
-    <output name="out" type="float" nodename="blur_float" />
+    <output name="out" type="float" nodename="blur_float_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
@@ -53,35 +53,35 @@
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
-    <blur name="blur_vector2" type="vector2">
+    <blur name="blur_vector2_node" type="vector2">
       <input name="in" type="vector2" nodename="tiledimage1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="box" />
     </blur>
-    <output name="out" type="color3" nodename="convert_blur_vector2" />
+    <output name="out" type="color3" nodename="convert_blur_vector2_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <convert name="convert_blur_vector2" type="color3">
-      <input name="in" type="vector2" nodename="blur_vector2" />
+    <convert name="convert_blur_vector2_node" type="color3">
+      <input name="in" type="vector2" nodename="blur_vector2_node" />
     </convert>
   </nodegraph>
-  <nodegraph name="blur_vector3_graph">
+  <nodegraph name="blur_vector3">
     <tiledimage name="tiledimage1" type="vector3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
-    <blur name="blur_vector3" type="vector3">
+    <blur name="blur_vector3_node" type="vector3">
       <input name="in" type="vector3" nodename="tiledimage1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="box" />
     </blur>
-    <output name="out" type="color3" nodename="convert_blur_vector3" />
+    <output name="out" type="color3" nodename="convert_blur_vector3_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <convert name="convert_blur_vector3" type="color3">
-      <input name="in" type="vector3" nodename="blur_vector3" />
+    <convert name="convert_blur_vector3_node" type="color3">
+      <input name="in" type="vector3" nodename="blur_vector3_node" />
     </convert>
   </nodegraph>
   <nodegraph name="blur_vector4">
@@ -89,20 +89,20 @@
       <input name="file" type="filename" value="resources/Images/grid.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
-    <blur name="blur_vector4" type="vector4">
+    <blur name="blur_vector4_node" type="vector4">
       <input name="in" type="vector4" nodename="tiledimage1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="box" />
     </blur>
-    <output name="out" type="color3" nodename="convert_blur_vector4" />
+    <output name="out" type="color3" nodename="convert_blur_vector4_node" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
-    <convert name="convert_blur_vector4" type="color3">
-      <input name="in" type="vector4" nodename="blur_vector4" />
+    <convert name="convert_blur_vector4_node" type="color3">
+      <input name="in" type="vector4" nodename="blur_vector4_node" />
     </convert>
   </nodegraph>
-  <nodegraph name="blur_cellnoise_graph">
+  <nodegraph name="blur_cellnoise">
     <texcoord name="texcoord1" type="vector2" />
     <multiply name="multiply1" type="vector2">
       <input name="in1" type="vector2" nodename="texcoord1" />
@@ -111,30 +111,30 @@
     <cellnoise2d name="cellnoise2d1" type="float">
       <input name="texcoord" type="vector2" nodename="multiply1" />
     </cellnoise2d>
-    <blur name="blur_cellnoise" type="float">
+    <blur name="blur_cellnoise_node" type="float">
       <input name="in" type="float" nodename="cellnoise2d1" />
       <input name="size" type="float" value="0.5" />
       <input name="filtertype" type="string" value="gaussian" />
     </blur>
-    <output name="out" type="float" nodename="blur_cellnoise" />
+    <output name="out" type="float" nodename="blur_cellnoise_node" />
   </nodegraph>
-  <surface_unlit name="shader_blur_color3_graph_out" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="blur_color3_graph" output="out" />
+  <surface_unlit name="shader_blur_color3_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="blur_color3" output="out" />
   </surface_unlit>
-  <surfacematerial name="blur_color3_graph_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color3_graph_out" />
+  <surfacematerial name="blur_color3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color3_out" />
   </surfacematerial>
-  <surface_unlit name="shader_blur_color4_graph_out" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="blur_color4_graph" output="out" />
+  <surface_unlit name="shader_blur_color4_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="blur_color4" output="out" />
   </surface_unlit>
-  <surfacematerial name="blur_color4_graph_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color4_graph_out" />
+  <surfacematerial name="blur_color4_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_color4_out" />
   </surfacematerial>
-  <surface_unlit name="shader_blur_float_graph_out" type="surfaceshader">
-    <input name="emission" type="float" nodegraph="blur_float_graph" output="out" />
+  <surface_unlit name="shader_blur_float_out" type="surfaceshader">
+    <input name="emission" type="float" nodegraph="blur_float" output="out" />
   </surface_unlit>
-  <surfacematerial name="blur_float_graph_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_float_graph_out" />
+  <surfacematerial name="blur_float_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_float_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_vector2_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_vector2" output="out" />
@@ -142,11 +142,11 @@
   <surfacematerial name="blur_vector2_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector2_out" />
   </surfacematerial>
-  <surface_unlit name="shader_blur_vector3_graph_out" type="surfaceshader">
-    <input name="emission_color" type="color3" nodegraph="blur_vector3_graph" output="out" />
+  <surface_unlit name="shader_blur_vector3_out" type="surfaceshader">
+    <input name="emission_color" type="color3" nodegraph="blur_vector3" output="out" />
   </surface_unlit>
-  <surfacematerial name="blur_vector3_graph_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector3_graph_out" />
+  <surfacematerial name="blur_vector3_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector3_out" />
   </surfacematerial>
   <surface_unlit name="shader_blur_vector4_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="blur_vector4" output="out" />
@@ -154,10 +154,10 @@
   <surfacematerial name="blur_vector4_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_vector4_out" />
   </surfacematerial>
-  <surface_unlit name="shader_blur_cellnoise_graph_out" type="surfaceshader">
-    <input name="emission" type="float" nodegraph="blur_cellnoise_graph" output="out" />
+  <surface_unlit name="shader_blur_cellnoise_out" type="surfaceshader">
+    <input name="emission" type="float" nodegraph="blur_cellnoise" output="out" />
   </surface_unlit>
-  <surfacematerial name="blur_cellnoise_graph_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_cellnoise_graph_out" />
+  <surfacematerial name="blur_cellnoise_out" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="shader_blur_cellnoise_out" />
   </surfacematerial>
 </materialx>

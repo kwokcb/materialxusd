@@ -80,8 +80,38 @@ class MaterialXUsdUtilities:
         '''
         mx.flattenFilenames(doc, search_paths)
 
+    def add_nodegraph_output_qualifier_on_shaders(self, doc: mx.Document):
+        '''
+        @brief Add nodegraph output qualifier on shaders in the MaterialX document if not already set.
+        USD appears to require this for shader inputs to be connected to outputs on a nodegraph
+        sometimes -- when the output name is not "out" ?
+        @param doc The MaterialX document.
+        @return The number of explicit outputs added.
+        '''
+        explicit_outputs_added = 0
+        surfaceshader_nodes = doc.getChildren()
+        for surfaceshader_node in surfaceshader_nodes:
+            if surfaceshader_node.getType() not in ['surfaceshader']:
+                continue
+
+            # Scan all inputs on the shader node
+            for input in surfaceshader_node.getInputs():
+                # Check for nodegraph output qualifier
+                nodegraph_string = input.getNodeGraphString()
+                if nodegraph_string:
+                    if not input.getOutputString():
+                        nodegraph = doc.getNodeGraph(nodegraph_string)
+                        if nodegraph:
+                            outputs = nodegraph.getOutputs()
+                            if outputs:
+                                input.setOutputString(outputs[0].getName())
+                                explicit_outputs_added += 1
+                                self.logger.debug(f'>> Add output qualifier for shader input {mx.prettyPrint(input)}')  
+        
+        return explicit_outputs_added
+
     
-    def add_materials_for_shaders(self, doc: mx.Document, logger=None):
+    def add_materials_for_shaders(self, doc: mx.Document):
         '''
         @brief Add materials for shaders at the root level of a MaterialX document. Nodegraphs are not considered as this is not supported by USD. 
         @param doc The MaterialX document. 

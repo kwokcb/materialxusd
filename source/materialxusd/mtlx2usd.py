@@ -119,7 +119,11 @@ def main():
             materials_added = utils.add_downstream_materials(doc)
             if materials_added:
                 logger.info(f'> Added {materials_added} downstream materials.')
-            doc.setDataLibrary(None)      
+
+            # Add explicit outputs to nodegraph outputs for shader connections
+            explicit_outputs_added = utils.add_nodegraph_output_qualifier_on_shaders(doc)
+            if explicit_outputs_added:
+                logger.info(f"> Added {explicit_outputs_added} explicit outputs to nodegraph outputs for shader connections")
 
             # Resolve image file paths
             # Include absolute path of the input file's folder
@@ -136,8 +140,9 @@ def main():
                     logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
                 resolved_image_paths = True            
 
-            if resolved_image_paths or materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
+            if explicit_outputs_added or resolved_image_paths or materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
                 valid, errors = doc.validate()
+                doc.setDataLibrary(None)     
                 if not valid:
                     logger.warning(f"> Validation errors: {errors}")
 

@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\mapped_surfaceshader_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader/mapped_surfaceshader_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -64,7 +64,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/MappedShaderMaterial/RedRamp.outputs:out>
                 float inputs:coat.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:coat_affect_roughness>
@@ -85,7 +85,7 @@ def "MaterialX"
                 float inputs:sheen_roughness.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:sheen_roughness>
                 float inputs:specular.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular>
                 float inputs:specular_anisotropy.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular_anisotropy>
-                color3f inputs:specular_color.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular_color>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/MappedShaderMaterial/GreenRamp.outputs:out>
                 float inputs:specular_IOR.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular_IOR>
                 float inputs:specular_rotation.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular_rotation>
                 float inputs:specular_roughness.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:specular_roughness>
@@ -105,6 +105,18 @@ def "MaterialX"
                 float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:transmission_extra_roughness>
                 color3f inputs:transmission_scatter.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:transmission_scatter>
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/MappedShaderMaterial.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "RedRamp" (
+                prepend references = </MaterialX/NodeGraphs/RedRamp>
+            )
+            {
+            }
+
+            def "GreenRamp" (
+                prepend references = </MaterialX/NodeGraphs/GreenRamp>
+            )
+            {
             }
         }
 
@@ -161,8 +173,8 @@ def "MaterialX"
                 prepend references = </MaterialX/Shaders/UnitMappedShader>
             )
             {
-                float inputs:base.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:base_color>
+                float inputs:base.connect = </MaterialX/Materials/UnitMappedShaderMaterial/UnitGraph.outputs:out>
+                color3f inputs:base_color.connect = </MaterialX/Materials/UnitMappedShaderMaterial/YellowRamp.outputs:out>
                 float inputs:coat.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:coat_affect_roughness>
@@ -183,7 +195,7 @@ def "MaterialX"
                 float inputs:sheen_roughness.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:sheen_roughness>
                 float inputs:specular.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular>
                 float inputs:specular_anisotropy.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular_anisotropy>
-                color3f inputs:specular_color.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular_color>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/UnitMappedShaderMaterial/BlueRamp.outputs:out>
                 float inputs:specular_IOR.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular_IOR>
                 float inputs:specular_rotation.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular_rotation>
                 float inputs:specular_roughness.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:specular_roughness>
@@ -203,6 +215,24 @@ def "MaterialX"
                 float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:transmission_extra_roughness>
                 color3f inputs:transmission_scatter.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:transmission_scatter>
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/UnitMappedShaderMaterial.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "UnitGraph" (
+                prepend references = </MaterialX/NodeGraphs/UnitGraph>
+            )
+            {
+            }
+
+            def "YellowRamp" (
+                prepend references = </MaterialX/NodeGraphs/YellowRamp>
+            )
+            {
+            }
+
+            def "BlueRamp" (
+                prepend references = </MaterialX/NodeGraphs/BlueRamp>
+            )
+            {
             }
         }
 
@@ -262,7 +292,7 @@ def "MaterialX"
             )
             {
                 float inputs:base.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:base>
-                color3f inputs:base_color.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:base_color>
+                color3f inputs:base_color.connect = </MaterialX/Materials/ColorSpaceShaderMaterial/ColorSpaceGraph.outputs:out>
                 float inputs:coat.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:coat>
                 float inputs:coat_affect_color.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:coat_affect_color>
                 float inputs:coat_affect_roughness.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:coat_affect_roughness>
@@ -303,6 +333,12 @@ def "MaterialX"
                 float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:transmission_extra_roughness>
                 color3f inputs:transmission_scatter.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:transmission_scatter>
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/ColorSpaceShaderMaterial.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "ColorSpaceGraph" (
+                prepend references = </MaterialX/NodeGraphs/ColorSpaceGraph>
+            )
+            {
             }
         }
 
@@ -374,7 +410,7 @@ def "MaterialX"
                 float inputs:emission.connect = </MaterialX/Materials/NormalMapMaterial.inputs:emission>
                 color3f inputs:emission_color.connect = </MaterialX/Materials/NormalMapMaterial.inputs:emission_color>
                 float inputs:metalness.connect = </MaterialX/Materials/NormalMapMaterial.inputs:metalness>
-                float3 inputs:normal.connect = </MaterialX/Materials/NormalMapMaterial.inputs:normal>
+                float3 inputs:normal.connect = </MaterialX/Materials/NormalMapMaterial/Compound.outputs:out>
                 color3f inputs:opacity.connect = </MaterialX/Materials/NormalMapMaterial.inputs:opacity>
                 float inputs:sheen.connect = </MaterialX/Materials/NormalMapMaterial.inputs:sheen>
                 color3f inputs:sheen_color.connect = </MaterialX/Materials/NormalMapMaterial.inputs:sheen_color>
@@ -401,6 +437,12 @@ def "MaterialX"
                 float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/NormalMapMaterial.inputs:transmission_extra_roughness>
                 color3f inputs:transmission_scatter.connect = </MaterialX/Materials/NormalMapMaterial.inputs:transmission_scatter>
                 float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/NormalMapMaterial.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "Compound" (
+                prepend references = </MaterialX/NodeGraphs/Compound>
+            )
+            {
             }
         }
     }
@@ -429,6 +471,185 @@ def "MaterialX"
         {
             uniform token info:id = "ND_standard_surface_surfaceshader"
             token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "RedRamp"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/RedRamp/ramp4.outputs:out>
+
+            def Shader "ramp4"
+            {
+                uniform token info:id = "ND_ramp4_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/RedRamp/UV0.outputs:out>
+                color3f inputs:valuebl = (1, 0, 0)
+                color3f inputs:valuebr = (0.1, 0, 0)
+                color3f inputs:valuetl = (1, 0, 0)
+                color3f inputs:valuetr = (0.1, 0, 0)
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+
+        def NodeGraph "GreenRamp"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/GreenRamp/ramp4.outputs:out>
+
+            def Shader "ramp4"
+            {
+                uniform token info:id = "ND_ramp4_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/GreenRamp/UV0.outputs:out>
+                color3f inputs:valuebl = (0, 1, 0)
+                color3f inputs:valuebr = (0, 0.1, 0)
+                color3f inputs:valuetl = (0, 1, 0)
+                color3f inputs:valuetr = (0, 0.1, 0)
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+
+        def NodeGraph "UnitGraph"
+        {
+            float outputs:out.connect = </MaterialX/NodeGraphs/UnitGraph/tiledimage.outputs:out>
+
+            def Shader "tiledimage"
+            {
+                uniform token info:id = "ND_tiledimage_float"
+                asset inputs:file = @resources/Images/grid.png@
+                float2 inputs:realworldimagesize = (1, 1)
+                float2 inputs:realworldtilesize = (100, 50)
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/UnitGraph/UV0.outputs:out>
+                float2 inputs:uvoffset = (0.2, 0.2)
+                float2 inputs:uvtiling = (2, 3)
+                float outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+
+        def NodeGraph "YellowRamp"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/YellowRamp/ramp4.outputs:out>
+
+            def Shader "ramp4"
+            {
+                uniform token info:id = "ND_ramp4_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/YellowRamp/UV0.outputs:out>
+                color3f inputs:valuebl = (1, 1, 0)
+                color3f inputs:valuebr = (1, 1, 1)
+                color3f inputs:valuetl = (1, 1, 0)
+                color3f inputs:valuetr = (0, 0, 0)
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+
+        def NodeGraph "BlueRamp"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/BlueRamp/ramp4.outputs:out>
+
+            def Shader "ramp4"
+            {
+                uniform token info:id = "ND_ramp4_color3"
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/BlueRamp/UV0.outputs:out>
+                color3f inputs:valuebl = (0, 0, 1)
+                color3f inputs:valuebr = (0, 0, 0.1)
+                color3f inputs:valuetl = (0, 0, 1)
+                color3f inputs:valuetr = (0, 0, 0.1)
+                color3f outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+
+        def NodeGraph "ColorSpaceGraph"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/ColorSpaceGraph/color_gamma22.outputs:out>
+
+            def Shader "color_gamma22"
+            {
+                uniform token info:id = "ND_constant_color3"
+                color3f inputs:value = (0.5, 0, 0) (
+                    colorSpace = "gamma22"
+                )
+                color3f outputs:out
+            }
+        }
+
+        def NodeGraph "Compound"
+        {
+            asset inputs:file
+            float3 outputs:out.connect = </MaterialX/NodeGraphs/Compound/normalmap.outputs:out>
+
+            def Shader "normalmap"
+            {
+                uniform token info:id = "ND_normalmap_vector2"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/Compound/tiledimage.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/Compound/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/Compound/Tworld.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "tiledimage"
+            {
+                uniform token info:id = "ND_tiledimage_vector3"
+                asset inputs:file = @resources/Images/mesh_wire_norm.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/Compound/UV0.outputs:out>
+                float2 inputs:uvtiling = (10, 10)
+                float3 outputs:out
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
         }
     }
 }

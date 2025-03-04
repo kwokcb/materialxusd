@@ -164,32 +164,37 @@ $(function(){initNavTree('preprocess__mtlx_8py_source.html',''); initResizable(t
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            logger.info(f<span class="stringliteral">&#39;&gt; Added {materials_added} downstream materials.&#39;</span>)</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        doc.setDataLibrary(<span class="keywordtype">None</span>)</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="comment"># Resolve image file paths</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="comment"># Include absolute path of the input file&#39;s folder</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        resolved_image_paths = <span class="keyword">False</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        image_paths = args.imagepaths.split(<span class="stringliteral">&#39;,&#39;</span>) <span class="keywordflow">if</span> args.imagepaths <span class="keywordflow">else</span> []</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        image_paths.append(os.path.dirname(os.path.abspath(input_path)))</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">if</span> image_paths:</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            beforeDoc = mx.prettyPrint(doc)             </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            mx_image_search_path = utils.create_FileSearchPath(image_paths)</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            utils.resolve_image_file_paths(doc, mx_image_search_path)</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            afterDoc = mx.prettyPrint(doc)</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordflow">if</span> beforeDoc != afterDoc:</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                resolved_image_paths = <span class="keyword">True</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                logger.info(f<span class="stringliteral">&quot;&gt; Resolved image file paths using search paths: {mx_image_search_path}&quot;</span>)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            resolved_image_paths = <span class="keyword">True</span>            </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">if</span> resolved_image_paths <span class="keywordflow">or</span> materials_added&gt; 0 <span class="keywordflow">or</span> implicit_nodes_added &gt; 0 <span class="keywordflow">or</span> top_level_nodes_found &gt; 0:</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            utils.write_document(doc, output_path)</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            logger.info(f<span class="stringliteral">&quot;&gt; Wrote modified document to {output_path}&quot;</span>)</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        logger.error(f<span class="stringliteral">&quot;&gt; Failed to preprocess document. Error: {e}&quot;</span>)</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    main()</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="comment"># Add explicit outputs to nodegraph outputs for shader connections</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        explicit_outputs_added = utils.add_nodegraph_output_qualifier_on_shaders(doc)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">if</span> explicit_outputs_added:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            logger.info(f<span class="stringliteral">&quot;&gt; Added {explicit_outputs_added} explicit outputs to nodegraph outputs for shader connections&quot;</span>)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="comment"># Resolve image file paths</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="comment"># Include absolute path of the input file&#39;s folder</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        resolved_image_paths = <span class="keyword">False</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        image_paths = args.imagepaths.split(<span class="stringliteral">&#39;,&#39;</span>) <span class="keywordflow">if</span> args.imagepaths <span class="keywordflow">else</span> []</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        image_paths.append(os.path.dirname(os.path.abspath(input_path)))</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">if</span> image_paths:</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            beforeDoc = mx.prettyPrint(doc)             </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            mx_image_search_path = utils.create_FileSearchPath(image_paths)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            utils.resolve_image_file_paths(doc, mx_image_search_path)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            afterDoc = mx.prettyPrint(doc)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">if</span> beforeDoc != afterDoc:</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                resolved_image_paths = <span class="keyword">True</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                logger.info(f<span class="stringliteral">&quot;&gt; Resolved image file paths using search paths: {mx_image_search_path}&quot;</span>)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            resolved_image_paths = <span class="keyword">True</span>            </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">if</span> explicit_outputs_added <span class="keywordflow">or</span> resolved_image_paths <span class="keywordflow">or</span> materials_added&gt; 0 <span class="keywordflow">or</span> implicit_nodes_added &gt; 0 <span class="keywordflow">or</span> top_level_nodes_found &gt; 0:</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            utils.write_document(doc, output_path)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            logger.info(f<span class="stringliteral">&quot;&gt; Wrote modified document to {output_path}&quot;</span>)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        logger.error(f<span class="stringliteral">&quot;&gt; Failed to preprocess document. Error: {e}&quot;</span>)</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    main()</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.12.0-->

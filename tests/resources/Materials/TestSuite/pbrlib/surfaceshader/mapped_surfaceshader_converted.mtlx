@@ -28,10 +28,10 @@
   </nodegraph>
   <standard_surface name="MappedShader" type="surfaceshader" version="1.0.1">
     <input name="base" type="float" value="1" />
-    <input name="base_color" type="color3" nodegraph="RedRamp" />
+    <input name="base_color" type="color3" nodegraph="RedRamp" output="out" />
     <input name="metalness" type="float" value="0.333" />
     <input name="specular" type="float" value="0" />
-    <input name="specular_color" type="color3" nodegraph="GreenRamp" />
+    <input name="specular_color" type="color3" nodegraph="GreenRamp" output="out" />
     <input name="coat" type="float" value="1" />
   </standard_surface>
   <surfacematerial name="MappedShaderMaterial" type="material">
@@ -79,11 +79,11 @@
     </texcoord>
   </nodegraph>
   <standard_surface name="UnitMappedShader" type="surfaceshader" version="1.0.1">
-    <input name="base" type="float" nodegraph="UnitGraph" />
-    <input name="base_color" type="color3" nodegraph="YellowRamp" />
+    <input name="base" type="float" nodegraph="UnitGraph" output="out" />
+    <input name="base_color" type="color3" nodegraph="YellowRamp" output="out" />
     <input name="metalness" type="float" value="0.1" />
     <input name="specular" type="float" value="1" />
-    <input name="specular_color" type="color3" nodegraph="BlueRamp" />
+    <input name="specular_color" type="color3" nodegraph="BlueRamp" output="out" />
   </standard_surface>
   <surfacematerial name="UnitMappedShaderMaterial" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="UnitMappedShader" />
@@ -97,7 +97,7 @@
   </nodegraph>
   <standard_surface name="ColorSpaceShader" type="surfaceshader" version="1.0.1">
     <input name="base" type="float" value="0.5" />
-    <input name="base_color" type="color3" nodegraph="ColorSpaceGraph" />
+    <input name="base_color" type="color3" nodegraph="ColorSpaceGraph" output="out" />
     <input name="metalness" type="float" value="0" />
     <input name="specular" type="float" value="1" />
     <input name="specular_color" type="color3" value="0.2, 0.6, 0.8" colorspace="g22_ap1" />
@@ -110,7 +110,7 @@
   </surfacematerial>
   <standard_surface name="NormalMapShader" type="surfaceshader" version="1.0.1">
     <input name="base_color" type="color3" value="0.2, 0.5, 0.9" />
-    <input name="normal" type="vector3" nodegraph="Compound" />
+    <input name="normal" type="vector3" nodegraph="Compound" output="out" />
   </standard_surface>
   <surfacematerial name="NormalMapMaterial" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="NormalMapShader" />

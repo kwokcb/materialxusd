@@ -34,6 +34,17 @@ Some initial utilities are provided with more coming on-line as the site / requi
   - `preprocess_mtlx.py` : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
     - Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
     - Resolve any implicit geometry stream bindings on `inputs` and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.
+    - Add a material node per surface shader which is not connected to any downstream material. USD only examines materials and not shaders
+    so these are skipped during conversion. 
+    - Extract out any surface shaders inside a nodegraph to be outside the graph as this is considered invalid by USD.
+    - If a surface shader input is connected to a nodegraph, add in an explicit `output` qualifier. Seems `out` is assumed to be the name
+    of the output when there is no explicit qualifier which can be incorrect.
+    - Flatten all image asset references using the existing MaterialX
+    utilities for path resolve. This is needed as the MaterialX 
+    render tests have assumed search paths which are not explicitly defined -- thus requiring the paths to be passed in as part of 
+    preprocessing.
+
+- Note that nodes graphs with child nodes that are the same name as the parent graph, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. 
 
 ## Usage
 

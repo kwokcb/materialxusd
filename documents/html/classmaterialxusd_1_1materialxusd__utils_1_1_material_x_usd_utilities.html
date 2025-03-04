@@ -140,9 +140,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a523bca6eb5bb2f1da5f334f3844e0572" id="r_a523bca6eb5bb2f1da5f334f3844e0572"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a523bca6eb5bb2f1da5f334f3844e0572">resolve_image_file_paths</a> (self, mx.Document doc, mx.FileSearchPath search_paths)</td></tr>
 <tr class="memdesc:a523bca6eb5bb2f1da5f334f3844e0572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolve image file paths in a MaterialX document.  <br /></td></tr>
 <tr class="separator:a523bca6eb5bb2f1da5f334f3844e0572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13139a0f9b7e20f1110d065248381c1b" id="r_a13139a0f9b7e20f1110d065248381c1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13139a0f9b7e20f1110d065248381c1b">add_materials_for_shaders</a> (self, mx.Document doc, logger=None)</td></tr>
-<tr class="memdesc:a13139a0f9b7e20f1110d065248381c1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add materials for shaders at the root level of a MaterialX document.  <br /></td></tr>
-<tr class="separator:a13139a0f9b7e20f1110d065248381c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9dbc82e0a9467928d680f5fcf4fc58e" id="r_ad9dbc82e0a9467928d680f5fcf4fc58e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9dbc82e0a9467928d680f5fcf4fc58e">add_nodegraph_output_qualifier_on_shaders</a> (self, mx.Document doc)</td></tr>
+<tr class="memdesc:ad9dbc82e0a9467928d680f5fcf4fc58e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add nodegraph output qualifier on shaders in the MaterialX document if not already set.  <br /></td></tr>
+<tr class="separator:ad9dbc82e0a9467928d680f5fcf4fc58e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4b42a83f8b98b72ab354b88ce14560f" id="r_ab4b42a83f8b98b72ab354b88ce14560f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4b42a83f8b98b72ab354b88ce14560f">add_materials_for_shaders</a> (self, mx.Document doc)</td></tr>
+<tr class="memdesc:ab4b42a83f8b98b72ab354b88ce14560f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add materials for shaders at the root level of a MaterialX document.  <br /></td></tr>
+<tr class="separator:ab4b42a83f8b98b72ab354b88ce14560f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9d3342a25c4a89db3738e2c7e72cb6c" id="r_ae9d3342a25c4a89db3738e2c7e72cb6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9d3342a25c4a89db3738e2c7e72cb6c">add_downstream_materials</a> (self, mx.Document doc, logger=None)</td></tr>
 <tr class="memdesc:ae9d3342a25c4a89db3738e2c7e72cb6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add downstream materials to the MaterialX graph.  <br /></td></tr>
 <tr class="separator:ae9d3342a25c4a89db3738e2c7e72cb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,220 +239,220 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of materials added. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00113">113</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  113</span>    <span class="keyword">def </span>add_downstream_materials(self, doc: mx.Document, logger=<span class="keywordtype">None</span>):</div>
-<div class="line"><span class="lineno">  114</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  115</span><span class="stringliteral">        @brief Add downstream materials to the MaterialX graph.</span></div>
-<div class="line"><span class="lineno">  116</span><span class="stringliteral">        @param doc The MaterialX document.</span></div>
-<div class="line"><span class="lineno">  117</span><span class="stringliteral">        @return The number of materials added.</span></div>
-<div class="line"><span class="lineno">  118</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  119</span>        <span class="comment"># If has materials skip</span></div>
-<div class="line"><span class="lineno">  120</span>        material_count = len(doc.getMaterialNodes())</div>
-<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">if</span> material_count &gt; 0:</div>
-<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">return</span> 0</div>
-<div class="line"><span class="lineno">  123</span> </div>
-<div class="line"><span class="lineno">  124</span>        nodegraphs = doc.getNodeGraphs()</div>
-<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodegraphs:</div>
-<div class="line"><span class="lineno">  126</span>            <span class="keywordflow">return</span> 0</div>
-<div class="line"><span class="lineno">  127</span>        </div>
-<div class="line"><span class="lineno">  128</span>        <span class="comment"># Only support these types of graph outputs</span></div>
-<div class="line"><span class="lineno">  129</span>        supported_output_types = [ <span class="stringliteral">&#39;float&#39;</span>, <span class="stringliteral">&#39;vector2&#39;</span>, <span class="stringliteral">&#39;vector3&#39;</span>, <span class="stringliteral">&#39;vector4&#39;</span>, <span class="stringliteral">&#39;integer&#39;</span>, <span class="stringliteral">&#39;boolean&#39;</span>, <span class="stringliteral">&#39;color3&#39;</span>, <span class="stringliteral">&#39;color4&#39;</span> ]</div>
-<div class="line"><span class="lineno">  130</span> </div>
-<div class="line"><span class="lineno">  131</span>        <span class="keywordflow">for</span> graph <span class="keywordflow">in</span> nodegraphs:</div>
-<div class="line"><span class="lineno">  132</span>            <span class="keywordflow">if</span> graph.hasSourceUri():</div>
-<div class="line"><span class="lineno">  133</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  134</span> </div>
-<div class="line"><span class="lineno">  135</span> </div>
-<div class="line"><span class="lineno">  136</span>            graph_outputs = graph.getOutputs()</div>
-<div class="line"><span class="lineno">  137</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_outputs:</div>
-<div class="line"><span class="lineno">  138</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  139</span> </div>
-<div class="line"><span class="lineno">  140</span>            self.logger.info(f<span class="stringliteral">&#39;&gt;&gt; Scan graph: {graph.getName()}&#39;</span>)</div>
-<div class="line"><span class="lineno">  141</span> </div>
-<div class="line"><span class="lineno">  142</span>            <span class="comment"># Use does not support these nodes so need to do it the hard way....</span></div>
-<div class="line"><span class="lineno">  143</span>            usd_supports_convert_to_surface_shader = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>            downstream_ports = graph.getDownstreamPorts()</div>
-<div class="line"><span class="lineno">  146</span>            <span class="keywordflow">for</span> output <span class="keywordflow">in</span> graph_outputs:</div>
-<div class="line"><span class="lineno">  147</span>                <span class="comment"># See if output name path is in downstream ports</span></div>
-<div class="line"><span class="lineno">  148</span>                match = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  149</span>                <span class="keywordflow">for</span> port <span class="keywordflow">in</span> downstream_ports:</div>
-<div class="line"><span class="lineno">  150</span>                    <span class="keywordflow">if</span> port.getNamePath() == output.getNamePath():</div>
-<div class="line"><span class="lineno">  151</span>                        match = <span class="keyword">True</span></div>
-<div class="line"><span class="lineno">  152</span>                        <span class="keywordflow">break</span></div>
-<div class="line"><span class="lineno">  153</span>                <span class="keywordflow">if</span> match:</div>
-<div class="line"><span class="lineno">  154</span>                    downstream_ports.remove(port)</div>
-<div class="line"><span class="lineno">  155</span> </div>
-<div class="line"><span class="lineno">  156</span>            <span class="comment">#downstream_port_count = 0</span></div>
-<div class="line"><span class="lineno">  157</span>            <span class="comment">#for port in downstream_ports:</span></div>
-<div class="line"><span class="lineno">  158</span>            <span class="comment">#    match = False</span></div>
-<div class="line"><span class="lineno">  159</span>            <span class="comment">#    for output in graph_outputs:</span></div>
-<div class="line"><span class="lineno">  160</span>            <span class="comment">#        if port.getName() == output.getName():</span></div>
-<div class="line"><span class="lineno">  161</span>            <span class="comment">#            match = True                       </span></div>
-<div class="line"><span class="lineno">  162</span>            <span class="comment">#            break</span></div>
-<div class="line"><span class="lineno">  163</span>            <span class="comment">#    if not match:</span></div>
-<div class="line"><span class="lineno">  164</span>            <span class="comment">#        downstream_port_count += 1</span></div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00143">143</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>add_downstream_materials(self, doc: mx.Document, logger=<span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">  144</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  145</span><span class="stringliteral">        @brief Add downstream materials to the MaterialX graph.</span></div>
+<div class="line"><span class="lineno">  146</span><span class="stringliteral">        @param doc The MaterialX document.</span></div>
+<div class="line"><span class="lineno">  147</span><span class="stringliteral">        @return The number of materials added.</span></div>
+<div class="line"><span class="lineno">  148</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment"># If has materials skip</span></div>
+<div class="line"><span class="lineno">  150</span>        material_count = len(doc.getMaterialNodes())</div>
+<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">if</span> material_count &gt; 0:</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>        nodegraphs = doc.getNodeGraphs()</div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodegraphs:</div>
+<div class="line"><span class="lineno">  156</span>            <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  157</span>        </div>
+<div class="line"><span class="lineno">  158</span>        <span class="comment"># Only support these types of graph outputs</span></div>
+<div class="line"><span class="lineno">  159</span>        supported_output_types = [ <span class="stringliteral">&#39;float&#39;</span>, <span class="stringliteral">&#39;vector2&#39;</span>, <span class="stringliteral">&#39;vector3&#39;</span>, <span class="stringliteral">&#39;vector4&#39;</span>, <span class="stringliteral">&#39;integer&#39;</span>, <span class="stringliteral">&#39;boolean&#39;</span>, <span class="stringliteral">&#39;color3&#39;</span>, <span class="stringliteral">&#39;color4&#39;</span> ]</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>        <span class="keywordflow">for</span> graph <span class="keywordflow">in</span> nodegraphs:</div>
+<div class="line"><span class="lineno">  162</span>            <span class="keywordflow">if</span> graph.hasSourceUri():</div>
+<div class="line"><span class="lineno">  163</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  164</span> </div>
 <div class="line"><span class="lineno">  165</span> </div>
-<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">if</span> downstream_ports:                       </div>
-<div class="line"><span class="lineno">  167</span>                self.logger.info(<span class="stringliteral">&#39;&gt;&gt;&gt; Downstream port:&#39;</span> + <span class="stringliteral">&quot;,&quot;</span>.join( [port.getNamePath() <span class="keywordflow">for</span> port <span class="keywordflow">in</span> downstream_ports]))</div>
-<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">if</span> len(downstream_ports) == 0:</div>
-<div class="line"><span class="lineno">  169</span>                <span class="comment"># Add a material per output</span></div>
-<div class="line"><span class="lineno">  170</span>                <span class="comment"># </span></div>
-<div class="line"><span class="lineno">  171</span>                is_multi_output = len(graph_outputs) &gt; 1    </div>
-<div class="line"><span class="lineno">  172</span>                <span class="keywordflow">for</span> output <span class="keywordflow">in</span> graph_outputs:</div>
-<div class="line"><span class="lineno">  173</span>                    <span class="comment">#if downstream_ports:</span></div>
-<div class="line"><span class="lineno">  174</span>                    <span class="comment">#    for port in downstream_ports:</span></div>
-<div class="line"><span class="lineno">  175</span>                    <span class="comment">#        if port.getNamePath() == output.getNamePath():</span></div>
-<div class="line"><span class="lineno">  176</span>                    <span class="comment">#            self.logger.info(&#39;---- SKIP OUTPUT :&#39;, output.getNamePath())</span></div>
-<div class="line"><span class="lineno">  177</span>                    <span class="comment">#            continue</span></div>
-<div class="line"><span class="lineno">  178</span>                        </div>
-<div class="line"><span class="lineno">  179</span>                    output_name = output.getName()</div>
-<div class="line"><span class="lineno">  180</span>                    output_type = output.getType()</div>
-<div class="line"><span class="lineno">  181</span> </div>
-<div class="line"><span class="lineno">  182</span>                    <span class="comment">#self.logger.info(f&#39;&gt;&gt;&gt; Scan output: {output_name}. type: {output_type}&#39;)</span></div>
-<div class="line"><span class="lineno">  183</span> </div>
-<div class="line"><span class="lineno">  184</span>                    <span class="comment"># Special case for surfaceshader outputs. Just add in a downstream material</span></div>
-<div class="line"><span class="lineno">  185</span>                    <span class="keywordflow">if</span> output_type == <span class="stringliteral">&#39;surfaceshader&#39;</span>:</div>
-<div class="line"><span class="lineno">  186</span>                        graph_parent = graph.getParent()</div>
-<div class="line"><span class="lineno">  187</span>                        connected_ss = output.getConnectedNode()</div>
-<div class="line"><span class="lineno">  188</span>                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_parent <span class="keywordflow">or</span> <span class="keywordflow">not</span> connected_ss:</div>
-<div class="line"><span class="lineno">  189</span>                            <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  190</span> </div>
-<div class="line"><span class="lineno">  191</span>                        self.logger.info(f<span class="stringliteral">&#39;&gt;&gt;&gt;&gt; Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}&#39;</span>)</div>
-<div class="line"><span class="lineno">  192</span> </div>
-<div class="line"><span class="lineno">  193</span>                        shadernode_name = graph_parent.createValidChildName(connected_ss.getName())</div>
-<div class="line"><span class="lineno">  194</span>                        shadernode_nodedef = connected_ss.getNodeDef()</div>
-<div class="line"><span class="lineno">  195</span>                        shadernode = graph_parent.addNodeInstance(shadernode_nodedef, shadernode_name)</div>
-<div class="line"><span class="lineno">  196</span>                        shadernode.copyContentFrom(connected_ss)</div>
-<div class="line"><span class="lineno">  197</span> </div>
-<div class="line"><span class="lineno">  198</span>                        <span class="comment"># For every connected input on the surfaceshader node</span></div>
-<div class="line"><span class="lineno">  199</span>                        <span class="comment"># create a nodegraph output</span></div>
-<div class="line"><span class="lineno">  200</span>                        <span class="keywordflow">for</span> ss_input <span class="keywordflow">in</span> connected_ss.getInputs():</div>
-<div class="line"><span class="lineno">  201</span>                            ss_input_input = ss_input.getNodeName() <span class="keywordflow">if</span> ss_input.getNodeName() <span class="keywordflow">else</span> ss_input.getInterfaceName()</div>
-<div class="line"><span class="lineno">  202</span>                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> ss_input_input:</div>
-<div class="line"><span class="lineno">  203</span>                                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  204</span>                            ss_input_type = ss_input.getType()</div>
-<div class="line"><span class="lineno">  205</span>                            ss_input_output = graph.addOutput(graph.createValidChildName(<span class="stringliteral">&#39;out&#39;</span>), ss_input_type)</div>
-<div class="line"><span class="lineno">  206</span>                            ss_input_output.setNodeName(ss_input_input)</div>
-<div class="line"><span class="lineno">  207</span>                            <span class="keywordflow">if</span> ss_input.getOutputString():</div>
-<div class="line"><span class="lineno">  208</span>                                ss_input_output.setOutputString(ss_input.getOutputString())</div>
-<div class="line"><span class="lineno">  209</span> </div>
-<div class="line"><span class="lineno">  210</span>                            <span class="comment"># Connect new graph output to new shader node&#39;s input to </span></div>
-<div class="line"><span class="lineno">  211</span>                            shadernode_input = shadernode.getInput(ss_input.getName())</div>
-<div class="line"><span class="lineno">  212</span>                            <span class="keywordflow">if</span> shadernode_input:</div>
-<div class="line"><span class="lineno">  213</span>                                shadernode_input.removeAttribute(<span class="stringliteral">&#39;nodename&#39;</span>)</div>
-<div class="line"><span class="lineno">  214</span>                                shadernode_input.setNodeGraphString(graph.getName())</div>
-<div class="line"><span class="lineno">  215</span>                                shadernode_input.setOutputString(ss_input_output.getName())</div>
-<div class="line"><span class="lineno">  216</span>                        </div>
-<div class="line"><span class="lineno">  217</span>                        <span class="comment"># Should do this after scanning all surfaceshader nodes...</span></div>
-<div class="line"><span class="lineno">  218</span>                        graph.removeNode(connected_ss.getName())</div>
-<div class="line"><span class="lineno">  219</span>                        graph.removeOutput(output_name)</div>
+<div class="line"><span class="lineno">  166</span>            graph_outputs = graph.getOutputs()</div>
+<div class="line"><span class="lineno">  167</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_outputs:</div>
+<div class="line"><span class="lineno">  168</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>            self.logger.info(f<span class="stringliteral">&#39;&gt;&gt; Scan graph: {graph.getName()}&#39;</span>)</div>
+<div class="line"><span class="lineno">  171</span> </div>
+<div class="line"><span class="lineno">  172</span>            <span class="comment"># Use does not support these nodes so need to do it the hard way....</span></div>
+<div class="line"><span class="lineno">  173</span>            usd_supports_convert_to_surface_shader = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  174</span> </div>
+<div class="line"><span class="lineno">  175</span>            downstream_ports = graph.getDownstreamPorts()</div>
+<div class="line"><span class="lineno">  176</span>            <span class="keywordflow">for</span> output <span class="keywordflow">in</span> graph_outputs:</div>
+<div class="line"><span class="lineno">  177</span>                <span class="comment"># See if output name path is in downstream ports</span></div>
+<div class="line"><span class="lineno">  178</span>                match = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  179</span>                <span class="keywordflow">for</span> port <span class="keywordflow">in</span> downstream_ports:</div>
+<div class="line"><span class="lineno">  180</span>                    <span class="keywordflow">if</span> port.getNamePath() == output.getNamePath():</div>
+<div class="line"><span class="lineno">  181</span>                        match = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  182</span>                        <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  183</span>                <span class="keywordflow">if</span> match:</div>
+<div class="line"><span class="lineno">  184</span>                    downstream_ports.remove(port)</div>
+<div class="line"><span class="lineno">  185</span> </div>
+<div class="line"><span class="lineno">  186</span>            <span class="comment">#downstream_port_count = 0</span></div>
+<div class="line"><span class="lineno">  187</span>            <span class="comment">#for port in downstream_ports:</span></div>
+<div class="line"><span class="lineno">  188</span>            <span class="comment">#    match = False</span></div>
+<div class="line"><span class="lineno">  189</span>            <span class="comment">#    for output in graph_outputs:</span></div>
+<div class="line"><span class="lineno">  190</span>            <span class="comment">#        if port.getName() == output.getName():</span></div>
+<div class="line"><span class="lineno">  191</span>            <span class="comment">#            match = True                       </span></div>
+<div class="line"><span class="lineno">  192</span>            <span class="comment">#            break</span></div>
+<div class="line"><span class="lineno">  193</span>            <span class="comment">#    if not match:</span></div>
+<div class="line"><span class="lineno">  194</span>            <span class="comment">#        downstream_port_count += 1</span></div>
+<div class="line"><span class="lineno">  195</span> </div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">if</span> downstream_ports:                       </div>
+<div class="line"><span class="lineno">  197</span>                self.logger.info(<span class="stringliteral">&#39;&gt;&gt;&gt; Downstream port:&#39;</span> + <span class="stringliteral">&quot;,&quot;</span>.join( [port.getNamePath() <span class="keywordflow">for</span> port <span class="keywordflow">in</span> downstream_ports]))</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">if</span> len(downstream_ports) == 0:</div>
+<div class="line"><span class="lineno">  199</span>                <span class="comment"># Add a material per output</span></div>
+<div class="line"><span class="lineno">  200</span>                <span class="comment"># </span></div>
+<div class="line"><span class="lineno">  201</span>                is_multi_output = len(graph_outputs) &gt; 1    </div>
+<div class="line"><span class="lineno">  202</span>                <span class="keywordflow">for</span> output <span class="keywordflow">in</span> graph_outputs:</div>
+<div class="line"><span class="lineno">  203</span>                    <span class="comment">#if downstream_ports:</span></div>
+<div class="line"><span class="lineno">  204</span>                    <span class="comment">#    for port in downstream_ports:</span></div>
+<div class="line"><span class="lineno">  205</span>                    <span class="comment">#        if port.getNamePath() == output.getNamePath():</span></div>
+<div class="line"><span class="lineno">  206</span>                    <span class="comment">#            self.logger.info(&#39;---- SKIP OUTPUT :&#39;, output.getNamePath())</span></div>
+<div class="line"><span class="lineno">  207</span>                    <span class="comment">#            continue</span></div>
+<div class="line"><span class="lineno">  208</span>                        </div>
+<div class="line"><span class="lineno">  209</span>                    output_name = output.getName()</div>
+<div class="line"><span class="lineno">  210</span>                    output_type = output.getType()</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>                    <span class="comment">#self.logger.info(f&#39;&gt;&gt;&gt; Scan output: {output_name}. type: {output_type}&#39;)</span></div>
+<div class="line"><span class="lineno">  213</span> </div>
+<div class="line"><span class="lineno">  214</span>                    <span class="comment"># Special case for surfaceshader outputs. Just add in a downstream material</span></div>
+<div class="line"><span class="lineno">  215</span>                    <span class="keywordflow">if</span> output_type == <span class="stringliteral">&#39;surfaceshader&#39;</span>:</div>
+<div class="line"><span class="lineno">  216</span>                        graph_parent = graph.getParent()</div>
+<div class="line"><span class="lineno">  217</span>                        connected_ss = output.getConnectedNode()</div>
+<div class="line"><span class="lineno">  218</span>                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_parent <span class="keywordflow">or</span> <span class="keywordflow">not</span> connected_ss:</div>
+<div class="line"><span class="lineno">  219</span>                            <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">  220</span> </div>
-<div class="line"><span class="lineno">  221</span>                        <span class="comment"># Add a material for the shader</span></div>
-<div class="line"><span class="lineno">  222</span>                        material_name = doc.createValidChildName(graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
-<div class="line"><span class="lineno">  223</span>                        material_node = doc.addMaterialNode(material_name)</div>
-<div class="line"><span class="lineno">  224</span>                        <span class="keywordflow">if</span> material_node:</div>
-<div class="line"><span class="lineno">  225</span>                            self.logger.info(f<span class="stringliteral">&quot;&gt;&gt;&gt;&gt; Added material node: {material_node.getName()}, for graph shader output: {output_name}&quot;</span>)</div>
-<div class="line"><span class="lineno">  226</span>                            material_node_input = material_node.addInput(output_type, output_type)</div>
-<div class="line"><span class="lineno">  227</span>                            <span class="comment">#material_node_input.setNodeGraphString(graph.getName())</span></div>
-<div class="line"><span class="lineno">  228</span>                            <span class="comment">#material_node_input.setOutputString(output_name)</span></div>
-<div class="line"><span class="lineno">  229</span>                            material_node_input.setNodeName(shadernode_name)</div>
-<div class="line"><span class="lineno">  230</span>                            material_count += 1</div>
-<div class="line"><span class="lineno">  231</span> </div>
-<div class="line"><span class="lineno">  232</span>                    <span class="keywordflow">elif</span> output_type <span class="keywordflow">in</span> supported_output_types:</div>
-<div class="line"><span class="lineno">  233</span> </div>
-<div class="line"><span class="lineno">  234</span>                        <span class="keywordflow">if</span> usd_supports_convert_to_surface_shader:</div>
-<div class="line"><span class="lineno">  235</span>                            <span class="comment"># Create a new material node</span></div>
-<div class="line"><span class="lineno">  236</span>                            shadernode_name = doc.createValidChildName(<span class="stringliteral">&#39;SHD_&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)                </div>
-<div class="line"><span class="lineno">  237</span>                            materialnode_name = doc.createValidChildName(<span class="stringliteral">&#39;MAT&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
-<div class="line"><span class="lineno">  238</span> </div>
-<div class="line"><span class="lineno">  239</span>                            convert_definition = <span class="stringliteral">&#39;ND_convert_&#39;</span> + output_type + <span class="stringliteral">&#39;_color3&#39;</span></div>
-<div class="line"><span class="lineno">  240</span>                            convert_node = doc.getNodeDef(convert_definition)</div>
-<div class="line"><span class="lineno">  241</span>                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_node:</div>
-<div class="line"><span class="lineno">  242</span>                                self.logger.info(f<span class="stringliteral">&#39;&gt;&gt;&gt;&gt; Failed to find conversion definition: {convert_definition}&#39;</span>)</div>
-<div class="line"><span class="lineno">  243</span>                            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  244</span>                                shadernode = doc.addNodeInstance(convert_node, shadernode_name)</div>
-<div class="line"><span class="lineno">  245</span>                                shadernode.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
-<div class="line"><span class="lineno">  246</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;in&#39;</span>, output_type)</div>
-<div class="line"><span class="lineno">  247</span>                                new_input.setNodeGraphString(graph.getName())</div>
-<div class="line"><span class="lineno">  248</span>                                new_input.removeAttribute(<span class="stringliteral">&#39;value&#39;</span>)</div>
-<div class="line"><span class="lineno">  249</span>                                <span class="comment">#if is_multi_output:</span></div>
-<div class="line"><span class="lineno">  250</span>                                <span class="comment"># ISSUE: USD does not handle nodegraph without an explicit output propoerly</span></div>
-<div class="line"><span class="lineno">  251</span>                                <span class="comment"># so always added in the output string !</span></div>
-<div class="line"><span class="lineno">  252</span>                                new_input.setOutputString(output_name)    </div>
-<div class="line"><span class="lineno">  253</span>                                materialnode = doc.addMaterialNode(materialnode_name, shadernode)</div>
-<div class="line"><span class="lineno">  254</span> </div>
-<div class="line"><span class="lineno">  255</span>                                <span class="keywordflow">if</span> materialnode:</div>
-<div class="line"><span class="lineno">  256</span>                                    material_count += 1</div>
-<div class="line"><span class="lineno">  257</span> </div>
-<div class="line"><span class="lineno">  258</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  259</span>                            self.logger.info(f<span class="stringliteral">&#39;Scan: {graph.getName()} output: {output_name} type: {output_type}&#39;</span>)</div>
-<div class="line"><span class="lineno">  260</span>                            </div>
-<div class="line"><span class="lineno">  261</span>                            <span class="comment"># If not color3 or float add a convert node and connect it to the current upstream node</span></div>
-<div class="line"><span class="lineno">  262</span>                            <span class="comment"># and then add in a new output which is of type color3</span></div>
-<div class="line"><span class="lineno">  263</span>                            <span class="keywordflow">if</span> output_type != <span class="stringliteral">&#39;color3&#39;</span> <span class="keywordflow">and</span> output_type != <span class="stringliteral">&#39;float&#39;</span>:</div>
-<div class="line"><span class="lineno">  264</span> </div>
-<div class="line"><span class="lineno">  265</span>                                convert_definition = <span class="stringliteral">&#39;ND_convert_&#39;</span> + output_type + <span class="stringliteral">&#39;_color3&#39;</span></div>
-<div class="line"><span class="lineno">  266</span>                                convert_nodedef = doc.getNodeDef(convert_definition)</div>
-<div class="line"><span class="lineno">  267</span>                                <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_nodedef:</div>
-<div class="line"><span class="lineno">  268</span>                                    self.logger.info(<span class="stringliteral">&quot;&gt;&gt;&gt;&gt; Failed to find conversion definition: %s&quot;</span> % convert_definition)</div>
-<div class="line"><span class="lineno">  269</span>                                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  270</span> </div>
-<div class="line"><span class="lineno">  271</span>                                <span class="comment"># Find upstream node or interface input</span></div>
-<div class="line"><span class="lineno">  272</span>                                convert_upstream = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  273</span>                                <span class="keywordflow">if</span> len(output.getNodeName()) &gt; 0:</div>
-<div class="line"><span class="lineno">  274</span>                                    convert_upstream = output.getNodeName()</div>
-<div class="line"><span class="lineno">  275</span>                                <span class="keywordflow">elif</span> output.hasInterfaceName():</div>
-<div class="line"><span class="lineno">  276</span>                                    convert_upstream = output.getInterfaceName()</div>
-<div class="line"><span class="lineno">  277</span>                                <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_upstream:</div>
-<div class="line"><span class="lineno">  278</span>                                    self.logger.info(<span class="stringliteral">&quot;&gt; Failed to find upstream node for output: %s&quot;</span> % output.getName())</div>
-<div class="line"><span class="lineno">  279</span>                                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  280</span> </div>
-<div class="line"><span class="lineno">  281</span>                                <span class="comment"># Insert convert node</span></div>
-<div class="line"><span class="lineno">  282</span>                                convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName(f<span class="stringliteral">&#39;convert_{convert_upstream}&#39;</span>))                                                               </div>
-<div class="line"><span class="lineno">  283</span>                                convert_node.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
-<div class="line"><span class="lineno">  284</span>                                convert_input = convert_node.addInput(<span class="stringliteral">&#39;in&#39;</span>, output_type)</div>
-<div class="line"><span class="lineno">  285</span>                                <span class="keywordflow">if</span> len(output.getNodeName()) &gt; 0:</div>
-<div class="line"><span class="lineno">  286</span>                                    convert_input.setNodeName(output.getNodeName())</div>
-<div class="line"><span class="lineno">  287</span>                                <span class="keywordflow">elif</span> output.hasInterfaceName():</div>
-<div class="line"><span class="lineno">  288</span>                                    convert_input.setInterfaceName(output.getInterfaceName())</div>
-<div class="line"><span class="lineno">  289</span> </div>
-<div class="line"><span class="lineno">  290</span>                                <span class="comment"># Overwrite the upstream connection on the output</span></div>
-<div class="line"><span class="lineno">  291</span>                                <span class="comment"># and change it&#39;s type</span></div>
-<div class="line"><span class="lineno">  292</span>                                output.setNodeName(convert_node.getName())                                </div>
-<div class="line"><span class="lineno">  293</span>                                output.setType(<span class="stringliteral">&#39;color3&#39;</span>)</div>
-<div class="line"><span class="lineno">  294</span>                                output_type = <span class="stringliteral">&#39;color3&#39;</span></div>
-<div class="line"><span class="lineno">  295</span>                            </div>
-<div class="line"><span class="lineno">  296</span>                            <span class="comment"># Create downstream (umlit) shader</span></div>
-<div class="line"><span class="lineno">  297</span>                            shadernode_name = doc.createValidChildName(<span class="stringliteral">&#39;shader_&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)                </div>
-<div class="line"><span class="lineno">  298</span>                            materialnode_name = doc.createValidChildName(graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
-<div class="line"><span class="lineno">  299</span>                            unlitDefinition = <span class="stringliteral">&#39;ND_surface_unlit&#39;</span></div>
-<div class="line"><span class="lineno">  300</span>                            unlitNode = doc.getNodeDef(unlitDefinition)</div>
-<div class="line"><span class="lineno">  301</span>                            shadernode = doc.addNodeInstance(unlitNode, shadernode_name)</div>
-<div class="line"><span class="lineno">  302</span>                            shadernode.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
-<div class="line"><span class="lineno">  303</span> </div>
-<div class="line"><span class="lineno">  304</span>                            <span class="comment"># Connect upstream output to shader input (based on type)</span></div>
-<div class="line"><span class="lineno">  305</span>                            new_input = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  306</span>                            <span class="keywordflow">if</span> output_type == <span class="stringliteral">&#39;color3&#39;</span>:</div>
-<div class="line"><span class="lineno">  307</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;emission_color&#39;</span>, output_type)</div>
-<div class="line"><span class="lineno">  308</span>                            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  309</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;emission&#39;</span>, output_type)</div>
-<div class="line"><span class="lineno">  310</span>                            new_input.setNodeGraphString(graph.getName())</div>
-<div class="line"><span class="lineno">  311</span>                            new_input.removeAttribute(<span class="stringliteral">&#39;value&#39;</span>)</div>
-<div class="line"><span class="lineno">  312</span>                            <span class="comment">#if is_multi_output:</span></div>
-<div class="line"><span class="lineno">  313</span>                            <span class="comment"># ISSUE: USD does not handle nodegraph without an explicit output propoerly</span></div>
-<div class="line"><span class="lineno">  314</span>                            <span class="comment"># so always added in the output string !</span></div>
-<div class="line"><span class="lineno">  315</span>                            new_input.setOutputString(output_name)   </div>
-<div class="line"><span class="lineno">  316</span> </div>
-<div class="line"><span class="lineno">  317</span>                            <span class="comment"># Add downstream material node connected to shadernode </span></div>
-<div class="line"><span class="lineno">  318</span>                            materialnode = doc.addMaterialNode(materialnode_name, shadernode)</div>
+<div class="line"><span class="lineno">  221</span>                        self.logger.info(f<span class="stringliteral">&#39;&gt;&gt;&gt;&gt; Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}&#39;</span>)</div>
+<div class="line"><span class="lineno">  222</span> </div>
+<div class="line"><span class="lineno">  223</span>                        shadernode_name = graph_parent.createValidChildName(connected_ss.getName())</div>
+<div class="line"><span class="lineno">  224</span>                        shadernode_nodedef = connected_ss.getNodeDef()</div>
+<div class="line"><span class="lineno">  225</span>                        shadernode = graph_parent.addNodeInstance(shadernode_nodedef, shadernode_name)</div>
+<div class="line"><span class="lineno">  226</span>                        shadernode.copyContentFrom(connected_ss)</div>
+<div class="line"><span class="lineno">  227</span> </div>
+<div class="line"><span class="lineno">  228</span>                        <span class="comment"># For every connected input on the surfaceshader node</span></div>
+<div class="line"><span class="lineno">  229</span>                        <span class="comment"># create a nodegraph output</span></div>
+<div class="line"><span class="lineno">  230</span>                        <span class="keywordflow">for</span> ss_input <span class="keywordflow">in</span> connected_ss.getInputs():</div>
+<div class="line"><span class="lineno">  231</span>                            ss_input_input = ss_input.getNodeName() <span class="keywordflow">if</span> ss_input.getNodeName() <span class="keywordflow">else</span> ss_input.getInterfaceName()</div>
+<div class="line"><span class="lineno">  232</span>                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> ss_input_input:</div>
+<div class="line"><span class="lineno">  233</span>                                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  234</span>                            ss_input_type = ss_input.getType()</div>
+<div class="line"><span class="lineno">  235</span>                            ss_input_output = graph.addOutput(graph.createValidChildName(<span class="stringliteral">&#39;out&#39;</span>), ss_input_type)</div>
+<div class="line"><span class="lineno">  236</span>                            ss_input_output.setNodeName(ss_input_input)</div>
+<div class="line"><span class="lineno">  237</span>                            <span class="keywordflow">if</span> ss_input.getOutputString():</div>
+<div class="line"><span class="lineno">  238</span>                                ss_input_output.setOutputString(ss_input.getOutputString())</div>
+<div class="line"><span class="lineno">  239</span> </div>
+<div class="line"><span class="lineno">  240</span>                            <span class="comment"># Connect new graph output to new shader node&#39;s input to </span></div>
+<div class="line"><span class="lineno">  241</span>                            shadernode_input = shadernode.getInput(ss_input.getName())</div>
+<div class="line"><span class="lineno">  242</span>                            <span class="keywordflow">if</span> shadernode_input:</div>
+<div class="line"><span class="lineno">  243</span>                                shadernode_input.removeAttribute(<span class="stringliteral">&#39;nodename&#39;</span>)</div>
+<div class="line"><span class="lineno">  244</span>                                shadernode_input.setNodeGraphString(graph.getName())</div>
+<div class="line"><span class="lineno">  245</span>                                shadernode_input.setOutputString(ss_input_output.getName())</div>
+<div class="line"><span class="lineno">  246</span>                        </div>
+<div class="line"><span class="lineno">  247</span>                        <span class="comment"># Should do this after scanning all surfaceshader nodes...</span></div>
+<div class="line"><span class="lineno">  248</span>                        graph.removeNode(connected_ss.getName())</div>
+<div class="line"><span class="lineno">  249</span>                        graph.removeOutput(output_name)</div>
+<div class="line"><span class="lineno">  250</span> </div>
+<div class="line"><span class="lineno">  251</span>                        <span class="comment"># Add a material for the shader</span></div>
+<div class="line"><span class="lineno">  252</span>                        material_name = doc.createValidChildName(graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
+<div class="line"><span class="lineno">  253</span>                        material_node = doc.addMaterialNode(material_name)</div>
+<div class="line"><span class="lineno">  254</span>                        <span class="keywordflow">if</span> material_node:</div>
+<div class="line"><span class="lineno">  255</span>                            self.logger.info(f<span class="stringliteral">&quot;&gt;&gt;&gt;&gt; Added material node: {material_node.getName()}, for graph shader output: {output_name}&quot;</span>)</div>
+<div class="line"><span class="lineno">  256</span>                            material_node_input = material_node.addInput(output_type, output_type)</div>
+<div class="line"><span class="lineno">  257</span>                            <span class="comment">#material_node_input.setNodeGraphString(graph.getName())</span></div>
+<div class="line"><span class="lineno">  258</span>                            <span class="comment">#material_node_input.setOutputString(output_name)</span></div>
+<div class="line"><span class="lineno">  259</span>                            material_node_input.setNodeName(shadernode_name)</div>
+<div class="line"><span class="lineno">  260</span>                            material_count += 1</div>
+<div class="line"><span class="lineno">  261</span> </div>
+<div class="line"><span class="lineno">  262</span>                    <span class="keywordflow">elif</span> output_type <span class="keywordflow">in</span> supported_output_types:</div>
+<div class="line"><span class="lineno">  263</span> </div>
+<div class="line"><span class="lineno">  264</span>                        <span class="keywordflow">if</span> usd_supports_convert_to_surface_shader:</div>
+<div class="line"><span class="lineno">  265</span>                            <span class="comment"># Create a new material node</span></div>
+<div class="line"><span class="lineno">  266</span>                            shadernode_name = doc.createValidChildName(<span class="stringliteral">&#39;SHD_&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)                </div>
+<div class="line"><span class="lineno">  267</span>                            materialnode_name = doc.createValidChildName(<span class="stringliteral">&#39;MAT&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
+<div class="line"><span class="lineno">  268</span> </div>
+<div class="line"><span class="lineno">  269</span>                            convert_definition = <span class="stringliteral">&#39;ND_convert_&#39;</span> + output_type + <span class="stringliteral">&#39;_color3&#39;</span></div>
+<div class="line"><span class="lineno">  270</span>                            convert_node = doc.getNodeDef(convert_definition)</div>
+<div class="line"><span class="lineno">  271</span>                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_node:</div>
+<div class="line"><span class="lineno">  272</span>                                self.logger.info(f<span class="stringliteral">&#39;&gt;&gt;&gt;&gt; Failed to find conversion definition: {convert_definition}&#39;</span>)</div>
+<div class="line"><span class="lineno">  273</span>                            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  274</span>                                shadernode = doc.addNodeInstance(convert_node, shadernode_name)</div>
+<div class="line"><span class="lineno">  275</span>                                shadernode.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
+<div class="line"><span class="lineno">  276</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;in&#39;</span>, output_type)</div>
+<div class="line"><span class="lineno">  277</span>                                new_input.setNodeGraphString(graph.getName())</div>
+<div class="line"><span class="lineno">  278</span>                                new_input.removeAttribute(<span class="stringliteral">&#39;value&#39;</span>)</div>
+<div class="line"><span class="lineno">  279</span>                                <span class="comment">#if is_multi_output:</span></div>
+<div class="line"><span class="lineno">  280</span>                                <span class="comment"># ISSUE: USD does not handle nodegraph without an explicit output propoerly</span></div>
+<div class="line"><span class="lineno">  281</span>                                <span class="comment"># so always added in the output string !</span></div>
+<div class="line"><span class="lineno">  282</span>                                new_input.setOutputString(output_name)    </div>
+<div class="line"><span class="lineno">  283</span>                                materialnode = doc.addMaterialNode(materialnode_name, shadernode)</div>
+<div class="line"><span class="lineno">  284</span> </div>
+<div class="line"><span class="lineno">  285</span>                                <span class="keywordflow">if</span> materialnode:</div>
+<div class="line"><span class="lineno">  286</span>                                    material_count += 1</div>
+<div class="line"><span class="lineno">  287</span> </div>
+<div class="line"><span class="lineno">  288</span>                        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  289</span>                            self.logger.info(f<span class="stringliteral">&#39;Scan: {graph.getName()} output: {output_name} type: {output_type}&#39;</span>)</div>
+<div class="line"><span class="lineno">  290</span>                            </div>
+<div class="line"><span class="lineno">  291</span>                            <span class="comment"># If not color3 or float add a convert node and connect it to the current upstream node</span></div>
+<div class="line"><span class="lineno">  292</span>                            <span class="comment"># and then add in a new output which is of type color3</span></div>
+<div class="line"><span class="lineno">  293</span>                            <span class="keywordflow">if</span> output_type != <span class="stringliteral">&#39;color3&#39;</span> <span class="keywordflow">and</span> output_type != <span class="stringliteral">&#39;float&#39;</span>:</div>
+<div class="line"><span class="lineno">  294</span> </div>
+<div class="line"><span class="lineno">  295</span>                                convert_definition = <span class="stringliteral">&#39;ND_convert_&#39;</span> + output_type + <span class="stringliteral">&#39;_color3&#39;</span></div>
+<div class="line"><span class="lineno">  296</span>                                convert_nodedef = doc.getNodeDef(convert_definition)</div>
+<div class="line"><span class="lineno">  297</span>                                <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_nodedef:</div>
+<div class="line"><span class="lineno">  298</span>                                    self.logger.info(<span class="stringliteral">&quot;&gt;&gt;&gt;&gt; Failed to find conversion definition: %s&quot;</span> % convert_definition)</div>
+<div class="line"><span class="lineno">  299</span>                                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  300</span> </div>
+<div class="line"><span class="lineno">  301</span>                                <span class="comment"># Find upstream node or interface input</span></div>
+<div class="line"><span class="lineno">  302</span>                                convert_upstream = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  303</span>                                <span class="keywordflow">if</span> len(output.getNodeName()) &gt; 0:</div>
+<div class="line"><span class="lineno">  304</span>                                    convert_upstream = output.getNodeName()</div>
+<div class="line"><span class="lineno">  305</span>                                <span class="keywordflow">elif</span> output.hasInterfaceName():</div>
+<div class="line"><span class="lineno">  306</span>                                    convert_upstream = output.getInterfaceName()</div>
+<div class="line"><span class="lineno">  307</span>                                <span class="keywordflow">if</span> <span class="keywordflow">not</span> convert_upstream:</div>
+<div class="line"><span class="lineno">  308</span>                                    self.logger.info(<span class="stringliteral">&quot;&gt; Failed to find upstream node for output: %s&quot;</span> % output.getName())</div>
+<div class="line"><span class="lineno">  309</span>                                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  310</span> </div>
+<div class="line"><span class="lineno">  311</span>                                <span class="comment"># Insert convert node</span></div>
+<div class="line"><span class="lineno">  312</span>                                convert_node = graph.addNodeInstance(convert_nodedef, graph.createValidChildName(f<span class="stringliteral">&#39;convert_{convert_upstream}&#39;</span>))                                                               </div>
+<div class="line"><span class="lineno">  313</span>                                convert_node.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
+<div class="line"><span class="lineno">  314</span>                                convert_input = convert_node.addInput(<span class="stringliteral">&#39;in&#39;</span>, output_type)</div>
+<div class="line"><span class="lineno">  315</span>                                <span class="keywordflow">if</span> len(output.getNodeName()) &gt; 0:</div>
+<div class="line"><span class="lineno">  316</span>                                    convert_input.setNodeName(output.getNodeName())</div>
+<div class="line"><span class="lineno">  317</span>                                <span class="keywordflow">elif</span> output.hasInterfaceName():</div>
+<div class="line"><span class="lineno">  318</span>                                    convert_input.setInterfaceName(output.getInterfaceName())</div>
 <div class="line"><span class="lineno">  319</span> </div>
-<div class="line"><span class="lineno">  320</span>                            <span class="keywordflow">if</span> materialnode:</div>
-<div class="line"><span class="lineno">  321</span>                                material_count += 1</div>
-<div class="line"><span class="lineno">  322</span>            </div>
-<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">return</span> material_count            </div>
-<div class="line"><span class="lineno">  324</span> </div>
-<div class="line"><span class="lineno">  325</span>    </div>
+<div class="line"><span class="lineno">  320</span>                                <span class="comment"># Overwrite the upstream connection on the output</span></div>
+<div class="line"><span class="lineno">  321</span>                                <span class="comment"># and change it&#39;s type</span></div>
+<div class="line"><span class="lineno">  322</span>                                output.setNodeName(convert_node.getName())                                </div>
+<div class="line"><span class="lineno">  323</span>                                output.setType(<span class="stringliteral">&#39;color3&#39;</span>)</div>
+<div class="line"><span class="lineno">  324</span>                                output_type = <span class="stringliteral">&#39;color3&#39;</span></div>
+<div class="line"><span class="lineno">  325</span>                            </div>
+<div class="line"><span class="lineno">  326</span>                            <span class="comment"># Create downstream (umlit) shader</span></div>
+<div class="line"><span class="lineno">  327</span>                            shadernode_name = doc.createValidChildName(<span class="stringliteral">&#39;shader_&#39;</span> + graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)                </div>
+<div class="line"><span class="lineno">  328</span>                            materialnode_name = doc.createValidChildName(graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
+<div class="line"><span class="lineno">  329</span>                            unlitDefinition = <span class="stringliteral">&#39;ND_surface_unlit&#39;</span></div>
+<div class="line"><span class="lineno">  330</span>                            unlitNode = doc.getNodeDef(unlitDefinition)</div>
+<div class="line"><span class="lineno">  331</span>                            shadernode = doc.addNodeInstance(unlitNode, shadernode_name)</div>
+<div class="line"><span class="lineno">  332</span>                            shadernode.removeAttribute(<span class="stringliteral">&#39;nodedef&#39;</span>)</div>
+<div class="line"><span class="lineno">  333</span> </div>
+<div class="line"><span class="lineno">  334</span>                            <span class="comment"># Connect upstream output to shader input (based on type)</span></div>
+<div class="line"><span class="lineno">  335</span>                            new_input = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  336</span>                            <span class="keywordflow">if</span> output_type == <span class="stringliteral">&#39;color3&#39;</span>:</div>
+<div class="line"><span class="lineno">  337</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;emission_color&#39;</span>, output_type)</div>
+<div class="line"><span class="lineno">  338</span>                            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  339</span>                                new_input = shadernode.addInput(<span class="stringliteral">&#39;emission&#39;</span>, output_type)</div>
+<div class="line"><span class="lineno">  340</span>                            new_input.setNodeGraphString(graph.getName())</div>
+<div class="line"><span class="lineno">  341</span>                            new_input.removeAttribute(<span class="stringliteral">&#39;value&#39;</span>)</div>
+<div class="line"><span class="lineno">  342</span>                            <span class="comment">#if is_multi_output:</span></div>
+<div class="line"><span class="lineno">  343</span>                            <span class="comment"># ISSUE: USD does not handle nodegraph without an explicit output propoerly</span></div>
+<div class="line"><span class="lineno">  344</span>                            <span class="comment"># so always added in the output string !</span></div>
+<div class="line"><span class="lineno">  345</span>                            new_input.setOutputString(output_name)   </div>
+<div class="line"><span class="lineno">  346</span> </div>
+<div class="line"><span class="lineno">  347</span>                            <span class="comment"># Add downstream material node connected to shadernode </span></div>
+<div class="line"><span class="lineno">  348</span>                            materialnode = doc.addMaterialNode(materialnode_name, shadernode)</div>
+<div class="line"><span class="lineno">  349</span> </div>
+<div class="line"><span class="lineno">  350</span>                            <span class="keywordflow">if</span> materialnode:</div>
+<div class="line"><span class="lineno">  351</span>                                material_count += 1</div>
+<div class="line"><span class="lineno">  352</span>            </div>
+<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> material_count            </div>
+<div class="line"><span class="lineno">  354</span> </div>
+<div class="line"><span class="lineno">  355</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -481,90 +484,90 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of implicit nodes added. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00326">326</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  326</span>    <span class="keyword">def </span>add_explicit_geometry_stream(self, graph: mx.GraphElement):</div>
-<div class="line"><span class="lineno">  327</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  328</span><span class="stringliteral">        @brief Add explicit geometry stream nodes for inputs with defaultgeomprop specified</span></div>
-<div class="line"><span class="lineno">  329</span><span class="stringliteral">        in nodes definition. Do this for unconnected inputs only.</span></div>
-<div class="line"><span class="lineno">  330</span><span class="stringliteral">        @param graph The MaterialX graph element.</span></div>
-<div class="line"><span class="lineno">  331</span><span class="stringliteral">        @return The number of implicit nodes added.</span></div>
-<div class="line"><span class="lineno">  332</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  333</span>        </div>
-<div class="line"><span class="lineno">  334</span>        graph_default_nodes = {}</div>
-<div class="line"><span class="lineno">  335</span> </div>
-<div class="line"><span class="lineno">  336</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> graph.getNodes():</div>
-<div class="line"><span class="lineno">  337</span>            <span class="keywordflow">if</span> node.hasSourceUri() <span class="keywordflow">or</span> (node.getCategory() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodedef&quot;</span>]):</div>
-<div class="line"><span class="lineno">  338</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  339</span> </div>
-<div class="line"><span class="lineno">  340</span>            nodedef = node.getNodeDef(node.getType())</div>
-<div class="line"><span class="lineno">  341</span>            <span class="comment">#self.logger.info(&#39;Node:&#39;, node.getName(), &#39;NodeDef:&#39;, nodedef.getName() if nodedef else &quot;None&quot;)</span></div>
-<div class="line"><span class="lineno">  342</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodedef:</div>
-<div class="line"><span class="lineno">  343</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  344</span> </div>
-<div class="line"><span class="lineno">  345</span>            <span class="keywordflow">for</span> nodedef_input <span class="keywordflow">in</span> nodedef.getInputs():</div>
-<div class="line"><span class="lineno">  346</span>                node_input = node.getInput(nodedef_input.getName())</div>
-<div class="line"><span class="lineno">  347</span>                <span class="comment"># Skip if is a connected input</span></div>
-<div class="line"><span class="lineno">  348</span>                <span class="keywordflow">if</span> node_input:</div>
-<div class="line"><span class="lineno">  349</span>                    <span class="keywordflow">if</span> node_input.getInterfaceName() <span class="keywordflow">or</span> node_input.getNodeName() <span class="keywordflow">or</span> node_input.getNodeGraphString():</div>
-<div class="line"><span class="lineno">  350</span>                        <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  351</span> </div>
-<div class="line"><span class="lineno">  352</span>                <span class="comment"># Skip if no defaultgeomprop</span></div>
-<div class="line"><span class="lineno">  353</span>                defaultgeomprop = nodedef_input.getDefaultGeomProp()</div>
-<div class="line"><span class="lineno">  354</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> defaultgeomprop:</div>
-<div class="line"><span class="lineno">  355</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  356</span> </div>
-<div class="line"><span class="lineno">  357</span>                <span class="comment"># Firewall. USD does not appear to handle bitangent properly so</span></div>
-<div class="line"><span class="lineno">  358</span>                <span class="comment"># skip it for now.</span></div>
-<div class="line"><span class="lineno">  359</span>                <span class="keywordflow">if</span> defaultgeomprop.getGeomProp() == <span class="stringliteral">&quot;bitangent&quot;</span>:</div>
-<div class="line"><span class="lineno">  360</span>                    <span class="comment">#self.logger.info(f&#39;&gt; WARNING: Skipping adding explicit bitangent node for: &quot;{node.getNamePath()}&quot;&#39;)</span></div>
-<div class="line"><span class="lineno">  361</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  362</span> </div>
-<div class="line"><span class="lineno">  363</span>                <span class="comment"># Fix this up to get information from the defaultgromprop e.g.</span></div>
-<div class="line"><span class="lineno">  364</span>                <span class="comment"># - texcoord &lt;geompropdef name=&quot;UV0&quot; type=&quot;vector2&quot; geomprop=&quot;texcoord&quot; index=&quot;0&quot;&gt;</span></div>
-<div class="line"><span class="lineno">  365</span>                defaultgeomprop_name = defaultgeomprop.getName()</div>
-<div class="line"><span class="lineno">  366</span>                defaultgeomprop_prop = defaultgeomprop.getGeomProp()</div>
-<div class="line"><span class="lineno">  367</span>                defaultgeomprop_type = defaultgeomprop.getType()</div>
-<div class="line"><span class="lineno">  368</span>                defaultgeomprop_index = defaultgeomprop.getIndex()</div>
-<div class="line"><span class="lineno">  369</span>                defaultgeomprop_space = defaultgeomprop.getSpace()</div>
-<div class="line"><span class="lineno">  370</span> </div>
-<div class="line"><span class="lineno">  371</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> node_input:</div>
-<div class="line"><span class="lineno">  372</span>                    node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())</div>
-<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">if</span> defaultgeomprop_name <span class="keywordflow">not</span> <span class="keywordflow">in</span> graph_default_nodes:</div>
-<div class="line"><span class="lineno">  374</span>                    upstream_default_node = graph.addNode(defaultgeomprop_prop, </div>
-<div class="line"><span class="lineno">  375</span>                                                            graph.createValidChildName(defaultgeomprop_name), </div>
-<div class="line"><span class="lineno">  376</span>                                                            defaultgeomprop_type)</div>
-<div class="line"><span class="lineno">  377</span>                    upstream_default_node.addInputsFromNodeDef()</div>
-<div class="line"><span class="lineno">  378</span> </div>
-<div class="line"><span class="lineno">  379</span>                    <span class="comment"># Set space and set index</span></div>
-<div class="line"><span class="lineno">  380</span>                    index_input = upstream_default_node.getInput(<span class="stringliteral">&quot;index&quot;</span>)</div>
-<div class="line"><span class="lineno">  381</span>                    <span class="keywordflow">if</span> index_input:</div>
-<div class="line"><span class="lineno">  382</span>                        index_input.setValue(defaultgeomprop_index, <span class="stringliteral">&#39;integer&#39;</span>)</div>
-<div class="line"><span class="lineno">  383</span>                    space_input = upstream_default_node.getInput(<span class="stringliteral">&quot;space&quot;</span>)  </div>
-<div class="line"><span class="lineno">  384</span>                    <span class="keywordflow">if</span> space_input:</div>
-<div class="line"><span class="lineno">  385</span>                        space_input.setValue(defaultgeomprop_space, <span class="stringliteral">&#39;string&#39;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00356">356</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  356</span>    <span class="keyword">def </span>add_explicit_geometry_stream(self, graph: mx.GraphElement):</div>
+<div class="line"><span class="lineno">  357</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  358</span><span class="stringliteral">        @brief Add explicit geometry stream nodes for inputs with defaultgeomprop specified</span></div>
+<div class="line"><span class="lineno">  359</span><span class="stringliteral">        in nodes definition. Do this for unconnected inputs only.</span></div>
+<div class="line"><span class="lineno">  360</span><span class="stringliteral">        @param graph The MaterialX graph element.</span></div>
+<div class="line"><span class="lineno">  361</span><span class="stringliteral">        @return The number of implicit nodes added.</span></div>
+<div class="line"><span class="lineno">  362</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  363</span>        </div>
+<div class="line"><span class="lineno">  364</span>        graph_default_nodes = {}</div>
+<div class="line"><span class="lineno">  365</span> </div>
+<div class="line"><span class="lineno">  366</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> graph.getNodes():</div>
+<div class="line"><span class="lineno">  367</span>            <span class="keywordflow">if</span> node.hasSourceUri() <span class="keywordflow">or</span> (node.getCategory() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodedef&quot;</span>]):</div>
+<div class="line"><span class="lineno">  368</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  369</span> </div>
+<div class="line"><span class="lineno">  370</span>            nodedef = node.getNodeDef(node.getType())</div>
+<div class="line"><span class="lineno">  371</span>            <span class="comment">#self.logger.info(&#39;Node:&#39;, node.getName(), &#39;NodeDef:&#39;, nodedef.getName() if nodedef else &quot;None&quot;)</span></div>
+<div class="line"><span class="lineno">  372</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> nodedef:</div>
+<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>            <span class="keywordflow">for</span> nodedef_input <span class="keywordflow">in</span> nodedef.getInputs():</div>
+<div class="line"><span class="lineno">  376</span>                node_input = node.getInput(nodedef_input.getName())</div>
+<div class="line"><span class="lineno">  377</span>                <span class="comment"># Skip if is a connected input</span></div>
+<div class="line"><span class="lineno">  378</span>                <span class="keywordflow">if</span> node_input:</div>
+<div class="line"><span class="lineno">  379</span>                    <span class="keywordflow">if</span> node_input.getInterfaceName() <span class="keywordflow">or</span> node_input.getNodeName() <span class="keywordflow">or</span> node_input.getNodeGraphString():</div>
+<div class="line"><span class="lineno">  380</span>                        <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  381</span> </div>
+<div class="line"><span class="lineno">  382</span>                <span class="comment"># Skip if no defaultgeomprop</span></div>
+<div class="line"><span class="lineno">  383</span>                defaultgeomprop = nodedef_input.getDefaultGeomProp()</div>
+<div class="line"><span class="lineno">  384</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> defaultgeomprop:</div>
+<div class="line"><span class="lineno">  385</span>                    <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">  386</span> </div>
-<div class="line"><span class="lineno">  387</span>                    <span class="comment">#self.logger.info(f&#39;&gt; Added upstream node &quot;{upstream_default_node.getNamePath()}&quot; : {upstream_default_node}&#39;)</span></div>
-<div class="line"><span class="lineno">  388</span>                    graph_default_nodes[defaultgeomprop_name] = upstream_default_node</div>
-<div class="line"><span class="lineno">  389</span>                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  390</span>                    upstream_default_node = graph_default_nodes[defaultgeomprop_name]</div>
-<div class="line"><span class="lineno">  391</span>                    <span class="comment">#self.logger.info(&#39;Use upstream node for defaultgromprop:&#39;, nodedef_input.getName(), defaultgeomprop)</span></div>
-<div class="line"><span class="lineno">  392</span>                node_input.setNodeName(upstream_default_node.getName())</div>
-<div class="line"><span class="lineno">  393</span> </div>
-<div class="line"><span class="lineno">  394</span>        implicit_nodes_added = len(graph_default_nodes)</div>
-<div class="line"><span class="lineno">  395</span>        <span class="keywordflow">if</span>  graph.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> <span class="stringliteral">&quot;nodegraph&quot;</span>:</div>
-<div class="line"><span class="lineno">  396</span>            <span class="keywordflow">for</span> child_graph <span class="keywordflow">in</span> graph.getNodeGraphs():</div>
-<div class="line"><span class="lineno">  397</span>                <span class="keywordflow">if</span> child_graph.hasSourceUri():</div>
-<div class="line"><span class="lineno">  398</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  399</span>                implicit_nodes_added += self.add_explicit_geometry_stream(child_graph)                        </div>
+<div class="line"><span class="lineno">  387</span>                <span class="comment"># Firewall. USD does not appear to handle bitangent properly so</span></div>
+<div class="line"><span class="lineno">  388</span>                <span class="comment"># skip it for now.</span></div>
+<div class="line"><span class="lineno">  389</span>                <span class="keywordflow">if</span> defaultgeomprop.getGeomProp() == <span class="stringliteral">&quot;bitangent&quot;</span>:</div>
+<div class="line"><span class="lineno">  390</span>                    <span class="comment">#self.logger.info(f&#39;&gt; WARNING: Skipping adding explicit bitangent node for: &quot;{node.getNamePath()}&quot;&#39;)</span></div>
+<div class="line"><span class="lineno">  391</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  392</span> </div>
+<div class="line"><span class="lineno">  393</span>                <span class="comment"># Fix this up to get information from the defaultgromprop e.g.</span></div>
+<div class="line"><span class="lineno">  394</span>                <span class="comment"># - texcoord &lt;geompropdef name=&quot;UV0&quot; type=&quot;vector2&quot; geomprop=&quot;texcoord&quot; index=&quot;0&quot;&gt;</span></div>
+<div class="line"><span class="lineno">  395</span>                defaultgeomprop_name = defaultgeomprop.getName()</div>
+<div class="line"><span class="lineno">  396</span>                defaultgeomprop_prop = defaultgeomprop.getGeomProp()</div>
+<div class="line"><span class="lineno">  397</span>                defaultgeomprop_type = defaultgeomprop.getType()</div>
+<div class="line"><span class="lineno">  398</span>                defaultgeomprop_index = defaultgeomprop.getIndex()</div>
+<div class="line"><span class="lineno">  399</span>                defaultgeomprop_space = defaultgeomprop.getSpace()</div>
 <div class="line"><span class="lineno">  400</span> </div>
-<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">return</span> implicit_nodes_added</div>
-<div class="line"><span class="lineno">  402</span> </div>
-<div class="line"><span class="lineno">  403</span>    </div>
+<div class="line"><span class="lineno">  401</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> node_input:</div>
+<div class="line"><span class="lineno">  402</span>                    node_input = node.addInput(nodedef_input.getName(), nodedef_input.getType())</div>
+<div class="line"><span class="lineno">  403</span>                <span class="keywordflow">if</span> defaultgeomprop_name <span class="keywordflow">not</span> <span class="keywordflow">in</span> graph_default_nodes:</div>
+<div class="line"><span class="lineno">  404</span>                    upstream_default_node = graph.addNode(defaultgeomprop_prop, </div>
+<div class="line"><span class="lineno">  405</span>                                                            graph.createValidChildName(defaultgeomprop_name), </div>
+<div class="line"><span class="lineno">  406</span>                                                            defaultgeomprop_type)</div>
+<div class="line"><span class="lineno">  407</span>                    upstream_default_node.addInputsFromNodeDef()</div>
+<div class="line"><span class="lineno">  408</span> </div>
+<div class="line"><span class="lineno">  409</span>                    <span class="comment"># Set space and set index</span></div>
+<div class="line"><span class="lineno">  410</span>                    index_input = upstream_default_node.getInput(<span class="stringliteral">&quot;index&quot;</span>)</div>
+<div class="line"><span class="lineno">  411</span>                    <span class="keywordflow">if</span> index_input:</div>
+<div class="line"><span class="lineno">  412</span>                        index_input.setValue(defaultgeomprop_index, <span class="stringliteral">&#39;integer&#39;</span>)</div>
+<div class="line"><span class="lineno">  413</span>                    space_input = upstream_default_node.getInput(<span class="stringliteral">&quot;space&quot;</span>)  </div>
+<div class="line"><span class="lineno">  414</span>                    <span class="keywordflow">if</span> space_input:</div>
+<div class="line"><span class="lineno">  415</span>                        space_input.setValue(defaultgeomprop_space, <span class="stringliteral">&#39;string&#39;</span>)</div>
+<div class="line"><span class="lineno">  416</span> </div>
+<div class="line"><span class="lineno">  417</span>                    <span class="comment">#self.logger.info(f&#39;&gt; Added upstream node &quot;{upstream_default_node.getNamePath()}&quot; : {upstream_default_node}&#39;)</span></div>
+<div class="line"><span class="lineno">  418</span>                    graph_default_nodes[defaultgeomprop_name] = upstream_default_node</div>
+<div class="line"><span class="lineno">  419</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  420</span>                    upstream_default_node = graph_default_nodes[defaultgeomprop_name]</div>
+<div class="line"><span class="lineno">  421</span>                    <span class="comment">#self.logger.info(&#39;Use upstream node for defaultgromprop:&#39;, nodedef_input.getName(), defaultgeomprop)</span></div>
+<div class="line"><span class="lineno">  422</span>                node_input.setNodeName(upstream_default_node.getName())</div>
+<div class="line"><span class="lineno">  423</span> </div>
+<div class="line"><span class="lineno">  424</span>        implicit_nodes_added = len(graph_default_nodes)</div>
+<div class="line"><span class="lineno">  425</span>        <span class="keywordflow">if</span>  graph.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> <span class="stringliteral">&quot;nodegraph&quot;</span>:</div>
+<div class="line"><span class="lineno">  426</span>            <span class="keywordflow">for</span> child_graph <span class="keywordflow">in</span> graph.getNodeGraphs():</div>
+<div class="line"><span class="lineno">  427</span>                <span class="keywordflow">if</span> child_graph.hasSourceUri():</div>
+<div class="line"><span class="lineno">  428</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  429</span>                implicit_nodes_added += self.add_explicit_geometry_stream(child_graph)                        </div>
+<div class="line"><span class="lineno">  430</span> </div>
+<div class="line"><span class="lineno">  431</span>        <span class="keywordflow">return</span> implicit_nodes_added</div>
+<div class="line"><span class="lineno">  432</span> </div>
+<div class="line"><span class="lineno">  433</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a13139a0f9b7e20f1110d065248381c1b" name="a13139a0f9b7e20f1110d065248381c1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13139a0f9b7e20f1110d065248381c1b">&#9670;&#160;</a></span>add_materials_for_shaders()</h2>
+<a id="ab4b42a83f8b98b72ab354b88ce14560f" name="ab4b42a83f8b98b72ab354b88ce14560f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4b42a83f8b98b72ab354b88ce14560f">&#9670;&#160;</a></span>add_materials_for_shaders()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -577,12 +580,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">mx.Document</td>          <td class="paramname"><span class="paramname"><em>doc</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>logger</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>&#160;)</td>
+          <td class="paramtype">mx.Document</td>          <td class="paramname"><span class="paramname"><em>doc</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -597,36 +595,99 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of materials added. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00084">84</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>    <span class="keyword">def </span>add_materials_for_shaders(self, doc: mx.Document, logger=<span class="keywordtype">None</span>):</div>
-<div class="line"><span class="lineno">   85</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">   86</span><span class="stringliteral">        @brief Add materials for shaders at the root level of a MaterialX document. Nodegraphs are not considered as this is not supported by USD. </span></div>
-<div class="line"><span class="lineno">   87</span><span class="stringliteral">        @param doc The MaterialX document. </span></div>
-<div class="line"><span class="lineno">   88</span><span class="stringliteral">        @param logger The logger to use for output.</span></div>
-<div class="line"><span class="lineno">   89</span><span class="stringliteral">        @return The number of materials added.</span></div>
-<div class="line"><span class="lineno">   90</span><span class="stringliteral">        &#39;&#39;&#39;</span>  </div>
-<div class="line"><span class="lineno">   91</span>        <span class="comment"># If has materials skip</span></div>
-<div class="line"><span class="lineno">   92</span>        materials = doc.getMaterialNodes()</div>
-<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">if</span> len(materials):</div>
-<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">return</span> 0</div>
-<div class="line"><span class="lineno">   95</span>        </div>
-<div class="line"><span class="lineno">   96</span>        material_count = 0</div>
-<div class="line"><span class="lineno">   97</span>    </div>
-<div class="line"><span class="lineno">   98</span>        surfaceshader_nodes = doc.getChildren()</div>
-<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">for</span> surfaceshader_node <span class="keywordflow">in</span> surfaceshader_nodes:</div>
-<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">if</span> surfaceshader_node.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&#39;surfaceshader&#39;</span>]:</div>
-<div class="line"><span class="lineno">  101</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  102</span>            downstream_ports = surfaceshader_node.getDownstreamPorts()</div>
-<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> downstream_ports:</div>
-<div class="line"><span class="lineno">  104</span>                <span class="comment"># Add a material for the shader</span></div>
-<div class="line"><span class="lineno">  105</span>                material_name = doc.createValidChildName(<span class="stringliteral">&#39;material_&#39;</span> + surfaceshader_node.getName())</div>
-<div class="line"><span class="lineno">  106</span>                material_node = doc.addMaterialNode(material_name, surfaceshader_node)</div>
-<div class="line"><span class="lineno">  107</span>                <span class="keywordflow">if</span> material_node:</div>
-<div class="line"><span class="lineno">  108</span>                    material_count += 1</div>
-<div class="line"><span class="lineno">  109</span>        </div>
-<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">return</span> material_count</div>
-<div class="line"><span class="lineno">  111</span> </div>
-<div class="line"><span class="lineno">  112</span>    </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00114">114</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>add_materials_for_shaders(self, doc: mx.Document):</div>
+<div class="line"><span class="lineno">  115</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  116</span><span class="stringliteral">        @brief Add materials for shaders at the root level of a MaterialX document. Nodegraphs are not considered as this is not supported by USD. </span></div>
+<div class="line"><span class="lineno">  117</span><span class="stringliteral">        @param doc The MaterialX document. </span></div>
+<div class="line"><span class="lineno">  118</span><span class="stringliteral">        @param logger The logger to use for output.</span></div>
+<div class="line"><span class="lineno">  119</span><span class="stringliteral">        @return The number of materials added.</span></div>
+<div class="line"><span class="lineno">  120</span><span class="stringliteral">        &#39;&#39;&#39;</span>  </div>
+<div class="line"><span class="lineno">  121</span>        <span class="comment"># If has materials skip</span></div>
+<div class="line"><span class="lineno">  122</span>        materials = doc.getMaterialNodes()</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">if</span> len(materials):</div>
+<div class="line"><span class="lineno">  124</span>            <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  125</span>        </div>
+<div class="line"><span class="lineno">  126</span>        material_count = 0</div>
+<div class="line"><span class="lineno">  127</span>    </div>
+<div class="line"><span class="lineno">  128</span>        surfaceshader_nodes = doc.getChildren()</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">for</span> surfaceshader_node <span class="keywordflow">in</span> surfaceshader_nodes:</div>
+<div class="line"><span class="lineno">  130</span>            <span class="keywordflow">if</span> surfaceshader_node.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&#39;surfaceshader&#39;</span>]:</div>
+<div class="line"><span class="lineno">  131</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  132</span>            downstream_ports = surfaceshader_node.getDownstreamPorts()</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> downstream_ports:</div>
+<div class="line"><span class="lineno">  134</span>                <span class="comment"># Add a material for the shader</span></div>
+<div class="line"><span class="lineno">  135</span>                material_name = doc.createValidChildName(<span class="stringliteral">&#39;material_&#39;</span> + surfaceshader_node.getName())</div>
+<div class="line"><span class="lineno">  136</span>                material_node = doc.addMaterialNode(material_name, surfaceshader_node)</div>
+<div class="line"><span class="lineno">  137</span>                <span class="keywordflow">if</span> material_node:</div>
+<div class="line"><span class="lineno">  138</span>                    material_count += 1</div>
+<div class="line"><span class="lineno">  139</span>        </div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> material_count</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad9dbc82e0a9467928d680f5fcf4fc58e" name="ad9dbc82e0a9467928d680f5fcf4fc58e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9dbc82e0a9467928d680f5fcf4fc58e">&#9670;&#160;</a></span>add_nodegraph_output_qualifier_on_shaders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_nodegraph_output_qualifier_on_shaders </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mx.Document</td>          <td class="paramname"><span class="paramname"><em>doc</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add nodegraph output qualifier on shaders in the MaterialX document if not already set. </p>
+<p>USD appears to require this for shader inputs to be connected to outputs on a nodegraph sometimes &ndash; when the output name is not "out" ? </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>The MaterialX document. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of explicit outputs added. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00083">83</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   83</span>    <span class="keyword">def </span>add_nodegraph_output_qualifier_on_shaders(self, doc: mx.Document):</div>
+<div class="line"><span class="lineno">   84</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">   85</span><span class="stringliteral">        @brief Add nodegraph output qualifier on shaders in the MaterialX document if not already set.</span></div>
+<div class="line"><span class="lineno">   86</span><span class="stringliteral">        USD appears to require this for shader inputs to be connected to outputs on a nodegraph</span></div>
+<div class="line"><span class="lineno">   87</span><span class="stringliteral">        sometimes -- when the output name is not &quot;out&quot; ?</span></div>
+<div class="line"><span class="lineno">   88</span><span class="stringliteral">        @param doc The MaterialX document.</span></div>
+<div class="line"><span class="lineno">   89</span><span class="stringliteral">        @return The number of explicit outputs added.</span></div>
+<div class="line"><span class="lineno">   90</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">   91</span>        explicit_outputs_added = 0</div>
+<div class="line"><span class="lineno">   92</span>        surfaceshader_nodes = doc.getChildren()</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">for</span> surfaceshader_node <span class="keywordflow">in</span> surfaceshader_nodes:</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">if</span> surfaceshader_node.getType() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&#39;surfaceshader&#39;</span>]:</div>
+<div class="line"><span class="lineno">   95</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>            <span class="comment"># Scan all inputs on the shader node</span></div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">for</span> input <span class="keywordflow">in</span> surfaceshader_node.getInputs():</div>
+<div class="line"><span class="lineno">   99</span>                <span class="comment"># Check for nodegraph output qualifier</span></div>
+<div class="line"><span class="lineno">  100</span>                nodegraph_string = input.getNodeGraphString()</div>
+<div class="line"><span class="lineno">  101</span>                <span class="keywordflow">if</span> nodegraph_string:</div>
+<div class="line"><span class="lineno">  102</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> input.getOutputString():</div>
+<div class="line"><span class="lineno">  103</span>                        nodegraph = doc.getNodeGraph(nodegraph_string)</div>
+<div class="line"><span class="lineno">  104</span>                        <span class="keywordflow">if</span> nodegraph:</div>
+<div class="line"><span class="lineno">  105</span>                            outputs = nodegraph.getOutputs()</div>
+<div class="line"><span class="lineno">  106</span>                            <span class="keywordflow">if</span> outputs:</div>
+<div class="line"><span class="lineno">  107</span>                                input.setOutputString(outputs[0].getName())</div>
+<div class="line"><span class="lineno">  108</span>                                explicit_outputs_added += 1</div>
+<div class="line"><span class="lineno">  109</span>                                self.logger.debug(f<span class="stringliteral">&#39;&gt;&gt; Add output qualifier for shader input {mx.prettyPrint(input)}&#39;</span>)  </div>
+<div class="line"><span class="lineno">  110</span>        </div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> explicit_outputs_added</div>
+<div class="line"><span class="lineno">  112</span> </div>
+<div class="line"><span class="lineno">  113</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -758,78 +819,78 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of top level nodes found </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00404">404</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  404</span>    <span class="keyword">def </span>encapsulate_top_level_nodes(self, doc: mx.Document, nodegraph_name:str=<span class="stringliteral">&quot;top_level_nodes&quot;</span>, remove_original:bool=<span class="keyword">True</span>):</div>
-<div class="line"><span class="lineno">  405</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  406</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes</span></div>
-<div class="line"><span class="lineno">  407</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
-<div class="line"><span class="lineno">  408</span><span class="stringliteral">        @param doc The MaterialX document.</span></div>
-<div class="line"><span class="lineno">  409</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
-<div class="line"><span class="lineno">  410</span><span class="stringliteral">        @param remove_original If True, remove the original top level nodes from the document. Default is True.</span></div>
-<div class="line"><span class="lineno">  411</span><span class="stringliteral">        @return The number of top level nodes found</span></div>
-<div class="line"><span class="lineno">  412</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  413</span>        connections_made = 0</div>
-<div class="line"><span class="lineno">  414</span>        top_level_nodes_found = 0</div>
-<div class="line"><span class="lineno">  415</span> </div>
-<div class="line"><span class="lineno">  416</span>        <span class="comment"># Find all children of document which are no material or shader nodes.</span></div>
-<div class="line"><span class="lineno">  417</span>        top_level_nodes = []</div>
-<div class="line"><span class="lineno">  418</span>        top_level_connections = []</div>
-<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">for</span> elem <span class="keywordflow">in</span> doc.getNodes():</div>
-<div class="line"><span class="lineno">  420</span>            <span class="comment"># skips elements that are part of the stdlib</span></div>
-<div class="line"><span class="lineno">  421</span>            <span class="keywordflow">if</span> elem.hasSourceUri():</div>
-<div class="line"><span class="lineno">  422</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  423</span>            <span class="keywordflow">if</span> (</div>
-<div class="line"><span class="lineno">  424</span>                elem.getName()</div>
-<div class="line"><span class="lineno">  425</span>                <span class="keywordflow">and</span> (elem.getType() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;material&quot;</span>, <span class="stringliteral">&quot;surfaceshader&quot;</span>])</div>
-<div class="line"><span class="lineno">  426</span>                <span class="keywordflow">and</span> elem.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodegraph&quot;</span>, <span class="stringliteral">&quot;nodedef&quot;</span>]</div>
-<div class="line"><span class="lineno">  427</span>            ):</div>
-<div class="line"><span class="lineno">  428</span>                <span class="comment">#self.logger.info(&quot;Finding top level nodes: &quot;, elem.getName(), elem.getType())</span></div>
-<div class="line"><span class="lineno">  429</span>                top_level_nodes.append(elem)</div>
-<div class="line"><span class="lineno">  430</span>            <span class="keywordflow">elif</span> elem.getType() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;surfaceshader&quot;</span>]:</div>
-<div class="line"><span class="lineno">  431</span>                <span class="keywordflow">for</span> input_port <span class="keywordflow">in</span> elem.getInputs():</div>
-<div class="line"><span class="lineno">  432</span>                    upstream_node = input_port.getNodeName()</div>
-<div class="line"><span class="lineno">  433</span>                    <span class="keywordflow">if</span> len(upstream_node) &gt; 0:</div>
-<div class="line"><span class="lineno">  434</span>                        upstream_output_name = input_port.getOutputString()</div>
-<div class="line"><span class="lineno">  435</span>                        <span class="comment">#self.logger.info(&quot;Store connection: &quot;, upstream_node, &quot;&lt;--&quot;, input_port.getNamePath())</span></div>
-<div class="line"><span class="lineno">  436</span>                        top_level_connections.append([upstream_node, input_port.getNamePath(), upstream_output_name])</div>
-<div class="line"><span class="lineno">  437</span>        </div>
-<div class="line"><span class="lineno">  438</span>        <span class="comment">#self.logger.info(&quot;Top level connections: &quot;, top_level_connections)</span></div>
-<div class="line"><span class="lineno">  439</span>        top_level_nodes_found = len(top_level_nodes)</div>
-<div class="line"><span class="lineno">  440</span>        <span class="keywordflow">if</span> top_level_nodes_found == 0:</div>
-<div class="line"><span class="lineno">  441</span>            <span class="keywordflow">return</span> top_level_nodes_found</div>
-<div class="line"><span class="lineno">  442</span> </div>
-<div class="line"><span class="lineno">  443</span>        <span class="comment"># create nodegraph</span></div>
-<div class="line"><span class="lineno">  444</span>        ng_name = doc.createValidChildName(nodegraph_name)</div>
-<div class="line"><span class="lineno">  445</span>        ng = doc.addNodeGraph(ng_name)</div>
-<div class="line"><span class="lineno">  446</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> top_level_nodes:</div>
-<div class="line"><span class="lineno">  447</span>            <span class="comment">#self.logger.info(&quot;Adding node: &quot;, node.getName())</span></div>
-<div class="line"><span class="lineno">  448</span>            new_node = ng.addNode(node.getCategory(), mx.createValidName(node.getName()), node.getType())</div>
-<div class="line"><span class="lineno">  449</span>            new_node.copyContentFrom(node)</div>
-<div class="line"><span class="lineno">  450</span>            <span class="keywordflow">for</span> connect <span class="keywordflow">in</span> top_level_connections:</div>
-<div class="line"><span class="lineno">  451</span>                <span class="keywordflow">if</span> connect[0] == node.getName():</div>
-<div class="line"><span class="lineno">  452</span>                    the_input = doc.getDescendant(connect[1])</div>
-<div class="line"><span class="lineno">  453</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> the_input:</div>
-<div class="line"><span class="lineno">  454</span>                        <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  455</span> </div>
-<div class="line"><span class="lineno">  456</span>                    <span class="comment"># Create a new output on the graph</span></div>
-<div class="line"><span class="lineno">  457</span>                    new_output = ng.addOutput(ng.createValidChildName(<span class="stringliteral">&quot;out&quot;</span>), the_input.getType())</div>
-<div class="line"><span class="lineno">  458</span>                    new_output.setNodeName(new_node.getName())</div>
-<div class="line"><span class="lineno">  459</span>                    <span class="keywordflow">if</span> len(connect[2]) &gt; 0:</div>
-<div class="line"><span class="lineno">  460</span>                        new_output.setOutputString(connect[2])</div>
-<div class="line"><span class="lineno">  461</span>                    <span class="comment">#self.logger.info(&quot;Create new output: &quot;, mx.prettyPrint(new_output))</span></div>
-<div class="line"><span class="lineno">  462</span>                    the_input.setNodeGraphString(ng_name)</div>
-<div class="line"><span class="lineno">  463</span>                    the_input.setOutputString(new_output.getName())</div>
-<div class="line"><span class="lineno">  464</span>                    the_input.removeAttribute(<span class="stringliteral">&quot;nodename&quot;</span>)</div>
-<div class="line"><span class="lineno">  465</span>                    <span class="comment">#self.logger.info(f&quot;Reconnecting {the_input.getNamePath()} {connect[1]} to {mx.prettyPrint(the_input)}&quot;)</span></div>
-<div class="line"><span class="lineno">  466</span>                    connections_made += 1</div>
-<div class="line"><span class="lineno">  467</span> </div>
-<div class="line"><span class="lineno">  468</span>        <span class="keywordflow">if</span> remove_original:</div>
-<div class="line"><span class="lineno">  469</span>            <span class="keywordflow">for</span> node <span class="keywordflow">in</span> top_level_nodes:</div>
-<div class="line"><span class="lineno">  470</span>                doc.removeChild(node.getName())</div>
-<div class="line"><span class="lineno">  471</span>        </div>
-<div class="line"><span class="lineno">  472</span>        <span class="keywordflow">return</span> top_level_nodes_found</div>
-<div class="line"><span class="lineno">  473</span> </div>
-<div class="line"><span class="lineno">  474</span>    </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00434">434</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  434</span>    <span class="keyword">def </span>encapsulate_top_level_nodes(self, doc: mx.Document, nodegraph_name:str=<span class="stringliteral">&quot;top_level_nodes&quot;</span>, remove_original:bool=<span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  435</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  436</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes</span></div>
+<div class="line"><span class="lineno">  437</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
+<div class="line"><span class="lineno">  438</span><span class="stringliteral">        @param doc The MaterialX document.</span></div>
+<div class="line"><span class="lineno">  439</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
+<div class="line"><span class="lineno">  440</span><span class="stringliteral">        @param remove_original If True, remove the original top level nodes from the document. Default is True.</span></div>
+<div class="line"><span class="lineno">  441</span><span class="stringliteral">        @return The number of top level nodes found</span></div>
+<div class="line"><span class="lineno">  442</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  443</span>        connections_made = 0</div>
+<div class="line"><span class="lineno">  444</span>        top_level_nodes_found = 0</div>
+<div class="line"><span class="lineno">  445</span> </div>
+<div class="line"><span class="lineno">  446</span>        <span class="comment"># Find all children of document which are no material or shader nodes.</span></div>
+<div class="line"><span class="lineno">  447</span>        top_level_nodes = []</div>
+<div class="line"><span class="lineno">  448</span>        top_level_connections = []</div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordflow">for</span> elem <span class="keywordflow">in</span> doc.getNodes():</div>
+<div class="line"><span class="lineno">  450</span>            <span class="comment"># skips elements that are part of the stdlib</span></div>
+<div class="line"><span class="lineno">  451</span>            <span class="keywordflow">if</span> elem.hasSourceUri():</div>
+<div class="line"><span class="lineno">  452</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  453</span>            <span class="keywordflow">if</span> (</div>
+<div class="line"><span class="lineno">  454</span>                elem.getName()</div>
+<div class="line"><span class="lineno">  455</span>                <span class="keywordflow">and</span> (elem.getType() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;material&quot;</span>, <span class="stringliteral">&quot;surfaceshader&quot;</span>])</div>
+<div class="line"><span class="lineno">  456</span>                <span class="keywordflow">and</span> elem.getCategory() <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;nodegraph&quot;</span>, <span class="stringliteral">&quot;nodedef&quot;</span>]</div>
+<div class="line"><span class="lineno">  457</span>            ):</div>
+<div class="line"><span class="lineno">  458</span>                <span class="comment">#self.logger.info(&quot;Finding top level nodes: &quot;, elem.getName(), elem.getType())</span></div>
+<div class="line"><span class="lineno">  459</span>                top_level_nodes.append(elem)</div>
+<div class="line"><span class="lineno">  460</span>            <span class="keywordflow">elif</span> elem.getType() <span class="keywordflow">in</span> [<span class="stringliteral">&quot;surfaceshader&quot;</span>]:</div>
+<div class="line"><span class="lineno">  461</span>                <span class="keywordflow">for</span> input_port <span class="keywordflow">in</span> elem.getInputs():</div>
+<div class="line"><span class="lineno">  462</span>                    upstream_node = input_port.getNodeName()</div>
+<div class="line"><span class="lineno">  463</span>                    <span class="keywordflow">if</span> len(upstream_node) &gt; 0:</div>
+<div class="line"><span class="lineno">  464</span>                        upstream_output_name = input_port.getOutputString()</div>
+<div class="line"><span class="lineno">  465</span>                        <span class="comment">#self.logger.info(&quot;Store connection: &quot;, upstream_node, &quot;&lt;--&quot;, input_port.getNamePath())</span></div>
+<div class="line"><span class="lineno">  466</span>                        top_level_connections.append([upstream_node, input_port.getNamePath(), upstream_output_name])</div>
+<div class="line"><span class="lineno">  467</span>        </div>
+<div class="line"><span class="lineno">  468</span>        <span class="comment">#self.logger.info(&quot;Top level connections: &quot;, top_level_connections)</span></div>
+<div class="line"><span class="lineno">  469</span>        top_level_nodes_found = len(top_level_nodes)</div>
+<div class="line"><span class="lineno">  470</span>        <span class="keywordflow">if</span> top_level_nodes_found == 0:</div>
+<div class="line"><span class="lineno">  471</span>            <span class="keywordflow">return</span> top_level_nodes_found</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>        <span class="comment"># create nodegraph</span></div>
+<div class="line"><span class="lineno">  474</span>        ng_name = doc.createValidChildName(nodegraph_name)</div>
+<div class="line"><span class="lineno">  475</span>        ng = doc.addNodeGraph(ng_name)</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">for</span> node <span class="keywordflow">in</span> top_level_nodes:</div>
+<div class="line"><span class="lineno">  477</span>            <span class="comment">#self.logger.info(&quot;Adding node: &quot;, node.getName())</span></div>
+<div class="line"><span class="lineno">  478</span>            new_node = ng.addNode(node.getCategory(), mx.createValidName(node.getName()), node.getType())</div>
+<div class="line"><span class="lineno">  479</span>            new_node.copyContentFrom(node)</div>
+<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">for</span> connect <span class="keywordflow">in</span> top_level_connections:</div>
+<div class="line"><span class="lineno">  481</span>                <span class="keywordflow">if</span> connect[0] == node.getName():</div>
+<div class="line"><span class="lineno">  482</span>                    the_input = doc.getDescendant(connect[1])</div>
+<div class="line"><span class="lineno">  483</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> the_input:</div>
+<div class="line"><span class="lineno">  484</span>                        <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  485</span> </div>
+<div class="line"><span class="lineno">  486</span>                    <span class="comment"># Create a new output on the graph</span></div>
+<div class="line"><span class="lineno">  487</span>                    new_output = ng.addOutput(ng.createValidChildName(<span class="stringliteral">&quot;out&quot;</span>), the_input.getType())</div>
+<div class="line"><span class="lineno">  488</span>                    new_output.setNodeName(new_node.getName())</div>
+<div class="line"><span class="lineno">  489</span>                    <span class="keywordflow">if</span> len(connect[2]) &gt; 0:</div>
+<div class="line"><span class="lineno">  490</span>                        new_output.setOutputString(connect[2])</div>
+<div class="line"><span class="lineno">  491</span>                    <span class="comment">#self.logger.info(&quot;Create new output: &quot;, mx.prettyPrint(new_output))</span></div>
+<div class="line"><span class="lineno">  492</span>                    the_input.setNodeGraphString(ng_name)</div>
+<div class="line"><span class="lineno">  493</span>                    the_input.setOutputString(new_output.getName())</div>
+<div class="line"><span class="lineno">  494</span>                    the_input.removeAttribute(<span class="stringliteral">&quot;nodename&quot;</span>)</div>
+<div class="line"><span class="lineno">  495</span>                    <span class="comment">#self.logger.info(f&quot;Reconnecting {the_input.getNamePath()} {connect[1]} to {mx.prettyPrint(the_input)}&quot;)</span></div>
+<div class="line"><span class="lineno">  496</span>                    connections_made += 1</div>
+<div class="line"><span class="lineno">  497</span> </div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">if</span> remove_original:</div>
+<div class="line"><span class="lineno">  499</span>            <span class="keywordflow">for</span> node <span class="keywordflow">in</span> top_level_nodes:</div>
+<div class="line"><span class="lineno">  500</span>                doc.removeChild(node.getName())</div>
+<div class="line"><span class="lineno">  501</span>        </div>
+<div class="line"><span class="lineno">  502</span>        <span class="keywordflow">return</span> top_level_nodes_found</div>
+<div class="line"><span class="lineno">  503</span> </div>
+<div class="line"><span class="lineno">  504</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -879,29 +940,29 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The modified MaterialX document if top level connections were found, None otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00475">475</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  475</span>    <span class="keyword">def </span>encapsulate_top_level_nodes_file(self, input_path:str, new_input_path:str, nodegraph_name:str=<span class="stringliteral">&#39;top_level_nodes&#39;</span>, remove_original_nodes:bool =<span class="keyword">True</span>):</div>
-<div class="line"><span class="lineno">  476</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  477</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes </span></div>
-<div class="line"><span class="lineno">  478</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
-<div class="line"><span class="lineno">  479</span><span class="stringliteral">        @param input_path The path to the MaterialX document.</span></div>
-<div class="line"><span class="lineno">  480</span><span class="stringliteral">        @param new_input_path The path to write the modified MaterialX document.</span></div>
-<div class="line"><span class="lineno">  481</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
-<div class="line"><span class="lineno">  482</span><span class="stringliteral">        @param remove_original_nodes If True, remove the original top level nodes from the document. Default is True.</span></div>
-<div class="line"><span class="lineno">  483</span><span class="stringliteral">        @return The modified MaterialX document if top level connections were found, None otherwise.</span></div>
-<div class="line"><span class="lineno">  484</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  485</span>        doc = self.create_document(input_path)</div>
-<div class="line"><span class="lineno">  486</span>        top_level_nodes_found = self.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)        </div>
-<div class="line"><span class="lineno">  487</span>        <span class="keywordflow">if</span> top_level_nodes_found:            </div>
-<div class="line"><span class="lineno">  488</span>            self.logger.info(f<span class="stringliteral">&#39;&gt; Encapsulated {top_level_nodes_found} top level nodes in a new nodegraph.&#39;</span>)</div>
-<div class="line"><span class="lineno">  489</span>            <span class="keywordflow">if</span> new_input_path:</div>
-<div class="line"><span class="lineno">  490</span>                print(f<span class="stringliteral">&#39;&gt; Writing modified MaterialX document to: {new_input_path}&#39;</span>)</div>
-<div class="line"><span class="lineno">  491</span>                self.write_document(doc, new_input_path)</div>
-<div class="line"><span class="lineno">  492</span>            <span class="keywordflow">return</span> doc </div>
-<div class="line"><span class="lineno">  493</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  494</span> </div>
-<div class="line"><span class="lineno">  495</span>        </div>
-<div class="line"><span class="lineno">  496</span>        </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__utils_8py_source.html#l00505">505</a> of file <a class="el" href="materialxusd__utils_8py_source.html">materialxusd_utils.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  505</span>    <span class="keyword">def </span>encapsulate_top_level_nodes_file(self, input_path:str, new_input_path:str, nodegraph_name:str=<span class="stringliteral">&#39;top_level_nodes&#39;</span>, remove_original_nodes:bool =<span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  506</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  507</span><span class="stringliteral">        @brief Encapsulate top level nodes in a nodegraph. Remap any connections to the top level nodes </span></div>
+<div class="line"><span class="lineno">  508</span><span class="stringliteral">        to outputs on a new nodegraph.</span></div>
+<div class="line"><span class="lineno">  509</span><span class="stringliteral">        @param input_path The path to the MaterialX document.</span></div>
+<div class="line"><span class="lineno">  510</span><span class="stringliteral">        @param new_input_path The path to write the modified MaterialX document.</span></div>
+<div class="line"><span class="lineno">  511</span><span class="stringliteral">        @param nodegraph_name The name of the new nodegraph to encapsulate the top level nodes. Default is &#39;top_level_nodes&#39;.</span></div>
+<div class="line"><span class="lineno">  512</span><span class="stringliteral">        @param remove_original_nodes If True, remove the original top level nodes from the document. Default is True.</span></div>
+<div class="line"><span class="lineno">  513</span><span class="stringliteral">        @return The modified MaterialX document if top level connections were found, None otherwise.</span></div>
+<div class="line"><span class="lineno">  514</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  515</span>        doc = self.create_document(input_path)</div>
+<div class="line"><span class="lineno">  516</span>        top_level_nodes_found = self.encapsulate_top_level_nodes(doc, nodegraph_name, remove_original_nodes)        </div>
+<div class="line"><span class="lineno">  517</span>        <span class="keywordflow">if</span> top_level_nodes_found:            </div>
+<div class="line"><span class="lineno">  518</span>            self.logger.info(f<span class="stringliteral">&#39;&gt; Encapsulated {top_level_nodes_found} top level nodes in a new nodegraph.&#39;</span>)</div>
+<div class="line"><span class="lineno">  519</span>            <span class="keywordflow">if</span> new_input_path:</div>
+<div class="line"><span class="lineno">  520</span>                print(f<span class="stringliteral">&#39;&gt; Writing modified MaterialX document to: {new_input_path}&#39;</span>)</div>
+<div class="line"><span class="lineno">  521</span>                self.write_document(doc, new_input_path)</div>
+<div class="line"><span class="lineno">  522</span>            <span class="keywordflow">return</span> doc </div>
+<div class="line"><span class="lineno">  523</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  524</span> </div>
+<div class="line"><span class="lineno">  525</span>        </div>
+<div class="line"><span class="lineno">  526</span>        </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1006,7 +1067,6 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   80</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
 <div class="line"><span class="lineno">   81</span>        mx.flattenFilenames(doc, search_paths)</div>
 <div class="line"><span class="lineno">   82</span> </div>
-<div class="line"><span class="lineno">   83</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>

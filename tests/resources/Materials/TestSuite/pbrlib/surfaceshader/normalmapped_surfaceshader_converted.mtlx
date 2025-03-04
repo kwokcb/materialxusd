@@ -5,7 +5,7 @@
     <input name="metalness" type="float" value="1.0" />
     <input name="specular" type="float" value="0.7" />
     <input name="coat" type="float" value="1" />
-    <input name="normal" type="vector3" nodegraph="NormalMapGraph" />
+    <input name="normal" type="vector3" nodegraph="NormalMapGraph" output="normal" />
   </standard_surface>
   <surfacematerial name="NormalMappedMaterial" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="NormalMappedShader" />
@@ -42,7 +42,7 @@
     <input name="metalness" type="float" value="1.0" />
     <input name="specular" type="float" value="0.7" />
     <input name="coat" type="float" value="1" />
-    <input name="normal" type="vector3" nodegraph="NormalMapGraph2" />
+    <input name="normal" type="vector3" nodegraph="NormalMapGraph2" output="normal" />
   </standard_surface>
   <surfacematerial name="NormalMappedMaterial2" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="NormalMappedShader2" />

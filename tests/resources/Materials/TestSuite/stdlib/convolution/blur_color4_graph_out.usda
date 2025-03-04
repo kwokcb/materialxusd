@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/convolution/blur_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/sphere.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/stdlib/convolution\\blur_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -270,7 +270,7 @@ def "MaterialX"
     {
         def NodeGraph "blur_color3_graph"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_color3_graph/blur_color3.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_color3_graph/blur_color3_node.outputs:out>
 
             def Shader "image1"
             {
@@ -280,7 +280,7 @@ def "MaterialX"
                 color3f outputs:out
             }
 
-            def Shader "blur_color3"
+            def Shader "blur_color3_node"
             {
                 uniform token info:id = "ND_blur_color3"
                 string inputs:filtertype = "gaussian"
@@ -299,7 +299,7 @@ def "MaterialX"
 
         def NodeGraph "blur_color4_graph"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_color4_graph/convert_blur_color4.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_color4_graph/convert_blur_color4_node.outputs:out>
 
             def Shader "tiledimage1"
             {
@@ -309,7 +309,7 @@ def "MaterialX"
                 color4f outputs:out
             }
 
-            def Shader "blur_color4"
+            def Shader "blur_color4_node"
             {
                 uniform token info:id = "ND_blur_color4"
                 string inputs:filtertype = "gaussian"
@@ -325,17 +325,17 @@ def "MaterialX"
                 float2 outputs:out
             }
 
-            def Shader "convert_blur_color4"
+            def Shader "convert_blur_color4_node"
             {
                 uniform token info:id = "ND_convert_color4_color3"
-                color4f inputs:in.connect = </MaterialX/NodeGraphs/blur_color4_graph/blur_color4.outputs:out>
+                color4f inputs:in.connect = </MaterialX/NodeGraphs/blur_color4_graph/blur_color4_node.outputs:out>
                 color3f outputs:out
             }
         }
 
         def NodeGraph "blur_float_graph"
         {
-            float outputs:out.connect = </MaterialX/NodeGraphs/blur_float_graph/blur_float.outputs:out>
+            float outputs:out.connect = </MaterialX/NodeGraphs/blur_float_graph/blur_float_node.outputs:out>
 
             def Shader "image1"
             {
@@ -345,7 +345,7 @@ def "MaterialX"
                 float outputs:out
             }
 
-            def Shader "blur_float"
+            def Shader "blur_float_node"
             {
                 uniform token info:id = "ND_blur_float"
                 string inputs:filtertype = "box"
@@ -364,7 +364,7 @@ def "MaterialX"
 
         def NodeGraph "blur_vector2"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector2/convert_blur_vector2.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector2/convert_blur_vector2_node.outputs:out>
 
             def Shader "tiledimage1"
             {
@@ -374,7 +374,7 @@ def "MaterialX"
                 float2 outputs:out
             }
 
-            def Shader "blur_vector2"
+            def Shader "blur_vector2_node"
             {
                 uniform token info:id = "ND_blur_vector2"
                 string inputs:filtertype = "box"
@@ -390,17 +390,17 @@ def "MaterialX"
                 float2 outputs:out
             }
 
-            def Shader "convert_blur_vector2"
+            def Shader "convert_blur_vector2_node"
             {
                 uniform token info:id = "ND_convert_vector2_color3"
-                float2 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector2/blur_vector2.outputs:out>
+                float2 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector2/blur_vector2_node.outputs:out>
                 color3f outputs:out
             }
         }
 
         def NodeGraph "blur_vector3_graph"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector3_graph/convert_blur_vector3.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector3_graph/convert_blur_vector3_node.outputs:out>
 
             def Shader "tiledimage1"
             {
@@ -410,7 +410,7 @@ def "MaterialX"
                 float3 outputs:out
             }
 
-            def Shader "blur_vector3"
+            def Shader "blur_vector3_node"
             {
                 uniform token info:id = "ND_blur_vector3"
                 string inputs:filtertype = "box"
@@ -426,17 +426,17 @@ def "MaterialX"
                 float2 outputs:out
             }
 
-            def Shader "convert_blur_vector3"
+            def Shader "convert_blur_vector3_node"
             {
                 uniform token info:id = "ND_convert_vector3_color3"
-                float3 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector3_graph/blur_vector3.outputs:out>
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector3_graph/blur_vector3_node.outputs:out>
                 color3f outputs:out
             }
         }
 
         def NodeGraph "blur_vector4"
         {
-            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector4/convert_blur_vector4.outputs:out>
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/blur_vector4/convert_blur_vector4_node.outputs:out>
 
             def Shader "tiledimage1"
             {
@@ -446,7 +446,7 @@ def "MaterialX"
                 float4 outputs:out
             }
 
-            def Shader "blur_vector4"
+            def Shader "blur_vector4_node"
             {
                 uniform token info:id = "ND_blur_vector4"
                 string inputs:filtertype = "box"
@@ -462,17 +462,17 @@ def "MaterialX"
                 float2 outputs:out
             }
 
-            def Shader "convert_blur_vector4"
+            def Shader "convert_blur_vector4_node"
             {
                 uniform token info:id = "ND_convert_vector4_color3"
-                float4 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector4/blur_vector4.outputs:out>
+                float4 inputs:in.connect = </MaterialX/NodeGraphs/blur_vector4/blur_vector4_node.outputs:out>
                 color3f outputs:out
             }
         }
 
         def NodeGraph "blur_cellnoise_graph"
         {
-            float outputs:out.connect = </MaterialX/NodeGraphs/blur_cellnoise_graph/blur_cellnoise.outputs:out>
+            float outputs:out.connect = </MaterialX/NodeGraphs/blur_cellnoise_graph/blur_cellnoise_node.outputs:out>
 
             def Shader "texcoord1"
             {
@@ -495,7 +495,7 @@ def "MaterialX"
                 float outputs:out
             }
 
-            def Shader "blur_cellnoise"
+            def Shader "blur_cellnoise_node"
             {
                 uniform token info:id = "ND_blur_float"
                 string inputs:filtertype = "gaussian"
@@ -511,7 +511,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/sphere.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/blur_color4_graph_out>
@@ -526,14 +526,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera_sphere.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

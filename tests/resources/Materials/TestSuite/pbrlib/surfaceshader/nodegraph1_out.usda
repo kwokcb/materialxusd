@@ -24,13 +24,13 @@ def "MaterialX"
                 prepend references = </MaterialX/Shaders/mix_surface1>
             )
             {
-                token inputs:bg.connect = </MaterialX/Materials/nodegraph1_out.inputs:bg>
-                token inputs:fg.connect = </MaterialX/Materials/nodegraph1_out.inputs:fg>
+                token inputs:bg.connect = </MaterialX/Materials/nodegraph1_out/nodegraph1.outputs:out3>
+                token inputs:fg.connect = </MaterialX/Materials/nodegraph1_out/nodegraph1.outputs:out2>
                 float inputs:mix.connect = </MaterialX/Materials/nodegraph1_out.inputs:mix>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "nodegraph1" (
+                prepend references = </MaterialX/NodeGraphs/nodegraph1>
             )
             {
             }
@@ -48,6 +48,162 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
+        def NodeGraph "nodegraph1"
+        {
+            token outputs:out2
+            token outputs:out3
+
+            def Shader "roughness_dual1"
+            {
+                uniform token info:id = "ND_roughness_dual"
+                float2 inputs:roughness = (0.2, 0.4)
+                float2 outputs:out
+            }
+
+            def Shader "subsurface_brdf1"
+            {
+                uniform token info:id = "ND_subsurface_bsdf"
+                float inputs:anisotropy = 0
+                color3f inputs:color = (0.18, 0.18, 0.18)
+                float3 inputs:normal = (0, 0, 0)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/nodegraph1/Nworld.outputs:out>
+                color3f inputs:radius = (1, 1, 1)
+                float inputs:weight = 1
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "sheen_brdf1"
+            {
+                uniform token info:id = "ND_sheen_bsdf"
+                color3f inputs:color = (1, 1, 1)
+                float3 inputs:normal = (0, 0, 0)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/nodegraph1/Nworld.outputs:out>
+                float inputs:roughness = 0.3
+                float inputs:weight = 1
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "mix_edf1"
+            {
+                uniform token info:id = "ND_mix_edf"
+                token inputs:bg (
+                    renderType = "EDF"
+                )
+                token inputs:fg (
+                    renderType = "EDF"
+                )
+                token inputs:fg.connect = </MaterialX/NodeGraphs/nodegraph1/Emission_EDF.outputs:out>
+                float inputs:mix = 0.5
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+
+            def Shader "mix_bsdf1"
+            {
+                uniform token info:id = "ND_mix_bsdf"
+                token inputs:bg (
+                    renderType = "BSDF"
+                )
+                token inputs:bg.connect = </MaterialX/NodeGraphs/nodegraph1/subsurface_brdf1.outputs:out>
+                token inputs:fg (
+                    renderType = "BSDF"
+                )
+                token inputs:fg.connect = </MaterialX/NodeGraphs/nodegraph1/sheen_brdf1.outputs:out>
+                float inputs:mix = 0.5
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Emission_EDF"
+            {
+                uniform token info:id = "ND_uniform_edf"
+                color3f inputs:color = (0.2, 1, 0.2)
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+
+            def Shader "conductor_brdf1"
+            {
+                uniform token info:id = "ND_conductor_bsdf"
+                string inputs:distribution = "ggx"
+                color3f inputs:extinction.connect = </MaterialX/NodeGraphs/nodegraph1/conductor_brdf1__artistic_ior.outputs:extinction>
+                color3f inputs:ior.connect = </MaterialX/NodeGraphs/nodegraph1/conductor_brdf1__artistic_ior.outputs:ior>
+                float3 inputs:normal = (0, 0, 0)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/nodegraph1/Nworld.outputs:out>
+                float2 inputs:roughness = (0, 0)
+                float3 inputs:tangent = (0, 0, 0)
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/nodegraph1/Tworld.outputs:out>
+                float inputs:weight = 1
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "SchlickBRDF__layer_top"
+            {
+                uniform token info:id = "ND_generalized_schlick_bsdf"
+                color3f inputs:color0 = (1, 1, 1)
+                color3f inputs:color90 = (1, 1, 1)
+                string inputs:distribution = "ggx"
+                float inputs:exponent = 5
+                float3 inputs:normal = (0, 0, 0)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/nodegraph1/Nworld.outputs:out>
+                float2 inputs:roughness.connect = </MaterialX/NodeGraphs/nodegraph1/roughness_dual1.outputs:out>
+                float3 inputs:tangent = (0, 0, 0)
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/nodegraph1/Tworld.outputs:out>
+                float inputs:weight = 1
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "conductor_brdf1__artistic_ior"
+            {
+                uniform token info:id = "ND_artistic_ior"
+                color3f inputs:edge_color = (0.998, 0.981, 0.751)
+                color3f inputs:reflectivity = (0.944, 0.776, 0.373)
+                color3f outputs:extinction
+                color3f outputs:ior
+            }
+
+            def Shader "SchlickBRDF"
+            {
+                uniform token info:id = "ND_layer_bsdf"
+                token inputs:base (
+                    renderType = "BSDF"
+                )
+                token inputs:base.connect = </MaterialX/NodeGraphs/nodegraph1/mix_bsdf1.outputs:out>
+                token inputs:top (
+                    renderType = "BSDF"
+                )
+                token inputs:top.connect = </MaterialX/NodeGraphs/nodegraph1/SchlickBRDF__layer_top.outputs:out>
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
     }
 }
 

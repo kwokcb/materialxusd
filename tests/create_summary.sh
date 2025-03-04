@@ -1,1 +1,1 @@
-python ../utilities/create_image_path.py ../tests/resources/Materials/
+python ../utilities/create_image_path.py ./resources/Materials/

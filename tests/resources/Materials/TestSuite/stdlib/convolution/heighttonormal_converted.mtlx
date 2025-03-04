@@ -16,9 +16,6 @@
       <input name="normal" type="vector3" nodename="Nworld" />
       <input name="tangent" type="vector3" nodename="Tworld" />
     </normalmap>
-    <standard_surface name="standard_surface" type="surfaceshader">
-      <input name="normal" type="vector3" nodename="normalmap" />
-    </standard_surface>
     <multiply name="scale" type="vector3">
       <input name="in1" type="vector3" nodename="heighttonormal" />
       <input name="in2" type="float" value="2" />
@@ -27,12 +24,7 @@
       <input name="in1" type="vector3" nodename="scale" />
       <input name="in2" type="vector3" value="-1, -1, -1" />
     </add>
-    <UsdPreviewSurface name="UsdPreviewSurface" type="surfaceshader">
-      <input name="normal" type="vector3" nodename="bias" />
-    </UsdPreviewSurface>
     <output name="vector3_out" type="color3" nodename="convert_heighttonormal" />
-    <output name="surface1_out" type="surfaceshader" nodename="standard_surface" />
-    <output name="surface2_out" type="surfaceshader" nodename="UsdPreviewSurface" />
     <texcoord name="UV0" type="vector2">
       <input name="index" type="integer" value="0" />
     </texcoord>
@@ -46,6 +38,8 @@
     <convert name="convert_heighttonormal" type="color3">
       <input name="in" type="vector3" nodename="heighttonormal" />
     </convert>
+    <output name="out" type="vector3" nodename="normalmap" />
+    <output name="out2" type="vector3" nodename="bias" />
   </nodegraph>
   <surface_unlit name="shader_heighttonormal_vector3_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="heighttonormal" output="vector3_out" />
@@ -53,10 +47,16 @@
   <surfacematerial name="heighttonormal_vector3_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_heighttonormal_vector3_out" />
   </surfacematerial>
+  <standard_surface name="standard_surface" type="surfaceshader">
+    <input name="normal" type="vector3" nodegraph="heighttonormal" output="out" />
+  </standard_surface>
   <surfacematerial name="heighttonormal_surface1_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodegraph="heighttonormal" output="surface1_out" />
+    <input name="surfaceshader" type="surfaceshader" nodename="standard_surface" />
   </surfacematerial>
+  <UsdPreviewSurface name="UsdPreviewSurface" type="surfaceshader">
+    <input name="normal" type="vector3" nodegraph="heighttonormal" output="out2" />
+  </UsdPreviewSurface>
   <surfacematerial name="heighttonormal_surface2_out" type="material">
-    <input name="surfaceshader" type="surfaceshader" nodegraph="heighttonormal" output="surface2_out" />
+    <input name="surfaceshader" type="surfaceshader" nodename="UsdPreviewSurface" />
   </surfacematerial>
 </materialx>

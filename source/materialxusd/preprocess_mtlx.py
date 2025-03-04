@@ -54,6 +54,11 @@ def main():
             logger.info(f'> Added {materials_added} downstream materials.')
         doc.setDataLibrary(None)
 
+        # Add explicit outputs to nodegraph outputs for shader connections
+        explicit_outputs_added = utils.add_nodegraph_output_qualifier_on_shaders(doc)
+        if explicit_outputs_added:
+            logger.info(f"> Added {explicit_outputs_added} explicit outputs to nodegraph outputs for shader connections")
+
         # Resolve image file paths
         # Include absolute path of the input file's folder
         resolved_image_paths = False
@@ -69,7 +74,7 @@ def main():
                 logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
             resolved_image_paths = True            
 
-        if resolved_image_paths or materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:
+        if explicit_outputs_added or resolved_image_paths or materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:
             utils.write_document(doc, output_path)
             logger.info(f"> Wrote modified document to {output_path}")
     except Exception as e:

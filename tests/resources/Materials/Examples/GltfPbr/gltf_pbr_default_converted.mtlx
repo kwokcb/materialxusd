@@ -4,7 +4,7 @@
     <input name="base_color" type="color3" value="1.0, 1.0, 1.0" />
     <input name="metallic" type="float" value="1" />
     <input name="roughness" type="float" value="1" />
-    <input name="normal" type="vector3" value="0, 0, 1" nodegraph="root_graph" output="out" />
+    <input name="normal" type="vector3" nodegraph="root_graph" output="out" />
     <input name="occlusion" type="float" value="0" />
     <input name="transmission" type="float" value="0" />
     <input name="specular" type="float" value="1" />
@@ -20,7 +20,7 @@
     <input name="sheen_roughness" type="float" value="0" />
     <input name="clearcoat" type="float" value="0" />
     <input name="clearcoat_roughness" type="float" value="0" />
-    <input name="clearcoat_normal" type="vector3" value="0, 0, 1" nodegraph="root_graph" output="out2" />
+    <input name="clearcoat_normal" type="vector3" nodegraph="root_graph" output="out2" />
     <input name="emissive" type="color3" value="0, 0, 0" />
     <input name="emissive_strength" type="float" value="1" />
     <input name="thickness" type="float" value="0" />

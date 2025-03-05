@@ -242,6 +242,7 @@ class MaterialXUsdUtilities:
                             shadernode_input = shadernode.getInput(ss_input.getName())
                             if shadernode_input:
                                 shadernode_input.removeAttribute('nodename')
+                                shadernode_input.removeAttribute('value')
                                 shadernode_input.setNodeGraphString(graph.getName())
                                 shadernode_input.setOutputString(ss_input_output.getName())
                         
@@ -258,6 +259,7 @@ class MaterialXUsdUtilities:
                             #material_node_input.setNodeGraphString(graph.getName())
                             #material_node_input.setOutputString(output_name)
                             material_node_input.setNodeName(shadernode_name)
+                            material_node_input.removeAttribute('value')
                             material_count += 1
 
                     elif output_type in supported_output_types:
@@ -317,10 +319,12 @@ class MaterialXUsdUtilities:
                                     convert_input.setNodeName(output.getNodeName())
                                 elif output.hasInterfaceName():
                                     convert_input.setInterfaceName(output.getInterfaceName())
+                                convert_input.removeAttribute('value')
 
                                 # Overwrite the upstream connection on the output
                                 # and change it's type
-                                output.setNodeName(convert_node.getName())                                
+                                output.setNodeName(convert_node.getName())
+                                output.removeAttribute('value')
                                 output.setType('color3')
                                 output_type = 'color3'
                             
@@ -421,6 +425,7 @@ class MaterialXUsdUtilities:
                     upstream_default_node = graph_default_nodes[defaultgeomprop_name]
                     #self.logger.info('Use upstream node for defaultgromprop:', nodedef_input.getName(), defaultgeomprop)
                 node_input.setNodeName(upstream_default_node.getName())
+                node_input.removeAttribute('value')
 
         implicit_nodes_added = len(graph_default_nodes)
         if  graph.getCategory() not in "nodegraph":
@@ -493,6 +498,7 @@ class MaterialXUsdUtilities:
                     the_input.setNodeGraphString(ng_name)
                     the_input.setOutputString(new_output.getName())
                     the_input.removeAttribute("nodename")
+                    the_input.removeAttribute("value")
                     #self.logger.info(f"Reconnecting {the_input.getNamePath()} {connect[1]} to {mx.prettyPrint(the_input)}")
                     connections_made += 1
 

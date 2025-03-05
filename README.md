@@ -32,19 +32,27 @@ Some initial utilities are provided with more coming on-line as the site / requi
 
 - Preprocessing Utilities:
   - `preprocess_mtlx.py` : Tries to preprocess a MaterialX document so that it considered valid by USD. Currently this includes logic to:
-    - Encapsulate top level nodes in a MaterialX document into a nodegraph. Connections are preserved.
-    - Resolve any implicit geometry stream bindings on `inputs` and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.
-    - Add a material node per surface shader which is not connected to any downstream material. USD only examines materials and not shaders
-    so these are skipped during conversion. 
+    - Encapsulate **top level nodes** in a MaterialX document into a nodegraph but preserve connections. Only
+    materials and shading model nodes are valid at the top level in USD. 
+    - Resolve any **implicit geometry stream bindings** on `inputs` and make them explicit by adding geometric stream nodes and binding them to any inputs with implicit bindings. Note that this requires loading in the standard library to get node definitions.
+    - Add a **material node per surface shader** which is not connected to any downstream material. USD only examines materials and not shaders so these shaders are skipped during conversion. 
     - Extract out any surface shaders inside a nodegraph to be outside the graph as this is considered invalid by USD.
-    - If a surface shader input is connected to a nodegraph, add in an explicit `output` qualifier. Seems `out` is assumed to be the name
-    of the output when there is no explicit qualifier which can be incorrect.
-    - Flatten all image asset references using the existing MaterialX
-    utilities for path resolve. This is needed as the MaterialX 
-    render tests have assumed search paths which are not explicitly defined -- thus requiring the paths to be passed in as part of 
-    preprocessing.
+    - If a surface shader input is connected to a nodegraph, add in an **explicit `output` qualifier**. Seems `out` is assumed to be the name of the output when there is no explicit qualifier which can be incorrect.
+    - **"Flatten" (resolve) all image asset references** using the existing MaterialX utilities for path resolve. This is needed as the MaterialX  render tests have assumed search paths which are not explicitly defined -- thus requiring the paths to be passed in as part of preprocessing.
+      - There is probably a better way to do this using USD asset resolvers, but have not tried. ( Input is welcome on this. )
+    - Remove any `value` attributes on `input`s with connections to avoid ambiguity and MaterialX validation errors.
 
-- Note that nodes graphs with child nodes that are the same name as the parent graph, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. 
+- Notes:
+  - Color space and Real World Units:
+    - Color space meta-data appears to work properly as do explicit color space conversion nodes.   
+    - **Real world unit meta-data is lost during conversion**. Unknown if this is unsupportable or a known issue.
+  - There appears to be no way to convert shading graphs which have a roots surface shaders which are not the current
+  shading models: glTF, USDPreviewSurface, OpenPBR ? That is arbitrary PBR shaders. They may translate but are considered invalid root nodes. **It is unclear / undocumented as to what are "valid" root pbr nodes for USD.**
+  -  **Nodes graphs with child nodes that are the same name as the parent graph**, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.
+  - **Validation is inconsistent between USD and MaterialX for upstream output connections**. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not
+  specify the output then conversion to USD will skip this link. *It would be useful to remove this inconsistent  validation check in MaterialX.*
+  - For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.
+  - For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. **Input is welcome on this**.
 
 ## Usage
 

@@ -127,8 +127,9 @@ class MaterialXUsdUtilities:
     
         surfaceshader_nodes = doc.getChildren()
         for surfaceshader_node in surfaceshader_nodes:
-            if surfaceshader_node.getCategory() not in ['surfaceshader']:
+            if surfaceshader_node.getType() not in ['surfaceshader']:
                 continue
+            self.logger.info(f'>> Scan shader: {surfaceshader_node.getName()}')
             downstream_ports = surfaceshader_node.getDownstreamPorts()
             if not downstream_ports:
                 # Add a material for the shader

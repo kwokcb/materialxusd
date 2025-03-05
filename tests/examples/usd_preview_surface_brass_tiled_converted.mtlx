@@ -2,12 +2,12 @@
 <materialx version="1.39" colorspace="lin_rec709">
   <nodegraph name="NG_brass1">
     <tiledimage name="image_color" type="color3">
-      <input name="file" type="filename" value="resources\Images\brass_color.jpg" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="resources/Images/brass_color.jpg" colorspace="srgb_texture" />
       <input name="uvtiling" type="vector2" value="1.0, 1.0" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="image_roughness" type="float">
-      <input name="file" type="filename" value="resources\Images\brass_roughness.jpg" />
+      <input name="file" type="filename" value="resources/Images/brass_roughness.jpg" />
       <input name="uvtiling" type="vector2" value="1.0, 1.0" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>

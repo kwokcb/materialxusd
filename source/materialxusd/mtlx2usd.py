@@ -117,6 +117,7 @@ def main():
                 logger.info(f"> Encapsulated {num_top_level_nodes} top level nodes.")
 
             materials_added = utils.add_downstream_materials(doc)
+            materials_added += utils.add_materials_for_shaders(doc)
             if materials_added:
                 logger.info(f'> Added {materials_added} downstream materials.')
 

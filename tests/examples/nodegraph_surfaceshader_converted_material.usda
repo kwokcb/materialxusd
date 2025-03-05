@@ -31,7 +31,7 @@ def "MaterialX"
                 token inputs:bsdf (
                     renderType = "BSDF"
                 )
-                token inputs:bsdf.connect = </MaterialX/Materials/lighting1_out.inputs:bsdf>
+                token inputs:bsdf.connect = </MaterialX/Materials/lighting1_out/lighting1.outputs:out2>
                 token inputs:edf (
                     renderType = "EDF"
                 )
@@ -40,8 +40,8 @@ def "MaterialX"
                 bool inputs:thin_walled.connect = </MaterialX/Materials/lighting1_out.inputs:thin_walled>
             }
 
-            def "NodeGraphs" (
-                prepend references = </MaterialX/NodeGraphs>
+            def "lighting1" (
+                prepend references = </MaterialX/NodeGraphs/lighting1>
             )
             {
             }
@@ -59,6 +59,31 @@ def "MaterialX"
 
     def "NodeGraphs"
     {
+        def NodeGraph "lighting1"
+        {
+            token outputs:out2 (
+                renderType = "BSDF"
+            )
+            token outputs:out2.connect = </MaterialX/NodeGraphs/lighting1/diffusebsdf1.outputs:out>
+
+            def Shader "diffusebsdf1"
+            {
+                uniform token info:id = "ND_oren_nayar_diffuse_bsdf"
+                color3f inputs:color = (0.3, 0.3, 1)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/lighting1/Nworld.outputs:out>
+                float inputs:roughness = 0.8
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
     }
 }
 

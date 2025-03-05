@@ -71,4 +71,10 @@
     <input name="subsurface" type="float" value="0.4" />
     <input name="subsurface_color" type="color3" nodegraph="NG_marble1" output="out" />
   </standard_surface>
+  <surfacematerial name="material_SR_carpaint" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_carpaint" />
+  </surfacematerial>
+  <surfacematerial name="material_SR_marble1" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_marble1" />
+  </surfacematerial>
 </materialx>

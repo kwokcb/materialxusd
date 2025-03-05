@@ -3,7 +3,7 @@
   <!---
      Blur unit test
   -->
-  <nodegraph name="blur_color3_graph">
+  <nodegraph name="blur_color3">
     <image name="image1" type="color3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
     </image>
@@ -14,7 +14,7 @@
     </blur>
     <output name="out" type="color3" nodename="blur_color3_node" />
   </nodegraph>
-  <nodegraph name="blur_color4_graph">
+  <nodegraph name="blur_color4">
     <tiledimage name="tiledimage1" type="color4">
       <input name="file" type="filename" value="resources/Images/grid.png" />
     </tiledimage>
@@ -25,7 +25,7 @@
     </blur>
     <output name="out" type="color4" nodename="blur_color4_node" />
   </nodegraph>
-  <nodegraph name="blur_float_graph">
+  <nodegraph name="blur_float">
     <image name="image1" type="float">
       <input name="file" type="filename" value="resources/Images/grid.png" />
     </image>
@@ -47,7 +47,7 @@
     </blur>
     <output name="out" type="vector2" nodename="blur_vector2_node" />
   </nodegraph>
-  <nodegraph name="blur_vector3_graph">
+  <nodegraph name="blur_vector3">
     <tiledimage name="tiledimage1" type="vector3">
       <input name="file" type="filename" value="resources/Images/grid.png" />
     </tiledimage>
@@ -69,7 +69,7 @@
     </blur>
     <output name="out" type="vector4" nodename="blur_vector4_node" />
   </nodegraph>
-  <nodegraph name="blur_cellnoise_graph">
+  <nodegraph name="blur_cellnoise">
     <texcoord name="texcoord1" type="vector2" />
     <multiply name="multiply1" type="vector2">
       <input name="in1" type="vector2" nodename="texcoord1" />

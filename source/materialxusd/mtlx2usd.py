@@ -259,7 +259,7 @@ def main():
                         render_path = sub_folder_path.replace('.usda', f'_{args.shadingLanguage}.png')
                     else:
                         render_path = output_path.replace('.usda', f'_{args.shadingLanguage}.png')
-                    render_command = f"usdrecord {output_path} {render_path} --disableCameraLight --imageWidth 512"
+                    render_command = f'usdrecord "{output_path}" "{render_path}" --disableCameraLight --imageWidth 512'
                     if camera_prim:
                         render_command += f' --camera "{camera_prim.GetName()}"'
                     logger.info(f"> Rendering using command: {render_command}")

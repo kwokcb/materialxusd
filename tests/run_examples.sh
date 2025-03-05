@@ -16,4 +16,5 @@ python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn $1 -m ./examples/TH_Cat
 echo Handle documents without materials
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/starfield.mtlx $1 
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/nodegraph_surfaceshader.mtlx
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/no_materials.mtlx $1 
 

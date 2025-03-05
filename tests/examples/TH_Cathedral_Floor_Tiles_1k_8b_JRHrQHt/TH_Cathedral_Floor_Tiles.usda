@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\\TH_Cathedral_Floor_Tiles_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles_converted.mtlx, /Users/bernardkwok/work/materialxusd/tests/data/shaderball.usd, /Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -160,7 +160,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_color3"
                 color3f inputs:default = (0, 0, 0)
-                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_baseColor.png@ (
+                asset inputs:file = @/Users/bernardkwok/work/materialxusd/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/textures/TH_Cathedral_Floor_Tiles_baseColor.png@ (
                     colorSpace = "srgb_texture"
                 )
                 string inputs:filtertype = "linear"
@@ -186,7 +186,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 float3 inputs:default = (0, 0, 0)
-                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_roughness.png@
+                asset inputs:file = @/Users/bernardkwok/work/materialxusd/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/textures/TH_Cathedral_Floor_Tiles_roughness.png@
                 string inputs:filtertype = "linear"
                 string inputs:frameendaction = "constant"
                 int inputs:frameoffset = 0
@@ -218,7 +218,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_image_vector3"
                 float3 inputs:default = (0, 0, 0)
-                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_normal.png@
+                asset inputs:file = @/Users/bernardkwok/work/materialxusd/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/textures/TH_Cathedral_Floor_Tiles_normal.png@
                 string inputs:filtertype = "linear"
                 string inputs:frameendaction = "constant"
                 int inputs:frameoffset = 0
@@ -282,7 +282,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/shaderball.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/TH_Cathedral_Floor_Tiles>
@@ -297,14 +297,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @/Users/bernardkwok/work/materialxusd/tests/data/san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
+        prepend references = @/Users/bernardkwok/work/materialxusd/tests/data/camera.usda@
     )
     {
     }

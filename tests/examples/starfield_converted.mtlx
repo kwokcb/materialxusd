@@ -30,19 +30,19 @@
   <surface_unlit name="shader_starfield_out" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="starfield" output="out" />
   </surface_unlit>
-  <surfacematerial name="material_starfield_out" type="material">
+  <surfacematerial name="starfield_out" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out" />
   </surfacematerial>
   <surface_unlit name="shader_starfield_out_float" type="surfaceshader">
     <input name="emission" type="float" nodegraph="starfield" output="out_float" />
   </surface_unlit>
-  <surfacematerial name="material_starfield_out_float" type="material">
+  <surfacematerial name="starfield_out_float" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out_float" />
   </surfacematerial>
   <surface_unlit name="shader_starfield_out_viewDir" type="surfaceshader">
     <input name="emission_color" type="color3" nodegraph="starfield" output="out_viewDir" />
   </surface_unlit>
-  <surfacematerial name="material_starfield_out_viewDir" type="material">
+  <surfacematerial name="starfield_out_viewDir" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="shader_starfield_out_viewDir" />
   </surfacematerial>
 </materialx>

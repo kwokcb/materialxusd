@@ -16,7 +16,7 @@ Some initial utilities are provided with more coming on-line as the site / requi
 
   The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.
 
-  Options Include:
+- Options Include:
   - Preprocess the MaterialX file to
   attempt to produce valid USD shading network (See Support Utilities)
   - Input geometry (USD file)

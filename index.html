@@ -117,19 +117,25 @@
 <li>
 <p><code>mtlx2usd.py</code> : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. </p>
 <p>The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.</p>
-<p>Options Include:
-- Preprocess the MaterialX file to
-attempt to produce valid USD shading network (See Support Utilities)
-- Input geometry (USD file)
-- Input camera (USD file)
-- Skydome like (A latlong HDR file)
-- Perform USD validation
-- Export just the materials to a USD file.
-- Render the corresponding USD file. This uses <code>usdrecord</code> currently.
-- Misc options for output for test
-  suite compatibility:
-  - Use material name for file name
-  - Create in subfolder with name being the input MaterialX name</p>
+</li>
+<li>
+<p>Options Include:</p>
+<ul>
+<li>Preprocess the MaterialX file to
+attempt to produce valid USD shading network (See Support Utilities)</li>
+<li>Input geometry (USD file)</li>
+<li>Input camera (USD file)</li>
+<li>Skydome like (A latlong HDR file)</li>
+<li>Perform USD validation</li>
+<li>Export just the materials to a USD file.</li>
+<li>Render the corresponding USD file. This uses <code>usdrecord</code> currently.</li>
+<li>Misc options for output for test
+  suite compatibility:<ul>
+<li>Use material name for file name</li>
+<li>Create in subfolder with name being the input MaterialX name</li>
+</ul>
+</li>
+</ul>
 </li>
 <li>
 <p>Preprocessing Utilities:</p>

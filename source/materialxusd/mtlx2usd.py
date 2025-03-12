@@ -77,6 +77,7 @@ def main():
     parser.add_argument("-sf", "--subfolder", action="store_true", help="Save output to subfolder named <input materialx file> w/o extension.")
     parser.add_argument("-pp", "--preprocess", action="store_true", help="Attempt to pre-process the MaterialX file.")
     parser.add_argument("-ip", "--imagepaths", default="", help="Comma separated list of search paths for image path resolving. ")
+    parser.add_argument("-ra", "--renderargs", default="", help="Additional render arguments.")
 
     # Parse arguments
     args = parser.parse_args()
@@ -263,6 +264,9 @@ def main():
                     if camera_prim:
                         render_command += f' --camera "{camera_prim.GetName()}"'
                     logger.info(f"> Rendering using command: {render_command}")
+                    if args.renderargs:
+                        render_command += f' {args.renderargs}'
+                        print('>'*20, render_command)
                     sys.stdout.flush() 
                     os.system(f"{render_command} > nul 2>&1" if os.name == "nt" else f"{render_command} > /dev/null 2>&1")
                     #os.system(render_command)

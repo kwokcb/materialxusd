@@ -8,8 +8,6 @@ This can be hooked into the larger interoperability picture with glTF / Material
 
 > Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&material=6e933741-eeb3-4956-b756-0b44f08aa6cf"> AMD GPUOpen library</a>. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)
 
-An overview MaterialX->USD presentation can be found <a href="https://github.com/kwokcb/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://github.com/kwokcb/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png">here</a>
-
 ### Available Components
 
 - `mtlx2usd.py` : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. 
@@ -118,6 +116,8 @@ done
 ```
 
 ### Documentation
+
+An overview MaterialX->USD presentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png">here</a>
 
 Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>
 ## Acceptance

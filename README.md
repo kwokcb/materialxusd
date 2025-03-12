@@ -117,7 +117,7 @@ done
 
 ### Documentation
 
-An overview MaterialX->USD presentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png">here</a>
+An overview MaterialX->USD presentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png" width=100%>here</a>
 
 Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a>
 ## Acceptance

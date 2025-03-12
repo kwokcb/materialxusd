@@ -126,10 +126,10 @@ Available Components</h2>
 <li>Preprocess the MaterialX file to attempt to produce valid USD shading network (See Support Utilities)</li>
 <li>Input geometry (USD file)</li>
 <li>Input camera (USD file)</li>
-<li>Skydome like (A latlong HDR file)</li>
+<li>Skydome light (A latlong HDR file)</li>
 <li>Perform USD validation</li>
 <li>Export just the materials to a USD file.</li>
-<li>Render the corresponding USD file. This uses <code>usdrecord</code> currently.</li>
+<li>Render the corresponding USD file. This uses <code>usdrecord</code> currently. Render arguments can be passed in to specify the render delegate to use for instance. The default is GL.</li>
 <li>Misc options for output for test suite compatibility:<ul>
 <li>Use material name for file name</li>
 <li>Create in subfolder with name being the input MaterialX name</li>

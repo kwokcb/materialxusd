@@ -21,10 +21,10 @@ Some initial utilities are provided with more coming on-line as the site / requi
   attempt to produce valid USD shading network (See Support Utilities)
   - Input geometry (USD file)
   - Input camera (USD file)
-  - Skydome like (A latlong HDR file)
+  - Skydome light (A latlong HDR file)
   - Perform USD validation
   - Export just the materials to a USD file.
-  - Render the corresponding USD file. This uses `usdrecord` currently.
+  - Render the corresponding USD file. This uses `usdrecord` currently. Render arguments can be passed in to specify the render delegate to use for instance. The default is GL. 
   - Misc options for output for test
     suite compatibility:
     - Use material name for file name

@@ -11,7 +11,7 @@ import MaterialX as mx
 
 class MtlxToUsd():
     '''
-    Sample convert from MaterialX to Usd
+    Sample converter from MaterialX to Usd
     '''
   
     def getUsdTypes(self):
@@ -136,7 +136,7 @@ class MtlxToUsd():
                             else:
                                 connectionPath = rootPath + parent.getNamePath() + '/' + mtlxConnection
                         else:
-                            # The connectio is to a prim at the root level so insert a '/' identifier
+                            # The connection is to a prim at the root level so insert a '/' identifier
                             # as getNamePath() will return an empty string at the root Document level.
                             if interfacename:
                                 connectionPath = rootPath
@@ -419,6 +419,18 @@ class MtlxToUsd():
         stdlib = self.createLibraryDocument()        
         #doc.importLibrary(stdlib)
         doc.setDataLibrary(stdlib)
+
+        # Emit document level information
+        custom_layer_data = {
+            "colorSpace": "lin_rec709"
+        }
+
+        # Set the customLayerData metadata
+        rootLayer = stage.GetRootLayer()
+        if rootLayer.customLayerData:
+            rootLayer.customLayerData.update(custom_layer_data)
+        else:
+            rootLayer.customLayerData = custom_layer_data
         
         # Translate
         self.emitUsdShaderGraph(doc, stage, mxnodes, emitAllValueElements)        

@@ -78,6 +78,7 @@ def main():
     parser.add_argument("-pp", "--preprocess", action="store_true", help="Attempt to pre-process the MaterialX file.")
     parser.add_argument("-ip", "--imagepaths", default="", help="Comma separated list of search paths for image path resolving. ")
     parser.add_argument("-ra", "--renderargs", default="", help="Additional render arguments.")
+    parser.add_argument("-cst", "--custom", action="store_true", help="Use custom MaterialX USD conversion.")
 
     # Parse arguments
     args = parser.parse_args()
@@ -182,11 +183,13 @@ def main():
                 logger.info(f"> Camera file not found at {abs_camera_path}")
         
         converter = mxusd.MaterialxUSDConverter()
+        custom_conversion = args.custom
         stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, 
                                                                                                 abs_geometry_path, 
                                                                                                 abs_environment_path, 
                                                                                                 material_file_path, 
-                                                                                                abs_camera_path)
+                                                                                                abs_camera_path,
+                                                                                                custom_conversion)
 
         if stage:
             output_folder, input_file = os.path.split(input_path)

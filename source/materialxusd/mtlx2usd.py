@@ -140,7 +140,7 @@ def main():
                 afterDoc = mx.prettyPrint(doc)
                 if beforeDoc != afterDoc:
                     resolved_image_paths = True
-                    logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
+                    logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path.asString()}")
                 resolved_image_paths = True            
 
             if explicit_outputs_added or resolved_image_paths or materials_added > 0 or num_top_level_nodes > 0 or implicit_nodes_added > 0:
@@ -183,7 +183,7 @@ def main():
                 logger.info(f"> Camera file not found at {abs_camera_path}")
         
         converter = mxusd.MaterialxUSDConverter()
-        custom_conversion = args.custom
+        custom_conversion = True
         stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, 
                                                                                                 abs_geometry_path, 
                                                                                                 abs_environment_path, 

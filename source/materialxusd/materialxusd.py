@@ -246,9 +246,8 @@ class MaterialxUSDConverter:
         stage = None 
 
         if use_custom:
-            mtlx_to_usd = mxcust.MtlxToUsd()
+            mtlx_to_usd = mxcust.MtlxToUsd(self.logger)
             stage = mtlx_to_usd.emit(input_usd_path, False)
-            stage.Export('blah.usda', False)
         else:
             try:
                 stage = Usd.Stage.Open(input_usd_path)

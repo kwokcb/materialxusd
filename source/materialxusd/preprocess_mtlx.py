@@ -72,7 +72,7 @@ def main():
             afterDoc = mx.prettyPrint(doc)
             if beforeDoc != afterDoc:
                 resolved_image_paths = True
-                logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path}")
+                logger.info(f"> Resolved image file paths using search paths: {mx_image_search_path.asString()}")
             resolved_image_paths = True            
 
         if explicit_outputs_added or resolved_image_paths or materials_added> 0 or implicit_nodes_added > 0 or top_level_nodes_found > 0:

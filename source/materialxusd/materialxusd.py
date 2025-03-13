@@ -5,7 +5,7 @@ except ImportError:
     self.logger.info("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
     exit(1)
 
-import mxusd_custom as mxcust
+import materialxusd_custom as mxcust
 
 class MaterialxUSDConverter:
     '''

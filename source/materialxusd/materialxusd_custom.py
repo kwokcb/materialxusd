@@ -38,6 +38,7 @@ class MtlxToUsd:
     def get_usd_types(self):
         '''
         Retrieve a list of USD Sdf value type names.
+        @return: List of USD Sdf value type names.
         '''
         types = []
         for t in dir(Sdf.ValueTypeNames):
@@ -47,9 +48,11 @@ class MtlxToUsd:
 
     def map_mtlx_to_usd_type(self, mtlx_type : str):
         '''
-        Map a MaterialX type to a USD Sdf type. The mapping is easier from MaterialX as
+        Map a MaterialX type to a USD Sdf type.The mapping is easier from MaterialX as
         the number of type variations is much less. Note that one USD type is chosen
         with no options for choosing things like precision.
+        @param mtlx_type: MaterialX type.
+        @return: Corresponding USD Sdf type.
         '''
         mtlx_usd_map = {
             "filename": Sdf.ValueTypeNames.Asset,
@@ -71,7 +74,10 @@ class MtlxToUsd:
     def map_mtlx_to_usd_value(self, mtlx_type, mtlx_value):
         '''
         Map a MaterialX value of a given type to a USD value.
-        Note: Not all types are included here.
+        TODO: Add all types here...
+        @param mtlx_type: MaterialX type.
+        @param mtlx_value: MaterialX value.
+        @return: Corresponding USD value.
         '''
         if mtlx_type == "float":
             return float(mtlx_value)
@@ -92,6 +98,8 @@ class MtlxToUsd:
     def map_mtlx_to_usd_shader_notation(self, name):
         '''
         Utility to map from MaterialX shader notation to USD notation.
+        @param name: MaterialX shader notation.
+        @return: Corresponding USD notation.
         '''
         if name == "surfaceshader":
             return "surface"
@@ -105,14 +113,9 @@ class MtlxToUsd:
         '''
         Emit connections between MaterialX elements as USD connections for
         a given MaterialX node.
-
-        Parameters:
-        - node:
-            MaterialX node to examine
-        - stage:
-            USD stage to write connection to
-        - root_path:
-            root path for connections
+        @param node: MaterialX node to examine.
+        @param stage: USD stage to write connection to.
+        @param root_path: Root path for connections.
         '''
         if not node:
             return
@@ -244,15 +247,9 @@ class MtlxToUsd:
     def emit_usd_value_elements(self, node, usd_node, emit_all_value_elements):
         '''
         Emit MaterialX value elements in USD.
-
-        Parameters
-        ------------
-        node:
-            MaterialX node with value elements to scan
-        usd_node:
-            UsdShade node to create value elements on.
-        emit_all_value_elements: bool
-            Emit value elements based on node definition, even if not specified on node instance.
+        @param node: MaterialX node with value elements to scan.
+        @param usd_node: UsdShade node to create value elements on.
+        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.
         '''
         if not node:
             return
@@ -317,17 +314,11 @@ class MtlxToUsd:
     def emit_usd_shader_graph(self, doc, stage, mtlx_nodes, emit_all_value_elements, root="/MaterialX/Materials/"):
         '''
         Emit USD shader graph to a given stage from a list of MaterialX nodes.
-
-        Parameters
-        ------------
-        doc:
-            MaterialX source document
-        stage:
-            USD target stage
-        mtlx_nodes:
-            MaterialX shader nodes.
-        emit_all_value_elements: bool
-            Emit value elements based on node definition, even if not specified on node instance.
+        @param doc: MaterialX source document.
+        @param stage: USD target stage.
+        @param mtlx_nodes: MaterialX shader nodes.
+        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.
+        @param root: Root path for the shader graph.
         '''
         material_path = None
         for node_name in mtlx_nodes:
@@ -370,6 +361,8 @@ class MtlxToUsd:
     def find_materialx_nodes(self, doc):
         '''
         Find all nodes in a MaterialX document.
+        @param doc: MaterialX document.
+        @return: List of node paths.
         '''
         visited_nodes = []
         for elem in doc.traverseTree():
@@ -377,18 +370,32 @@ class MtlxToUsd:
             if path not in visited_nodes:
                 visited_nodes.append(path)
         return visited_nodes
+    
+    def emit_document_metadata(self, doc, stage):
+        '''
+        Emit MaterialX document metadata to the USD stage.
+        @param doc: MaterialX document.
+        @param stage: USD stage.
+        '''
+        root_layer = stage.GetRootLayer()
+        # - color space
+        color_space = doc.getColorSpace()
+        if not color_space:
+            color_space = "lin_rec709"
+        
+        custom_layer_data = {"colorSpace": color_space}        
+        if root_layer.customLayerData:
+            root_layer.customLayerData.update(custom_layer_data)
+        else:
+            root_layer.customLayerData = custom_layer_data
 
     def emit(self, mtlx_file_name, emit_all_value_elements):
         '''
         Read in a MaterialX file and emit it to a new USD Stage.
         Dump results for display and save to usda file.
-
-        Parameters:
-        -----------
-        mtlx_file_name : string
-            Name of file containing MaterialX document. Assumed to end in ".mtlx"
-        emit_all_value_elements: bool
-            Emit value elements based on node definition, even if not specified on node instance.
+        @param mtlx_file_name: Name of file containing MaterialX document. Assumed to end in ".mtlx".
+        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.
+        @return: USD stage.
         '''
         stage = Usd.Stage.CreateInMemory()
         doc = mx.createDocument()
@@ -405,15 +412,7 @@ class MtlxToUsd:
         stdlib = self.create_library_document()
         doc.setDataLibrary(stdlib)
 
-        # Emit document level information
-        custom_layer_data = {"colorSpace": "lin_rec709"}
-
-        # Set the customLayerData metadata
-        root_layer = stage.GetRootLayer()
-        if root_layer.customLayerData:
-            root_layer.customLayerData.update(custom_layer_data)
-        else:
-            root_layer.customLayerData = custom_layer_data
+        self.emit_document_metadata(doc, stage)
 
         # Translate
         self.emit_usd_shader_graph(doc, stage, mtlx_nodes, emit_all_value_elements)
@@ -422,6 +421,7 @@ class MtlxToUsd:
     def create_library_document(self):
         '''
         Create a MaterialX library document.
+        @return: MaterialX library document.
         '''
         stdlib = mx.createDocument()
         search_path = mx.getDefaultDataSearchPath()

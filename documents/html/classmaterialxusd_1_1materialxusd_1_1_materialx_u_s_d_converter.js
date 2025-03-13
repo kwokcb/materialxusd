@@ -9,7 +9,7 @@ var classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter =
     [ "find_first_valid_prim", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a3b55d09478cba5958783ec72e15b19de", null ],
     [ "find_materials", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#aa8abb28438a7e444605c06e36413b7eb", null ],
     [ "get_flattend_layer", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a6d3d7daa1f425da764fb82c1576bd4ae", null ],
-    [ "mtlx_to_usd", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#ad78b837d1ca3071b4b4d68f78a815bf0", null ],
+    [ "mtlx_to_usd", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a91f00d7a96033e43be27791ab73885fc", null ],
     [ "save_flattened_layer", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#acb391ba3086b6911a8701476d3ba69ed", null ],
     [ "set_required_validation_attributes", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a2f6c82097cd55cf859abba5732ee58e1", null ],
     [ "validate_stage", "classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a10a5feb126760ee19ed36dc51583f0e5", null ]

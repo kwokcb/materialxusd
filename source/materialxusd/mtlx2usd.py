@@ -183,7 +183,7 @@ def main():
                 logger.info(f"> Camera file not found at {abs_camera_path}")
         
         converter = mxusd.MaterialxUSDConverter()
-        custom_conversion = True
+        custom_conversion = args.custom
         stage, found_materials, test_geom_prim, dome_light, camera_prim = converter.mtlx_to_usd(input_path, 
                                                                                                 abs_geometry_path, 
                                                                                                 abs_environment_path, 

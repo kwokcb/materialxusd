@@ -267,7 +267,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  168</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_outputs:</div>
 <div class="line"><span class="lineno">  169</span>                <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">  170</span> </div>
-<div class="line"><span class="lineno">  171</span>            self.logger.info(f<span class="stringliteral">&#39;&gt;&gt; Scan graph: {graph.getName()}&#39;</span>)</div>
+<div class="line"><span class="lineno">  171</span>            self.logger.debug(f<span class="stringliteral">&#39;Scan graph: {graph.getName()}&#39;</span>)</div>
 <div class="line"><span class="lineno">  172</span> </div>
 <div class="line"><span class="lineno">  173</span>            <span class="comment"># Use does not support these nodes so need to do it the hard way....</span></div>
 <div class="line"><span class="lineno">  174</span>            usd_supports_convert_to_surface_shader = <span class="keyword">False</span></div>
@@ -318,7 +318,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  219</span>                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> graph_parent <span class="keywordflow">or</span> <span class="keywordflow">not</span> connected_ss:</div>
 <div class="line"><span class="lineno">  220</span>                            <span class="keywordflow">continue</span></div>
 <div class="line"><span class="lineno">  221</span> </div>
-<div class="line"><span class="lineno">  222</span>                        self.logger.info(f<span class="stringliteral">&#39;&gt;&gt;&gt;&gt; Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}&#39;</span>)</div>
+<div class="line"><span class="lineno">  222</span>                        self.logger.info(f<span class="stringliteral">&#39;Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}&#39;</span>)</div>
 <div class="line"><span class="lineno">  223</span> </div>
 <div class="line"><span class="lineno">  224</span>                        shadernode_name = graph_parent.createValidChildName(connected_ss.getName())</div>
 <div class="line"><span class="lineno">  225</span>                        shadernode_nodedef = connected_ss.getNodeDef()</div>
@@ -353,7 +353,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  254</span>                        material_name = doc.createValidChildName(graph.getName() + <span class="stringliteral">&#39;_&#39;</span> + output_name)</div>
 <div class="line"><span class="lineno">  255</span>                        material_node = doc.addMaterialNode(material_name)</div>
 <div class="line"><span class="lineno">  256</span>                        <span class="keywordflow">if</span> material_node:</div>
-<div class="line"><span class="lineno">  257</span>                            self.logger.info(f<span class="stringliteral">&quot;&gt;&gt;&gt;&gt; Added material node: {material_node.getName()}, for graph shader output: {output_name}&quot;</span>)</div>
+<div class="line"><span class="lineno">  257</span>                            self.logger.info(f<span class="stringliteral">&quot;Added material node: {material_node.getName()}, for graph shader output: {output_name}&quot;</span>)</div>
 <div class="line"><span class="lineno">  258</span>                            material_node_input = material_node.addInput(output_type, output_type)</div>
 <div class="line"><span class="lineno">  259</span>                            <span class="comment">#material_node_input.setNodeGraphString(graph.getName())</span></div>
 <div class="line"><span class="lineno">  260</span>                            <span class="comment">#material_node_input.setOutputString(output_name)</span></div>
@@ -388,7 +388,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  289</span>                                    material_count += 1</div>
 <div class="line"><span class="lineno">  290</span> </div>
 <div class="line"><span class="lineno">  291</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  292</span>                            self.logger.info(f<span class="stringliteral">&#39;Scan: {graph.getName()} output: {output_name} type: {output_type}&#39;</span>)</div>
+<div class="line"><span class="lineno">  292</span>                            <span class="comment">#self.logger.info(f&#39;Scan: {graph.getName()} output: {output_name} type: {output_type}&#39;)</span></div>
 <div class="line"><span class="lineno">  293</span>                            </div>
 <div class="line"><span class="lineno">  294</span>                            <span class="comment"># If not color3 or float add a convert node and connect it to the current upstream node</span></div>
 <div class="line"><span class="lineno">  295</span>                            <span class="comment"># and then add in a new output which is of type color3</span></div>

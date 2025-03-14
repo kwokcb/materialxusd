@@ -12,5 +12,6 @@ var classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd =
     [ "log", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a44db5220b8b8f74f27aee1fdbc6944eb", null ],
     [ "map_mtlx_to_usd_shader_notation", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a6f8aed4706108029e91666e2688fb993", null ],
     [ "map_mtlx_to_usd_type", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a3a270e9f5a06351c863b30d592c602ad", null ],
-    [ "map_mtlx_to_usd_value", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#aa98413078671a56fefaa8882a38d9564", null ]
+    [ "map_mtlx_to_usd_value", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#aa98413078671a56fefaa8882a38d9564", null ],
+    [ "set_prim_mtlx_version", "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a7eb569052d6abbc9510cc82faac24693", null ]
 ];

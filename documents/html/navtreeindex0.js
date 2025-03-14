@@ -34,6 +34,8 @@ var NAVTREEINDEX0 =
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a75fe4255ec5d1883e11ed107b15d06b7":[2,0,0,1,0,2],
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a76bdb946d2166207fa923c0adde78127":[1,0,0,0,0,5],
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a76bdb946d2166207fa923c0adde78127":[2,0,0,1,0,5],
+"classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a7eb569052d6abbc9510cc82faac24693":[1,0,0,0,0,13],
+"classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a7eb569052d6abbc9510cc82faac24693":[2,0,0,1,0,13],
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a83b125c04ef2d7acd8f7f0a295ebfd6a":[1,0,0,0,0,8],
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a83b125c04ef2d7acd8f7f0a295ebfd6a":[2,0,0,1,0,8],
 "classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#aa691272ecc8663126c4615e3a724bd9c":[1,0,0,0,0,1],

@@ -142,6 +142,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15a1526e59d066f727c6e3e1fa7ad2ba" id="r_a15a1526e59d066f727c6e3e1fa7ad2ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15a1526e59d066f727c6e3e1fa7ad2ba">emit_usd_value_elements</a> (self, node, usd_node, emit_all_value_elements)</td></tr>
 <tr class="memdesc:a15a1526e59d066f727c6e3e1fa7ad2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit MaterialX value elements in USD.  <br /></td></tr>
 <tr class="separator:a15a1526e59d066f727c6e3e1fa7ad2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb569052d6abbc9510cc82faac24693" id="r_a7eb569052d6abbc9510cc82faac24693"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7eb569052d6abbc9510cc82faac24693">set_prim_mtlx_version</a> (self, Usd.Prim prim, str version)</td></tr>
+<tr class="memdesc:a7eb569052d6abbc9510cc82faac24693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the MaterialX version on a prim.  <br /></td></tr>
+<tr class="separator:a7eb569052d6abbc9510cc82faac24693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76bdb946d2166207fa923c0adde78127" id="r_a76bdb946d2166207fa923c0adde78127"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76bdb946d2166207fa923c0adde78127">emit_usd_shader_graph</a> (self, doc, stage, mtlx_nodes, emit_all_value_elements, root=&quot;/MaterialX/Materials/&quot;)</td></tr>
 <tr class="memdesc:a76bdb946d2166207fa923c0adde78127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit USD shader graph to a given stage from a list of MaterialX nodes.  <br /></td></tr>
 <tr class="separator:a76bdb946d2166207fa923c0adde78127"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,16 +230,16 @@ Public Attributes</h2></td></tr>
 <p>Create a MaterialX library document. </p>
 <dl class="section return"><dt>Returns</dt><dd>: MaterialX library document. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00421">421</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  421</span>    <span class="keyword">def </span>create_library_document(self):</div>
-<div class="line"><span class="lineno">  422</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  423</span><span class="stringliteral">        Create a MaterialX library document.</span></div>
-<div class="line"><span class="lineno">  424</span><span class="stringliteral">        @return: MaterialX library document.</span></div>
-<div class="line"><span class="lineno">  425</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  426</span>        stdlib = mx.createDocument()</div>
-<div class="line"><span class="lineno">  427</span>        search_path = mx.getDefaultDataSearchPath()</div>
-<div class="line"><span class="lineno">  428</span>        mx.loadLibraries(mx.getDefaultDataLibraryFolders(), search_path, stdlib)</div>
-<div class="line"><span class="lineno">  429</span>        <span class="keywordflow">return</span> stdlib</div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00486">486</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  486</span>    <span class="keyword">def </span>create_library_document(self):</div>
+<div class="line"><span class="lineno">  487</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  488</span><span class="stringliteral">        Create a MaterialX library document.</span></div>
+<div class="line"><span class="lineno">  489</span><span class="stringliteral">        @return: MaterialX library document.</span></div>
+<div class="line"><span class="lineno">  490</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  491</span>        stdlib = mx.createDocument()</div>
+<div class="line"><span class="lineno">  492</span>        search_path = mx.getDefaultDataSearchPath()</div>
+<div class="line"><span class="lineno">  493</span>        mx.loadLibraries(mx.getDefaultDataLibraryFolders(), search_path, stdlib)</div>
+<div class="line"><span class="lineno">  494</span>        <span class="keywordflow">return</span> stdlib</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -274,36 +277,36 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>: USD stage. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00392">392</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  392</span>    <span class="keyword">def </span>emit(self, mtlx_file_name, emit_all_value_elements):</div>
-<div class="line"><span class="lineno">  393</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  394</span><span class="stringliteral">        Read in a MaterialX file and emit it to a new USD Stage.</span></div>
-<div class="line"><span class="lineno">  395</span><span class="stringliteral">        Dump results for display and save to usda file.</span></div>
-<div class="line"><span class="lineno">  396</span><span class="stringliteral">        @param mtlx_file_name: Name of file containing MaterialX document. Assumed to end in &quot;.mtlx&quot;.</span></div>
-<div class="line"><span class="lineno">  397</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
-<div class="line"><span class="lineno">  398</span><span class="stringliteral">        @return: USD stage.</span></div>
-<div class="line"><span class="lineno">  399</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  400</span>        stage = Usd.Stage.CreateInMemory()</div>
-<div class="line"><span class="lineno">  401</span>        doc = mx.createDocument()</div>
-<div class="line"><span class="lineno">  402</span>        mtlx_file_path = mx.FilePath(mtlx_file_name)</div>
-<div class="line"><span class="lineno">  403</span> </div>
-<div class="line"><span class="lineno">  404</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> mtlx_file_path.exists():</div>
-<div class="line"><span class="lineno">  405</span>            self.log(f<span class="stringliteral">&quot;Failed to read file: {mtlx_file_path.asString()}&quot;</span>)</div>
-<div class="line"><span class="lineno">  406</span>            <span class="keywordflow">return</span></div>
-<div class="line"><span class="lineno">  407</span> </div>
-<div class="line"><span class="lineno">  408</span>        <span class="comment"># Find nodes to transform before importing the definition library</span></div>
-<div class="line"><span class="lineno">  409</span>        mx.readFromXmlFile(doc, mtlx_file_name)</div>
-<div class="line"><span class="lineno">  410</span>        mtlx_nodes = self.find_materialx_nodes(doc)</div>
-<div class="line"><span class="lineno">  411</span> </div>
-<div class="line"><span class="lineno">  412</span>        stdlib = self.create_library_document()</div>
-<div class="line"><span class="lineno">  413</span>        doc.setDataLibrary(stdlib)</div>
-<div class="line"><span class="lineno">  414</span> </div>
-<div class="line"><span class="lineno">  415</span>        self.emit_document_metadata(doc, stage)</div>
-<div class="line"><span class="lineno">  416</span> </div>
-<div class="line"><span class="lineno">  417</span>        <span class="comment"># Translate</span></div>
-<div class="line"><span class="lineno">  418</span>        self.emit_usd_shader_graph(doc, stage, mtlx_nodes, emit_all_value_elements)</div>
-<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">return</span> stage</div>
-<div class="line"><span class="lineno">  420</span> </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00457">457</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  457</span>    <span class="keyword">def </span>emit(self, mtlx_file_name, emit_all_value_elements):</div>
+<div class="line"><span class="lineno">  458</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  459</span><span class="stringliteral">        Read in a MaterialX file and emit it to a new USD Stage.</span></div>
+<div class="line"><span class="lineno">  460</span><span class="stringliteral">        Dump results for display and save to usda file.</span></div>
+<div class="line"><span class="lineno">  461</span><span class="stringliteral">        @param mtlx_file_name: Name of file containing MaterialX document. Assumed to end in &quot;.mtlx&quot;.</span></div>
+<div class="line"><span class="lineno">  462</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
+<div class="line"><span class="lineno">  463</span><span class="stringliteral">        @return: USD stage.</span></div>
+<div class="line"><span class="lineno">  464</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  465</span>        stage = Usd.Stage.CreateInMemory()</div>
+<div class="line"><span class="lineno">  466</span>        doc = mx.createDocument()</div>
+<div class="line"><span class="lineno">  467</span>        mtlx_file_path = mx.FilePath(mtlx_file_name)</div>
+<div class="line"><span class="lineno">  468</span> </div>
+<div class="line"><span class="lineno">  469</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> mtlx_file_path.exists():</div>
+<div class="line"><span class="lineno">  470</span>            self.log(f<span class="stringliteral">&quot;Failed to read file: {mtlx_file_path.asString()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  471</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>        <span class="comment"># Find nodes to transform before importing the definition library</span></div>
+<div class="line"><span class="lineno">  474</span>        mx.readFromXmlFile(doc, mtlx_file_name)</div>
+<div class="line"><span class="lineno">  475</span>        mtlx_nodes = self.find_materialx_nodes(doc)</div>
+<div class="line"><span class="lineno">  476</span> </div>
+<div class="line"><span class="lineno">  477</span>        stdlib = self.create_library_document()</div>
+<div class="line"><span class="lineno">  478</span>        doc.setDataLibrary(stdlib)</div>
+<div class="line"><span class="lineno">  479</span> </div>
+<div class="line"><span class="lineno">  480</span>        self.emit_document_metadata(doc, stage)</div>
+<div class="line"><span class="lineno">  481</span> </div>
+<div class="line"><span class="lineno">  482</span>        <span class="comment"># Translate</span></div>
+<div class="line"><span class="lineno">  483</span>        self.emit_usd_shader_graph(doc, stage, mtlx_nodes, emit_all_value_elements)</div>
+<div class="line"><span class="lineno">  484</span>        <span class="keywordflow">return</span> stage</div>
+<div class="line"><span class="lineno">  485</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -340,25 +343,25 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00374">374</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  374</span>    <span class="keyword">def </span>emit_document_metadata(self, doc, stage):</div>
-<div class="line"><span class="lineno">  375</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  376</span><span class="stringliteral">        Emit MaterialX document metadata to the USD stage.</span></div>
-<div class="line"><span class="lineno">  377</span><span class="stringliteral">        @param doc: MaterialX document.</span></div>
-<div class="line"><span class="lineno">  378</span><span class="stringliteral">        @param stage: USD stage.</span></div>
-<div class="line"><span class="lineno">  379</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  380</span>        root_layer = stage.GetRootLayer()</div>
-<div class="line"><span class="lineno">  381</span>        <span class="comment"># - color space</span></div>
-<div class="line"><span class="lineno">  382</span>        color_space = doc.getColorSpace()</div>
-<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> color_space:</div>
-<div class="line"><span class="lineno">  384</span>            color_space = <span class="stringliteral">&quot;lin_rec709&quot;</span></div>
-<div class="line"><span class="lineno">  385</span>        </div>
-<div class="line"><span class="lineno">  386</span>        custom_layer_data = {<span class="stringliteral">&quot;colorSpace&quot;</span>: color_space}        </div>
-<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">if</span> root_layer.customLayerData:</div>
-<div class="line"><span class="lineno">  388</span>            root_layer.customLayerData.update(custom_layer_data)</div>
-<div class="line"><span class="lineno">  389</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  390</span>            root_layer.customLayerData = custom_layer_data</div>
-<div class="line"><span class="lineno">  391</span> </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00439">439</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  439</span>    <span class="keyword">def </span>emit_document_metadata(self, doc, stage):</div>
+<div class="line"><span class="lineno">  440</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  441</span><span class="stringliteral">        Emit MaterialX document metadata to the USD stage.</span></div>
+<div class="line"><span class="lineno">  442</span><span class="stringliteral">        @param doc: MaterialX document.</span></div>
+<div class="line"><span class="lineno">  443</span><span class="stringliteral">        @param stage: USD stage.</span></div>
+<div class="line"><span class="lineno">  444</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  445</span>        root_layer = stage.GetRootLayer()</div>
+<div class="line"><span class="lineno">  446</span>        <span class="comment"># - color space</span></div>
+<div class="line"><span class="lineno">  447</span>        color_space = doc.getColorSpace()</div>
+<div class="line"><span class="lineno">  448</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> color_space:</div>
+<div class="line"><span class="lineno">  449</span>            color_space = <span class="stringliteral">&quot;lin_rec709&quot;</span></div>
+<div class="line"><span class="lineno">  450</span>        </div>
+<div class="line"><span class="lineno">  451</span>        custom_layer_data = {<span class="stringliteral">&quot;colorSpace&quot;</span>: color_space}        </div>
+<div class="line"><span class="lineno">  452</span>        <span class="keywordflow">if</span> root_layer.customLayerData:</div>
+<div class="line"><span class="lineno">  453</span>            root_layer.customLayerData.update(custom_layer_data)</div>
+<div class="line"><span class="lineno">  454</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  455</span>            root_layer.customLayerData = custom_layer_data</div>
+<div class="line"><span class="lineno">  456</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -401,142 +404,143 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00112">112</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  112</span>    <span class="keyword">def </span>emit_usd_connections(self, node, stage, root_path):</div>
-<div class="line"><span class="lineno">  113</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  114</span><span class="stringliteral">        Emit connections between MaterialX elements as USD connections for</span></div>
-<div class="line"><span class="lineno">  115</span><span class="stringliteral">        a given MaterialX node.</span></div>
-<div class="line"><span class="lineno">  116</span><span class="stringliteral">        @param node: MaterialX node to examine.</span></div>
-<div class="line"><span class="lineno">  117</span><span class="stringliteral">        @param stage: USD stage to write connection to.</span></div>
-<div class="line"><span class="lineno">  118</span><span class="stringliteral">        @param root_path: Root path for connections.</span></div>
-<div class="line"><span class="lineno">  119</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> node:</div>
-<div class="line"><span class="lineno">  121</span>            <span class="keywordflow">return</span></div>
-<div class="line"><span class="lineno">  122</span> </div>
-<div class="line"><span class="lineno">  123</span>        material_path = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">if</span> node.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
-<div class="line"><span class="lineno">  125</span>            material_path = node.getName()</div>
-<div class="line"><span class="lineno">  126</span> </div>
-<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> node.getActiveValueElements():</div>
-<div class="line"><span class="lineno">  128</span>            is_input = value_element.isA(mx.Input)</div>
-<div class="line"><span class="lineno">  129</span>            is_output = value_element.isA(mx.Output)</div>
-<div class="line"><span class="lineno">  130</span> </div>
-<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">if</span> is_input <span class="keywordflow">or</span> is_output:</div>
-<div class="line"><span class="lineno">  132</span>                interface_name = <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  133</span> </div>
-<div class="line"><span class="lineno">  134</span>                <span class="comment"># Find out what type of element is connected to upstream:</span></div>
-<div class="line"><span class="lineno">  135</span>                <span class="comment"># node, nodegraph, or interface input.</span></div>
-<div class="line"><span class="lineno">  136</span>                mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;nodename&quot;</span>)</div>
-<div class="line"><span class="lineno">  137</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> mtlx_connection:</div>
-<div class="line"><span class="lineno">  138</span>                    mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;nodegraph&quot;</span>)</div>
-<div class="line"><span class="lineno">  139</span>                <span class="keywordflow">if</span> is_input <span class="keywordflow">and</span> <span class="keywordflow">not</span> mtlx_connection:</div>
-<div class="line"><span class="lineno">  140</span>                    mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;interfacename&quot;</span>)</div>
-<div class="line"><span class="lineno">  141</span>                    interface_name = mtlx_connection</div>
-<div class="line"><span class="lineno">  142</span> </div>
-<div class="line"><span class="lineno">  143</span>                connection_path = <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">if</span> mtlx_connection:</div>
-<div class="line"><span class="lineno">  145</span>                    <span class="comment"># Handle input connection by searching for the appropriate parent node.</span></div>
-<div class="line"><span class="lineno">  146</span>                    <span class="comment"># - If it&#39;s an interface input we want the parent nodegraph. Otherwise</span></div>
-<div class="line"><span class="lineno">  147</span>                    <span class="comment"># we want the node or nodegraph specified above.</span></div>
-<div class="line"><span class="lineno">  148</span>                    <span class="comment"># - If the parent path is the root (getNamePath() is empty), then this is to</span></div>
-<div class="line"><span class="lineno">  149</span>                    <span class="comment"># nodes at the root document level.</span></div>
-<div class="line"><span class="lineno">  150</span>                    <span class="keywordflow">if</span> is_input:</div>
-<div class="line"><span class="lineno">  151</span>                        parent = node.getParent()</div>
-<div class="line"><span class="lineno">  152</span>                        <span class="keywordflow">if</span> parent.getNamePath():</div>
-<div class="line"><span class="lineno">  153</span>                            <span class="keywordflow">if</span> interface_name:</div>
-<div class="line"><span class="lineno">  154</span>                                connection_path = root_path + parent.getNamePath()</div>
-<div class="line"><span class="lineno">  155</span>                            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  156</span>                                connection_path = root_path + parent.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
-<div class="line"><span class="lineno">  157</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  158</span>                            <span class="comment"># The connection is to a prim at the root level so insert a &#39;/&#39; identifier</span></div>
-<div class="line"><span class="lineno">  159</span>                            <span class="comment"># as getNamePath() will return an empty string at the root Document level.</span></div>
-<div class="line"><span class="lineno">  160</span>                            <span class="keywordflow">if</span> interface_name:</div>
-<div class="line"><span class="lineno">  161</span>                                connection_path = root_path</div>
-<div class="line"><span class="lineno">  162</span>                            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  163</span>                                connection_path = root_path + mtlx_connection</div>
-<div class="line"><span class="lineno">  164</span> </div>
-<div class="line"><span class="lineno">  165</span>                    <span class="comment"># Handle output connection by looking for sibling elements</span></div>
-<div class="line"><span class="lineno">  166</span>                    <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  167</span>                        parent = node.getParent()</div>
-<div class="line"><span class="lineno">  168</span> </div>
-<div class="line"><span class="lineno">  169</span>                        <span class="comment"># Connection is to sibling under the same nodegraph</span></div>
-<div class="line"><span class="lineno">  170</span>                        <span class="keywordflow">if</span> node.isA(mx.NodeGraph):</div>
-<div class="line"><span class="lineno">  171</span>                            connection_path = root_path + node.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
-<div class="line"><span class="lineno">  172</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  173</span>                            <span class="comment"># Connection is to a nodegraph parent of the current node</span></div>
-<div class="line"><span class="lineno">  174</span>                            <span class="keywordflow">if</span> parent.getNamePath():</div>
-<div class="line"><span class="lineno">  175</span>                                connection_path = root_path + parent.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
-<div class="line"><span class="lineno">  176</span>                            <span class="comment"># Connection is to the root document.</span></div>
-<div class="line"><span class="lineno">  177</span>                            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  178</span>                                connection_path = root_path + mtlx_connection</div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00122">122</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  122</span>    <span class="keyword">def </span>emit_usd_connections(self, node, stage, root_path):</div>
+<div class="line"><span class="lineno">  123</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  124</span><span class="stringliteral">        Emit connections between MaterialX elements as USD connections for</span></div>
+<div class="line"><span class="lineno">  125</span><span class="stringliteral">        a given MaterialX node.</span></div>
+<div class="line"><span class="lineno">  126</span><span class="stringliteral">        @param node: MaterialX node to examine.</span></div>
+<div class="line"><span class="lineno">  127</span><span class="stringliteral">        @param stage: USD stage to write connection to.</span></div>
+<div class="line"><span class="lineno">  128</span><span class="stringliteral">        @param root_path: Root path for connections.</span></div>
+<div class="line"><span class="lineno">  129</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> node:</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span>        material_path = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  134</span>        <span class="keywordflow">if</span> node.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
+<div class="line"><span class="lineno">  135</span>            material_path = node.getName()</div>
+<div class="line"><span class="lineno">  136</span> </div>
+<div class="line"><span class="lineno">  137</span>        value_elements = node.getActiveValueElements() <span class="keywordflow">if</span> (node.isA(mx.Node) <span class="keywordflow">or</span> node.isA(mx.NodeGraph)) <span class="keywordflow">else</span> [ node ]</div>
+<div class="line"><span class="lineno">  138</span>        <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> value_elements:</div>
+<div class="line"><span class="lineno">  139</span>            is_input = value_element.isA(mx.Input)</div>
+<div class="line"><span class="lineno">  140</span>            is_output = value_element.isA(mx.Output)</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>            <span class="keywordflow">if</span> is_input <span class="keywordflow">or</span> is_output:</div>
+<div class="line"><span class="lineno">  143</span>                interface_name = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span>                <span class="comment"># Find out what type of element is connected to upstream:</span></div>
+<div class="line"><span class="lineno">  146</span>                <span class="comment"># node, nodegraph, or interface input.</span></div>
+<div class="line"><span class="lineno">  147</span>                mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;nodename&quot;</span>)</div>
+<div class="line"><span class="lineno">  148</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> mtlx_connection:</div>
+<div class="line"><span class="lineno">  149</span>                    mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;nodegraph&quot;</span>)</div>
+<div class="line"><span class="lineno">  150</span>                <span class="keywordflow">if</span> is_input <span class="keywordflow">and</span> <span class="keywordflow">not</span> mtlx_connection:</div>
+<div class="line"><span class="lineno">  151</span>                    mtlx_connection = value_element.getAttribute(<span class="stringliteral">&quot;interfacename&quot;</span>)</div>
+<div class="line"><span class="lineno">  152</span>                    interface_name = mtlx_connection</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>                connection_path = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  155</span>                <span class="keywordflow">if</span> mtlx_connection:</div>
+<div class="line"><span class="lineno">  156</span>                    <span class="comment"># Handle input connection by searching for the appropriate parent node.</span></div>
+<div class="line"><span class="lineno">  157</span>                    <span class="comment"># - If it&#39;s an interface input we want the parent nodegraph. Otherwise</span></div>
+<div class="line"><span class="lineno">  158</span>                    <span class="comment"># we want the node or nodegraph specified above.</span></div>
+<div class="line"><span class="lineno">  159</span>                    <span class="comment"># - If the parent path is the root (getNamePath() is empty), then this is to</span></div>
+<div class="line"><span class="lineno">  160</span>                    <span class="comment"># nodes at the root document level.</span></div>
+<div class="line"><span class="lineno">  161</span>                    <span class="keywordflow">if</span> is_input:</div>
+<div class="line"><span class="lineno">  162</span>                        parent = node.getParent()</div>
+<div class="line"><span class="lineno">  163</span>                        <span class="keywordflow">if</span> parent.getNamePath():</div>
+<div class="line"><span class="lineno">  164</span>                            <span class="keywordflow">if</span> interface_name:</div>
+<div class="line"><span class="lineno">  165</span>                                connection_path = root_path + parent.getNamePath()</div>
+<div class="line"><span class="lineno">  166</span>                            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  167</span>                                connection_path = root_path + parent.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
+<div class="line"><span class="lineno">  168</span>                        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  169</span>                            <span class="comment"># The connection is to a prim at the root level so insert a &#39;/&#39; identifier</span></div>
+<div class="line"><span class="lineno">  170</span>                            <span class="comment"># as getNamePath() will return an empty string at the root Document level.</span></div>
+<div class="line"><span class="lineno">  171</span>                            <span class="keywordflow">if</span> interface_name:</div>
+<div class="line"><span class="lineno">  172</span>                                connection_path = root_path</div>
+<div class="line"><span class="lineno">  173</span>                            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  174</span>                                connection_path = root_path + mtlx_connection</div>
+<div class="line"><span class="lineno">  175</span> </div>
+<div class="line"><span class="lineno">  176</span>                    <span class="comment"># Handle output connection by looking for sibling elements</span></div>
+<div class="line"><span class="lineno">  177</span>                    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  178</span>                        parent = node.getParent()</div>
 <div class="line"><span class="lineno">  179</span> </div>
-<div class="line"><span class="lineno">  180</span>                    <span class="comment"># Find the source prim</span></div>
-<div class="line"><span class="lineno">  181</span>                    <span class="comment"># Assumes that the source is either a nodegraph, a material or a shader</span></div>
-<div class="line"><span class="lineno">  182</span>                    connection_path = connection_path.removesuffix(<span class="stringliteral">&quot;/&quot;</span>)</div>
-<div class="line"><span class="lineno">  183</span>                    source_prim = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  184</span>                    source_port = <span class="stringliteral">&quot;out&quot;</span></div>
-<div class="line"><span class="lineno">  185</span>                    source = stage.GetPrimAtPath(connection_path)</div>
-<div class="line"><span class="lineno">  186</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> source <span class="keywordflow">and</span> material_path:</div>
-<div class="line"><span class="lineno">  187</span>                        connection_path = <span class="stringliteral">&quot;/&quot;</span> + material_path + connection_path</div>
-<div class="line"><span class="lineno">  188</span>                        source = stage.GetPrimAtPath(connection_path)</div>
-<div class="line"><span class="lineno">  189</span>                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> source:</div>
-<div class="line"><span class="lineno">  190</span>                            source = stage.GetPrimAtPath(<span class="stringliteral">&quot;/&quot;</span> + material_path)</div>
-<div class="line"><span class="lineno">  191</span> </div>
-<div class="line"><span class="lineno">  192</span>                    <span class="keywordflow">if</span> source:</div>
-<div class="line"><span class="lineno">  193</span>                        <span class="keywordflow">if</span> source.IsA(UsdShade.Material):</div>
-<div class="line"><span class="lineno">  194</span>                            source_prim = UsdShade.Material(source)</div>
-<div class="line"><span class="lineno">  195</span>                        <span class="keywordflow">elif</span> source.IsA(UsdShade.NodeGraph):</div>
-<div class="line"><span class="lineno">  196</span>                            source_prim = UsdShade.NodeGraph(source)</div>
-<div class="line"><span class="lineno">  197</span>                        <span class="keywordflow">elif</span> source.IsA(UsdShade.Shader):</div>
-<div class="line"><span class="lineno">  198</span>                            source_prim = UsdShade.Shader(source)</div>
-<div class="line"><span class="lineno">  199</span> </div>
-<div class="line"><span class="lineno">  200</span>                        <span class="comment"># Special case handle interface input vs an output</span></div>
-<div class="line"><span class="lineno">  201</span>                        <span class="keywordflow">if</span> interface_name:</div>
-<div class="line"><span class="lineno">  202</span>                            source_port = interface_name</div>
-<div class="line"><span class="lineno">  203</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  204</span>                            source_port = value_element.getAttribute(<span class="stringliteral">&quot;output&quot;</span>) <span class="keywordflow">or</span> <span class="stringliteral">&quot;out&quot;</span></div>
-<div class="line"><span class="lineno">  205</span> </div>
-<div class="line"><span class="lineno">  206</span>                    <span class="comment"># Find destination prim and port and make the appropriate connection.</span></div>
-<div class="line"><span class="lineno">  207</span>                    <span class="comment"># Assumes that the destination is either a nodegraph, a material or a shader</span></div>
-<div class="line"><span class="lineno">  208</span>                    <span class="keywordflow">if</span> source_prim:</div>
-<div class="line"><span class="lineno">  209</span>                        dest = stage.GetPrimAtPath(root_path + node.getNamePath())</div>
-<div class="line"><span class="lineno">  210</span>                        <span class="keywordflow">if</span> dest:</div>
-<div class="line"><span class="lineno">  211</span>                            port_name = value_element.getName()</div>
-<div class="line"><span class="lineno">  212</span>                            dest_node = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  213</span>                            <span class="keywordflow">if</span> dest.IsA(UsdShade.Material):</div>
-<div class="line"><span class="lineno">  214</span>                                dest_node = UsdShade.Material(dest)</div>
-<div class="line"><span class="lineno">  215</span>                            <span class="keywordflow">elif</span> dest.IsA(UsdShade.NodeGraph):</div>
-<div class="line"><span class="lineno">  216</span>                                dest_node = UsdShade.NodeGraph(dest)</div>
-<div class="line"><span class="lineno">  217</span>                            <span class="keywordflow">elif</span> dest.IsA(UsdShade.Shader):</div>
-<div class="line"><span class="lineno">  218</span>                                dest_node = UsdShade.Shader(dest)</div>
-<div class="line"><span class="lineno">  219</span> </div>
-<div class="line"><span class="lineno">  220</span>                            <span class="comment"># Find downstream port (input or output)</span></div>
-<div class="line"><span class="lineno">  221</span>                            <span class="keywordflow">if</span> dest_node:</div>
-<div class="line"><span class="lineno">  222</span>                                <span class="keywordflow">if</span> is_input:</div>
-<div class="line"><span class="lineno">  223</span>                                    <span class="comment"># Map from MaterialX to USD connection syntax</span></div>
-<div class="line"><span class="lineno">  224</span>                                    <span class="keywordflow">if</span> dest.IsA(UsdShade.Material):</div>
-<div class="line"><span class="lineno">  225</span>                                        port_name = self.map_mtlx_to_usd_shader_notation(port_name)</div>
-<div class="line"><span class="lineno">  226</span>                                        port_name = <span class="stringliteral">&quot;mtlx:&quot;</span> + port_name</div>
-<div class="line"><span class="lineno">  227</span>                                        dest_port = dest_node.GetOutput(port_name)</div>
-<div class="line"><span class="lineno">  228</span>                                    <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  229</span>                                        dest_port = dest_node.GetInput(port_name)</div>
-<div class="line"><span class="lineno">  230</span>                                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  231</span>                                    dest_port = dest_node.GetOutput(port_name)</div>
-<div class="line"><span class="lineno">  232</span> </div>
-<div class="line"><span class="lineno">  233</span>                                <span class="comment"># Make connection to interface input, or node/nodegraph output</span></div>
-<div class="line"><span class="lineno">  234</span>                                <span class="keywordflow">if</span> dest_port:</div>
-<div class="line"><span class="lineno">  235</span>                                    <span class="keywordflow">if</span> interface_name:</div>
-<div class="line"><span class="lineno">  236</span>                                        interface_input = source_prim.GetInput(source_port)</div>
-<div class="line"><span class="lineno">  237</span>                                        <span class="keywordflow">if</span> interface_input:</div>
-<div class="line"><span class="lineno">  238</span>                                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> dest_port.ConnectToSource(interface_input):</div>
-<div class="line"><span class="lineno">  239</span>                                                self.log(f<span class="stringliteral">&quot;&gt; Failed to connect: {source.GetPrimPath()} --&gt; {dest_port.GetFullName()}&quot;</span>)</div>
-<div class="line"><span class="lineno">  240</span>                                    <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  241</span>                                        source_prim_api = source_prim.ConnectableAPI()</div>
-<div class="line"><span class="lineno">  242</span>                                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> dest_port.ConnectToSource(source_prim_api, source_port):</div>
-<div class="line"><span class="lineno">  243</span>                                            self.log(f<span class="stringliteral">&quot;&gt; Failed to connect: {source.GetPrimPath()} --&gt; {dest_port.GetFullName()}&quot;</span>)</div>
-<div class="line"><span class="lineno">  244</span>                                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  245</span>                                    self.log(f<span class="stringliteral">&quot;&gt; Failed to find destination port: {port_name}&quot;</span>)</div>
-<div class="line"><span class="lineno">  246</span> </div>
+<div class="line"><span class="lineno">  180</span>                        <span class="comment"># Connection is to sibling under the same nodegraph</span></div>
+<div class="line"><span class="lineno">  181</span>                        <span class="keywordflow">if</span> node.isA(mx.NodeGraph):</div>
+<div class="line"><span class="lineno">  182</span>                            connection_path = root_path + node.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
+<div class="line"><span class="lineno">  183</span>                        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  184</span>                            <span class="comment"># Connection is to a nodegraph parent of the current node</span></div>
+<div class="line"><span class="lineno">  185</span>                            <span class="keywordflow">if</span> parent.getNamePath():</div>
+<div class="line"><span class="lineno">  186</span>                                connection_path = root_path + parent.getNamePath() + <span class="stringliteral">&quot;/&quot;</span> + mtlx_connection</div>
+<div class="line"><span class="lineno">  187</span>                            <span class="comment"># Connection is to the root document.</span></div>
+<div class="line"><span class="lineno">  188</span>                            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  189</span>                                connection_path = root_path + mtlx_connection</div>
+<div class="line"><span class="lineno">  190</span> </div>
+<div class="line"><span class="lineno">  191</span>                    <span class="comment"># Find the source prim</span></div>
+<div class="line"><span class="lineno">  192</span>                    <span class="comment"># Assumes that the source is either a nodegraph, a material or a shader</span></div>
+<div class="line"><span class="lineno">  193</span>                    connection_path = connection_path.removesuffix(<span class="stringliteral">&quot;/&quot;</span>)</div>
+<div class="line"><span class="lineno">  194</span>                    source_prim = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  195</span>                    source_port = <span class="stringliteral">&quot;out&quot;</span></div>
+<div class="line"><span class="lineno">  196</span>                    source = stage.GetPrimAtPath(connection_path)</div>
+<div class="line"><span class="lineno">  197</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> source <span class="keywordflow">and</span> material_path:</div>
+<div class="line"><span class="lineno">  198</span>                        connection_path = <span class="stringliteral">&quot;/&quot;</span> + material_path + connection_path</div>
+<div class="line"><span class="lineno">  199</span>                        source = stage.GetPrimAtPath(connection_path)</div>
+<div class="line"><span class="lineno">  200</span>                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> source:</div>
+<div class="line"><span class="lineno">  201</span>                            source = stage.GetPrimAtPath(<span class="stringliteral">&quot;/&quot;</span> + material_path)</div>
+<div class="line"><span class="lineno">  202</span> </div>
+<div class="line"><span class="lineno">  203</span>                    <span class="keywordflow">if</span> source:</div>
+<div class="line"><span class="lineno">  204</span>                        <span class="keywordflow">if</span> source.IsA(UsdShade.Material):</div>
+<div class="line"><span class="lineno">  205</span>                            source_prim = UsdShade.Material(source)</div>
+<div class="line"><span class="lineno">  206</span>                        <span class="keywordflow">elif</span> source.IsA(UsdShade.NodeGraph):</div>
+<div class="line"><span class="lineno">  207</span>                            source_prim = UsdShade.NodeGraph(source)</div>
+<div class="line"><span class="lineno">  208</span>                        <span class="keywordflow">elif</span> source.IsA(UsdShade.Shader):</div>
+<div class="line"><span class="lineno">  209</span>                            source_prim = UsdShade.Shader(source)</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>                        <span class="comment"># Special case handle interface input vs an output</span></div>
+<div class="line"><span class="lineno">  212</span>                        <span class="keywordflow">if</span> interface_name:</div>
+<div class="line"><span class="lineno">  213</span>                            source_port = interface_name</div>
+<div class="line"><span class="lineno">  214</span>                        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  215</span>                            source_port = value_element.getAttribute(<span class="stringliteral">&quot;output&quot;</span>) <span class="keywordflow">or</span> <span class="stringliteral">&quot;out&quot;</span></div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>                    <span class="comment"># Find destination prim and port and make the appropriate connection.</span></div>
+<div class="line"><span class="lineno">  218</span>                    <span class="comment"># Assumes that the destination is either a nodegraph, a material or a shader</span></div>
+<div class="line"><span class="lineno">  219</span>                    <span class="keywordflow">if</span> source_prim:</div>
+<div class="line"><span class="lineno">  220</span>                        dest = stage.GetPrimAtPath(root_path + node.getNamePath())</div>
+<div class="line"><span class="lineno">  221</span>                        <span class="keywordflow">if</span> dest:</div>
+<div class="line"><span class="lineno">  222</span>                            port_name = value_element.getName()</div>
+<div class="line"><span class="lineno">  223</span>                            dest_node = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  224</span>                            <span class="keywordflow">if</span> dest.IsA(UsdShade.Material):</div>
+<div class="line"><span class="lineno">  225</span>                                dest_node = UsdShade.Material(dest)</div>
+<div class="line"><span class="lineno">  226</span>                            <span class="keywordflow">elif</span> dest.IsA(UsdShade.NodeGraph):</div>
+<div class="line"><span class="lineno">  227</span>                                dest_node = UsdShade.NodeGraph(dest)</div>
+<div class="line"><span class="lineno">  228</span>                            <span class="keywordflow">elif</span> dest.IsA(UsdShade.Shader):</div>
+<div class="line"><span class="lineno">  229</span>                                dest_node = UsdShade.Shader(dest)</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span>                            <span class="comment"># Find downstream port (input or output)</span></div>
+<div class="line"><span class="lineno">  232</span>                            <span class="keywordflow">if</span> dest_node:</div>
+<div class="line"><span class="lineno">  233</span>                                <span class="keywordflow">if</span> is_input:</div>
+<div class="line"><span class="lineno">  234</span>                                    <span class="comment"># Map from MaterialX to USD connection syntax</span></div>
+<div class="line"><span class="lineno">  235</span>                                    <span class="keywordflow">if</span> dest.IsA(UsdShade.Material):</div>
+<div class="line"><span class="lineno">  236</span>                                        port_name = self.map_mtlx_to_usd_shader_notation(port_name)</div>
+<div class="line"><span class="lineno">  237</span>                                        port_name = <span class="stringliteral">&quot;mtlx:&quot;</span> + port_name</div>
+<div class="line"><span class="lineno">  238</span>                                        dest_port = dest_node.GetOutput(port_name)</div>
+<div class="line"><span class="lineno">  239</span>                                    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  240</span>                                        dest_port = dest_node.GetInput(port_name)</div>
+<div class="line"><span class="lineno">  241</span>                                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  242</span>                                    dest_port = dest_node.GetOutput(port_name)</div>
+<div class="line"><span class="lineno">  243</span> </div>
+<div class="line"><span class="lineno">  244</span>                                <span class="comment"># Make connection to interface input, or node/nodegraph output</span></div>
+<div class="line"><span class="lineno">  245</span>                                <span class="keywordflow">if</span> dest_port:</div>
+<div class="line"><span class="lineno">  246</span>                                    <span class="keywordflow">if</span> interface_name:</div>
+<div class="line"><span class="lineno">  247</span>                                        interface_input = source_prim.GetInput(source_port)</div>
+<div class="line"><span class="lineno">  248</span>                                        <span class="keywordflow">if</span> interface_input:</div>
+<div class="line"><span class="lineno">  249</span>                                            <span class="keywordflow">if</span> <span class="keywordflow">not</span> dest_port.ConnectToSource(interface_input):</div>
+<div class="line"><span class="lineno">  250</span>                                                self.log(f<span class="stringliteral">&quot;&gt; Failed to connect: {source.GetPrimPath()} --&gt; {dest_port.GetFullName()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  251</span>                                    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  252</span>                                        source_prim_api = source_prim.ConnectableAPI()</div>
+<div class="line"><span class="lineno">  253</span>                                        <span class="keywordflow">if</span> <span class="keywordflow">not</span> dest_port.ConnectToSource(source_prim_api, source_port):</div>
+<div class="line"><span class="lineno">  254</span>                                            self.log(f<span class="stringliteral">&quot;&gt; Failed to connect: {source.GetPrimPath()} --&gt; {dest_port.GetFullName()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  255</span>                                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  256</span>                                    self.log(f<span class="stringliteral">&quot;&gt; Failed to find destination port: {port_name}&quot;</span>)</div>
+<div class="line"><span class="lineno">  257</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -591,54 +595,67 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00314">314</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  314</span>    <span class="keyword">def </span>emit_usd_shader_graph(self, doc, stage, mtlx_nodes, emit_all_value_elements, root=&quot;/MaterialX/Materials/&quot;):</div>
-<div class="line"><span class="lineno">  315</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  316</span><span class="stringliteral">        Emit USD shader graph to a given stage from a list of MaterialX nodes.</span></div>
-<div class="line"><span class="lineno">  317</span><span class="stringliteral">        @param doc: MaterialX source document.</span></div>
-<div class="line"><span class="lineno">  318</span><span class="stringliteral">        @param stage: USD target stage.</span></div>
-<div class="line"><span class="lineno">  319</span><span class="stringliteral">        @param mtlx_nodes: MaterialX shader nodes.</span></div>
-<div class="line"><span class="lineno">  320</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
-<div class="line"><span class="lineno">  321</span><span class="stringliteral">        @param root: Root path for the shader graph.</span></div>
-<div class="line"><span class="lineno">  322</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  323</span>        material_path = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
-<div class="line"><span class="lineno">  325</span>            elem = doc.getDescendant(node_name)</div>
-<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
-<div class="line"><span class="lineno">  327</span>                material_path = elem.getName()</div>
-<div class="line"><span class="lineno">  328</span>                <span class="keywordflow">break</span></div>
-<div class="line"><span class="lineno">  329</span> </div>
-<div class="line"><span class="lineno">  330</span>        <span class="comment"># Emit USD nodes</span></div>
-<div class="line"><span class="lineno">  331</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
-<div class="line"><span class="lineno">  332</span>            elem = doc.getDescendant(node_name)</div>
-<div class="line"><span class="lineno">  333</span>            usd_path = root + elem.getNamePath()</div>
-<div class="line"><span class="lineno">  334</span> </div>
-<div class="line"><span class="lineno">  335</span>            node_def = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  336</span>            usd_node = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  337</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
-<div class="line"><span class="lineno">  338</span>                self.log(f<span class="stringliteral">&quot;Add material at path: {usd_path}&quot;</span>, -1)</div>
-<div class="line"><span class="lineno">  339</span>                usd_node = UsdShade.Material.Define(stage, usd_path)</div>
-<div class="line"><span class="lineno">  340</span>                material_prim = usd_node.GetPrim()</div>
-<div class="line"><span class="lineno">  341</span>                material_prim.ApplyAPI(<span class="stringliteral">&quot;MaterialXConfigAPI&quot;</span>)</div>
-<div class="line"><span class="lineno">  342</span>            <span class="keywordflow">elif</span> elem.isA(mx.Node):</div>
-<div class="line"><span class="lineno">  343</span>                node_def = elem.getNodeDef()</div>
-<div class="line"><span class="lineno">  344</span>                self.log(f<span class="stringliteral">&quot;Add node at path: {usd_path}&quot;</span>, -1)</div>
-<div class="line"><span class="lineno">  345</span>                usd_node = UsdShade.Shader.Define(stage, usd_path)</div>
-<div class="line"><span class="lineno">  346</span>            <span class="keywordflow">elif</span> elem.isA(mx.NodeGraph):</div>
-<div class="line"><span class="lineno">  347</span>                self.log(f<span class="stringliteral">&quot;Add nodegraph at path: {usd_path}&quot;</span>, -1)</div>
-<div class="line"><span class="lineno">  348</span>                usd_node = UsdShade.NodeGraph.Define(stage, usd_path)</div>
-<div class="line"><span class="lineno">  349</span> </div>
-<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">if</span> usd_node:</div>
-<div class="line"><span class="lineno">  351</span>                <span class="keywordflow">if</span> node_def:</div>
-<div class="line"><span class="lineno">  352</span>                    usd_node.SetShaderId(node_def.getName())</div>
-<div class="line"><span class="lineno">  353</span>                self.emit_usd_value_elements(elem, usd_node, emit_all_value_elements)</div>
-<div class="line"><span class="lineno">  354</span> </div>
-<div class="line"><span class="lineno">  355</span>        <span class="comment"># Emit connections between USD nodes</span></div>
-<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
-<div class="line"><span class="lineno">  357</span>            elem = doc.getDescendant(node_name)</div>
-<div class="line"><span class="lineno">  358</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span> <span class="keywordflow">or</span> elem.isA(mx.Node) <span class="keywordflow">or</span> elem.isA(mx.NodeGraph):</div>
-<div class="line"><span class="lineno">  359</span>                self.emit_usd_connections(elem, stage, root)</div>
-<div class="line"><span class="lineno">  360</span> </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00363">363</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  363</span>    <span class="keyword">def </span>emit_usd_shader_graph(self, doc, stage, mtlx_nodes, emit_all_value_elements, root=&quot;/MaterialX/Materials/&quot;):</div>
+<div class="line"><span class="lineno">  364</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  365</span><span class="stringliteral">        Emit USD shader graph to a given stage from a list of MaterialX nodes.</span></div>
+<div class="line"><span class="lineno">  366</span><span class="stringliteral">        @param doc: MaterialX source document.</span></div>
+<div class="line"><span class="lineno">  367</span><span class="stringliteral">        @param stage: USD target stage.</span></div>
+<div class="line"><span class="lineno">  368</span><span class="stringliteral">        @param mtlx_nodes: MaterialX shader nodes.</span></div>
+<div class="line"><span class="lineno">  369</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
+<div class="line"><span class="lineno">  370</span><span class="stringliteral">        @param root: Root path for the shader graph.</span></div>
+<div class="line"><span class="lineno">  371</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  372</span>        mtx_version = doc.getVersionString()</div>
+<div class="line"><span class="lineno">  373</span>        <span class="comment"># Create root primt</span></div>
+<div class="line"><span class="lineno">  374</span>        <span class="comment"># Q: Should this be done here. Seems this is not considered valid.</span></div>
+<div class="line"><span class="lineno">  375</span>        declare_version_at_root = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  376</span>        <span class="keywordflow">if</span> declare_version_at_root: </div>
+<div class="line"><span class="lineno">  377</span>            root_prim = stage.DefinePrim(<span class="stringliteral">&quot;/MaterialX/Materials&quot;</span>)</div>
+<div class="line"><span class="lineno">  378</span>            self.set_prim_mtlx_version(root_prim, mtx_version)</div>
+<div class="line"><span class="lineno">  379</span> </div>
+<div class="line"><span class="lineno">  380</span>        material_path = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
+<div class="line"><span class="lineno">  382</span>            elem = doc.getDescendant(node_name)</div>
+<div class="line"><span class="lineno">  383</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
+<div class="line"><span class="lineno">  384</span>                material_path = elem.getName()</div>
+<div class="line"><span class="lineno">  385</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  386</span> </div>
+<div class="line"><span class="lineno">  387</span>        <span class="comment"># Emit USD nodes</span></div>
+<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
+<div class="line"><span class="lineno">  389</span>            elem = doc.getDescendant(node_name)</div>
+<div class="line"><span class="lineno">  390</span>            usd_path = root + elem.getNamePath()</div>
+<div class="line"><span class="lineno">  391</span> </div>
+<div class="line"><span class="lineno">  392</span>            node_def = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  393</span>            usd_node = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  394</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span>:</div>
+<div class="line"><span class="lineno">  395</span>                self.log(f<span class="stringliteral">&quot;Add material at path: {usd_path}&quot;</span>, -1)</div>
+<div class="line"><span class="lineno">  396</span>                <span class="comment"># Q: Should we set the MTLX version on all nodes / graphs ?</span></div>
+<div class="line"><span class="lineno">  397</span>                usd_node = UsdShade.Material.Define(stage, usd_path)</div>
+<div class="line"><span class="lineno">  398</span>                material_prim = usd_node.GetPrim()</div>
+<div class="line"><span class="lineno">  399</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> declare_version_at_root:</div>
+<div class="line"><span class="lineno">  400</span>                    self.set_prim_mtlx_version(material_prim, mtx_version)</div>
+<div class="line"><span class="lineno">  401</span>                material_prim.ApplyAPI(<span class="stringliteral">&quot;MaterialXConfigAPI&quot;</span>)</div>
+<div class="line"><span class="lineno">  402</span>            <span class="keywordflow">elif</span> elem.isA(mx.Node):</div>
+<div class="line"><span class="lineno">  403</span>                node_def = elem.getNodeDef()</div>
+<div class="line"><span class="lineno">  404</span>                self.log(f<span class="stringliteral">&quot;Add node at path: {usd_path}&quot;</span>, -1)</div>
+<div class="line"><span class="lineno">  405</span>                usd_node = UsdShade.Shader.Define(stage, usd_path)</div>
+<div class="line"><span class="lineno">  406</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> declare_version_at_root:</div>
+<div class="line"><span class="lineno">  407</span>                    self.set_prim_mtlx_version(usd_node.GetPrim(), mtx_version)</div>
+<div class="line"><span class="lineno">  408</span>            <span class="keywordflow">elif</span> elem.isA(mx.NodeGraph):</div>
+<div class="line"><span class="lineno">  409</span>                self.log(f<span class="stringliteral">&quot;Add nodegraph at path: {usd_path}&quot;</span>, -1)</div>
+<div class="line"><span class="lineno">  410</span>                usd_node = UsdShade.NodeGraph.Define(stage, usd_path)</div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span>            <span class="keywordflow">if</span> usd_node:</div>
+<div class="line"><span class="lineno">  413</span>                <span class="keywordflow">if</span> node_def:</div>
+<div class="line"><span class="lineno">  414</span>                    usd_node.SetShaderId(node_def.getName())</div>
+<div class="line"><span class="lineno">  415</span>                self.emit_usd_value_elements(elem, usd_node, emit_all_value_elements)</div>
+<div class="line"><span class="lineno">  416</span> </div>
+<div class="line"><span class="lineno">  417</span>        <span class="comment"># Emit connections between USD nodes</span></div>
+<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">for</span> node_name <span class="keywordflow">in</span> mtlx_nodes:</div>
+<div class="line"><span class="lineno">  419</span>            elem = doc.getDescendant(node_name)</div>
+<div class="line"><span class="lineno">  420</span>            <span class="keywordflow">if</span> elem.getType() == <span class="stringliteral">&quot;material&quot;</span> <span class="keywordflow">or</span> elem.isA(mx.Node) <span class="keywordflow">or</span> elem.isA(mx.NodeGraph):</div>
+<div class="line"><span class="lineno">  421</span>                self.emit_usd_connections(elem, stage, root)</div>
+<div class="line"><span class="lineno">  422</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -681,74 +698,92 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00247">247</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  247</span>    <span class="keyword">def </span>emit_usd_value_elements(self, node, usd_node, emit_all_value_elements):</div>
-<div class="line"><span class="lineno">  248</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  249</span><span class="stringliteral">        Emit MaterialX value elements in USD.</span></div>
-<div class="line"><span class="lineno">  250</span><span class="stringliteral">        @param node: MaterialX node with value elements to scan.</span></div>
-<div class="line"><span class="lineno">  251</span><span class="stringliteral">        @param usd_node: UsdShade node to create value elements on.</span></div>
-<div class="line"><span class="lineno">  252</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
-<div class="line"><span class="lineno">  253</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  254</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> node:</div>
-<div class="line"><span class="lineno">  255</span>            <span class="keywordflow">return</span></div>
-<div class="line"><span class="lineno">  256</span> </div>
-<div class="line"><span class="lineno">  257</span>        is_material = node.getType() == <span class="stringliteral">&quot;material&quot;</span></div>
-<div class="line"><span class="lineno">  258</span>        node_def = node.getNodeDef()</div>
-<div class="line"><span class="lineno">  259</span> </div>
-<div class="line"><span class="lineno">  260</span>        <span class="comment"># Instantiate with all the nodedef inputs (if emit_all_value_elements is True).</span></div>
-<div class="line"><span class="lineno">  261</span>        <span class="comment"># Note that outputs are always created.</span></div>
-<div class="line"><span class="lineno">  262</span>        <span class="keywordflow">if</span> node_def <span class="keywordflow">and</span> <span class="keywordflow">not</span> is_material:</div>
-<div class="line"><span class="lineno">  263</span>            <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> node_def.getActiveValueElements():</div>
-<div class="line"><span class="lineno">  264</span>                <span class="keywordflow">if</span> value_element.isA(mx.Input):</div>
-<div class="line"><span class="lineno">  265</span>                    <span class="keywordflow">if</span> emit_all_value_elements:</div>
-<div class="line"><span class="lineno">  266</span>                        mtlx_type = value_element.getType()</div>
-<div class="line"><span class="lineno">  267</span>                        usd_type = self.map_mtlx_to_usd_type(mtlx_type)</div>
-<div class="line"><span class="lineno">  268</span>                        port_name = value_element.getName()</div>
-<div class="line"><span class="lineno">  269</span>                        usd_input = usd_node.CreateInput(port_name, usd_type)</div>
-<div class="line"><span class="lineno">  270</span> </div>
-<div class="line"><span class="lineno">  271</span>                        <span class="keywordflow">if</span> value_element.getValueString():</div>
-<div class="line"><span class="lineno">  272</span>                            mtlx_value = value_element.getValue()</div>
-<div class="line"><span class="lineno">  273</span>                            usd_value = self.map_mtlx_to_usd_value(mtlx_type, mtlx_value)</div>
-<div class="line"><span class="lineno">  274</span>                            <span class="keywordflow">if</span> usd_value <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  275</span>                                usd_input.Set(usd_value)</div>
-<div class="line"><span class="lineno">  276</span>                        color_space = value_element.getAttribute(<span class="stringliteral">&quot;colorspace&quot;</span>)</div>
-<div class="line"><span class="lineno">  277</span>                        <span class="keywordflow">if</span> color_space:</div>
-<div class="line"><span class="lineno">  278</span>                            usd_input.GetAttr().SetColorSpace(color_space)                            </div>
-<div class="line"><span class="lineno">  279</span> </div>
-<div class="line"><span class="lineno">  280</span>                <span class="keywordflow">elif</span> <span class="keywordflow">not</span> is_material <span class="keywordflow">and</span> value_element.isA(mx.Output):</div>
-<div class="line"><span class="lineno">  281</span>                    usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))</div>
-<div class="line"><span class="lineno">  282</span> </div>
-<div class="line"><span class="lineno">  283</span>        <span class="comment"># From the given instance add inputs and outputs and set values.</span></div>
-<div class="line"><span class="lineno">  284</span>        <span class="comment"># This may override the default value specified on the definition.</span></div>
-<div class="line"><span class="lineno">  285</span>        <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> node.getActiveValueElements():</div>
-<div class="line"><span class="lineno">  286</span>            <span class="keywordflow">if</span> value_element.isA(mx.Input):</div>
-<div class="line"><span class="lineno">  287</span>                mtlx_type = value_element.getType()</div>
-<div class="line"><span class="lineno">  288</span>                usd_type = self.map_mtlx_to_usd_type(mtlx_type)</div>
-<div class="line"><span class="lineno">  289</span>                port_name = value_element.getName()</div>
-<div class="line"><span class="lineno">  290</span>                <span class="keywordflow">if</span> is_material:</div>
-<div class="line"><span class="lineno">  291</span>                    <span class="comment"># Map from Materials to USD notation</span></div>
-<div class="line"><span class="lineno">  292</span>                    port_name = self.map_mtlx_to_usd_shader_notation(port_name)</div>
-<div class="line"><span class="lineno">  293</span>                    usd_input = usd_node.CreateOutput(<span class="stringliteral">&quot;mtlx:&quot;</span> + port_name, usd_type)</div>
-<div class="line"><span class="lineno">  294</span>                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  295</span>                    usd_input = usd_node.CreateInput(port_name, usd_type)</div>
-<div class="line"><span class="lineno">  296</span> </div>
-<div class="line"><span class="lineno">  297</span>                <span class="comment"># Set value. Note that we check the length of the value string</span></div>
-<div class="line"><span class="lineno">  298</span>                <span class="comment"># instead of getValue() as a 0 value will be skipped.</span></div>
-<div class="line"><span class="lineno">  299</span>                <span class="keywordflow">if</span> value_element.getValueString():</div>
-<div class="line"><span class="lineno">  300</span>                    mtlx_value = value_element.getValue()</div>
-<div class="line"><span class="lineno">  301</span>                    usd_value = self.map_mtlx_to_usd_value(mtlx_type, mtlx_value)</div>
-<div class="line"><span class="lineno">  302</span>                    <span class="keywordflow">if</span> usd_value <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  303</span>                        usd_input.Set(usd_value)</div>
-<div class="line"><span class="lineno">  304</span>                color_space = value_element.getAttribute(<span class="stringliteral">&quot;colorspace&quot;</span>)</div>
-<div class="line"><span class="lineno">  305</span>                <span class="keywordflow">if</span> color_space:</div>
-<div class="line"><span class="lineno">  306</span>                    usd_input.GetAttr().SetColorSpace(color_space)                            </div>
-<div class="line"><span class="lineno">  307</span> </div>
-<div class="line"><span class="lineno">  308</span> </div>
-<div class="line"><span class="lineno">  309</span>            <span class="keywordflow">elif</span> <span class="keywordflow">not</span> is_material <span class="keywordflow">and</span> value_element.isA(mx.Output):</div>
-<div class="line"><span class="lineno">  310</span>                usd_output = usd_node.GetInput(value_element.getName())</div>
-<div class="line"><span class="lineno">  311</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> usd_output:</div>
-<div class="line"><span class="lineno">  312</span>                    usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))</div>
-<div class="line"><span class="lineno">  313</span> </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00258">258</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  258</span>    <span class="keyword">def </span>emit_usd_value_elements(self, node, usd_node, emit_all_value_elements):</div>
+<div class="line"><span class="lineno">  259</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  260</span><span class="stringliteral">        Emit MaterialX value elements in USD.</span></div>
+<div class="line"><span class="lineno">  261</span><span class="stringliteral">        @param node: MaterialX node with value elements to scan.</span></div>
+<div class="line"><span class="lineno">  262</span><span class="stringliteral">        @param usd_node: UsdShade node to create value elements on.</span></div>
+<div class="line"><span class="lineno">  263</span><span class="stringliteral">        @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.</span></div>
+<div class="line"><span class="lineno">  264</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  265</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> node:</div>
+<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  267</span> </div>
+<div class="line"><span class="lineno">  268</span>        is_material = node.getType() == <span class="stringliteral">&quot;material&quot;</span></div>
+<div class="line"><span class="lineno">  269</span>        node_def = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  270</span>        <span class="keywordflow">if</span> node.isA(mx.Node):</div>
+<div class="line"><span class="lineno">  271</span>            node_def = node.getNodeDef()</div>
+<div class="line"><span class="lineno">  272</span> </div>
+<div class="line"><span class="lineno">  273</span>        <span class="comment"># Instantiate with all the nodedef inputs (if emit_all_value_elements is True).</span></div>
+<div class="line"><span class="lineno">  274</span>        <span class="comment"># Note that outputs are always created.</span></div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">if</span> node_def <span class="keywordflow">and</span> <span class="keywordflow">not</span> is_material:</div>
+<div class="line"><span class="lineno">  276</span>            <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> node_def.getActiveValueElements():</div>
+<div class="line"><span class="lineno">  277</span>                <span class="keywordflow">if</span> value_element.isA(mx.Input):</div>
+<div class="line"><span class="lineno">  278</span>                    <span class="keywordflow">if</span> emit_all_value_elements:</div>
+<div class="line"><span class="lineno">  279</span>                        mtlx_type = value_element.getType()</div>
+<div class="line"><span class="lineno">  280</span>                        usd_type = self.map_mtlx_to_usd_type(mtlx_type)</div>
+<div class="line"><span class="lineno">  281</span>                        port_name = value_element.getName()</div>
+<div class="line"><span class="lineno">  282</span>                        usd_input = usd_node.CreateInput(port_name, usd_type)</div>
+<div class="line"><span class="lineno">  283</span> </div>
+<div class="line"><span class="lineno">  284</span>                        <span class="keywordflow">if</span> value_element.getValueString():</div>
+<div class="line"><span class="lineno">  285</span>                            mtlx_value = value_element.getValue()</div>
+<div class="line"><span class="lineno">  286</span>                            usd_value = self.map_mtlx_to_usd_value(mtlx_type, mtlx_value)</div>
+<div class="line"><span class="lineno">  287</span>                            <span class="keywordflow">if</span> usd_value <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  288</span>                                usd_input.Set(usd_value)</div>
+<div class="line"><span class="lineno">  289</span>                        color_space = value_element.getAttribute(<span class="stringliteral">&quot;colorspace&quot;</span>)</div>
+<div class="line"><span class="lineno">  290</span>                        <span class="keywordflow">if</span> color_space:</div>
+<div class="line"><span class="lineno">  291</span>                            usd_input.GetAttr().SetColorSpace(color_space)   </div>
+<div class="line"><span class="lineno">  292</span>                        uifolder = value_element.getAttribute(<span class="stringliteral">&quot;uifolder&quot;</span>)</div>
+<div class="line"><span class="lineno">  293</span>                        <span class="keywordflow">if</span> uifolder:</div>
+<div class="line"><span class="lineno">  294</span>                            usd_input.SetDisplayGroup(uifolder)</div>
+<div class="line"><span class="lineno">  295</span>                        uiname = value_element.getAttribute(<span class="stringliteral">&quot;uiname&quot;</span>)</div>
+<div class="line"><span class="lineno">  296</span>                        <span class="keywordflow">if</span> uiname:</div>
+<div class="line"><span class="lineno">  297</span>                            usd_input.GetAttr().SetDisplayName(uiname)                         </div>
+<div class="line"><span class="lineno">  298</span> </div>
+<div class="line"><span class="lineno">  299</span>                <span class="keywordflow">elif</span> <span class="keywordflow">not</span> is_material <span class="keywordflow">and</span> value_element.isA(mx.Output):</div>
+<div class="line"><span class="lineno">  300</span>                    usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))</div>
+<div class="line"><span class="lineno">  301</span> </div>
+<div class="line"><span class="lineno">  302</span>        <span class="comment"># From the given instance add inputs and outputs and set values.</span></div>
+<div class="line"><span class="lineno">  303</span>        <span class="comment"># This may override the default value specified on the definition.</span></div>
+<div class="line"><span class="lineno">  304</span>        value_elements = []</div>
+<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">if</span> node.isA(mx.Node) <span class="keywordflow">or</span> node.isA(mx.NodeGraph):</div>
+<div class="line"><span class="lineno">  306</span>            value_elements = node.getActiveValueElements()</div>
+<div class="line"><span class="lineno">  307</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  308</span>            value_elements = [ node ]</div>
+<div class="line"><span class="lineno">  309</span>        <span class="keywordflow">for</span> value_element <span class="keywordflow">in</span> value_elements:</div>
+<div class="line"><span class="lineno">  310</span>            <span class="keywordflow">if</span> value_element.isA(mx.Input):</div>
+<div class="line"><span class="lineno">  311</span>                mtlx_type = value_element.getType()</div>
+<div class="line"><span class="lineno">  312</span>                usd_type = self.map_mtlx_to_usd_type(mtlx_type)</div>
+<div class="line"><span class="lineno">  313</span>                port_name = value_element.getName()</div>
+<div class="line"><span class="lineno">  314</span>                <span class="keywordflow">if</span> is_material:</div>
+<div class="line"><span class="lineno">  315</span>                    <span class="comment"># Map from Materials to USD notation</span></div>
+<div class="line"><span class="lineno">  316</span>                    port_name = self.map_mtlx_to_usd_shader_notation(port_name)</div>
+<div class="line"><span class="lineno">  317</span>                    usd_input = usd_node.CreateOutput(<span class="stringliteral">&quot;mtlx:&quot;</span> + port_name, usd_type)</div>
+<div class="line"><span class="lineno">  318</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  319</span>                    usd_input = usd_node.CreateInput(port_name, usd_type)</div>
+<div class="line"><span class="lineno">  320</span> </div>
+<div class="line"><span class="lineno">  321</span>                <span class="comment"># Set value. Note that we check the length of the value string</span></div>
+<div class="line"><span class="lineno">  322</span>                <span class="comment"># instead of getValue() as a 0 value will be skipped.</span></div>
+<div class="line"><span class="lineno">  323</span>                <span class="keywordflow">if</span> value_element.getValueString():</div>
+<div class="line"><span class="lineno">  324</span>                    mtlx_value = value_element.getValue()</div>
+<div class="line"><span class="lineno">  325</span>                    usd_value = self.map_mtlx_to_usd_value(mtlx_type, mtlx_value)</div>
+<div class="line"><span class="lineno">  326</span>                    <span class="keywordflow">if</span> usd_value <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  327</span>                        usd_input.Set(usd_value)</div>
+<div class="line"><span class="lineno">  328</span>                color_space = value_element.getAttribute(<span class="stringliteral">&quot;colorspace&quot;</span>)</div>
+<div class="line"><span class="lineno">  329</span>                <span class="keywordflow">if</span> color_space:</div>
+<div class="line"><span class="lineno">  330</span>                    usd_input.GetAttr().SetColorSpace(color_space)  </div>
+<div class="line"><span class="lineno">  331</span>                uifolder = value_element.getAttribute(<span class="stringliteral">&quot;uifolder&quot;</span>)</div>
+<div class="line"><span class="lineno">  332</span>                <span class="keywordflow">if</span> uifolder:</div>
+<div class="line"><span class="lineno">  333</span>                    usd_input.SetDisplayGroup(uifolder)    </div>
+<div class="line"><span class="lineno">  334</span>                uiname = value_element.getAttribute(<span class="stringliteral">&quot;uiname&quot;</span>)</div>
+<div class="line"><span class="lineno">  335</span>                <span class="keywordflow">if</span> uiname:</div>
+<div class="line"><span class="lineno">  336</span>                    usd_input.GetAttr().SetDisplayName(uiname)</div>
+<div class="line"><span class="lineno">  337</span> </div>
+<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">elif</span> <span class="keywordflow">not</span> is_material <span class="keywordflow">and</span> value_element.isA(mx.Output):</div>
+<div class="line"><span class="lineno">  339</span>                usd_output = usd_node.GetInput(value_element.getName())</div>
+<div class="line"><span class="lineno">  340</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> usd_output:</div>
+<div class="line"><span class="lineno">  341</span>                    usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))</div>
+<div class="line"><span class="lineno">  342</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -780,20 +815,23 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>: List of node paths. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00361">361</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  361</span>    <span class="keyword">def </span>find_materialx_nodes(self, doc):</div>
-<div class="line"><span class="lineno">  362</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  363</span><span class="stringliteral">        Find all nodes in a MaterialX document.</span></div>
-<div class="line"><span class="lineno">  364</span><span class="stringliteral">        @param doc: MaterialX document.</span></div>
-<div class="line"><span class="lineno">  365</span><span class="stringliteral">        @return: List of node paths.</span></div>
-<div class="line"><span class="lineno">  366</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  367</span>        visited_nodes = []</div>
-<div class="line"><span class="lineno">  368</span>        <span class="keywordflow">for</span> elem <span class="keywordflow">in</span> doc.traverseTree():</div>
-<div class="line"><span class="lineno">  369</span>            path = elem.getNamePath()</div>
-<div class="line"><span class="lineno">  370</span>            <span class="keywordflow">if</span> path <span class="keywordflow">not</span> <span class="keywordflow">in</span> visited_nodes:</div>
-<div class="line"><span class="lineno">  371</span>                visited_nodes.append(path)</div>
-<div class="line"><span class="lineno">  372</span>        <span class="keywordflow">return</span> visited_nodes</div>
-<div class="line"><span class="lineno">  373</span>    </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00423">423</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  423</span>    <span class="keyword">def </span>find_materialx_nodes(self, doc):</div>
+<div class="line"><span class="lineno">  424</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  425</span><span class="stringliteral">        Find all nodes in a MaterialX document.</span></div>
+<div class="line"><span class="lineno">  426</span><span class="stringliteral">        @param doc: MaterialX document.</span></div>
+<div class="line"><span class="lineno">  427</span><span class="stringliteral">        @return: List of node paths.</span></div>
+<div class="line"><span class="lineno">  428</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  429</span>        visited_nodes = []</div>
+<div class="line"><span class="lineno">  430</span>        <span class="keywordflow">for</span> elem <span class="keywordflow">in</span> doc.traverseTree():</div>
+<div class="line"><span class="lineno">  431</span>            <span class="keywordflow">if</span> elem.isA(mx.Look) <span class="keywordflow">or</span> elem.isA(mx.MaterialAssign):</div>
+<div class="line"><span class="lineno">  432</span>                self.logger.debug(f<span class="stringliteral">&quot;Skipping look element: {elem.getNamePath()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  433</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  434</span>                path = elem.getNamePath()</div>
+<div class="line"><span class="lineno">  435</span>                <span class="keywordflow">if</span> path <span class="keywordflow">not</span> <span class="keywordflow">in</span> visited_nodes:</div>
+<div class="line"><span class="lineno">  436</span>                    visited_nodes.append(path)</div>
+<div class="line"><span class="lineno">  437</span>        <span class="keywordflow">return</span> visited_nodes</div>
+<div class="line"><span class="lineno">  438</span>    </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -913,21 +951,21 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>: Corresponding USD notation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00098">98</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>    <span class="keyword">def </span>map_mtlx_to_usd_shader_notation(self, name):</div>
-<div class="line"><span class="lineno">   99</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  100</span><span class="stringliteral">        Utility to map from MaterialX shader notation to USD notation.</span></div>
-<div class="line"><span class="lineno">  101</span><span class="stringliteral">        @param name: MaterialX shader notation.</span></div>
-<div class="line"><span class="lineno">  102</span><span class="stringliteral">        @return: Corresponding USD notation.</span></div>
-<div class="line"><span class="lineno">  103</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">if</span> name == <span class="stringliteral">&quot;surfaceshader&quot;</span>:</div>
-<div class="line"><span class="lineno">  105</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;surface&quot;</span></div>
-<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">elif</span> name == <span class="stringliteral">&quot;displacementshader&quot;</span>:</div>
-<div class="line"><span class="lineno">  107</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;displacement&quot;</span></div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">elif</span> name == <span class="stringliteral">&quot;volumeshader&quot;</span>:</div>
-<div class="line"><span class="lineno">  109</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;volume&quot;</span></div>
-<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">return</span> name</div>
-<div class="line"><span class="lineno">  111</span> </div>
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00108">108</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  108</span>    <span class="keyword">def </span>map_mtlx_to_usd_shader_notation(self, name):</div>
+<div class="line"><span class="lineno">  109</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  110</span><span class="stringliteral">        Utility to map from MaterialX shader notation to USD notation.</span></div>
+<div class="line"><span class="lineno">  111</span><span class="stringliteral">        @param name: MaterialX shader notation.</span></div>
+<div class="line"><span class="lineno">  112</span><span class="stringliteral">        @return: Corresponding USD notation.</span></div>
+<div class="line"><span class="lineno">  113</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">if</span> name == <span class="stringliteral">&quot;surfaceshader&quot;</span>:</div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;surface&quot;</span></div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">elif</span> name == <span class="stringliteral">&quot;displacementshader&quot;</span>:</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;displacement&quot;</span></div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">elif</span> name == <span class="stringliteral">&quot;volumeshader&quot;</span>:</div>
+<div class="line"><span class="lineno">  119</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;volume&quot;</span></div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">return</span> name</div>
+<div class="line"><span class="lineno">  121</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1013,7 +1051,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Map a MaterialX value of a given type to a USD value. </p>
-<p>TODO: Add all types here... </p><dl class="params"><dt>Parameters</dt><dd>
+<p>TODO: Add all types here. This does not seem to be exposed in Python? See: <a href="https://openusd.org/dev/api/struct_usd_mtlx_usd_type_info.html">https://openusd.org/dev/api/struct_usd_mtlx_usd_type_info.html</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mtlx_type</td><td>MaterialX type. </td></tr>
     <tr><td class="paramname">mtlx_value</td><td>MaterialX value. </td></tr>
@@ -1026,27 +1064,95 @@ Public Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>map_mtlx_to_usd_value(self, mtlx_type, mtlx_value):</div>
 <div class="line"><span class="lineno">   75</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
 <div class="line"><span class="lineno">   76</span><span class="stringliteral">        Map a MaterialX value of a given type to a USD value.</span></div>
-<div class="line"><span class="lineno">   77</span><span class="stringliteral">        TODO: Add all types here...</span></div>
-<div class="line"><span class="lineno">   78</span><span class="stringliteral">        @param mtlx_type: MaterialX type.</span></div>
-<div class="line"><span class="lineno">   79</span><span class="stringliteral">        @param mtlx_value: MaterialX value.</span></div>
-<div class="line"><span class="lineno">   80</span><span class="stringliteral">        @return: Corresponding USD value.</span></div>
-<div class="line"><span class="lineno">   81</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span> mtlx_type == <span class="stringliteral">&quot;float&quot;</span>:</div>
-<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">return</span> float(mtlx_value)</div>
-<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;integer&quot;</span>:</div>
-<div class="line"><span class="lineno">   85</span>            <span class="keywordflow">return</span> int(mtlx_value)</div>
-<div class="line"><span class="lineno">   86</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;boolean&quot;</span>:</div>
-<div class="line"><span class="lineno">   87</span>            <span class="keywordflow">return</span> bool(mtlx_value)</div>
-<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;string&quot;</span>, <span class="stringliteral">&quot;filename&quot;</span>):</div>
-<div class="line"><span class="lineno">   89</span>            <span class="keywordflow">return</span> str(mtlx_value)</div>
-<div class="line"><span class="lineno">   90</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;vector2&quot;</span>:</div>
-<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">return</span> Gf.Vec2f(mtlx_value[0], mtlx_value[1])</div>
-<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;color3&quot;</span>, <span class="stringliteral">&quot;vector3&quot;</span>):</div>
-<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">return</span> Gf.Vec3f(mtlx_value[0], mtlx_value[1], mtlx_value[2])</div>
-<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;color4&quot;</span>, <span class="stringliteral">&quot;vector4&quot;</span>):</div>
-<div class="line"><span class="lineno">   95</span>            <span class="keywordflow">return</span> Gf.Vec4f(mtlx_value[0], mtlx_value[1], mtlx_value[2], mtlx_value[3])</div>
-<div class="line"><span class="lineno">   96</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">   97</span> </div>
+<div class="line"><span class="lineno">   77</span><span class="stringliteral">        TODO: Add all types here. This does not seem to be exposed in Python?</span></div>
+<div class="line"><span class="lineno">   78</span><span class="stringliteral">        See: https://openusd.org/dev/api/struct_usd_mtlx_usd_type_info.html</span></div>
+<div class="line"><span class="lineno">   79</span><span class="stringliteral">        @param mtlx_type: MaterialX type.</span></div>
+<div class="line"><span class="lineno">   80</span><span class="stringliteral">        @param mtlx_value: MaterialX value.</span></div>
+<div class="line"><span class="lineno">   81</span><span class="stringliteral">        @return: Corresponding USD value.</span></div>
+<div class="line"><span class="lineno">   82</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">if</span> mtlx_type == <span class="stringliteral">&quot;float&quot;</span>:</div>
+<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">return</span> float(mtlx_value)</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;integer&quot;</span>:</div>
+<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">return</span> int(mtlx_value)</div>
+<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;boolean&quot;</span>:</div>
+<div class="line"><span class="lineno">   88</span>            <span class="keywordflow">return</span> bool(mtlx_value)</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;string&quot;</span>, <span class="stringliteral">&quot;filename&quot;</span>):</div>
+<div class="line"><span class="lineno">   90</span>            <span class="keywordflow">return</span> str(mtlx_value)</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;vector2&quot;</span>:</div>
+<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">return</span> Gf.Vec2f(mtlx_value[0], mtlx_value[1])</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;color3&quot;</span>, <span class="stringliteral">&quot;vector3&quot;</span>):</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">return</span> Gf.Vec3f(mtlx_value[0], mtlx_value[1], mtlx_value[2])</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">elif</span> mtlx_type <span class="keywordflow">in</span> (<span class="stringliteral">&quot;color4&quot;</span>, <span class="stringliteral">&quot;vector4&quot;</span>):</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">return</span> Gf.Vec4f(mtlx_value[0], mtlx_value[1], mtlx_value[2], mtlx_value[3])</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;matraix33&quot;</span>:</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">return</span> Gf.Matrix3f(mtlx_value[0], mtlx_value[1], mtlx_value[2],</div>
+<div class="line"><span class="lineno">   99</span>                                mtlx_value[3], mtlx_value[4], mtlx_value[5],</div>
+<div class="line"><span class="lineno">  100</span>                                mtlx_value[6], mtlx_value[7], mtlx_value[8])</div>
+<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">elif</span> mtlx_type == <span class="stringliteral">&quot;matrix44&quot;</span>:</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> Gf.Matrix4f(mtlx_value[0], mtlx_value[1], mtlx_value[2], mtlx_value[3],</div>
+<div class="line"><span class="lineno">  103</span>                                mtlx_value[4], mtlx_value[5], mtlx_value[6], mtlx_value[7],</div>
+<div class="line"><span class="lineno">  104</span>                                mtlx_value[8], mtlx_value[9], mtlx_value[10], mtlx_value[11],</div>
+<div class="line"><span class="lineno">  105</span>                                mtlx_value[12], mtlx_value[13], mtlx_value[14], mtlx_value[15])</div>
+<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  107</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7eb569052d6abbc9510cc82faac24693" name="a7eb569052d6abbc9510cc82faac24693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eb569052d6abbc9510cc82faac24693">&#9670;&#160;</a></span>set_prim_mtlx_version()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">materialxusd.materialxusd_custom.MtlxToUsd.set_prim_mtlx_version </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Usd.Prim</td>          <td class="paramname"><span class="paramname"><em>prim</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str</td>          <td class="paramname"><span class="paramname"><em>version</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the MaterialX version on a prim. </p>
+<p>See: <a href="https://openusd.org/dev/api/class_usd_mtlx_material_x_config_a_p_i.html">https://openusd.org/dev/api/class_usd_mtlx_material_x_config_a_p_i.html</a> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prim</td><td>USD prim. </td></tr>
+    <tr><td class="paramname">version</td><td>MaterialX version string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>: True if the version was set, False otherwise. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="materialxusd__custom_8py_source.html#l00343">343</a> of file <a class="el" href="materialxusd__custom_8py_source.html">materialxusd_custom.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  343</span>    <span class="keyword">def </span>set_prim_mtlx_version(self, prim: Usd.Prim, version: str):</div>
+<div class="line"><span class="lineno">  344</span>        <span class="stringliteral">&#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  345</span><span class="stringliteral">        Set the MaterialX version on a prim.</span></div>
+<div class="line"><span class="lineno">  346</span><span class="stringliteral">        See: https://openusd.org/dev/api/class_usd_mtlx_material_x_config_a_p_i.html</span></div>
+<div class="line"><span class="lineno">  347</span><span class="stringliteral">        @param prim: USD prim.</span></div>
+<div class="line"><span class="lineno">  348</span><span class="stringliteral">        @param version: MaterialX version string.</span></div>
+<div class="line"><span class="lineno">  349</span><span class="stringliteral">        @return: True if the version was set, False otherwise.</span></div>
+<div class="line"><span class="lineno">  350</span><span class="stringliteral">        &#39;&#39;&#39;</span></div>
+<div class="line"><span class="lineno">  351</span>        error = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  353</span>            <span class="comment">#if UsdMtlx.MaterialXConfigAPI.CanApply(prim):</span></div>
+<div class="line"><span class="lineno">  354</span>            mtlx_config_api = UsdMtlx.MaterialXConfigAPI.Apply(prim)</div>
+<div class="line"><span class="lineno">  355</span>            version_attr = mtlx_config_api.CreateConfigMtlxVersionAttr()</div>
+<div class="line"><span class="lineno">  356</span>            version_attr.Set(version)        </div>
+<div class="line"><span class="lineno">  357</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  359</span>            error = e</div>
+<div class="line"><span class="lineno">  360</span>        self.logger.warning(f<span class="stringliteral">&quot;Failed to set MaterialX version on prim: {prim.GetPath()}. {error}&quot;</span>)</div>
+<div class="line"><span class="lineno">  361</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  362</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

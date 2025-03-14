@@ -126,9 +126,14 @@ An initial acceptance criteria is to be able to run MaterialX to USD conversion 
 
 ### Gallery of Example Materials
 
-glTF, Standard Surface, OpenUSD material renderings
+Test Suite material renderings
 
 <iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
+<p></p>
+
+Physically Based Material library rendering
+
+<iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"></iframe>
 <p></p>
 
 ### Comparison: GLSL vs GLSLFX

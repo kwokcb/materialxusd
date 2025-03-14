@@ -25,7 +25,10 @@ def main():
     parser.add_argument('-o', '--output_file', type=str, default='usd_mtlx_image_gallery.html', help="Path to the output HTML file.")
     parser.add_argument('-c', '--columns', type=int, default=4, help="Number of columns in the grid.")
     parser.add_argument('-sc', '--scroll', action="store_true", help="Enable scrolling for the gallery.")
+    parser.add_argument('-hd', '--header', type=str, default='MaterialX RTS / USD Render Gallery', help="Title of the HTML page.")
+    parser.add_argument('-r', '--root', type=str, default='https://kwokcb.github.io/materialxusd/tests', help="Root directory for the images.")
     args = parser.parse_args()
+    print(args)
 
     # Directory to scan for PNG files
     image_directory = args.input_folder
@@ -38,7 +41,11 @@ def main():
     for root, _, files in os.walk(image_directory):
         for file in files:
             if file.endswith('glslfx.png'):
-                png_files.append(os.path.join(root, file))
+                root = root.replace("\\", "/")
+                root = root.replace("./", args.root + "/")
+                full_path = os.path.join(root, file)
+                print("Add file: ", full_path)
+                png_files.append(full_path)
 
     # Generate HTML content
     html_content = '''
@@ -47,7 +54,7 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MaterialX RTS / USD Render Gallery</title>
+        <title>__TITLE__</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
             .img-fluid { max-width: 100%; height: auto; }
@@ -55,10 +62,12 @@ def main():
         </style>
     </head>
     <body data-bs-theme="dark" class="p-4">
-        <h2 class="text-center">MaterialX RTS / USD Render Gallery</h2>
+        <h2 class="text-center">__TITLE__</h2>
         <div class="p-2 container-fluid border rounded-4" style="__SCROLL_STYLE__">
             <div class="row">
     '''
+    print(args.header)
+    html_content = html_content.replace('__TITLE__', args.header)
     scroll_style = ''
     if args.scroll:
         scroll_style = 'max-height: 800px; overflow-y: auto;'
@@ -72,10 +81,10 @@ def main():
             html_content += '</div><div class="row">\n'  # Start a new row every 6 images
         file_name = os.path.basename(png_file)
         html_content += f'''
-                <div class="col-md-{column_width}">
-                    <img src="{png_file}" class="img-fluid" alt="{file_name}">
-                    <div class="image-name">{file_name}</div>
-                </div>
+            <div class="col-md-{column_width}">
+                <img src="{png_file}" class="img-fluid" alt="{file_name}" loading="lazy">
+                <div class="image-name">{file_name}</div>
+            </div>
         '''
 
     # Close the HTML content

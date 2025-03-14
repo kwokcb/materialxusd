@@ -74,7 +74,8 @@ class MtlxToUsd:
     def map_mtlx_to_usd_value(self, mtlx_type, mtlx_value):
         '''
         Map a MaterialX value of a given type to a USD value.
-        TODO: Add all types here...
+        TODO: Add all types here. This does not seem to be exposed in Python?
+        See: https://openusd.org/dev/api/struct_usd_mtlx_usd_type_info.html
         @param mtlx_type: MaterialX type.
         @param mtlx_value: MaterialX value.
         @return: Corresponding USD value.
@@ -93,6 +94,15 @@ class MtlxToUsd:
             return Gf.Vec3f(mtlx_value[0], mtlx_value[1], mtlx_value[2])
         elif mtlx_type in ("color4", "vector4"):
             return Gf.Vec4f(mtlx_value[0], mtlx_value[1], mtlx_value[2], mtlx_value[3])
+        elif mtlx_type == "matraix33":
+            return Gf.Matrix3f(mtlx_value[0], mtlx_value[1], mtlx_value[2],
+                                mtlx_value[3], mtlx_value[4], mtlx_value[5],
+                                mtlx_value[6], mtlx_value[7], mtlx_value[8])
+        elif mtlx_type == "matrix44":
+            return Gf.Matrix4f(mtlx_value[0], mtlx_value[1], mtlx_value[2], mtlx_value[3],
+                                mtlx_value[4], mtlx_value[5], mtlx_value[6], mtlx_value[7],
+                                mtlx_value[8], mtlx_value[9], mtlx_value[10], mtlx_value[11],
+                                mtlx_value[12], mtlx_value[13], mtlx_value[14], mtlx_value[15])
         return None
 
     def map_mtlx_to_usd_shader_notation(self, name):
@@ -315,7 +325,6 @@ class MtlxToUsd:
                     usd_input.SetDisplayGroup(uifolder)    
                 uiname = value_element.getAttribute("uiname")
                 if uiname:
-                    print('-----set uiname:',uiname)
                     usd_input.GetAttr().SetDisplayName(uiname)
 
             elif not is_material and value_element.isA(mx.Output):

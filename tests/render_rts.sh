@@ -11,7 +11,7 @@ folders=(
 
 for folder in "${folders[@]}"; do
     echo "Rendering $folder"
-    python ../source/materialxusd/mtlx2usd.py -pp -mn -sf "$folder" $1 -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr
+    python ../source/materialxusd/mtlx2usd.py -pp -mn -sf "$folder" $* -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr > render_rts_log.txt 2>&1
 done
 
 

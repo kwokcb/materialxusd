@@ -13,13 +13,11 @@
       <input name="weight" type="float" interfacename="diffuse" />
       <input name="color" type="color3" interfacename="diffuse_color" />
       <input name="roughness" type="float" value="0" />
-      <input name="normal" type="vector3" nodename="Nworld" />
     </oren_nayar_diffuse_bsdf>
     <sheen_bsdf name="sheen1__layer_top" type="BSDF">
       <input name="weight" type="float" interfacename="sheen" />
       <input name="color" type="color3" interfacename="sheen_color" />
       <input name="roughness" type="float" interfacename="sheen_roughness" />
-      <input name="normal" type="vector3" nodename="Nworld" />
     </sheen_bsdf>
     <surface name="surface1" type="surfaceshader">
       <input name="bsdf" type="BSDF" nodename="sheen1" />
@@ -31,9 +29,6 @@
       <input name="top" type="BSDF" nodename="sheen1__layer_top" />
       <input name="base" type="BSDF" nodename="diffuse1" />
     </layer>
-    <normal name="Nworld" type="vector3">
-      <input name="space" type="string" value="world" />
-    </normal>
   </nodegraph>
   <sheen_surface name="SR_sheen" type="surfaceshader">
     <input name="diffuse" type="float" value="1.0" />

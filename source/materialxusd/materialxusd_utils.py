@@ -168,7 +168,7 @@ class MaterialXUsdUtilities:
             if not graph_outputs:
                 continue
 
-            self.logger.info(f'>> Scan graph: {graph.getName()}')
+            self.logger.debug(f'Scan graph: {graph.getName()}')
 
             # Use does not support these nodes so need to do it the hard way....
             usd_supports_convert_to_surface_shader = False
@@ -219,7 +219,7 @@ class MaterialXUsdUtilities:
                         if not graph_parent or not connected_ss:
                             continue
 
-                        self.logger.info(f'>>>> Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}')
+                        self.logger.info(f'Extract unsupported shader inside nodegraph: {connected_ss.getNamePath()}')
 
                         shadernode_name = graph_parent.createValidChildName(connected_ss.getName())
                         shadernode_nodedef = connected_ss.getNodeDef()
@@ -254,7 +254,7 @@ class MaterialXUsdUtilities:
                         material_name = doc.createValidChildName(graph.getName() + '_' + output_name)
                         material_node = doc.addMaterialNode(material_name)
                         if material_node:
-                            self.logger.info(f">>>> Added material node: {material_node.getName()}, for graph shader output: {output_name}")
+                            self.logger.info(f"Added material node: {material_node.getName()}, for graph shader output: {output_name}")
                             material_node_input = material_node.addInput(output_type, output_type)
                             #material_node_input.setNodeGraphString(graph.getName())
                             #material_node_input.setOutputString(output_name)
@@ -289,7 +289,7 @@ class MaterialXUsdUtilities:
                                     material_count += 1
 
                         else:
-                            self.logger.info(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
+                            #self.logger.info(f'Scan: {graph.getName()} output: {output_name} type: {output_type}')
                             
                             # If not color3 or float add a convert node and connect it to the current upstream node
                             # and then add in a new output which is of type color3

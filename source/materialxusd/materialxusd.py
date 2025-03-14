@@ -5,6 +5,8 @@ except ImportError:
     self.logger.info("Error: Python module 'pxr' not found. Please ensure that the USD Python bindings are installed.")
     exit(1)
 
+import materialxusd_custom as mxcust
+
 class MaterialxUSDConverter:
     '''
     @brief Class that converts a MaterialX file to a USD file with an appropriate scene.
@@ -228,7 +230,8 @@ class MaterialxUSDConverter:
         # Save the USD stage        
         return camera
     
-    def mtlx_to_usd(self, input_usd_path : str, shaderball_path : str, environment_path : str, material_file_path : str, camera_path : str):
+    def mtlx_to_usd(self, input_usd_path : str, shaderball_path : str, environment_path : str, material_file_path : str, camera_path : str,
+                    use_custom=False):
         '''
         @brief This function reads the input usd file and adds the shaderball geometry and environment light
         to the scene. It also binds the first material to the shaderball geometry. The final stage is returned.
@@ -241,11 +244,16 @@ class MaterialxUSDConverter:
         '''
         # Open the input USDA file
         stage = None 
-        try:
-            stage = Usd.Stage.Open(input_usd_path)
-        except Exception as e:
-            self.logger.info(f"> Error: Could not open file at {input_usd_path}. Error: {e}")
-            return stage, None, None, None, None
+
+        if use_custom:
+            mtlx_to_usd = mxcust.MtlxToUsd(self.logger)
+            stage = mtlx_to_usd.emit(input_usd_path, False)
+        else:
+            try:
+                stage = Usd.Stage.Open(input_usd_path)
+            except Exception as e:
+                self.logger.info(f"> Error: Could not open file at {input_usd_path}. Error: {e}")
+                return stage, None, None, None, None
         
         if not stage:
             self.logger.info(f"> Error: Could not open file at {input_usd_path}")

@@ -23,7 +23,6 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_oren_nayar_diffuse_bsdf"
                 color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse_color>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_sheen_surface/Nworld.outputs:out>
                 float inputs:roughness = 0
                 float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse>
                 token outputs:out (
@@ -35,7 +34,6 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_sheen_bsdf"
                 color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_color>
-                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_sheen_surface/Nworld.outputs:out>
                 float inputs:roughness.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_roughness>
                 float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen>
                 token outputs:out (
@@ -57,13 +55,6 @@ def "MaterialX"
                 token outputs:out (
                     renderType = "BSDF"
                 )
-            }
-
-            def Shader "Nworld"
-            {
-                uniform token info:id = "ND_normal_vector3"
-                string inputs:space = "world"
-                float3 outputs:out
             }
         }
     }

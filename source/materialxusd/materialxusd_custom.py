@@ -134,7 +134,8 @@ class MtlxToUsd:
         if node.getType() == "material":
             material_path = node.getName()
 
-        for value_element in node.getActiveValueElements():
+        value_elements = node.getActiveValueElements() if (node.isA(mx.Node) or node.isA(mx.NodeGraph)) else [ node ]
+        for value_element in value_elements:
             is_input = value_element.isA(mx.Input)
             is_output = value_element.isA(mx.Output)
 
@@ -265,7 +266,9 @@ class MtlxToUsd:
             return
 
         is_material = node.getType() == "material"
-        node_def = node.getNodeDef()
+        node_def = None
+        if node.isA(mx.Node):
+            node_def = node.getNodeDef()
 
         # Instantiate with all the nodedef inputs (if emit_all_value_elements is True).
         # Note that outputs are always created.
@@ -298,7 +301,12 @@ class MtlxToUsd:
 
         # From the given instance add inputs and outputs and set values.
         # This may override the default value specified on the definition.
-        for value_element in node.getActiveValueElements():
+        value_elements = []
+        if node.isA(mx.Node) or node.isA(mx.NodeGraph):
+            value_elements = node.getActiveValueElements()
+        else:
+            value_elements = [ node ]
+        for value_element in value_elements:
             if value_element.isA(mx.Input):
                 mtlx_type = value_element.getType()
                 usd_type = self.map_mtlx_to_usd_type(mtlx_type)
@@ -420,9 +428,12 @@ class MtlxToUsd:
         '''
         visited_nodes = []
         for elem in doc.traverseTree():
-            path = elem.getNamePath()
-            if path not in visited_nodes:
-                visited_nodes.append(path)
+            if elem.isA(mx.Look) or elem.isA(mx.MaterialAssign):
+                self.logger.debug(f"Skipping look element: {elem.getNamePath()}")
+            else:
+                path = elem.getNamePath()
+                if path not in visited_nodes:
+                    visited_nodes.append(path)
         return visited_nodes
     
     def emit_document_metadata(self, doc, stage):

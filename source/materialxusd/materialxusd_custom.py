@@ -371,7 +371,7 @@ class MtlxToUsd:
         '''
         mtx_version = doc.getVersionString()
         # Create root primt
-        # Q: Should this be done here?
+        # Q: Should this be done here. Seems this is not considered valid.
         declare_version_at_root = False
         if declare_version_at_root: 
             root_prim = stage.DefinePrim("/MaterialX/Materials")

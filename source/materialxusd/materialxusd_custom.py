@@ -2,7 +2,7 @@
 '''
 Conversion utilities to convert from USD to MaterialX and MaterialX to USD.
 '''
-from pxr import Usd, UsdShade, Sdf, Gf
+from pxr import Usd, UsdShade, Sdf, Gf, UsdMtlx
 import MaterialX as mx
 
 
@@ -311,6 +311,26 @@ class MtlxToUsd:
                 if not usd_output:
                     usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))
 
+    def set_prim_mtlx_version(self, prim: Usd.Prim, version: str):
+        '''
+        Set the MaterialX version on a prim.
+        See: https://openusd.org/dev/api/class_usd_mtlx_material_x_config_a_p_i.html
+        @param prim: USD prim.
+        @param version: MaterialX version string.
+        @return: True if the version was set, False otherwise.
+        '''
+        error = ""
+        try:
+            #if UsdMtlx.MaterialXConfigAPI.CanApply(prim):
+            mtlx_config_api = UsdMtlx.MaterialXConfigAPI.Apply(prim)
+            version_attr = mtlx_config_api.CreateConfigMtlxVersionAttr()
+            version_attr.Set(version)        
+            return True
+        except Exception as e:
+            error = e
+        self.logger.warning(f"Failed to set MaterialX version on prim: {prim.GetPath()}. {error}")
+        return False
+
     def emit_usd_shader_graph(self, doc, stage, mtlx_nodes, emit_all_value_elements, root="/MaterialX/Materials/"):
         '''
         Emit USD shader graph to a given stage from a list of MaterialX nodes.
@@ -320,6 +340,14 @@ class MtlxToUsd:
         @param emit_all_value_elements: Emit value elements based on node definition, even if not specified on node instance.
         @param root: Root path for the shader graph.
         '''
+        mtx_version = doc.getVersionString()
+        # Create root primt
+        # Q: Should this be done here?
+        declare_version_at_root = False
+        if declare_version_at_root: 
+            root_prim = stage.DefinePrim("/MaterialX/Materials")
+            self.set_prim_mtlx_version(root_prim, mtx_version)
+
         material_path = None
         for node_name in mtlx_nodes:
             elem = doc.getDescendant(node_name)
@@ -336,13 +364,18 @@ class MtlxToUsd:
             usd_node = None
             if elem.getType() == "material":
                 self.log(f"Add material at path: {usd_path}", -1)
+                # Q: Should we set the MTLX version on all nodes / graphs ?
                 usd_node = UsdShade.Material.Define(stage, usd_path)
                 material_prim = usd_node.GetPrim()
+                if not declare_version_at_root:
+                    self.set_prim_mtlx_version(material_prim, mtx_version)
                 material_prim.ApplyAPI("MaterialXConfigAPI")
             elif elem.isA(mx.Node):
                 node_def = elem.getNodeDef()
                 self.log(f"Add node at path: {usd_path}", -1)
                 usd_node = UsdShade.Shader.Define(stage, usd_path)
+                if not declare_version_at_root:
+                    self.set_prim_mtlx_version(usd_node.GetPrim(), mtx_version)
             elif elem.isA(mx.NodeGraph):
                 self.log(f"Add nodegraph at path: {usd_path}", -1)
                 usd_node = UsdShade.NodeGraph.Define(stage, usd_path)

@@ -275,7 +275,13 @@ class MtlxToUsd:
                                 usd_input.Set(usd_value)
                         color_space = value_element.getAttribute("colorspace")
                         if color_space:
-                            usd_input.GetAttr().SetColorSpace(color_space)                            
+                            usd_input.GetAttr().SetColorSpace(color_space)   
+                        uifolder = value_element.getAttribute("uifolder")
+                        if uifolder:
+                            usd_input.SetDisplayGroup(uifolder)
+                        uiname = value_element.getAttribute("uiname")
+                        if uiname:
+                            usd_input.GetAttr().SetDisplayName(uiname)                         
 
                 elif not is_material and value_element.isA(mx.Output):
                     usd_node.CreateOutput(value_element.getName(), self.map_mtlx_to_usd_type(value_element.getType()))
@@ -303,8 +309,14 @@ class MtlxToUsd:
                         usd_input.Set(usd_value)
                 color_space = value_element.getAttribute("colorspace")
                 if color_space:
-                    usd_input.GetAttr().SetColorSpace(color_space)                            
-
+                    usd_input.GetAttr().SetColorSpace(color_space)  
+                uifolder = value_element.getAttribute("uifolder")
+                if uifolder:
+                    usd_input.SetDisplayGroup(uifolder)    
+                uiname = value_element.getAttribute("uiname")
+                if uiname:
+                    print('-----set uiname:',uiname)
+                    usd_input.GetAttr().SetDisplayName(uiname)
 
             elif not is_material and value_element.isA(mx.Output):
                 usd_output = usd_node.GetInput(value_element.getName())

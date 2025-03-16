@@ -10,8 +10,9 @@ python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn $* -m ./examples/linepa
 python ../source/materialxusd/preprocess_mtlx.py ./examples/usd_preview_surface_brass_tiled.mtlx -ip "./resources/Materials/Examples/UsdPreviewSurface/"
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/usd_preview_surface_brass_tiled_converted.mtlx $*
 
-echo Convert ZIP file 
+echo Convert ZIP files. Nested and unnested 
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn $* -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip
+python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn $* -m ./examples/parquet_clothes.zip
 
 echo Handle documents without materials
 python ../source/materialxusd/mtlx2usd.py -pp -v -sf -mn -m ./examples/starfield.mtlx $* 

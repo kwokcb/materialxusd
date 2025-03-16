@@ -49,6 +49,8 @@ This can be hooked into the larger interoperability picture with glTF / Material
   -  **Nodes graphs with child nodes that are the same name as the parent graph**, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.
   - **Validation is inconsistent between USD and MaterialX for upstream output connections**. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not
   specify the output then conversion to USD will skip this link. *It would be useful to remove this inconsistent  validation check in MaterialX.*
+  - `usdMtlx` always tries to add in a `NodeGraphs` scope but this does not necessary contain graphs but nodes which can get confusing. Additionally downstrem port connects are incorrect as the first node's output seems to always be used.
+  - In generate `usdMtlx` seems to set up incorrect upstream connections for multiple output (`multioutput`) nodes and nodegraphs, assuming to take the first output and assuming the name `out` as opposed to taking the first (compatible) output which is done in MaterialX. **Connection failures result in aborting conversion completely** (instead of converting but leaving out certain connections)    
   - For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.
   - For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. **Input is welcome on this**.
 
@@ -92,10 +94,17 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 
 Some rendering of resulting USD files are shown below:
 
-| | | | |
-| :--: | :--: | :--: | :--: | 
-| <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="100%">Line Pattern</img> | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="100%">Marble</img> | <img width="100%" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img> | <img width="100%" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/>Wood (Zip) |
+---------
 
+| Material | Charateristic | USD Rendering |
+| :--: | :--: | :--: | 
+| Line Pattern | Generate Materials for outputs on NodeGraph | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="64px"></img> | 
+| Marble | Insert explicit stream bindings | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="64px"></img> | 
+| Car Paint | No preprocessing | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img> | 
+| Wood (Zip) | Unzip and resolve asset paths | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/> | 
+| Adobe pattern | Wrap top level nodes, create explicit output port connections | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/> |
+
+---------
 
 There is additionally a sample script that will traverse a local copy of the MaterialX test suite (`render_rts.sh`). The script calls the package's Python commands directly.
 

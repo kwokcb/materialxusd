@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <gltf_pbr name="gltf_pbr_surfaceshader" type="surfaceshader" xpos="13.768116" ypos="-3.594828">
+    <input name="base_color" type="color3" nodename="gltf_colorimage" />
+    <input name="roughness" type="float" nodename="gltf_image_float_float_1_0" />
+    <input name="normal" type="vector3" nodename="gltf_normalmap_vector3_1_0" />
+    <input name="occlusion" type="float" nodename="gltf_image_float_float_1_1" />
+    <input name="specular" type="float" value="0" />
+  </gltf_pbr>
+  <gltf_colorimage name="gltf_colorimage" type="multioutput" xpos="10.144928" ypos="-8.362069">
+    <input name="file" type="filename" value="parquet_clothes_Base_Color.png" />
+  </gltf_colorimage>
+  <gltf_image name="gltf_image_float_float_1_0" type="float" xpos="10.144928" ypos="-3.206897">
+    <input name="file" type="filename" value="parquet_clothes_Roughness.png" />
+  </gltf_image>
+  <gltf_normalmap name="gltf_normalmap_vector3_1_0" type="vector3" xpos="10.144928" ypos="1.336207">
+    <input name="file" type="filename" value="parquet_clothes_Normal.png" />
+  </gltf_normalmap>
+  <gltf_image name="gltf_image_float_float_1_1" type="float" xpos="10.144928" ypos="5.603448">
+    <input name="file" type="filename" value="parquet_clothes_Ambient_Occlusion.png" />
+  </gltf_image>
+  <surfacematerial name="surfacematerial" type="material" xpos="17.391304" ypos="0.000000">
+    <input name="surfaceshader" type="surfaceshader" nodename="gltf_pbr_surfaceshader" />
+  </surfacematerial>
+</materialx>

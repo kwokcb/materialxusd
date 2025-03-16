@@ -162,6 +162,9 @@ Available Components</h2>
 <li>There appears to be no way to convert shading graphs which have a roots surface shaders which are not the current shading models: glTF, USDPreviewSurface, OpenPBR ? That is arbitrary PBR shaders. They may translate but are considered invalid root nodes. <b>It is unclear / undocumented as to what are "valid" root pbr nodes for USD.</b></li>
 <li><b>Nodes graphs with child nodes that are the same name as the parent graph</b>, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.</li>
 <li><b>Validation is inconsistent between USD and MaterialX for upstream output connections</b>. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not specify the output then conversion to USD will skip this link. <em>It would be useful to remove this inconsistent validation check in MaterialX.</em></li>
+<li><code>usdMtlx</code> always tries to add in a <code>NodeGraphs</code> scope but this does not necessary contain graphs but nodes which can get confusing. Additionally downstrem port connects are incorrect as the first node's output seems to always be used.</li>
+<li>In generate <code>usdMtlx</code> seems to set up incorrect upstream connections for multiple output (<code>multioutput</code>) nodes and nodegraphs, assuming to take the first output and assuming the name <code>out</code> as opposed to taking the first (compatible) output which is done in MaterialX. <b>Connection failures result in aborting conversion completely</b> (instead of converting but leaving out certain connections) <br  />
+</li>
 <li>For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.</li>
 <li>For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. <b>Input is welcome on this</b>.</li>
 </ul>
@@ -191,12 +194,22 @@ Installation and Usage</h2>
 <div class="line">echo Convert ZIP file </div>
 <div class="line">materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt.zip</div>
 </div><!-- fragment --><p>Some rendering of resulting USD files are shown below:</p>
+<hr  />
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th><th class="markdownTableHeadCenter"></th></tr>
+<th class="markdownTableHeadCenter">Material   </th><th class="markdownTableHeadCenter">Charateristic   </th><th class="markdownTableHeadCenter">USD Rendering    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="100%" class="inline"/>Line Pattern   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="100%" class="inline"/>Marble   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="100%" class="inline"/>Car Paint   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png" alt="" width="100%" class="inline"/>Wood (Zip)   </td></tr>
+<td class="markdownTableBodyCenter">Line Pattern   </td><td class="markdownTableBodyCenter">Generate Materials for outputs on NodeGraph   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">Marble   </td><td class="markdownTableBodyCenter">Insert explicit stream bindings   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">Car Paint   </td><td class="markdownTableBodyCenter">No preprocessing   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">Wood (Zip)   </td><td class="markdownTableBodyCenter">Unzip and resolve asset paths   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">Adobe pattern   </td><td class="markdownTableBodyCenter">Wrap top level nodes, create explicit output port connections   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png" alt="" width="64px" class="inline"/>   </td></tr>
 </table>
+<hr  />
 <p>There is additionally a sample script that will traverse a local copy of the MaterialX test suite (<code>render_rts.sh</code>). The script calls the package's Python commands directly.</p>
 <div class="fragment"><div class="line">folders=(</div>
 <div class="line">    &quot;./resources/Materials/Examples&quot;</div>
@@ -211,26 +224,26 @@ Installation and Usage</h2>
 <div class="line">    echo &quot;Rendering $folder&quot;</div>
 <div class="line">    python ../source/materialxusd/mtlx2usd.py -pp -mn -sf &quot;$folder&quot; -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr</div>
 <div class="line">done</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Documentation</h2>
 <p>An overview MaterialX-&gt;USD presentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png" alt="" width="100%" class="inline"/>here</a></p>
 <p>Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a> </p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Acceptance</h1>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 Gallery of Example Materials</h2>
 <p>Test Suite material renderings</p>
 <p>&lt;iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"&gt;&lt;/iframe&gt; </p>
 <p>Physically Based Material library rendering</p>
 <p>&lt;iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"&gt;&lt;/iframe&gt; </p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Comparison: GLSL vs GLSLFX</h2>
 <p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"&gt;&lt;/iframe&gt; </p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 Comparison: GLSL vs OSL vs GLSLFX</h2>
 <p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"&gt;&lt;/iframe&gt;</p>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Design</h1>
 <p>An overview of the current package design is shown below. Boxes / lines which are dotted are optional logic which may be executed as desired.</p>
 <p><img src="./documents/images/design.png" alt="" width="100%" class="inline"/> </p>

@@ -1,0 +1,162 @@
+#usda 1.0
+(
+    doc = "MaterialX content from ./examples/parquet_clothes\\parquet_clothes_converted.mtlx"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "surfacematerial" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:alpha
+            float inputs:alpha_cutoff
+            int inputs:alpha_mode
+            color3f inputs:attenuation_color
+            float inputs:attenuation_distance
+            color3f inputs:base_color
+            float inputs:clearcoat
+            float3 inputs:clearcoat_normal
+            float inputs:clearcoat_roughness
+            color3f inputs:emissive
+            float inputs:emissive_strength
+            float inputs:ior
+            float inputs:iridescence
+            float inputs:iridescence_ior
+            float inputs:iridescence_thickness
+            float inputs:metallic
+            float3 inputs:normal
+            float inputs:occlusion
+            float inputs:roughness
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular = 0
+            color3f inputs:specular_color
+            float3 inputs:tangent
+            float inputs:thickness
+            float inputs:transmission
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/surfacematerial/gltf_pbr_surfaceshader.outputs:surface>
+
+            def Shader "gltf_pbr_surfaceshader" (
+                prepend references = </MaterialX/Shaders/gltf_pbr_surfaceshader>
+            )
+            {
+                float inputs:alpha.connect = </MaterialX/Materials/surfacematerial.inputs:alpha>
+                float inputs:alpha_cutoff.connect = </MaterialX/Materials/surfacematerial.inputs:alpha_cutoff>
+                int inputs:alpha_mode.connect = </MaterialX/Materials/surfacematerial.inputs:alpha_mode>
+                color3f inputs:attenuation_color.connect = </MaterialX/Materials/surfacematerial.inputs:attenuation_color>
+                float inputs:attenuation_distance.connect = </MaterialX/Materials/surfacematerial.inputs:attenuation_distance>
+                color3f inputs:base_color.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out>
+                float inputs:clearcoat.connect = </MaterialX/Materials/surfacematerial.inputs:clearcoat>
+                float3 inputs:clearcoat_normal.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out6>
+                float inputs:clearcoat_roughness.connect = </MaterialX/Materials/surfacematerial.inputs:clearcoat_roughness>
+                color3f inputs:emissive.connect = </MaterialX/Materials/surfacematerial.inputs:emissive>
+                float inputs:emissive_strength.connect = </MaterialX/Materials/surfacematerial.inputs:emissive_strength>
+                float inputs:ior.connect = </MaterialX/Materials/surfacematerial.inputs:ior>
+                float inputs:iridescence.connect = </MaterialX/Materials/surfacematerial.inputs:iridescence>
+                float inputs:iridescence_ior.connect = </MaterialX/Materials/surfacematerial.inputs:iridescence_ior>
+                float inputs:iridescence_thickness.connect = </MaterialX/Materials/surfacematerial.inputs:iridescence_thickness>
+                float inputs:metallic.connect = </MaterialX/Materials/surfacematerial.inputs:metallic>
+                float3 inputs:normal.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out3>
+                float inputs:occlusion.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out4>
+                float inputs:roughness.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out2>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/surfacematerial.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/surfacematerial.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/surfacematerial.inputs:specular>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/surfacematerial.inputs:specular_color>
+                float3 inputs:tangent.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out5>
+                float inputs:thickness.connect = </MaterialX/Materials/surfacematerial.inputs:thickness>
+                float inputs:transmission.connect = </MaterialX/Materials/surfacematerial.inputs:transmission>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "gltf_pbr_surfaceshader"
+        {
+            uniform token info:id = "ND_gltf_pbr_surfaceshader"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/root_graph/gltf_colorimage.outputs:outcolor>
+            float outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/gltf_image_float_float_1_0.outputs:out>
+            float3 outputs:out3.connect = </MaterialX/NodeGraphs/root_graph/gltf_normalmap_vector3_1_0.outputs:out>
+            float outputs:out4.connect = </MaterialX/NodeGraphs/root_graph/gltf_image_float_float_1_1.outputs:out>
+            float3 outputs:out5.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
+            float3 outputs:out6.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
+
+            def Shader "gltf_colorimage"
+            {
+                uniform token info:id = "ND_gltf_colorimage"
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float outputs:outa
+                color3f outputs:outcolor
+            }
+
+            def Shader "gltf_image_float_float_1_0"
+            {
+                uniform token info:id = "ND_gltf_image_float_float_1_0"
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "gltf_normalmap_vector3_1_0"
+            {
+                uniform token info:id = "ND_gltf_normalmap_vector3_1_0"
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "gltf_image_float_float_1_1"
+            {
+                uniform token info:id = "ND_gltf_image_float_float_1_0"
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png@
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "UV0"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+        }
+    }
+}
+

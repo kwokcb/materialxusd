@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['comparison_3a_20glsl_20vs_20glslfx_0',['Comparison: GLSL vs GLSLFX',['../index.html#autotoc_md7',1,'']]],
-  ['comparison_3a_20glsl_20vs_20osl_20vs_20glslfx_1',['Comparison: GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md8',1,'']]],
+  ['comparison_3a_20glsl_20vs_20glslfx_0',['Comparison: GLSL vs GLSLFX',['../index.html#autotoc_md9',1,'']]],
+  ['comparison_3a_20glsl_20vs_20osl_20vs_20glslfx_1',['Comparison: GLSL vs OSL vs GLSLFX',['../index.html#autotoc_md10',1,'']]],
   ['components_2',['Available Components',['../index.html#autotoc_md1',1,'']]],
   ['create_5fdocument_3',['create_document',['../classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aa317a8689180472a975936377d60e815',1,'materialxusd::materialxusd_utils::MaterialXUsdUtilities']]],
   ['create_5ffilesearchpath_4',['create_FileSearchPath',['../classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#a2194295013b7d6301fd78142ec4f6486',1,'materialxusd::materialxusd_utils::MaterialXUsdUtilities']]],

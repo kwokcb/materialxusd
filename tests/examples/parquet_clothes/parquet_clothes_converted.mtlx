@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <gltf_pbr name="gltf_pbr_surfaceshader" type="surfaceshader" xpos="13.768116" ypos="-3.594828">
+    <input name="base_color" type="color3" nodegraph="root_graph" output="out" />
+    <input name="roughness" type="float" nodegraph="root_graph" output="out2" />
+    <input name="normal" type="vector3" nodegraph="root_graph" output="out3" />
+    <input name="occlusion" type="float" nodegraph="root_graph" output="out4" />
+    <input name="specular" type="float" value="0" />
+    <input name="tangent" type="vector3" nodegraph="root_graph" output="out5" />
+    <input name="clearcoat_normal" type="vector3" nodegraph="root_graph" output="out6" />
+  </gltf_pbr>
+  <surfacematerial name="surfacematerial" type="material" xpos="17.391304" ypos="0.000000">
+    <input name="surfaceshader" type="surfaceshader" nodename="gltf_pbr_surfaceshader" />
+  </surfacematerial>
+  <nodegraph name="root_graph">
+    <gltf_colorimage name="gltf_colorimage" type="multioutput" xpos="10.144928" ypos="-8.362069">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_colorimage>
+    <output name="out" type="color3" nodename="gltf_colorimage" output="outcolor" />
+    <gltf_image name="gltf_image_float_float_1_0" type="float" xpos="10.144928" ypos="-3.206897">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_image>
+    <output name="out2" type="float" nodename="gltf_image_float_float_1_0" />
+    <gltf_normalmap name="gltf_normalmap_vector3_1_0" type="vector3" xpos="10.144928" ypos="1.336207">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_normalmap>
+    <output name="out3" type="vector3" nodename="gltf_normalmap_vector3_1_0" />
+    <gltf_image name="gltf_image_float_float_1_1" type="float" xpos="10.144928" ypos="5.603448">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_image>
+    <output name="out4" type="float" nodename="gltf_image_float_float_1_1" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <output name="out5" type="vector3" nodename="Tworld" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+    <output name="out6" type="vector3" nodename="Nworld" />
+    <texcoord name="UV0" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+  </nodegraph>
+</materialx>

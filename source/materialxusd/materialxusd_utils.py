@@ -453,23 +453,42 @@ class MaterialXUsdUtilities:
         top_level_nodes = []
         top_level_connections = []
         for elem in doc.getNodes():
+            
             # skips elements that are part of the stdlib
             if elem.hasSourceUri():
                 continue
-            if (
-                elem.getName()
+
+            if (elem.getName()
                 and (elem.getType() not in ["material", "surfaceshader"])
-                and elem.getCategory() not in ["nodegraph", "nodedef"]
-            ):
+                and elem.getCategory() not in ["nodegraph", "nodedef"]):
                 #self.logger.info("Finding top level nodes: ", elem.getName(), elem.getType())
                 top_level_nodes.append(elem)
+
             elif elem.getType() in ["surfaceshader"]:
                 for input_port in elem.getInputs():
-                    upstream_node = input_port.getNodeName()
-                    if len(upstream_node) > 0:
+                    upstream_node_name = input_port.getNodeName()
+                    if len(upstream_node_name) > 0:
                         upstream_output_name = input_port.getOutputString()
-                        #self.logger.info("Store connection: ", upstream_node, "<--", input_port.getNamePath())
-                        top_level_connections.append([upstream_node, input_port.getNamePath(), upstream_output_name])
+
+                        # Go through node outputs and nodedef outputs if needed if it's multi-output as
+                        # we have to find the output name for usdMtlx to make the connection properly.
+                        # It does not seem to hanlde upstream multioutputs properly and tries to connect to the first output
+                        # or not connect at all ? 
+                        if not upstream_output_name:
+                            upstream_node = doc.getDescendant(upstream_node_name)
+                            upstream_node_outputs = upstream_node.getOutputs()
+                            if len(upstream_node_outputs) > 1:
+                                self.logger.debug(f"Find an output of name: {upstream_node_outputs[0].getName()}")
+                                upstream_output_name = upstream_node_outputs[0].getName()
+                            else:
+                                upstream_node_nodedef = upstream_node.getNodeDef()
+                                upstream_node_outputs = upstream_node_nodedef.getActiveOutputs()
+                                if len(upstream_node_outputs) > 1:
+                                    self.logger.debug(f"Find an output of name: {upstream_node_outputs[0].getName()}")
+                                    upstream_output_name = upstream_node_outputs[0].getName()
+
+                        #self.logger.info("Store connection: ", upstream_node_name, "<--", input_port.getNamePath())
+                        top_level_connections.append([upstream_node_name, input_port.getNamePath(), upstream_output_name])
         
         #self.logger.info("Top level connections: ", top_level_connections)
         top_level_nodes_found = len(top_level_nodes)

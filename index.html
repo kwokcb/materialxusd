@@ -168,6 +168,8 @@ shading models: glTF, USDPreviewSurface, OpenPBR ? That is arbitrary PBR shaders
 <li><strong>Nodes graphs with child nodes that are the same name as the parent graph</strong>, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.</li>
 <li><strong>Validation is inconsistent between USD and MaterialX for upstream output connections</strong>. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not
 specify the output then conversion to USD will skip this link. <em>It would be useful to remove this inconsistent  validation check in MaterialX.</em></li>
+<li><code>usdMtlx</code> always tries to add in a <code>NodeGraphs</code> scope but this does not necessary contain graphs but nodes which can get confusing. Additionally downstrem port connects are incorrect as the first node's output seems to always be used.</li>
+<li>In generate <code>usdMtlx</code> seems to set up incorrect upstream connections for multiple output (<code>multioutput</code>) nodes and nodegraphs, assuming to take the first output and assuming the name <code>out</code> as opposed to taking the first (compatible) output which is done in MaterialX. <strong>Connection failures result in aborting conversion completely</strong> (instead of converting but leaving out certain connections)    </li>
 <li>For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.</li>
 <li>For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. <strong>Input is welcome on this</strong>.</li>
 </ul>
@@ -203,24 +205,44 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 </code></pre></div>
 
 <p>Some rendering of resulting USD files are shown below:</p>
+<hr />
 <table>
 <thead>
 <tr>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;">Material</th>
+<th style="text-align: center;">Charateristic</th>
+<th style="text-align: center;">USD Rendering</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="100%">Line Pattern</img></td>
-<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="100%">Marble</img></td>
-<td style="text-align: center;"><img width="100%" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png">Car Paint</img></td>
-<td style="text-align: center;"><img width="100%" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/>Wood (Zip)</td>
+<td style="text-align: center;">Line Pattern</td>
+<td style="text-align: center;">Generate Materials for outputs on NodeGraph</td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="64px"></img></td>
+</tr>
+<tr>
+<td style="text-align: center;">Marble</td>
+<td style="text-align: center;">Insert explicit stream bindings</td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="64px"></img></td>
+</tr>
+<tr>
+<td style="text-align: center;">Car Paint</td>
+<td style="text-align: center;">No preprocessing</td>
+<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img></td>
+</tr>
+<tr>
+<td style="text-align: center;">Wood (Zip)</td>
+<td style="text-align: center;">Unzip and resolve asset paths</td>
+<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/></td>
+</tr>
+<tr>
+<td style="text-align: center;">Adobe pattern</td>
+<td style="text-align: center;">Wrap top level nodes, create explicit output port connections</td>
+<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/></td>
 </tr>
 </tbody>
 </table>
+<hr />
 <p>There is additionally a sample script that will traverse a local copy of the MaterialX test suite (<code>render_rts.sh</code>). The script calls the package's Python commands directly.</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">folders</span><span class="o">=(</span>
 <span class="w">    </span><span class="s2">&quot;./resources/Materials/Examples&quot;</span>

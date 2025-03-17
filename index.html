@@ -210,7 +210,7 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 <thead>
 <tr>
 <th style="text-align: center;">Material</th>
-<th style="text-align: center;">Charateristic</th>
+<th style="text-align: center;">Pre-processing Required</th>
 <th style="text-align: center;">USD Rendering</th>
 </tr>
 </thead>
@@ -218,27 +218,27 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 <tr>
 <td style="text-align: center;">Line Pattern</td>
 <td style="text-align: center;">Generate Materials for outputs on NodeGraph</td>
-<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="64px"></img></td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="128px"></img></td>
 </tr>
 <tr>
 <td style="text-align: center;">Marble</td>
-<td style="text-align: center;">Insert explicit stream bindings</td>
-<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="64px"></img></td>
+<td style="text-align: center;">Add downstream material + explicit stream bindings</td>
+<td style="text-align: center;"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="128px"></img></td>
 </tr>
 <tr>
 <td style="text-align: center;">Car Paint</td>
-<td style="text-align: center;">No preprocessing</td>
-<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img></td>
+<td style="text-align: center;">Add downstream material</td>
+<td style="text-align: center;"><img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img></td>
 </tr>
 <tr>
-<td style="text-align: center;">Wood (Zip)</td>
+<td style="text-align: center;">AMD GPUOpen Wood (Zip)</td>
 <td style="text-align: center;">Unzip and resolve asset paths</td>
-<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/></td>
+<td style="text-align: center;"><img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/></td>
 </tr>
 <tr>
 <td style="text-align: center;">Adobe pattern</td>
 <td style="text-align: center;">Wrap top level nodes, create explicit output port connections</td>
-<td style="text-align: center;"><img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/></td>
+<td style="text-align: center;"><img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/></td>
 </tr>
 </tbody>
 </table>
@@ -265,11 +265,15 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 <h2>Acceptance</h2>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
 <h3>Gallery of Example Materials</h3>
-<p>Test Suite material renderings</p>
+<p>Render Test Suite material renderings</p>
 <iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
 <p></p>
 
-<p>Physically Based Material library rendering</p>
+<p>Unit Test renderings</p>
+<iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"></iframe>
+<p></p>
+
+<p><a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering</p>
 <iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"></iframe>
 <p></p>
 

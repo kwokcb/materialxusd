@@ -96,13 +96,13 @@ Some rendering of resulting USD files are shown below:
 
 ---------
 
-| Material | Charateristic | USD Rendering |
+| Material | Pre-processing Required | USD Rendering |
 | :--: | :--: | :--: | 
-| Line Pattern | Generate Materials for outputs on NodeGraph | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="64px"></img> | 
-| Marble | Insert explicit stream bindings | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="64px"></img> | 
-| Car Paint | No preprocessing | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img> | 
-| Wood (Zip) | Unzip and resolve asset paths | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/> | 
-| Adobe pattern | Wrap top level nodes, create explicit output port connections | <img width="64px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/> |
+| Line Pattern | Generate Materials for outputs on NodeGraph | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" width="128px"></img> | 
+| Marble | Add downstream material + explicit stream bindings | <img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" width="128px"></img> | 
+| Car Paint | Add downstream material | <img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png"></img> | 
+| AMD GPUOpen Wood (Zip) | Unzip and resolve asset paths | <img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png"/> | 
+| Adobe pattern | Wrap top level nodes, create explicit output port connections | <img width="128px" src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png"/> |
 
 ---------
 
@@ -135,12 +135,18 @@ An initial acceptance criteria is to be able to run MaterialX to USD conversion 
 
 ### Gallery of Example Materials
 
-Test Suite material renderings
+Render Test Suite material renderings
 
 <iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
 <p></p>
 
-Physically Based Material library rendering
+Unit Test renderings
+
+<iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"></iframe>
+<p></p>
+
+
+<a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering
 
 <iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"></iframe>
 <p></p>

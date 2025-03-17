@@ -197,17 +197,17 @@ Installation and Usage</h2>
 <hr  />
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadCenter">Material   </th><th class="markdownTableHeadCenter">Charateristic   </th><th class="markdownTableHeadCenter">USD Rendering    </th></tr>
+<th class="markdownTableHeadCenter">Material   </th><th class="markdownTableHeadCenter">Pre-processing Required   </th><th class="markdownTableHeadCenter">USD Rendering    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter">Line Pattern   </td><td class="markdownTableBodyCenter">Generate Materials for outputs on NodeGraph   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<td class="markdownTableBodyCenter">Line Pattern   </td><td class="markdownTableBodyCenter">Generate Materials for outputs on NodeGraph   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/linepattern/test_crosshatch_glslfx.png" alt="" width="128px" class="inline"/>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyCenter">Marble   </td><td class="markdownTableBodyCenter">Insert explicit stream bindings   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<td class="markdownTableBodyCenter">Marble   </td><td class="markdownTableBodyCenter">Add downstream material + explicit stream bindings   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_marble_solid/Marble_3D_glslfx.png" alt="" width="128px" class="inline"/>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter">Car Paint   </td><td class="markdownTableBodyCenter">No preprocessing   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<td class="markdownTableBodyCenter">Car Paint   </td><td class="markdownTableBodyCenter">Add downstream material   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/standard_surface_carpaint.sphere/Car_Paint_glslfx.png" alt="" width="128px" class="inline"/>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyCenter">Wood (Zip)   </td><td class="markdownTableBodyCenter">Unzip and resolve asset paths   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png" alt="" width="64px" class="inline"/>    </td></tr>
+<td class="markdownTableBodyCenter">AMD GPUOpen Wood (Zip)   </td><td class="markdownTableBodyCenter">Unzip and resolve asset paths   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt/TH_Cathedral_Floor_Tiles/TH_Cathedral_Floor_Tiles_glslfx.png" alt="" width="128px" class="inline"/>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter">Adobe pattern   </td><td class="markdownTableBodyCenter">Wrap top level nodes, create explicit output port connections   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png" alt="" width="64px" class="inline"/>   </td></tr>
+<td class="markdownTableBodyCenter">Adobe pattern   </td><td class="markdownTableBodyCenter">Wrap top level nodes, create explicit output port connections   </td><td class="markdownTableBodyCenter"><img src="https://raw.githubusercontent.com/kwokcb/materialxusd/refs/heads/main/tests/examples/parquet_clothes/parquet_clothes/surfacematerial_glslfx.png" alt="" width="128px" class="inline"/>   </td></tr>
 </table>
 <hr  />
 <p>There is additionally a sample script that will traverse a local copy of the MaterialX test suite (<code>render_rts.sh</code>). The script calls the package's Python commands directly.</p>
@@ -233,9 +233,11 @@ Acceptance</h1>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Gallery of Example Materials</h2>
-<p>Test Suite material renderings</p>
+<p>Render Test Suite material renderings</p>
 <p>&lt;iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"&gt;&lt;/iframe&gt; </p>
-<p>Physically Based Material library rendering</p>
+<p>Unit Test renderings</p>
+<p>&lt;iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"&gt;&lt;/iframe&gt; </p>
+<p><a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering</p>
 <p>&lt;iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"&gt;&lt;/iframe&gt; </p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Comparison: GLSL vs GLSLFX</h2>

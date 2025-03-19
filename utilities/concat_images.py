@@ -1,3 +1,10 @@
+"""
+Concatenate images left to right based on numbers in filenames.
+Usage: python concat_images.py image_folder [-y output_height] [-o output_filename]
+- image_folder: path to the folder containing images
+- output_height: height of the output image (default: 0, use the height of the first image)
+- output_filename: filename for the output image (default: use the first image name and replace the number with min_number_max_number)
+"""
 import os
 import re
 import argparse
@@ -5,12 +12,23 @@ import cv2
 import numpy as np
 
 def extract_number(filename):
-    """Extract the number from the filename."""
+    """
+    Extract the number from the filename.
+    param filename: str, name of the file
+    @return: int, number extracted from the filename
+    """
     match = re.search(r'\d+', filename)
     return int(match.group()) if match else 0
 
 def concatenate_images(image_paths, output_height):
-    """Concatenate images left to right, resizing to the specified height."""
+    """
+    Concatenate images left to right, resizing to the specified height.
+    Extract the min and max number from the filenames.
+
+    @param image_paths: list of str, paths to the images
+    @param output_height: int, height of the output image
+    @return: concatenated image, min number, max number
+    """
     images = [cv2.imread(img) for img in image_paths]
 
     # Get image height of images[0]
@@ -41,7 +59,7 @@ def main(image_folder, output_height, output_filename):
     """Main function to read images, concatenate them, and save the result."""
     # Get list of image files in the folder
     image_files = [os.path.join(image_folder, f) for f in os.listdir(image_folder) 
-                   if f.endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif'))]
+                   if f.endswith(('.png', '.jpg', '.jpeg', '.bmp', 'exr'))]
     
     # Sort images by the number in their filename
     image_files.sort(key=extract_number)

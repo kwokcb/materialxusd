@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MaterialXUSD: File List</title>
+<title>MaterialXUSD: issues_to_post</title>
 <link rel="icon" href="toon_sphere.png" type="image/x-icon" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <!-- Font Awesome CDN -->
@@ -79,7 +79,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('files.html',''); initResizable(true); });
+$(function(){initNavTree('md__d_1_2_work_2materialx_2materialxusd_2issues__to__post.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -104,25 +104,67 @@ $(function(){initNavTree('files.html',''); initResizable(true); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">File List</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">issues_to_post</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented files with brief descriptions:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:dynsection.toggleLevel(1);">1</span><span onclick="javascript:dynsection.toggleLevel(2);">2</span><span onclick="javascript:dynsection.toggleLevel(3);">3</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="dynsection.toggleFolder('0_')">&#9660;</span><span id="img_0_" class="iconfopen" onclick="dynsection.toggleFolder('0_')">&#160;</span><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html" target="_self">source</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_0_" class="arrow" onclick="dynsection.toggleFolder('0_0_')">&#9660;</span><span id="img_0_0_" class="iconfopen" onclick="dynsection.toggleFolder('0_0_')">&#160;</span><a class="el" href="dir_ea8c3eeab7c061791d54346a3ac24a00.html" target="_self">materialxusd</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_0_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="____init_____8py_source.html"><span class="icondoc"></span></a><b>__init__.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_1_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="____main_____8py_source.html"><span class="icondoc"></span></a><b>__main__.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_2_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="materialxusd_8py_source.html"><span class="icondoc"></span></a><b>materialxusd.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_3_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="materialxusd__custom_8py_source.html"><span class="icondoc"></span></a><b>materialxusd_custom.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_4_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="materialxusd__utils_8py_source.html"><span class="icondoc"></span></a><b>materialxusd_utils.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_5_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="mtlx2usd_8py_source.html"><span class="icondoc"></span></a><b>mtlx2usd.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_6_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="preprocess__mtlx_8py_source.html"><span class="icondoc"></span></a><b>preprocess_mtlx.py</b></td><td class="desc"></td></tr>
-<tr id="row_0_0_7_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="usd__mtlx__ref_8py_source.html"><span class="icondoc"></span></a><b>usd_mtlx_ref.py</b></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p>Improve Robustness of MaterialX to USD (USD components)</p>
+<ul>
+<li><code>usdMtlx</code> creates <code>NodeGraphs</code> for top level Nodes<ul>
+<li><code>UsdShade</code> can support such configurations so appears to be an artificial constraint.</li>
+<li>This complicates the graph and changes the original topology and exposure of nodes and inputs.</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> can fail if top level nodes not in NodeGraphs<ul>
+<li>Some nodes are not grouped under <code>NodeGraphs</code> and the import will fail. Seems PBR, BXDF nodes are not.</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> will create nothing if there is a connection failure<ul>
+<li>There is no concept of allow for valid parts to be imported.</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> imports nothing if there is no Material + shading model<ul>
+<li>This makes it impossible to import valid documents which for instance may only contain <code>NodeGraphs</code> and or Nodes</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> has no API to get errors back. This appears true for referencing or using Stage.Load() ?</li>
+<li>Syntax for referencing MaterialX appears to not be documented. You need to specify the rootPrim as <code>&lt;/MaterialX&gt;</code> otherwise "defaultPrim" is looked for. The error messaging is not very clear on this as well.</li>
+<li><code>usdMtlx</code> forms can form incorrect connections between <code>NodeGraphs</code> and downstream nodes.<ul>
+<li>This occurs if there are NodeGraph inputs with the same name as internal nodes. It appears to try to connect with the interior node and fails.</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> / <code>UsdShade</code> does not allow for BXDF / PBR nodes which have valid type surfaceshader, volumeshader, displacementshader outputs to be connected to downstream materials if they are not: glTF, USDPreview, std surface or OpenPBR.<ul>
+<li>This includes nodes which definition these shaders as their terminal node. This means related conversion nodes are not supported. e.g. "convert float to surface shader".</li>
+<li>Documentation is not clear on what is allowed.</li>
+</ul>
+</li>
+<li><code>UsdShade</code> requires output port specifiers for a valid connection. MaterialX does not always require this.</li>
+<li><code>usdMtlx</code> defaults to "out" as default upstream node / nodegraph output for connections<ul>
+<li>This may not be the case in which case connection creation fails and import aborts.</li>
+<li>This is inconsistent with MaterialX which takes the first valid output.</li>
+</ul>
+</li>
+<li><code>usdMtlx</code> requires explicit output qualifiers on MaterialX connections.</li>
+<li>HDStorm seems to not considered <code>defaultgeomprop</code> on node definitions and hence requires explicit upstream stream node nodes to be connected.</li>
+<li><code>usdMtlx</code> "valid" graph configuratins is not well documented.</li>
+<li><code>usdMtlx</code> does not create a valid stage on Load. Could not find any documentation on this.</li>
+<li><code>usdMtlx</code> gives no indication as to what meta-data is not transferred. e.g. real world units which can greatly affect the computation is not transferred but no indication is provided.</li>
+</ul>
+<p>Improve Robustness of MaterialX to USD Interoperability</p><ul>
+<li>MaterialX does not always require output qualifiers for connections. <code>UsdShade</code> does.<ul>
+<li>MaterialX considers explicit output qualifiers on upstream nodes/graphs which don't have multiple outputs to be invalid.</li>
+<li>Should remove this restriction as invalid MaterialX is required for <code>usdMtlx</code> to create valid <code>UsdShade</code> graphs.</li>
+</ul>
+</li>
+<li>MaterialX nodes with single outputs fails validation if an output is specified.</li>
+<li>Utility to convert implicit geometry bindings to explicit ones</li>
+<li>Utility to add materials for terminal shading nodes.</li>
+<li>Utility to add explicit output port qualifiers on input connections</li>
+<li>Utility to add downstream shading nodes / materials for output connections.</li>
+<li>Utility to group nodes into a nodegraph. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.12.0-->
 <!-- start footer part -->

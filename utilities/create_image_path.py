@@ -44,7 +44,7 @@ def main():
                 root = root.replace("\\", "/")
                 root = root.replace("./", args.root + "/")
                 full_path = os.path.join(root, file)
-                print("Add file: ", full_path)
+                #print("Add file: ", full_path)
                 png_files.append(full_path)
 
     # Generate HTML content
@@ -62,6 +62,7 @@ def main():
         </style>
     </head>
     <body data-bs-theme="dark" class="p-4">
+    <!--Start-->
         <h2 class="text-center">__TITLE__</h2>
         <div class="p-2 container-fluid border rounded-4" style="__SCROLL_STYLE__">
             <div class="row">
@@ -91,6 +92,7 @@ def main():
     html_content += '''
             </div>
         </div>
+    <!--End-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>

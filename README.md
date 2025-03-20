@@ -40,7 +40,12 @@ This can be hooked into the larger interoperability picture with glTF / Material
       - There is probably a better way to do this using USD asset resolvers, but have not tried. ( Input is welcome on this. )
     - Remove any `value` attributes on `input`s with connections to avoid ambiguity and MaterialX validation errors.
 
-- Notes:
+### Issues
+Issue logging is being tracked under these "master" issues:
+  - [MaterialX](https://github.com/AcademySoftwareFoundation/MaterialX/issues/2291)
+  - [OpenUSD](https://github.com/PixarAnimationStudios/OpenUSD/issues/3571)
+
+<details><summary>Notes</summary>
   - Color space and Real World Units:
     - Color space meta-data appears to work properly as do explicit color space conversion nodes.   
     - **Real world unit meta-data is lost during conversion**. Unknown if this is unsupportable or a known issue.
@@ -53,6 +58,7 @@ This can be hooked into the larger interoperability picture with glTF / Material
   - In generate `usdMtlx` seems to set up incorrect upstream connections for multiple output (`multioutput`) nodes and nodegraphs, assuming to take the first output and assuming the name `out` as opposed to taking the first (compatible) output which is done in MaterialX. **Connection failures result in aborting conversion completely** (instead of converting but leaving out certain connections)    
   - For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.
   - For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. **Input is welcome on this**.
+</details>
 
 ## Usage
 
@@ -135,33 +141,38 @@ An initial acceptance criteria is to be able to run MaterialX to USD conversion 
 
 ### Gallery of Example Materials
 
-Render Test Suite material renderings
+#### Render Test Suite material Renderings
 
-<iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
-<p></p>
+<a href="https://kwokcb.github.io/materialxusd/tests/usd_mtlx_image_gallery.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/rts_gallery.png" width=100% alt="USD RTS image gallery">
+</a>
 
-Unit Test renderings
+#### Unit Test Renderings
 
-<iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"></iframe>
-<p></p>
+<a href="https://kwokcb.github.io/materialxusd/tests/unit_test_gallery.html" target="_blank" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/unit_test_gallery.png" width=100% alt="Unit test image gallery">
+</a>
 
+#### <a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> Renderings 
 
-<a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering
-
-<iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"></iframe>
-<p></p>
+<a href="https://kwokcb.github.io/materialxusd//tests/usd_physically_based_gallery.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/physicallyBased_gallery.png" width=100% alt="USD RTS image gallery">
+</a>
 
 ### Comparison: GLSL vs GLSLFX
 
-<iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
-<p></p>
+<a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_glslfx.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx.png" width=100% alt="GLSL vs GLSLFx image comparison">
+</a>
 
 ### Comparison: GLSL vs OSL vs GLSLFX
 
-<iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
+<a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_osl_glslfx.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx_vs_osl.png" width=100% alt="GLSL vs GLSLFx image comparison">
+</a>
 
 ## Design
 
 An overview of the current package design is shown below. Boxes / lines which are dotted are optional logic which may be executed as desired.
 
-<img src="./documents/images/design.png" width=100%>
+<img src="https://kwokcb.github.io/materialxusd/documents/images/design.png" width=100%>

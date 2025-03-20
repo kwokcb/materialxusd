@@ -1,113 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Authors: Bernard Kwok and Matthew Kwok. Root site for MaterialX
-  related resources, libraries and tools. This includes interaction with 
-  related Open Standards: OpenUSD, Khronos glTF, and OpenColorIO.">
-
-  <!-- Google tag (gtag.js) 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7404418VP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-J7404418VP');
-  </script>
-  -->
-
-  <style>
-    model-viewer {
-      width: 256px;
-      height: 256px;
-      background-color: #7d7d7d;
-    }
-
-    .custom-gradient {
-	  	background: repeating-radial-gradient(circle, hsl(204, 100%, 8%), #290027 100%);	}
-
-      .custom-gradient2 {
-	  	background: repeating-radial-gradient(circle, hsl(204, 94%, 20%), #96018f 100%);	}
-
-    .clickable-image {
-      transition: transform 0.3s;
-    }
-    
-    .clickable-image:hover {
-      transform: scale(1.10);
-      cursor: pointer;
-      border: rgb(206, 175, 0) solid 1px;
-    }    
-  </style>
-
-  <!-- <link rel="icon" href="../documents/images/logo3d_icon.png" type="image/x-icon" /> -->
-  <!--
-  <link rel="icon" href="../documents/images/logo3d_2_small.png" type="image/x-icon" />
-  -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.0/css/brands.min.css"> 
-  <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/blogs/blog-3/assets/css/blog-3.css">
-
-  <link rel="stylesheet" href="../documents/css/style.css">
-
-
-  
-
-  <link rel="icon" type="images" href="../documents/images/toon_sphere.png" type="image/x-icon" class="img-fluid">
-
-</head>
-
-<body>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.min.js"></script> -->
-  <!-- <script src="../documents/js/ui_helpers.js"></script> -->
-  
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> -->
-    
-  <!-- Navigation_Area-->
-<nav class="navbar sticky-top navbar-expand-lg bg-dark-subtle" data-bs-theme="dark">
-    <div class="container-md container-fluid">
-        <a class="navbar-brand" href="https://kwokcb.github.io/MaterialXLab/">
-            <h5 class=""><img src=".././documents/icons/MX_LAB.svg" alt="MaterialXLab"
-                    class="d-inline-block align-text-center" width="96px"></h5>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenuContent"
-            aria-controls="mainMenuContent" aria-expanded="false" aria-label="Toggle top menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainMenuContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="../index.html" role="button">
-                        Home
-                    </a>
-                </li>
-         
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">Documentation</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../documents/html/index.html">API Documentation</a></li>
-                        <li><a class="dropdown-item" href="../tests/unit_test_gallery.html">Unit Test Results</a></li>
-                        <li><a class="dropdown-item" href="../tests/usd_mtlx_image_gallery.html">USD RTS Results</a></li>
-                        <li><a class="dropdown-item" href="../tests/usd_physically_based_gallery.html">PhysicallyBased Test Results</a></li>
-                        <li><a class="dropdown-item" href="../tests/glsl_vs_glslfx.html">MaterialX glsl vs USD glslfx</a></li>
-                        <li><a class="dropdown-item" href="../tests/glsl_vs_osl_glslfx.html">GLSL vs OSL vs USD glslfx</a></li>
-                    </ul>
-                </li>
-                
-                <!--INDEX_ITEM-->
-            </ul>
-        </div>
-    </div>
-</nav>
-
-  <!-- Section Information -->
-  <section class="py-0 px-0 g-0">
-    <div class="container-fluid p-4">
-              <h2 class="text-center">PhysicallyBased Materials USD Gallery</h2>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PhysicallyBased Materials USD Gallery</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .img-fluid { max-width: 100%; height: auto; }
+            .image-name { text-align: center; margin-top: 10px; font-size: 11px; }
+        </style>
+    </head>
+    <body data-bs-theme="dark" class="p-4">
+    <!--Start-->
+        <h2 class="text-center">PhysicallyBased Materials USD Gallery</h2>
         <div class="p-2 container-fluid border rounded-4" style="">
             <div class="row">
     
@@ -475,36 +381,8 @@
         
             </div>
         </div>
-
-    </div>
-  </section>
-
-  <script>
-    document.body.setAttribute('data-bs-theme', 'dark');
-  </script>
-
-    <footer class="bg-dark-subtle footer text-white py-2 pt-2" data-bs-theme="dark">
-    <div class="container">
-      <ul class="social-icons">
-        <button class="btn btn-outline" type="button">
-          <a href="https://github.com/kwokcb/materialxusd" target="_blank"><b class="fa-brands fa-github fa-2x"
-              style="color: #ffffff;"></b></a>
-        </button>
-        <button class="btn btn-outline " type="button">
-          <a href="https://www.linkedin.com/in/bernard-kwok/" target="_blank"><b class="fa-brands fa-linkedin-in fa-2x"
-              style="color: #0082ca;"></b></a>
-        </button>
-      </ul>
-      <p>
-        <a class="bg-dark p-2 right" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-            <img alt="Creative Commons License" style="border-width:0"
-                src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-                <a href="https://kwokcb.github.io/nanmuconsulting/" target="_blank">
-        &copy; 2022-2025 NanMu Consulting.</a>
-      </p>      
-    </div>
-  </footer>
-
-</body>
-
-</html>
+    <!--End-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    

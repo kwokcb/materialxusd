@@ -6,5 +6,6 @@ var dir_ea8c3eeab7c061791d54346a3ac24a00 =
     [ "materialxusd_custom.py", "materialxusd__custom_8py_source.html", null ],
     [ "materialxusd_utils.py", "materialxusd__utils_8py_source.html", null ],
     [ "mtlx2usd.py", "mtlx2usd_8py_source.html", null ],
-    [ "preprocess_mtlx.py", "preprocess__mtlx_8py_source.html", null ]
+    [ "preprocess_mtlx.py", "preprocess__mtlx_8py_source.html", null ],
+    [ "usd_mtlx_ref.py", "usd__mtlx__ref_8py_source.html", null ]
 ];

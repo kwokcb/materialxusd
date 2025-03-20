@@ -152,7 +152,17 @@ Available Components</h2>
 </li>
 </ul>
 </li>
-<li>Notes:<ul>
+</ul>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Issues</h2>
+<p>Issue logging is being tracked under these "master" issues:</p><ul>
+<li><a href="https://github.com/AcademySoftwareFoundation/MaterialX/issues/2291">MaterialX</a></li>
+<li><a href="https://github.com/PixarAnimationStudios/OpenUSD/issues/3571">OpenUSD</a></li>
+</ul>
+<details >
+<summary >
+Notes</summary>
+<ul>
 <li>Color space and Real World Units:<ul>
 <li>Color space meta-data appears to work properly as do explicit color space conversion nodes. <br  />
 </li>
@@ -166,13 +176,12 @@ Available Components</h2>
 <li>In generate <code>usdMtlx</code> seems to set up incorrect upstream connections for multiple output (<code>multioutput</code>) nodes and nodegraphs, assuming to take the first output and assuming the name <code>out</code> as opposed to taking the first (compatible) output which is done in MaterialX. <b>Connection failures result in aborting conversion completely</b> (instead of converting but leaving out certain connections) <br  />
 </li>
 <li>For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.</li>
-<li>For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. <b>Input is welcome on this</b>.</li>
+<li>For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. <b>Input is welcome on this</b>. </li>
 </ul>
-</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
+</details>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Usage</h1>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Installation and Usage</h2>
 <p>Install from the root folder:</p>
 <div class="fragment"><div class="line">pip install .</div>
@@ -224,31 +233,34 @@ Installation and Usage</h2>
 <div class="line">    echo &quot;Rendering $folder&quot;</div>
 <div class="line">    python ../source/materialxusd/mtlx2usd.py -pp -mn -sf &quot;$folder&quot; -r -g ./data/sphere.usd -c ./data/camera_sphere.usda -e ./data/san_giuseppe_bridge.hdr</div>
 <div class="line">done</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Documentation</h2>
 <p>An overview MaterialX-&gt;USD presentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.pdf"><img src="https://kwokcb.github.io/materialxusd/documents/results/MaterialX_USD_WG_Presentation_March_12_2025.png" alt="" width="100%" class="inline"/>here</a></p>
 <p>Python API documentation can be found <a href="https://kwokcb.github.io/materialxusd/documents/html/index.html">here</a> </p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Acceptance</h1>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Gallery of Example Materials</h2>
-<p>Render Test Suite material renderings</p>
-<p>&lt;iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"&gt;&lt;/iframe&gt; </p>
-<p>Unit Test renderings</p>
-<p>&lt;iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"&gt;&lt;/iframe&gt; </p>
-<p><a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering</p>
-<p>&lt;iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"&gt;&lt;/iframe&gt; </p>
 <h2><a class="anchor" id="autotoc_md9"></a>
+Gallery of Example Materials</h2>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Render Test Suite material Renderings</h3>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/usd_mtlx_image_gallery.html" target="_blank"><img src="https://kwokcb.github.io/materialxusd/documents/images/rts_gallery.png" alt="USD RTS image gallery" width="100%" class="inline"/> </a></p>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Unit Test Renderings</h3>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/unit_test_gallery.html" target="_blank" target="_blank"><img src="https://kwokcb.github.io/materialxusd/documents/images/unit_test_gallery.png" alt="Unit test image gallery" width="100%" class="inline"/> </a></p>
+<h3><a class="anchor" id="autotoc_md12"></a>
+<a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> Renderings</h3>
+<p><a href="https://kwokcb.github.io/materialxusd//tests/usd_physically_based_gallery.html" target="_blank"><img src="https://kwokcb.github.io/materialxusd/documents/images/physicallyBased_gallery.png" alt="USD RTS image gallery" width="100%" class="inline"/> </a></p>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Comparison: GLSL vs GLSLFX</h2>
-<p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"&gt;&lt;/iframe&gt; </p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_glslfx.html" target="_blank"><img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx.png" alt="GLSL vs GLSLFx image comparison" width="100%" class="inline"/> </a></p>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Comparison: GLSL vs OSL vs GLSLFX</h2>
-<p>&lt;iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"&gt;&lt;/iframe&gt;</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_osl_glslfx.html" target="_blank"><img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx_vs_osl.png" alt="GLSL vs GLSLFx image comparison" width="100%" class="inline"/> </a></p>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Design</h1>
 <p>An overview of the current package design is shown below. Boxes / lines which are dotted are optional logic which may be executed as desired.</p>
-<p><img src="./documents/images/design.png" alt="" width="100%" class="inline"/> </p>
+<p><img src="https://kwokcb.github.io/materialxusd/documents/images/design.png" alt="" width="100%" class="inline"/> </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

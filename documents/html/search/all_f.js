@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['write_5fdocument_0',['write_document',['../classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aa3206ef4975e308bfcf1538cfb8a92bf',1,'materialxusd::materialxusd_utils::MaterialXUsdUtilities']]]
+  ['save_5fflattened_5flayer_0',['save_flattened_layer',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#acb391ba3086b6911a8701476d3ba69ed',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
+  ['set_5fprim_5fmtlx_5fversion_1',['set_prim_mtlx_version',['../classmaterialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a7eb569052d6abbc9510cc82faac24693',1,'materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['set_5frequired_5fvalidation_5fattributes_2',['set_required_validation_attributes',['../classmaterialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a2f6c82097cd55cf859abba5732ee58e1',1,'materialxusd::materialxusd::MaterialxUSDConverter']]],
+  ['suite_20material_20renderings_3',['Render Test Suite material Renderings',['../index.html#autotoc_md10',1,'']]]
 ];

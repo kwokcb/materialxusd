@@ -90,6 +90,9 @@
                         aria-expanded="false">Documentation</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="./documents/html/index.html">API Documentation</a></li>
+                        <li><a class="dropdown-item" href="./tests/unit_test_gallery.html">Unit Test Results</a></li>
+                        <li><a class="dropdown-item" href="./tests/usd_mtlx_image_gallery.html">USD RTS Results</a></li>
+                        <li><a class="dropdown-item" href="./tests/usd_physically_based_gallery.html">PhysicallyBased Test Results</a></li>
                         <li><a class="dropdown-item" href="./tests/glsl_vs_glslfx.html">MaterialX glsl vs USD glslfx</a></li>
                         <li><a class="dropdown-item" href="./tests/glsl_vs_osl_glslfx.html">GLSL vs OSL vs USD glslfx</a></li>
                     </ul>
@@ -155,26 +158,26 @@ materials and shading model nodes are valid at the top level in USD. </li>
 </li>
 </ul>
 </li>
-<li>
-<p>Notes:</p>
-<ul>
-<li>Color space and Real World Units:<ul>
-<li>Color space meta-data appears to work properly as do explicit color space conversion nodes.   </li>
-<li><strong>Real world unit meta-data is lost during conversion</strong>. Unknown if this is unsupportable or a known issue.</li>
 </ul>
-</li>
-<li>There appears to be no way to convert shading graphs which have a roots surface shaders which are not the current
-shading models: glTF, USDPreviewSurface, OpenPBR ? That is arbitrary PBR shaders. They may translate but are considered invalid root nodes. <strong>It is unclear / undocumented as to what are "valid" root pbr nodes for USD.</strong></li>
-<li><strong>Nodes graphs with child nodes that are the same name as the parent graph</strong>, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.</li>
-<li><strong>Validation is inconsistent between USD and MaterialX for upstream output connections</strong>. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not
-specify the output then conversion to USD will skip this link. <em>It would be useful to remove this inconsistent  validation check in MaterialX.</em></li>
-<li><code>usdMtlx</code> always tries to add in a <code>NodeGraphs</code> scope but this does not necessary contain graphs but nodes which can get confusing. Additionally downstrem port connects are incorrect as the first node's output seems to always be used.</li>
-<li>In generate <code>usdMtlx</code> seems to set up incorrect upstream connections for multiple output (<code>multioutput</code>) nodes and nodegraphs, assuming to take the first output and assuming the name <code>out</code> as opposed to taking the first (compatible) output which is done in MaterialX. <strong>Connection failures result in aborting conversion completely</strong> (instead of converting but leaving out certain connections)    </li>
-<li>For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.</li>
-<li>For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. <strong>Input is welcome on this</strong>.</li>
-</ul>
-</li>
-</ul>
+<h3>Issues</h3>
+<p>Issue logging is being tracked under these "master" issues:
+  - <a href="https://github.com/AcademySoftwareFoundation/MaterialX/issues/2291">MaterialX</a>
+  - <a href="https://github.com/PixarAnimationStudios/OpenUSD/issues/3571">OpenUSD</a></p>
+<details><summary>Notes</summary>
+  - Color space and Real World Units:
+    - Color space meta-data appears to work properly as do explicit color space conversion nodes.   
+    - **Real world unit meta-data is lost during conversion**. Unknown if this is unsupportable or a known issue.
+  - There appears to be no way to convert shading graphs which have a roots surface shaders which are not the current
+  shading models: glTF, USDPreviewSurface, OpenPBR ? That is arbitrary PBR shaders. They may translate but are considered invalid root nodes. **It is unclear / undocumented as to what are "valid" root pbr nodes for USD.**
+  -  **Nodes graphs with child nodes that are the same name as the parent graph**, and which are connected will be interpreted improperly by USD as it attempts to connect the incorrect upstream path and returns an error on conversion from MaterialX to USD. These tests have been manually modified for nowt to rename the interior node. This appears to be a USD logic error.
+  - **Validation is inconsistent between USD and MaterialX for upstream output connections**. If the upstream node / nodegraph has 1 connection then a validation warning is issues if you explicit specify that output. If you do not
+  specify the output then conversion to USD will skip this link. *It would be useful to remove this inconsistent  validation check in MaterialX.*
+  - `usdMtlx` always tries to add in a `NodeGraphs` scope but this does not necessary contain graphs but nodes which can get confusing. Additionally downstrem port connects are incorrect as the first node's output seems to always be used.
+  - In generate `usdMtlx` seems to set up incorrect upstream connections for multiple output (`multioutput`) nodes and nodegraphs, assuming to take the first output and assuming the name `out` as opposed to taking the first (compatible) output which is done in MaterialX. **Connection failures result in aborting conversion completely** (instead of converting but leaving out certain connections)    
+  - For rendering HDStorm and the default (GLSL/ OSL / MDL) MaterialX renderers use different sampling logic for environment lighting. e.g. Anisotropy differs.
+  - For render results: The rendering setup for translucent / transparent shading does not show the environment when it is set to be hidden. There is probably a way to make this show up while hiding the background. **Input is welcome on this**.
+</details>
+
 <h2>Usage</h2>
 <h3>Installation and Usage</h3>
 <p>Install from the root folder:</p>
@@ -265,28 +268,29 @@ materialxusd m2u -pp -v -sf -mn -r -m ./examples/TH_Cathedral_Floor_Tiles_1k_8b_
 <h2>Acceptance</h2>
 <p>An initial acceptance criteria is to be able to run MaterialX to USD conversion against the MaterialX render test suite files. Preliminary results are show below:</p>
 <h3>Gallery of Example Materials</h3>
-<p>Render Test Suite material renderings</p>
-<iframe width="100%" height="500px" src="./tests/usd_mtlx_image_gallery.html"></iframe>
-<p></p>
-
-<p>Unit Test renderings</p>
-<iframe width="100%" height="500px" src="./tests/unit_test_gallery.html"></iframe>
-<p></p>
-
-<p><a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> rendering</p>
-<iframe width="100%" height="500px" src="./tests/usd_physically_based_gallery.html"></iframe>
-<p></p>
-
+<h4>Render Test Suite material Renderings</h4>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/usd_mtlx_image_gallery.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/rts_gallery.png" width=100% alt="USD RTS image gallery">
+</a></p>
+<h4>Unit Test Renderings</h4>
+<p><a href="https://kwokcb.github.io/materialxusd/tests/unit_test_gallery.html" target="_blank" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/unit_test_gallery.png" width=100% alt="Unit test image gallery">
+</a></p>
+<h4><a href="https://physicallybased.info/" target="_blank">Physically Based Material Library</a> Renderings</h4>
+<p><a href="https://kwokcb.github.io/materialxusd//tests/usd_physically_based_gallery.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/physicallyBased_gallery.png" width=100% alt="USD RTS image gallery">
+</a></p>
 <h3>Comparison: GLSL vs GLSLFX</h3>
-<iframe width="100%" height="500px" src="./tests/glsl_vs_glslfx.html"></iframe>
-<p></p>
-
+<p><a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_glslfx.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx.png" width=100% alt="GLSL vs GLSLFx image comparison">
+</a></p>
 <h3>Comparison: GLSL vs OSL vs GLSLFX</h3>
-<iframe width="100%" height="500px" src="./tests/glsl_vs_osl_glslfx.html"></iframe>
-
+<p><a href="https://kwokcb.github.io/materialxusd/tests/glsl_vs_osl_glslfx.html" target="_blank">
+<img src="https://kwokcb.github.io/materialxusd/documents/images/glsl_vs_glsfx_vs_osl.png" width=100% alt="GLSL vs GLSLFx image comparison">
+</a></p>
 <h2>Design</h2>
 <p>An overview of the current package design is shown below. Boxes / lines which are dotted are optional logic which may be executed as desired.</p>
-<p><img src="./documents/images/design.png" width=100%></p>
+<p><img src="https://kwokcb.github.io/materialxusd/documents/images/design.png" width=100%></p>
     </div>
   </section>
 

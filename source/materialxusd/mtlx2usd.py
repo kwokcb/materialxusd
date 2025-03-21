@@ -101,10 +101,17 @@ def main():
         # Cache this as we don't want to use the modified MaterialX document
         # for the subfolder path to render to
         subfolder_path = input_path
+        doc = None
+        add_frame_information = False
         if args.preprocess:
             logger.info(f"> Pre-processing MaterialX file: {input_path}")
             utils = mxusd_utils.MaterialXUsdUtilities()
             doc = utils.create_document(input_path)
+
+            # Check for time or frame nodes.
+            if utils.has_time_frame_nodes(doc):
+                add_frame_information = True
+                logger.info("> Found time or frame nodes in the MaterialX document.")
 
             shader_materials_added = utils.add_materials_for_shaders(doc)
             if shader_materials_added:
@@ -192,6 +199,15 @@ def main():
                                                                                                 custom_conversion)
 
         if stage:
+            # Add start and end time by default. 
+            # TODO: Try and figure out frame range required
+            if add_frame_information:
+                start_frame = 0
+                end_frame = 100
+                logger.info(f"> Add frame range: {start_frame} to {end_frame} to stage.")        
+                stage.SetStartTimeCode(0)
+                stage.SetEndTimeCode(100)
+
             output_folder, input_file = os.path.split(input_path)
             output_file = input_file
             unused, subfolder_file = os.path.split(subfolder_path)

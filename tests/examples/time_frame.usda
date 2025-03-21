@@ -1,0 +1,76 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "frame_material" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color = (1, 1, 1)
+            float inputs:opacity = 1
+            float inputs:transmission = 0
+            color3f inputs:transmission_color = (1, 1, 1)
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/frame_material/frame_shader.outputs:surface>
+
+            def Shader "frame_shader" (
+                prepend references = </MaterialX/Shaders/frame_shader>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/frame_material.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/frame_material.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/frame_material.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/frame_material.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/frame_material.inputs:transmission_color>
+            }
+        }
+
+        def Material "time_material" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color = (1, 1, 1)
+            float inputs:opacity = 1
+            float inputs:transmission = 0
+            color3f inputs:transmission_color = (1, 1, 1)
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/time_material/time_shader.outputs:surface>
+
+            def Shader "time_shader" (
+                prepend references = </MaterialX/Shaders/time_shader>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/time_material.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/time_material.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/time_material.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/time_material.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/time_material.inputs:transmission_color>
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "frame_shader"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "time_shader"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+}
+

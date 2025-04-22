@@ -548,5 +548,15 @@ class MaterialXUsdUtilities:
             return doc 
         return None
 
-        
+    def has_time_frame_nodes(self, doc : mx.Document):
+        '''
+        @brief Check if the MaterialX document has any time or frame nodes.
+        @param doc The MaterialX document.
+        @return True if time or frame nodes are found, False otherwise.
+        '''
+        for elem in doc.traverseTree():
+            if elem.isA(mx.Node):
+                if elem.getCategory() in ['time', 'frame']:
+                    return True 
+        return False        
         

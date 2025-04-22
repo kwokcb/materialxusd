@@ -1,0 +1,279 @@
+#usda 1.0
+(
+    doc = "MaterialX content from ./examples/TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\\TH_Cathedral_Floor_Tiles_converted.mtlx"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "TH_Cathedral_Floor_Tiles" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base = 0.8
+            color3f inputs:base_color
+            float inputs:coat = 0
+            float inputs:coat_affect_color = 0
+            float inputs:coat_affect_roughness = 0
+            float inputs:coat_anisotropy = 0
+            color3f inputs:coat_color = (1, 1, 1)
+            float inputs:coat_IOR = 1.5
+            float3 inputs:coat_normal
+            float inputs:coat_rotation = 0
+            float inputs:coat_roughness = 0.1
+            float inputs:diffuse_roughness = 0
+            float inputs:emission = 0
+            color3f inputs:emission_color = (1, 1, 1)
+            float inputs:metalness = 0
+            float3 inputs:normal
+            color3f inputs:opacity = (1, 1, 1)
+            float inputs:sheen = 0
+            color3f inputs:sheen_color = (1, 1, 1)
+            float inputs:sheen_roughness = 0.3
+            float inputs:specular = 1
+            float inputs:specular_anisotropy = 0
+            color3f inputs:specular_color = (1, 1, 1)
+            float inputs:specular_IOR = 1.5
+            float inputs:specular_rotation = 0
+            float inputs:specular_roughness
+            float inputs:subsurface = 0
+            float inputs:subsurface_anisotropy = 0
+            color3f inputs:subsurface_color = (1, 1, 1)
+            color3f inputs:subsurface_radius = (1, 1, 1)
+            float inputs:subsurface_scale = 1
+            float3 inputs:tangent
+            float inputs:thin_film_IOR = 1.5
+            float inputs:thin_film_thickness = 0
+            bool inputs:thin_walled = 0
+            float inputs:transmission = 0
+            color3f inputs:transmission_color = (1, 1, 1)
+            float inputs:transmission_depth = 0
+            float inputs:transmission_dispersion = 0
+            float inputs:transmission_extra_roughness = 0
+            color3f inputs:transmission_scatter = (0, 0, 0)
+            float inputs:transmission_scatter_anisotropy = 0
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/SR_TH_Cathedral_Floor_Tiles.outputs:surface>
+
+            def Shader "SR_TH_Cathedral_Floor_Tiles" (
+                prepend references = </MaterialX/Shaders/SR_TH_Cathedral_Floor_Tiles>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/NG_TH_Cathedral_Floor_Tiles.outputs:base_color_output>
+                float inputs:coat.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/NG_TH_Cathedral_Floor_Tiles.outputs:coat_normal_output>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/NG_TH_Cathedral_Floor_Tiles.outputs:normal_output>
+                color3f inputs:opacity.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/NG_TH_Cathedral_Floor_Tiles.outputs:specular_roughness_output>
+                float inputs:subsurface.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles/NG_TH_Cathedral_Floor_Tiles.outputs:tangent_output>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/TH_Cathedral_Floor_Tiles.inputs:transmission_scatter_anisotropy>
+            }
+
+            def "NG_TH_Cathedral_Floor_Tiles" (
+                prepend references = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "SR_TH_Cathedral_Floor_Tiles"
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "NG_TH_Cathedral_Floor_Tiles"
+        {
+            color3f outputs:base_color_output.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_image_color3_0.outputs:out>
+            float3 outputs:coat_normal_output.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/onthefly_2.outputs:out>
+            float3 outputs:normal_output.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_normalmap.outputs:out>
+            float outputs:specular_roughness_output.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_mix_1.outputs:out>
+            float3 outputs:tangent_output.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/onthefly_4.outputs:out>
+
+            def Shader "onthefly_2"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "onthefly_4"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "node_multiply_5"
+            {
+                uniform token info:id = "ND_multiply_vector2FA"
+                float2 inputs:in1.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_texcoord_vector2_6.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/uv.outputs:out>
+                float2 outputs:out
+            }
+
+            def Shader "node_image_color3_0"
+            {
+                uniform token info:id = "ND_image_color3"
+                color3f inputs:default = (0, 0, 0)
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_baseColor.png@ (
+                    colorSpace = "srgb_texture"
+                )
+                string inputs:filtertype = "linear"
+                string inputs:frameendaction = "constant"
+                int inputs:frameoffset = 0
+                string inputs:framerange
+                string inputs:layer
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_multiply_5.outputs:out>
+                string inputs:uaddressmode = "periodic"
+                string inputs:vaddressmode = "periodic"
+                color3f outputs:out
+            }
+
+            def Shader "node_extract_7"
+            {
+                uniform token info:id = "ND_extract_vector3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_image_vector3_8.outputs:out>
+                int inputs:index = 1
+                float outputs:out
+            }
+
+            def Shader "node_image_vector3_8"
+            {
+                uniform token info:id = "ND_image_vector3"
+                float3 inputs:default = (0, 0, 0)
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_roughness.png@
+                string inputs:filtertype = "linear"
+                string inputs:frameendaction = "constant"
+                int inputs:frameoffset = 0
+                string inputs:framerange
+                string inputs:layer
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_multiply_5.outputs:out>
+                string inputs:uaddressmode = "periodic"
+                string inputs:vaddressmode = "periodic"
+                float3 outputs:out
+            }
+
+            def Shader "node_texcoord_vector2_6"
+            {
+                uniform token info:id = "ND_texcoord_vector2"
+                int inputs:index = 0
+                float2 outputs:out
+            }
+
+            def Shader "node_normalmap"
+            {
+                uniform token info:id = "ND_normalmap_vector2"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_image_vector3_9.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/Nworld.outputs:out>
+                float3 inputs:tangent.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/Tworld.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "node_image_vector3_9"
+            {
+                uniform token info:id = "ND_image_vector3"
+                float3 inputs:default = (0, 0, 0)
+                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\TH_Cathedral_Floor_Tiles_1k_8b_JRHrQHt\textures\TH_Cathedral_Floor_Tiles_normal.png@
+                string inputs:filtertype = "linear"
+                string inputs:frameendaction = "constant"
+                int inputs:frameoffset = 0
+                string inputs:framerange
+                string inputs:layer
+                float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_multiply_5.outputs:out>
+                string inputs:uaddressmode = "periodic"
+                string inputs:vaddressmode = "periodic"
+                float3 outputs:out
+            }
+
+            def Shader "node_mix_1"
+            {
+                uniform token info:id = "ND_mix_float"
+                float inputs:bg.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/RoughnessLow.outputs:out>
+                float inputs:fg.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/RoughnessHigh.outputs:out>
+                float inputs:mix.connect = </MaterialX/NodeGraphs/NG_TH_Cathedral_Floor_Tiles/node_extract_7.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "RoughnessHigh"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 0.85300004
+                float outputs:out
+            }
+
+            def Shader "RoughnessLow"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 0.037
+                float outputs:out
+            }
+
+            def Shader "uv"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 2
+                float outputs:out
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
+    }
+}
+

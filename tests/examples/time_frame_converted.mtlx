@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <nodegraph name="frameGraph">
+    <frame name="frame1" type="float" />
+    <remap name="remap1" type="float">
+      <input name="in" type="float" nodename="frame1" />
+      <input name="inlow" type="float" value="0.0" />
+      <input name="inhigh" type="float" value="100.0000" />
+      <input name="outlow" type="float" value="0.0" />
+      <input name="outhigh" type="float" value="1.0" />
+    </remap>
+    <output name="out" type="float" nodename="remap1" />
+  </nodegraph>
+  <surface_unlit name="time_shader" type="surfaceshader">
+    <input name="emission" type="float" nodegraph="timeGraph" output="out" />
+    <input name="emission_color" type="color3" value="1, 1, 1" />
+    <input name="transmission" type="float" value="0" />
+    <input name="transmission_color" type="color3" value="1, 1, 1" />
+    <input name="opacity" type="float" value="1" />
+  </surface_unlit>
+  <surface_unlit name="frame_shader" type="surfaceshader">
+    <input name="emission" type="float" nodegraph="frameGraph" output="out" />
+    <input name="emission_color" type="color3" value="1, 1, 1" />
+    <input name="transmission" type="float" value="0" />
+    <input name="transmission_color" type="color3" value="1, 1, 1" />
+    <input name="opacity" type="float" value="1" />
+  </surface_unlit>
+  <surfacematerial name="frame_material" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="frame_shader" />
+    <input name="backsurfaceshader" type="surfaceshader" value="" />
+    <input name="displacementshader" type="displacementshader" value="" />
+  </surfacematerial>
+  <surfacematerial name="time_material" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="time_shader" />
+    <input name="backsurfaceshader" type="surfaceshader" value="" />
+    <input name="displacementshader" type="displacementshader" value="" />
+  </surfacematerial>
+  <nodegraph name="timeGraph">
+    <time name="time1" type="float">
+      <input name="fps" type="float" value="36.0000" />
+    </time>
+    <remap name="remap1" type="float">
+      <input name="in" type="float" nodename="time1" />
+      <input name="inlow" type="float" value="0.0" />
+      <input name="inhigh" type="float" value="100.0000" />
+      <input name="outlow" type="float" value="0.0" />
+      <input name="outhigh" type="float" value="1.0" />
+    </remap>
+    <output name="out" type="float" nodename="remap1" />
+  </nodegraph>
+</materialx>

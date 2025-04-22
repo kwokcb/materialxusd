@@ -1,0 +1,174 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "lin_rec709"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./examples/time_frame_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    endTimeCode = 100
+    metersPerUnit = 1
+    startTimeCode = 0
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "frame_material" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color = (1, 1, 1)
+            float inputs:opacity = 1
+            float inputs:transmission = 0
+            color3f inputs:transmission_color = (1, 1, 1)
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/frame_material/frame_shader.outputs:surface>
+
+            def Shader "frame_shader" (
+                prepend references = </MaterialX/Shaders/frame_shader>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/frame_material/frameGraph.outputs:out>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/frame_material.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/frame_material.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/frame_material.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/frame_material.inputs:transmission_color>
+            }
+
+            def "frameGraph" (
+                prepend references = </MaterialX/NodeGraphs/frameGraph>
+            )
+            {
+            }
+        }
+
+        def Material "time_material" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color = (1, 1, 1)
+            float inputs:opacity = 1
+            float inputs:transmission = 0
+            color3f inputs:transmission_color = (1, 1, 1)
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/time_material/time_shader.outputs:surface>
+
+            def Shader "time_shader" (
+                prepend references = </MaterialX/Shaders/time_shader>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/time_material/timeGraph.outputs:out>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/time_material.inputs:emission_color>
+                float inputs:opacity.connect = </MaterialX/Materials/time_material.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/time_material.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/time_material.inputs:transmission_color>
+            }
+
+            def "timeGraph" (
+                prepend references = </MaterialX/NodeGraphs/timeGraph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "frame_shader"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+
+        def Shader "time_shader"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "frameGraph"
+        {
+            float outputs:out.connect = </MaterialX/NodeGraphs/frameGraph/remap1.outputs:out>
+
+            def Shader "frame1"
+            {
+                uniform token info:id = "ND_frame_float"
+                float outputs:out
+            }
+
+            def Shader "remap1"
+            {
+                uniform token info:id = "ND_remap_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/frameGraph/frame1.outputs:out>
+                float inputs:inhigh = 100
+                float inputs:inlow = 0
+                float inputs:outhigh = 1
+                float inputs:outlow = 0
+                float outputs:out
+            }
+        }
+
+        def NodeGraph "timeGraph"
+        {
+            float outputs:out.connect = </MaterialX/NodeGraphs/timeGraph/remap1.outputs:out>
+
+            def Shader "time1"
+            {
+                uniform token info:id = "ND_time_float"
+                float inputs:fps = 36
+                float outputs:out
+            }
+
+            def Shader "remap1"
+            {
+                uniform token info:id = "ND_remap_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/timeGraph/time1.outputs:out>
+                float inputs:inhigh = 100
+                float inputs:inlow = 0
+                float inputs:outhigh = 1
+                float inputs:outlow = 0
+                float outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/time_material>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
+    )
+    {
+    }
+}
+

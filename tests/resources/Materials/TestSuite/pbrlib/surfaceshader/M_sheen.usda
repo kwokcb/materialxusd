@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\sheen_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./resources/Materials/TestSuite/pbrlib/surfaceshader\\sheen_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -23,6 +23,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_oren_nayar_diffuse_bsdf"
                 color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse_color>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_sheen_surface/Nworld.outputs:out>
                 float inputs:roughness = 0
                 float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:diffuse>
                 token outputs:out (
@@ -34,6 +35,7 @@ def "MaterialX"
             {
                 uniform token info:id = "ND_sheen_bsdf"
                 color3f inputs:color.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_color>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_sheen_surface/Nworld.outputs:out>
                 float inputs:roughness.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen_roughness>
                 float inputs:weight.connect = </MaterialX/NodeGraphs/ND_sheen_surface.inputs:sheen>
                 token outputs:out (
@@ -55,6 +57,13 @@ def "MaterialX"
                 token outputs:out (
                     renderType = "BSDF"
                 )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
             }
         }
     }
@@ -100,7 +109,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\sphere.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/M_sheen>
@@ -115,14 +124,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera_sphere.usda@
     )
     {
     }

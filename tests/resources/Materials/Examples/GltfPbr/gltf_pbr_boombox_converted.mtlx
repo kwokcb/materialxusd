@@ -16,22 +16,22 @@
   </surfacematerial>
   <nodegraph name="root_graph">
     <gltf_colorimage name="image_basecolor" type="multioutput">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_baseColor.png" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_baseColor.png" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_colorimage>
     <output name="out" type="color3" nodename="image_basecolor" output="outcolor" />
     <output name="out2" type="float" nodename="image_basecolor" output="outa" />
     <gltf_image name="image_orm" type="vector3">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_occlusionRoughnessMetallic.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_occlusionRoughnessMetallic.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <gltf_normalmap name="image_normal" type="vector3">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_normal.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_normal.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_normalmap>
     <output name="out3" type="vector3" nodename="image_normal" />
     <gltf_image name="image_emission" type="color3">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_emissive.png" colorspace="srgb_texture" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Materials\Examples\GltfPbr\boombox\BoomBox_emissive.png" colorspace="srgb_texture" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <output name="out4" type="color3" nodename="image_emission" />

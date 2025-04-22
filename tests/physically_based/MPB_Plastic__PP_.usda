@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./physically_based\\stdsurf_materials_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./physically_based\\stdsurf_materials_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -7333,7 +7333,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\shaderball.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/MPB_Plastic__PP_>
@@ -7348,14 +7348,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
+        prepend references = @D:\work\materialx\materialxusd\tests\data\camera.usda@
     )
     {
     }

@@ -14,22 +14,22 @@
   </surfacematerial>
   <nodegraph name="root_graph">
     <gltf_colorimage name="gltf_colorimage" type="multioutput" xpos="10.144928" ypos="-8.362069">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_colorimage>
     <output name="out" type="color3" nodename="gltf_colorimage" output="outcolor" />
     <gltf_image name="gltf_image_float_float_1_0" type="float" xpos="10.144928" ypos="-3.206897">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <output name="out2" type="float" nodename="gltf_image_float_float_1_0" />
     <gltf_normalmap name="gltf_normalmap_vector3_1_0" type="vector3" xpos="10.144928" ypos="1.336207">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_normalmap>
     <output name="out3" type="vector3" nodename="gltf_normalmap_vector3_1_0" />
     <gltf_image name="gltf_image_float_float_1_1" type="float" xpos="10.144928" ypos="5.603448">
-      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png" />
+      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </gltf_image>
     <output name="out4" type="float" nodename="gltf_image_float_float_1_1" />

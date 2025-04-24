@@ -6,6 +6,11 @@
     defaultPrim = "TestScene"
     metersPerUnit = 1
     upAxis = "Y"
+    endTimeCode = 24
+    metersPerUnit = 1
+    startTimeCode = 0
+    upAxis = "Y"
+    timeCodesPerSecond = 24  # Explicitly declare frame rate
 )
 
 def "MaterialX"
@@ -35,7 +40,21 @@ def "MaterialX"
                 prepend references = </MaterialX/NodeGraphs/NG_marble1>
             )
             {
-                color3f inputs:base_color_1 = (1.0, 0.2, 0.2)
+                color3f inputs:base_color_1.timeSamples = {
+                    0: ( 1, 0, 0 ),
+                    12: ( 1, 0, 0 ),
+                    24: ( 1, 0, 0 ),
+                }                
+                float inputs:noise_power = 3 (
+                    prepend apiSchemas = ["SplineAPI"]
+                    customData = {
+                        dictionary spline = {
+                            float[] knots = [0, 12, 24]
+                            float[] values = [3, 1, 9]
+                            token interpolation = "bezier"
+                        }
+                    }
+                )
             }
         }
 

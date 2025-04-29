@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "materialxusd"
-version = "0.0.1"
+version = "0.25.05"
 description = "Utilities for MaterialX and USD"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -17,7 +17,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-    "materialx==1.39.2"
+    "materialx==1.39.3"
 ]
 
 [project.scripts]

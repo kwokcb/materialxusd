@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <gltf_pbr name="SR_glass" type="surfaceshader">
+    <input name="metallic" type="float" value="0" />
+    <input name="roughness" type="float" value="0.01" />
+    <input name="transmission" type="float" value="1" />
+    <input name="ior" type="float" value="1.52" />
+    <input name="normal" type="vector3" nodegraph="root_graph" output="out" />
+    <input name="tangent" type="vector3" nodegraph="root_graph" output="out3" />
+    <input name="clearcoat_normal" type="vector3" nodegraph="root_graph" output="out2" />
+  </gltf_pbr>
+  <surfacematerial name="PBR_Glass" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_glass" />
+  </surfacematerial>
+  <nodegraph name="root_graph">
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+    <output name="out" type="vector3" nodename="Nworld" />
+    <output name="out2" type="vector3" nodename="Nworld" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <output name="out3" type="vector3" nodename="Tworld" />
+  </nodegraph>
+</materialx>

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <materialx version="1.39">
   <standard_surface name="SPB_Aluminum" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/aluminum.jpeg">
-    <input name="base_color" type="color3" value="0.912,0.914,0.92" />
+    <input name="base_color" type="color3" value="0.933,0.912,0.853" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.97,0.979,0.988" />
+    <input name="specular_color" type="color3" value="0.981,0.979,0.961" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -49,9 +49,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Bone" />
   </surfacematerial>
   <standard_surface name="SPB_Brass" type="surfaceshader" doc="Brass is an alloy of copper and zinc, with a bright and gold-like appearance. It is similar to bronze, another alloy containing copper that uses tin instead of zinc. Historically, the distinction between the two alloys has been less consistent and clear, and modern practice in museums and archaeology increasingly avoids both terms for historical objects in favor of the more general &quot;copper alloy&quot;.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/brass.jpeg">
-    <input name="base_color" type="color3" value="0.887,0.789,0.434" />
+    <input name="base_color" type="color3" value="0.931,0.776,0.392" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.988,0.976,0.843" />
+    <input name="specular_color" type="color3" value="0.995,0.974,0.747" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -104,9 +104,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Chocolate" />
   </surfacematerial>
   <standard_surface name="SPB_Chromium" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/chromium.jpeg">
-    <input name="base_color" type="color3" value="0.638,0.651,0.663" />
+    <input name="base_color" type="color3" value="0.653,0.65,0.615" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.632,0.718,0.809" />
+    <input name="specular_color" type="color3" value="0.675,0.72,0.711" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -114,9 +114,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Chromium" />
   </surfacematerial>
   <standard_surface name="SPB_Cobalt" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/cobalt.jpeg">
-    <input name="base_color" type="color3" value="0.692,0.703,0.673" />
+    <input name="base_color" type="color3" value="0.715,0.702,0.622" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.684,0.771,0.817" />
+    <input name="specular_color" type="color3" value="0.731,0.775,0.715" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -153,9 +153,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Cooking_Oil" />
   </surfacematerial>
   <standard_surface name="SPB_Copper" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/copper.jpeg">
-    <input name="base_color" type="color3" value="0.926,0.721,0.504" />
+    <input name="base_color" type="color3" value="0.988,0.688,0.448" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.996,0.957,0.823" />
+    <input name="specular_color" type="color3" value="0.999,0.946,0.705" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -238,16 +238,16 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Glass" />
   </surfacematerial>
   <standard_surface name="SPB_Gold" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gold.jpeg">
-    <input name="base_color" type="color3" value="0.944,0.776,0.373" />
+    <input name="base_color" type="color3" value="1,0.72,0.315" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.998,0.981,0.751" />
+    <input name="specular_color" type="color3" value="1,0.973,0.597" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
   <surfacematerial name="MPB_Gold" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Gold" />
   </surfacematerial>
-  <standard_surface name="SPB_Gray_Card" type="surfaceshader" doc="18% gray has a perceptual lightness of 50%.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gray-card.jpeg">
+  <standard_surface name="SPB_Gray_Card" type="surfaceshader" doc="In photography and computer graphics, middle gray is a tone that is perceptually about halfway between black and white on a lightness scale. Light meters and cameras are often calibrated using an 18% gray card or a color reference card such as a ColorChecker. It is typically defined as 18% reflectance in visible light.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gray-card.jpeg">
     <input name="base_color" type="color3" value="0.18,0.18,0.18" />
     <input name="metalness" type="float" value="0" />
     <input name="specular_roughness" type="float" value="0.5" />
@@ -279,9 +279,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Ice" />
   </surfacematerial>
   <standard_surface name="SPB_Iron" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/iron.jpeg">
-    <input name="base_color" type="color3" value="0.531,0.512,0.496" />
+    <input name="base_color" type="color3" value="0.542,0.512,0.458" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.571,0.54,0.586" />
+    <input name="specular_color" type="color3" value="0.612,0.541,0.422" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -298,9 +298,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Ketchup" />
   </surfacematerial>
   <standard_surface name="SPB_Lead" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/lead.jpeg">
-    <input name="base_color" type="color3" value="0.632,0.626,0.641" />
+    <input name="base_color" type="color3" value="0.641,0.622,0.59" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.803,0.808,0.862" />
+    <input name="specular_color" type="color3" value="0.819,0.804,0.769" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -326,9 +326,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Marble" />
   </surfacematerial>
   <standard_surface name="SPB_Mercury" type="surfaceshader" doc="Mercury is the only metallic element that is known to be liquid at standard conditions.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/mercury.jpeg">
-    <input name="base_color" type="color3" value="0.781,0.779,0.779" />
+    <input name="base_color" type="color3" value="0.799,0.777,0.721" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.879,0.91,0.941" />
+    <input name="specular_color" type="color3" value="0.901,0.91,0.89" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -363,9 +363,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Musou_Black" />
   </surfacematerial>
   <standard_surface name="SPB_Nickel" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/nickel.jpeg">
-    <input name="base_color" type="color3" value="0.649,0.61,0.541" />
+    <input name="base_color" type="color3" value="0.664,0.606,0.495" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.797,0.801,0.789" />
+    <input name="specular_color" type="color3" value="0.824,0.798,0.68" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -405,8 +405,9 @@
     <input name="base_color" type="color3" value="1,1,1" />
     <input name="metalness" type="float" value="0" />
     <input name="specular_roughness" type="float" value="0" />
-    <input name="specular_IOR" type="float" value="1.476" />
+    <input name="specular_IOR" type="float" value="1.4905" />
     <input name="transmission" type="float" value="1" />
+    <input name="transmission_dispersion" type="float" value="53.18" />
     <input name="transmission_color" type="color3" value="1,1,1" />
   </standard_surface>
   <surfacematerial name="MPB_Plastic__Acrylic_" type="material">
@@ -418,6 +419,7 @@
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5848" />
     <input name="transmission" type="float" value="1" />
+    <input name="transmission_dispersion" type="float" value="27.86" />
     <input name="transmission_color" type="color3" value="1,1,1" />
   </standard_surface>
   <surfacematerial name="MPB_Plastic__PC_" type="material">
@@ -449,7 +451,7 @@
     <input name="base_color" type="color3" value="1,1,1" />
     <input name="metalness" type="float" value="0" />
     <input name="specular_roughness" type="float" value="0" />
-    <input name="specular_IOR" type="float" value="1.531" />
+    <input name="specular_IOR" type="float" value="1.542" />
     <input name="transmission" type="float" value="1" />
     <input name="transmission_color" type="color3" value="1,1,1" />
   </standard_surface>
@@ -457,9 +459,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Plastic__PVC_" />
   </surfacematerial>
   <standard_surface name="SPB_Platinum" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/platinum.jpeg">
-    <input name="base_color" type="color3" value="0.679,0.642,0.588" />
+    <input name="base_color" type="color3" value="0.695,0.638,0.541" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.785,0.789,0.784" />
+    <input name="specular_color" type="color3" value="0.816,0.786,0.671" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -477,12 +479,25 @@
   <surfacematerial name="MPB_Polyurethane" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Polyurethane" />
   </surfacematerial>
+  <standard_surface name="SPB_Quartz" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/quartz.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_IOR" type="float" value="1.54" />
+    <input name="transmission" type="float" value="1" />
+    <input name="transmission_dispersion" type="float" value="67.82" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </standard_surface>
+  <surfacematerial name="MPB_Quartz" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SPB_Quartz" />
+  </surfacematerial>
   <standard_surface name="SPB_Salt" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/salt.jpeg">
     <input name="base_color" type="color3" value="1,1,1" />
     <input name="metalness" type="float" value="0" />
     <input name="specular_roughness" type="float" value="0.2" />
-    <input name="specular_IOR" type="float" value="1.5275" />
+    <input name="specular_IOR" type="float" value="1.5441" />
     <input name="transmission" type="float" value="1" />
+    <input name="transmission_dispersion" type="float" value="42.89" />
   </standard_surface>
   <surfacematerial name="MPB_Salt" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Salt" />
@@ -509,8 +524,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Sapphire" />
   </surfacematerial>
   <standard_surface name="SPB_Silicon" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/silicon.jpeg">
-    <input name="base_color" type="color3" value="0.344,0.367,0.419" />
+    <input name="base_color" type="color3" value="0.351,0.367,0.394" />
     <input name="metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.081,0,0.004" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -518,9 +534,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Silicon" />
   </surfacematerial>
   <standard_surface name="SPB_Silver" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/silver.jpeg">
-    <input name="base_color" type="color3" value="0.962,0.949,0.922" />
+    <input name="base_color" type="color3" value="0.984,0.946,0.851" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.999,0.998,0.998" />
+    <input name="specular_color" type="color3" value="0.999,0.998,0.986" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -603,6 +619,16 @@
   <surfacematerial name="MPB_Soap_Bubble" type="material">
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Soap_Bubble" />
   </surfacematerial>
+  <standard_surface name="SPB_Stainless_Steel" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/stainless-steel.jpeg">
+    <input name="base_color" type="color3" value="0.685,0.637,0.554" />
+    <input name="metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.804,0.791,0.714" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_IOR" type="float" value="1.5" />
+  </standard_surface>
+  <surfacematerial name="MPB_Stainless_Steel" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SPB_Stainless_Steel" />
+  </surfacematerial>
   <standard_surface name="SPB_Tire" type="surfaceshader" doc="Car tire.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/tire.jpeg">
     <input name="base_color" type="color3" value="0.023,0.023,0.023" />
     <input name="metalness" type="float" value="0" />
@@ -613,9 +639,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Tire" />
   </surfacematerial>
   <standard_surface name="SPB_Titanium" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/titanium.jpeg">
-    <input name="base_color" type="color3" value="0.616,0.582,0.544" />
+    <input name="base_color" type="color3" value="0.633,0.578,0.503" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.689,0.683,0.689" />
+    <input name="specular_color" type="color3" value="0.728,0.68,0.55" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -632,9 +658,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Toner__black_" />
   </surfacematerial>
   <standard_surface name="SPB_Tungsten" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/tungsten.jpeg">
-    <input name="base_color" type="color3" value="0.504,0.498,0.478" />
+    <input name="base_color" type="color3" value="0.518,0.495,0.442" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.403,0.418,0.423" />
+    <input name="specular_color" type="color3" value="0.461,0.413,0.206" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -642,9 +668,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Tungsten" />
   </surfacematerial>
   <standard_surface name="SPB_Vanadium" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/vanadium.jpeg">
-    <input name="base_color" type="color3" value="0.52,0.532,0.541" />
+    <input name="base_color" type="color3" value="0.547,0.525,0.506" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.402,0.447,0.395" />
+    <input name="specular_color" type="color3" value="0.474,0.426,0.175" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>
@@ -673,9 +699,9 @@
     <input name="surfaceshader" type="surfaceshader" nodename="SPB_Whiteboard" />
   </surfacematerial>
   <standard_surface name="SPB_Zinc" type="surfaceshader" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/zinc.jpeg">
-    <input name="base_color" type="color3" value="0.802,0.844,0.863" />
+    <input name="base_color" type="color3" value="0.826,0.842,0.801" />
     <input name="metalness" type="float" value="1" />
-    <input name="specular_color" type="color3" value="0.817,0.922,0.964" />
+    <input name="specular_color" type="color3" value="0.854,0.922,0.923" />
     <input name="specular_roughness" type="float" value="0" />
     <input name="specular_IOR" type="float" value="1.5" />
   </standard_surface>

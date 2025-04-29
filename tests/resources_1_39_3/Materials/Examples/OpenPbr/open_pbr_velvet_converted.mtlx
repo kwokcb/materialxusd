@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <surfacematerial name="Velvet" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="open_pbr_surface_surfaceshader" />
+  </surfacematerial>
+  <open_pbr_surface name="open_pbr_surface_surfaceshader" type="surfaceshader">
+    <input name="base_color" type="color3" value="0.02, 0.02, 0.02" />
+    <input name="specular_roughness" type="float" value="0.8" />
+    <input name="fuzz_weight" type="float" value="1" />
+    <input name="fuzz_color" type="color3" value="0.4, 0.4, 0.4" />
+    <input name="fuzz_roughness" type="float" value="0.5" />
+    <input name="geometry_normal" type="vector3" nodegraph="root_graph" output="out" />
+    <input name="geometry_coat_normal" type="vector3" nodegraph="root_graph" output="out2" />
+    <input name="geometry_tangent" type="vector3" nodegraph="root_graph" output="out3" />
+    <input name="geometry_coat_tangent" type="vector3" nodegraph="root_graph" output="out4" />
+  </open_pbr_surface>
+  <nodegraph name="root_graph">
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+    <output name="out" type="vector3" nodename="Nworld" />
+    <output name="out2" type="vector3" nodename="Nworld" />
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <output name="out3" type="vector3" nodename="Tworld" />
+    <output name="out4" type="vector3" nodename="Tworld" />
+  </nodegraph>
+</materialx>

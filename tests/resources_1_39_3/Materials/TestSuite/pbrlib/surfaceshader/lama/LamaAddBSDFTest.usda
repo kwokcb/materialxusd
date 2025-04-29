@@ -1,0 +1,265 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "acescg"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources_1_39_3/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_add_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "LamaAddBSDFTest" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/LamaAddBSDFTest/LamaAddBSDFSurface.outputs:surface>
+
+            def Shader "LamaAddBSDFSurface" (
+                prepend references = </MaterialX/Shaders/LamaAddBSDFSurface>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaAddBSDFTest/root_graph.outputs:out>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/LamaAddBSDFTest.inputs:edf>
+                float inputs:opacity.connect = </MaterialX/Materials/LamaAddBSDFTest.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/LamaAddBSDFTest.inputs:thin_walled>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+
+        def Material "LamaAddEDFTest" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/LamaAddEDFTest/LamaAddEDFSurface.outputs:surface>
+
+            def Shader "LamaAddEDFSurface" (
+                prepend references = </MaterialX/Shaders/LamaAddEDFSurface>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaAddEDFTest.inputs:bsdf>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/LamaAddEDFTest/root_graph.outputs:out2>
+                float inputs:opacity.connect = </MaterialX/Materials/LamaAddEDFTest.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/LamaAddEDFTest.inputs:thin_walled>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "LamaAddBSDFSurface"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+
+        def Shader "LamaAddEDFSurface"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            token outputs:out (
+                renderType = "BSDF"
+            )
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaAddBSDF.outputs:out>
+            token outputs:out2 (
+                renderType = "EDF"
+            )
+            token outputs:out2.connect = </MaterialX/NodeGraphs/root_graph/LamaAddEDF.outputs:out>
+
+            def Shader "LamaConductor"
+            {
+                uniform token info:id = "ND_lama_conductor"
+                float inputs:anisotropy = 0
+                float3 inputs:anisotropyDirection.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
+                float inputs:anisotropyRotation = 0
+                color3f inputs:edgeColor = (0.9979, 0.9813, 0.7523)
+                float3 inputs:extinction = (3.42, 2.35, 1.77)
+                int inputs:fresnelMode = 0
+                float3 inputs:IOR = (0.18, 0.42, 1.37)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
+                color3f inputs:reflectivity = (0.945, 0.7772, 0.3737)
+                float inputs:roughness = 0.1
+                color3f inputs:tint = (1, 1, 1)
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "LamaDielectric"
+            {
+                uniform token info:id = "ND_lama_dielectric"
+                color3f inputs:absorptionColor = (1, 1, 1)
+                float inputs:absorptionRadius = 1
+                float inputs:anisotropy = 0
+                float3 inputs:direction.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
+                int inputs:fresnelMode = 0
+                float inputs:IOR = 1.5
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
+                color3f inputs:reflectionTint = (1, 1, 1)
+                float inputs:reflectivity = 0.04
+                float inputs:rotation = 0
+                float inputs:roughness = 0.1
+                float inputs:scatterAnisotropy = 0
+                color3f inputs:scatterColor = (0, 0, 0)
+                color3f inputs:transmissionTint = (1, 1, 1)
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "LamaAddBSDF"
+            {
+                uniform token info:id = "ND_lama_add_bsdf"
+                token inputs:material1 (
+                    renderType = "BSDF"
+                )
+                token inputs:material1.connect = </MaterialX/NodeGraphs/root_graph/LamaConductor.outputs:out>
+                token inputs:material2 (
+                    renderType = "BSDF"
+                )
+                token inputs:material2.connect = </MaterialX/NodeGraphs/root_graph/LamaDielectric.outputs:out>
+                float inputs:weight1 = 0.5
+                float inputs:weight2 = 0.5
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "LamaEmission1"
+            {
+                uniform token info:id = "ND_lama_emission"
+                color3f inputs:color = (1, 1, 0)
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+
+            def Shader "LamaEmission2"
+            {
+                uniform token info:id = "ND_lama_emission"
+                color3f inputs:color = (1, 0, 1)
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+
+            def Shader "LamaAddEDF"
+            {
+                uniform token info:id = "ND_lama_add_edf"
+                token inputs:material1 (
+                    renderType = "EDF"
+                )
+                token inputs:material1.connect = </MaterialX/NodeGraphs/root_graph/LamaEmission1.outputs:out>
+                token inputs:material2 (
+                    renderType = "EDF"
+                )
+                token inputs:material2.connect = </MaterialX/NodeGraphs/root_graph/LamaEmission2.outputs:out>
+                float inputs:weight1 = 0.5
+                float inputs:weight2 = 0.5
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/LamaAddBSDFTest>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

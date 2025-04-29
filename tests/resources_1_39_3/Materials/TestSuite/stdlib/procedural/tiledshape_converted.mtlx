@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <standard_surface name="SR_test_tiledcircles" type="surfaceshader">
+    <input name="base" type="float" value="1" />
+    <input name="base_color" type="color3" nodegraph="root_graph" output="out" />
+  </standard_surface>
+  <surfacematerial name="test_tiledcircles" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_test_tiledcircles" />
+  </surfacematerial>
+  <standard_surface name="SR_test_tiledcloverleafs" type="surfaceshader">
+    <input name="base" type="float" value="1" />
+    <input name="base_color" type="color3" nodegraph="root_graph" output="out2" />
+  </standard_surface>
+  <surfacematerial name="test_tiledcloverleafs" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_test_tiledcloverleafs" />
+  </surfacematerial>
+  <standard_surface name="SR_test_tiledhexagons" type="surfaceshader">
+    <input name="base" type="float" value="1" />
+    <input name="base_color" type="color3" nodegraph="root_graph" output="out3" />
+  </standard_surface>
+  <surfacematerial name="test_tiledhexagons" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_test_tiledhexagons" />
+  </surfacematerial>
+  <nodegraph name="root_graph">
+    <tiledcircles name="tiledcircles_color3" type="color3">
+      <input name="uvtiling" type="vector2" value="29, 29" />
+      <input name="size" type="float" value="0.8" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </tiledcircles>
+    <output name="out" type="color3" nodename="tiledcircles_color3" />
+    <tiledcloverleafs name="tiledcloverleafs_color3" type="color3">
+      <input name="uvtiling" type="vector2" value="29, 29" />
+      <input name="size" type="float" value="0.8" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </tiledcloverleafs>
+    <output name="out2" type="color3" nodename="tiledcloverleafs_color3" />
+    <tiledhexagons name="tiledhexagons_color3" type="color3">
+      <input name="uvtiling" type="vector2" value="29, 29" />
+      <input name="size" type="float" value="0.7" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </tiledhexagons>
+    <output name="out3" type="color3" nodename="tiledhexagons_color3" />
+    <texcoord name="UV0" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+  </nodegraph>
+</materialx>

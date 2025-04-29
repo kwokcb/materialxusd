@@ -96,32 +96,32 @@
       <input name="in" type="float" interfacename="uvtiling" />
     </convert>
     <tiledimage name="node_tiledimage_vector3_27" type="vector3">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_normal.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_normal.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_22" type="float">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_roughness.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_roughness.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_10" type="float">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_mask.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_7" type="float">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_base_gray.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_base_gray.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_26" type="float">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_variation_mask.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_variation_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>
     <tiledimage name="node_tiledimage_float_24" type="float">
-      <input name="file" type="filename" value="D:\work\materialx\materialxusd\tests\resources\Images\brick_dirt_mask.jpg" />
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources\Images\brick_dirt_mask.jpg" />
       <input name="uvtiling" type="vector2" nodename="node_convert_1" />
       <input name="texcoord" type="vector2" nodename="UV0" />
     </tiledimage>

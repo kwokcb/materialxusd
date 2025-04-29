@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./examples/parquet_clothes\\parquet_clothes_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./examples/parquet_clothes\\parquet_clothes_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -106,7 +106,7 @@ def "MaterialX"
             def Shader "gltf_colorimage"
             {
                 uniform token info:id = "ND_gltf_colorimage"
-                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Base_Color.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float outputs:outa
                 color3f outputs:outcolor
@@ -115,7 +115,7 @@ def "MaterialX"
             def Shader "gltf_image_float_float_1_0"
             {
                 uniform token info:id = "ND_gltf_image_float_float_1_0"
-                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Roughness.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float outputs:out
             }
@@ -123,7 +123,7 @@ def "MaterialX"
             def Shader "gltf_normalmap_vector3_1_0"
             {
                 uniform token info:id = "ND_gltf_normalmap_vector3_1_0"
-                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Normal.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float3 outputs:out
             }
@@ -131,7 +131,7 @@ def "MaterialX"
             def Shader "gltf_image_float_float_1_1"
             {
                 uniform token info:id = "ND_gltf_image_float_float_1_0"
-                asset inputs:file = @D:\work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png@
+                asset inputs:file = @D:\Work\materialx\materialxusd\tests\examples\parquet_clothes\parquet_clothes_Ambient_Occlusion.png@
                 float2 inputs:texcoord.connect = </MaterialX/NodeGraphs/root_graph/UV0.outputs:out>
                 float outputs:out
             }
@@ -165,7 +165,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\shaderball.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/surfacematerial>
@@ -180,14 +180,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
     )
     {
     }

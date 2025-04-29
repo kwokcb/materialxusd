@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "TestScene"
-    doc = "Combined content from: ./physically_based\\stdsurf_materials_converted.mtlx, D:\\work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    doc = "Combined content from: ./physically_based\\stdsurf_materials_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\shaderball.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -16,7 +16,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.912, 0.914, 0.92)
+            color3f inputs:base_color = (0.933, 0.912, 0.853)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -37,7 +37,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.97, 0.979, 0.988)
+            color3f inputs:specular_color = (0.981, 0.979, 0.961)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -506,7 +506,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.887, 0.789, 0.434)
+            color3f inputs:base_color = (0.931, 0.776, 0.392)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -527,7 +527,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.988, 0.976, 0.843)
+            color3f inputs:specular_color = (0.995, 0.974, 0.747)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -1094,7 +1094,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.638, 0.651, 0.663)
+            color3f inputs:base_color = (0.653, 0.65, 0.615)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -1115,7 +1115,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.632, 0.718, 0.809)
+            color3f inputs:specular_color = (0.675, 0.72, 0.711)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -1192,7 +1192,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.692, 0.703, 0.673)
+            color3f inputs:base_color = (0.715, 0.702, 0.622)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -1213,7 +1213,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.684, 0.771, 0.817)
+            color3f inputs:specular_color = (0.731, 0.775, 0.715)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -1584,7 +1584,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.926, 0.721, 0.504)
+            color3f inputs:base_color = (0.988, 0.688, 0.448)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -1605,7 +1605,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.996, 0.957, 0.823)
+            color3f inputs:specular_color = (0.999, 0.946, 0.705)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -2368,7 +2368,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.944, 0.776, 0.373)
+            color3f inputs:base_color = (1, 0.72, 0.315)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -2389,7 +2389,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.998, 0.981, 0.751)
+            color3f inputs:specular_color = (1, 0.973, 0.597)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -2760,7 +2760,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.531, 0.512, 0.496)
+            color3f inputs:base_color = (0.542, 0.512, 0.458)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -2781,7 +2781,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.571, 0.54, 0.586)
+            color3f inputs:specular_color = (0.612, 0.541, 0.422)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -2956,7 +2956,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.632, 0.626, 0.641)
+            color3f inputs:base_color = (0.641, 0.622, 0.59)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -2977,7 +2977,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.803, 0.808, 0.862)
+            color3f inputs:specular_color = (0.819, 0.804, 0.769)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -3250,7 +3250,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.781, 0.779, 0.779)
+            color3f inputs:base_color = (0.799, 0.777, 0.721)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -3271,7 +3271,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.879, 0.91, 0.941)
+            color3f inputs:specular_color = (0.901, 0.91, 0.89)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -3642,7 +3642,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.649, 0.61, 0.541)
+            color3f inputs:base_color = (0.664, 0.606, 0.495)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -3663,7 +3663,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.797, 0.801, 0.789)
+            color3f inputs:specular_color = (0.824, 0.798, 0.68)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -4056,7 +4056,7 @@ def "MaterialX"
             float inputs:specular
             float inputs:specular_anisotropy
             color3f inputs:specular_color
-            float inputs:specular_IOR = 1.476
+            float inputs:specular_IOR = 1.4905
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
             float inputs:subsurface
@@ -4071,7 +4071,7 @@ def "MaterialX"
             float inputs:transmission = 1
             color3f inputs:transmission_color = (1, 1, 1)
             float inputs:transmission_depth
-            float inputs:transmission_dispersion
+            float inputs:transmission_dispersion = 53.18
             float inputs:transmission_extra_roughness
             color3f inputs:transmission_scatter
             float inputs:transmission_scatter_anisotropy
@@ -4169,7 +4169,7 @@ def "MaterialX"
             float inputs:transmission = 1
             color3f inputs:transmission_color = (1, 1, 1)
             float inputs:transmission_depth
-            float inputs:transmission_dispersion
+            float inputs:transmission_dispersion = 27.86
             float inputs:transmission_extra_roughness
             color3f inputs:transmission_scatter
             float inputs:transmission_scatter_anisotropy
@@ -4448,7 +4448,7 @@ def "MaterialX"
             float inputs:specular
             float inputs:specular_anisotropy
             color3f inputs:specular_color
-            float inputs:specular_IOR = 1.531
+            float inputs:specular_IOR = 1.542
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
             float inputs:subsurface
@@ -4524,7 +4524,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.679, 0.642, 0.588)
+            color3f inputs:base_color = (0.695, 0.638, 0.541)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -4545,7 +4545,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.785, 0.789, 0.784)
+            color3f inputs:specular_color = (0.816, 0.786, 0.671)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -4714,6 +4714,104 @@ def "MaterialX"
             }
         }
 
+        def Material "MPB_Quartz" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base
+            color3f inputs:base_color = (1, 1, 1)
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness = 0
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color
+            float inputs:specular_IOR = 1.54
+            float inputs:specular_rotation
+            float inputs:specular_roughness = 0
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission = 1
+            color3f inputs:transmission_color = (1, 1, 1)
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion = 67.82
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/MPB_Quartz/SPB_Quartz.outputs:surface>
+
+            def Shader "SPB_Quartz" (
+                prepend references = </MaterialX/Shaders/SPB_Quartz>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/MPB_Quartz.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:base_color>
+                float inputs:coat.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/MPB_Quartz.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/MPB_Quartz.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/MPB_Quartz.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/MPB_Quartz.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/MPB_Quartz.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/MPB_Quartz.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/MPB_Quartz.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/MPB_Quartz.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/MPB_Quartz.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/MPB_Quartz.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/MPB_Quartz.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/MPB_Quartz.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/MPB_Quartz.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/MPB_Quartz.inputs:transmission_scatter_anisotropy>
+            }
+        }
+
         def Material "MPB_Salt" (
             prepend apiSchemas = ["MaterialXConfigAPI"]
         )
@@ -4742,7 +4840,7 @@ def "MaterialX"
             float inputs:specular
             float inputs:specular_anisotropy
             color3f inputs:specular_color
-            float inputs:specular_IOR = 1.5275
+            float inputs:specular_IOR = 1.5441
             float inputs:specular_rotation
             float inputs:specular_roughness = 0.2
             float inputs:subsurface
@@ -4757,7 +4855,7 @@ def "MaterialX"
             float inputs:transmission = 1
             color3f inputs:transmission_color
             float inputs:transmission_depth
-            float inputs:transmission_dispersion
+            float inputs:transmission_dispersion = 42.89
             float inputs:transmission_extra_roughness
             color3f inputs:transmission_scatter
             float inputs:transmission_scatter_anisotropy
@@ -5014,7 +5112,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.344, 0.367, 0.419)
+            color3f inputs:base_color = (0.351, 0.367, 0.394)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -5035,7 +5133,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color
+            color3f inputs:specular_color = (0.081, 0, 0.004)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -5112,7 +5210,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.962, 0.949, 0.922)
+            color3f inputs:base_color = (0.984, 0.946, 0.851)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -5133,7 +5231,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.999, 0.998, 0.998)
+            color3f inputs:specular_color = (0.999, 0.998, 0.986)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -5988,6 +6086,104 @@ def "MaterialX"
             }
         }
 
+        def Material "MPB_Stainless_Steel" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:base
+            color3f inputs:base_color = (0.685, 0.637, 0.554)
+            float inputs:coat
+            float inputs:coat_affect_color
+            float inputs:coat_affect_roughness
+            float inputs:coat_anisotropy
+            color3f inputs:coat_color
+            float inputs:coat_IOR
+            float3 inputs:coat_normal
+            float inputs:coat_rotation
+            float inputs:coat_roughness
+            float inputs:diffuse_roughness
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:metalness = 1
+            float3 inputs:normal
+            color3f inputs:opacity
+            float inputs:sheen
+            color3f inputs:sheen_color
+            float inputs:sheen_roughness
+            float inputs:specular
+            float inputs:specular_anisotropy
+            color3f inputs:specular_color = (0.804, 0.791, 0.714)
+            float inputs:specular_IOR = 1.5
+            float inputs:specular_rotation
+            float inputs:specular_roughness = 0
+            float inputs:subsurface
+            float inputs:subsurface_anisotropy
+            color3f inputs:subsurface_color
+            color3f inputs:subsurface_radius
+            float inputs:subsurface_scale
+            float3 inputs:tangent
+            float inputs:thin_film_IOR
+            float inputs:thin_film_thickness
+            bool inputs:thin_walled
+            float inputs:transmission
+            color3f inputs:transmission_color
+            float inputs:transmission_depth
+            float inputs:transmission_dispersion
+            float inputs:transmission_extra_roughness
+            color3f inputs:transmission_scatter
+            float inputs:transmission_scatter_anisotropy
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/MPB_Stainless_Steel/SPB_Stainless_Steel.outputs:surface>
+
+            def Shader "SPB_Stainless_Steel" (
+                prepend references = </MaterialX/Shaders/SPB_Stainless_Steel>
+            )
+            {
+                float inputs:base.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:base>
+                color3f inputs:base_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:base_color>
+                float inputs:coat.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat>
+                float inputs:coat_affect_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_affect_color>
+                float inputs:coat_affect_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_affect_roughness>
+                float inputs:coat_anisotropy.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_anisotropy>
+                color3f inputs:coat_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_color>
+                float inputs:coat_IOR.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_IOR>
+                float3 inputs:coat_normal.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_normal>
+                float inputs:coat_rotation.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_rotation>
+                float inputs:coat_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:coat_roughness>
+                float inputs:diffuse_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:diffuse_roughness>
+                float inputs:emission.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:emission_color>
+                float inputs:metalness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:metalness>
+                float3 inputs:normal.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:normal>
+                color3f inputs:opacity.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:opacity>
+                float inputs:sheen.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:sheen>
+                color3f inputs:sheen_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:sheen_color>
+                float inputs:sheen_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:sheen_roughness>
+                float inputs:specular.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular>
+                float inputs:specular_anisotropy.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular_anisotropy>
+                color3f inputs:specular_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular_color>
+                float inputs:specular_IOR.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular_IOR>
+                float inputs:specular_rotation.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular_rotation>
+                float inputs:specular_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:specular_roughness>
+                float inputs:subsurface.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:subsurface>
+                float inputs:subsurface_anisotropy.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:subsurface_anisotropy>
+                color3f inputs:subsurface_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:subsurface_color>
+                color3f inputs:subsurface_radius.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:subsurface_radius>
+                float inputs:subsurface_scale.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:subsurface_scale>
+                float3 inputs:tangent.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:tangent>
+                float inputs:thin_film_IOR.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:thin_film_IOR>
+                float inputs:thin_film_thickness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:thin_film_thickness>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:thin_walled>
+                float inputs:transmission.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_color>
+                float inputs:transmission_depth.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_depth>
+                float inputs:transmission_dispersion.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_dispersion>
+                float inputs:transmission_extra_roughness.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_extra_roughness>
+                color3f inputs:transmission_scatter.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_scatter>
+                float inputs:transmission_scatter_anisotropy.connect = </MaterialX/Materials/MPB_Stainless_Steel.inputs:transmission_scatter_anisotropy>
+            }
+        }
+
         def Material "MPB_Tire" (
             prepend apiSchemas = ["MaterialXConfigAPI"]
         )
@@ -6092,7 +6288,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.616, 0.582, 0.544)
+            color3f inputs:base_color = (0.633, 0.578, 0.503)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -6113,7 +6309,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.689, 0.683, 0.689)
+            color3f inputs:specular_color = (0.728, 0.68, 0.55)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -6288,7 +6484,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.504, 0.498, 0.478)
+            color3f inputs:base_color = (0.518, 0.495, 0.442)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -6309,7 +6505,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.403, 0.418, 0.423)
+            color3f inputs:specular_color = (0.461, 0.413, 0.206)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -6386,7 +6582,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.52, 0.532, 0.541)
+            color3f inputs:base_color = (0.547, 0.525, 0.506)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -6407,7 +6603,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.402, 0.447, 0.395)
+            color3f inputs:specular_color = (0.474, 0.426, 0.175)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -6680,7 +6876,7 @@ def "MaterialX"
         {
             string config:mtlx:version = "1.39"
             float inputs:base
-            color3f inputs:base_color = (0.802, 0.844, 0.863)
+            color3f inputs:base_color = (0.826, 0.842, 0.801)
             float inputs:coat
             float inputs:coat_affect_color
             float inputs:coat_affect_roughness
@@ -6701,7 +6897,7 @@ def "MaterialX"
             float inputs:sheen_roughness
             float inputs:specular
             float inputs:specular_anisotropy
-            color3f inputs:specular_color = (0.817, 0.922, 0.964)
+            color3f inputs:specular_color = (0.854, 0.922, 0.923)
             float inputs:specular_IOR = 1.5
             float inputs:specular_rotation
             float inputs:specular_roughness = 0
@@ -6976,7 +7172,7 @@ def "MaterialX"
         }
 
         def Shader "SPB_Gray_Card" (
-            doc = "18% gray has a perceptual lightness of 50%.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gray-card.jpeg"
+            doc = "In photography and computer graphics, middle gray is a tone that is perceptually about halfway between black and white on a lightness scale. Light meters and cameras are often calibrated using an 18% gray card or a color reference card such as a ColorChecker. It is typically defined as 18% reflectance in visible light.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gray-card.jpeg"
         )
         {
             uniform token info:id = "ND_standard_surface_surfaceshader"
@@ -7159,6 +7355,14 @@ def "MaterialX"
             token outputs:surface
         }
 
+        def Shader "SPB_Quartz" (
+            doc = "Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/quartz.jpeg"
+        )
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+
         def Shader "SPB_Salt" (
             doc = "Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/salt.jpeg"
         )
@@ -7263,6 +7467,14 @@ def "MaterialX"
             token outputs:surface
         }
 
+        def Shader "SPB_Stainless_Steel" (
+            doc = "Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/stainless-steel.jpeg"
+        )
+        {
+            uniform token info:id = "ND_standard_surface_surfaceshader"
+            token outputs:surface
+        }
+
         def Shader "SPB_Tire" (
             doc = "Car tire.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/tire.jpeg"
         )
@@ -7333,7 +7545,7 @@ def Xform "TestScene"
 {
     def Xform "Geometry" (
         prepend apiSchemas = ["MaterialBindingAPI"]
-        prepend references = @D:\work\materialx\materialxusd\tests\data\shaderball.usd@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\shaderball.usd@
     )
     {
         rel material:binding = </MaterialX/Materials/MPB_Brass>
@@ -7348,14 +7560,14 @@ def Xform "TestScene"
         {
             float guideRadius = 1
             float inputs:intensity = 1
-            asset inputs:texture:file = @D:\work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
             float3 xformOp:rotateXYZ = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
         }
     }
 
     def Xform "Camera" (
-        prepend references = @D:\work\materialx\materialxusd\tests\data\camera.usda@
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera.usda@
     )
     {
     }

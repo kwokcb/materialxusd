@@ -10,6 +10,7 @@ var classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities =
     [ "encapsulate_top_level_nodes", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#abf336b04d1bcf9b6c77cd2c3d520471c", null ],
     [ "encapsulate_top_level_nodes_file", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aadb11d04e3718ca4874707af77c66703", null ],
     [ "get_standard_libraries", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aadfbb34633aacafb0c2a9b05116165cc", null ],
+    [ "has_time_frame_nodes", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#a06c40ebea4a29f193468100d95441d67", null ],
     [ "load_standard_libraries", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aecffc179fd921ca0a420a53b7d675cf9", null ],
     [ "resolve_image_file_paths", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#a523bca6eb5bb2f1da5f334f3844e0572", null ],
     [ "write_document", "classmaterialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#aa3206ef4975e308bfcf1538cfb8a92bf", null ]

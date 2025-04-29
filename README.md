@@ -1,6 +1,12 @@
 ## MaterialX USD Utilities
 
-This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.
+<a href="https://github.com/kwokcb/materialxusd/actions">
+  <img src="https://github.com/kwokcb/materialxusd/actions/workflows/static.yml/badge.svg" alt="GitHub Actions Status">
+</a>
+
+This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. The corresponding web site is <a href="https://kwokcb.github.io/materialxusd/">here</a>
+
+The utilities and results use the `25.05` version of OpenUSD which is sync'ed to MaterialX version `1.39.3`.
 
 This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:
 

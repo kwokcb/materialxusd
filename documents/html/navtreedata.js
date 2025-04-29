@@ -26,6 +26,7 @@ var NAVTREE =
 [
   [ "MaterialXUSD", "index.html", [
     [ "MaterialX USD Utilities", "index.html", "index" ],
+    [ "x", "md__d_1_2_work_2materialx_2materialxusd_2x.html", null ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],

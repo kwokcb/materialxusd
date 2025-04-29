@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <!-- Geometric node unit tests, also useful for debug visualization of geometric streams -->
+  <normal name="normal_object" type="vector3">
+    <input name="space" type="string" value="object" />
+  </normal>
+  <multiply name="normal_object_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="normal_object" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="normal_object_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="normal_object_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="normal_object_output" type="vector3" nodename="normal_object_bias" />
+  <normal name="normal_world" type="vector3">
+    <input name="space" type="string" value="world" />
+  </normal>
+  <multiply name="normal_world_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="normal_world" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="normal_world_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="normal_world_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="normal_world_output" type="vector3" nodename="normal_world_bias" />
+  <tangent name="tangent" type="vector3">
+    <input name="index" type="integer" value="0" />
+  </tangent>
+  <multiply name="tangent_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="tangent" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="tangent_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="tangent_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="tangent_output" type="vector3" nodename="tangent_bias" />
+  <bitangent name="bitangent" type="vector3">
+    <input name="index" type="integer" value="0" />
+  </bitangent>
+  <multiply name="bitangent_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="bitangent" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="bitangent_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="bitangent_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="bitangent_output" type="vector3" nodename="bitangent_bias" />
+  <position name="position_object" type="vector3">
+    <input name="space" type="string" value="object" />
+  </position>
+  <multiply name="position_object_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="position_object" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="position_object_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="position_object_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="position_object_output" type="vector3" nodename="position_object_bias" />
+  <position name="position_world" type="vector3">
+    <input name="space" type="string" value="world" />
+  </position>
+  <multiply name="position_world_scale" type="vector3">
+    <input name="in1" type="vector3" nodename="position_world" />
+    <input name="in2" type="float" value="0.5" />
+  </multiply>
+  <add name="position_world_bias" type="vector3">
+    <input name="in1" type="vector3" nodename="position_world_scale" />
+    <input name="in2" type="float" value="0.5" />
+  </add>
+  <output name="position_world_output" type="vector3" nodename="position_world_bias" />
+  <texcoord name="texcoord0" type="vector2">
+    <input name="index" type="integer" value="0" />
+  </texcoord>
+  <separate2 name="separate" type="multioutput">
+    <input name="in" type="vector2" nodename="texcoord0" />
+  </separate2>
+  <combine3 name="swizzle" type="vector3">
+    <input name="in1" type="float" nodename="separate" output="outx" />
+    <input name="in2" type="float" nodename="separate" output="outy" />
+    <input name="in3" type="float" value="0" />
+  </combine3>
+  <output name="texcoord0_output" type="vector3" nodename="swizzle" />
+  <texcoord name="texcoord0_vec3" type="vector3">
+    <input name="index" type="integer" value="0" />
+  </texcoord>
+  <output name="texcoord0_vec3_output" type="vector3" nodename="texcoord0_vec3" />
+  <texcoord name="texcoord1" type="vector2">
+    <input name="index" type="integer" value="1" />
+  </texcoord>
+  <separate2 name="separate2" type="multioutput">
+    <input name="in" type="vector2" nodename="texcoord1" />
+  </separate2>
+  <combine3 name="swizzle2" type="vector3">
+    <input name="in1" type="float" nodename="separate2" output="outx" />
+    <input name="in2" type="float" nodename="separate2" output="outy" />
+    <input name="in3" type="float" value="0" />
+  </combine3>
+  <output name="texcoord1_output" type="vector3" nodename="swizzle2" />
+  <geomcolor name="color_float" type="float">
+    <input name="index" type="integer" value="0" />
+  </geomcolor>
+  <combine3 name="swizzle3" type="vector3">
+    <input name="in1" type="float" nodename="color_float" />
+    <input name="in2" type="float" value="0" />
+    <input name="in3" type="float" value="0" />
+  </combine3>
+  <output name="color_float_output" type="vector3" nodename="swizzle3" />
+  <geomcolor name="color_vec3" type="color3">
+    <input name="index" type="integer" value="0" />
+  </geomcolor>
+  <output name="color_vec3_output" type="color3" nodename="color_vec3" />
+  <geomcolor name="color_vec4" type="color4">
+    <input name="index" type="integer" value="0" />
+  </geomcolor>
+  <output name="color_vec4_output" type="color4" nodename="color_vec4" />
+</materialx>

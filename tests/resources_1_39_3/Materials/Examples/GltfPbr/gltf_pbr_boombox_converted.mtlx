@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<materialx version="1.39" colorspace="lin_rec709">
+  <gltf_pbr name="SR_boombox" type="surfaceshader">
+    <input name="base_color" type="color3" output="out" nodegraph="root_graph" />
+    <input name="alpha" type="float" output="out2" nodegraph="root_graph" />
+    <input name="metallic" type="float" output="out5" nodegraph="root_graph" />
+    <input name="roughness" type="float" output="out6" nodegraph="root_graph" />
+    <input name="occlusion" type="float" output="out7" nodegraph="root_graph" />
+    <input name="normal" type="vector3" nodegraph="root_graph" output="out3" />
+    <input name="emissive" type="color3" nodegraph="root_graph" output="out4" />
+    <input name="tangent" type="vector3" nodegraph="root_graph" output="out8" />
+    <input name="clearcoat_normal" type="vector3" nodegraph="root_graph" output="out9" />
+  </gltf_pbr>
+  <surfacematerial name="Material_boombox" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="SR_boombox" />
+  </surfacematerial>
+  <nodegraph name="root_graph">
+    <gltf_colorimage name="image_basecolor" type="multioutput">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources_1_39_3\Materials\Examples\GltfPbr\boombox\BoomBox_baseColor.png" colorspace="srgb_texture" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_colorimage>
+    <output name="out" type="color3" nodename="image_basecolor" output="outcolor" />
+    <output name="out2" type="float" nodename="image_basecolor" output="outa" />
+    <gltf_image name="image_orm" type="vector3">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources_1_39_3\Materials\Examples\GltfPbr\boombox\BoomBox_occlusionRoughnessMetallic.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_image>
+    <gltf_normalmap name="image_normal" type="vector3">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources_1_39_3\Materials\Examples\GltfPbr\boombox\BoomBox_normal.png" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_normalmap>
+    <output name="out3" type="vector3" nodename="image_normal" />
+    <gltf_image name="image_emission" type="color3">
+      <input name="file" type="filename" value="D:\Work\materialx\materialxusd\tests\resources_1_39_3\Materials\Examples\GltfPbr\boombox\BoomBox_emissive.png" colorspace="srgb_texture" />
+      <input name="texcoord" type="vector2" nodename="UV0" />
+    </gltf_image>
+    <output name="out4" type="color3" nodename="image_emission" />
+    <separate3 name="image_orm_channels" type="multioutput">
+      <input name="in" type="vector3" nodename="image_orm" />
+    </separate3>
+    <output name="out5" type="float" nodename="image_orm_channels" output="outz" />
+    <output name="out6" type="float" nodename="image_orm_channels" output="outy" />
+    <output name="out7" type="float" nodename="image_orm_channels" output="outx" />
+    <texcoord name="UV0" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+    <tangent name="Tworld" type="vector3">
+      <input name="space" type="string" value="world" />
+      <input name="index" type="integer" value="0" />
+    </tangent>
+    <output name="out8" type="vector3" nodename="Tworld" />
+    <normal name="Nworld" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+    <output name="out9" type="vector3" nodename="Nworld" />
+  </nodegraph>
+</materialx>

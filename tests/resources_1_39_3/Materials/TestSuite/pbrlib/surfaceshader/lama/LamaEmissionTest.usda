@@ -1,0 +1,116 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "acescg"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources_1_39_3/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_emission_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "LamaEmissionTest" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/LamaEmissionTest/LamaEmissionSurface.outputs:surface>
+
+            def Shader "LamaEmissionSurface" (
+                prepend references = </MaterialX/Shaders/LamaEmissionSurface>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaEmissionTest.inputs:bsdf>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/LamaEmissionTest/root_graph.outputs:out>
+                float inputs:opacity.connect = </MaterialX/Materials/LamaEmissionTest.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/LamaEmissionTest.inputs:thin_walled>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "LamaEmissionSurface"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            token outputs:out (
+                renderType = "EDF"
+            )
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaEmission.outputs:out>
+
+            def Shader "LamaEmission"
+            {
+                uniform token info:id = "ND_lama_emission"
+                color3f inputs:color = (0, 0, 0)
+                token outputs:out (
+                    renderType = "EDF"
+                )
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/LamaEmissionTest>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

@@ -1,0 +1,146 @@
+#usda 1.0
+(
+    customLayerData = {
+        string colorSpace = "acescg"
+    }
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources_1_39_3/Materials/TestSuite/pbrlib/surfaceshader\\lama\\lama_generalized_schlick_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "Materials"
+    {
+        def Material "LamaGeneralizedSchlickTest" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            token inputs:bsdf (
+                renderType = "BSDF"
+            )
+            token inputs:edf (
+                renderType = "EDF"
+            )
+            float inputs:opacity
+            bool inputs:thin_walled
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/LamaGeneralizedSchlickTest/LamaGeneralizedSchlickSurface.outputs:surface>
+
+            def Shader "LamaGeneralizedSchlickSurface" (
+                prepend references = </MaterialX/Shaders/LamaGeneralizedSchlickSurface>
+            )
+            {
+                token inputs:bsdf (
+                    renderType = "BSDF"
+                )
+                token inputs:bsdf.connect = </MaterialX/Materials/LamaGeneralizedSchlickTest/root_graph.outputs:out>
+                token inputs:edf (
+                    renderType = "EDF"
+                )
+                token inputs:edf.connect = </MaterialX/Materials/LamaGeneralizedSchlickTest.inputs:edf>
+                float inputs:opacity.connect = </MaterialX/Materials/LamaGeneralizedSchlickTest.inputs:opacity>
+                bool inputs:thin_walled.connect = </MaterialX/Materials/LamaGeneralizedSchlickTest.inputs:thin_walled>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "LamaGeneralizedSchlickSurface"
+        {
+            uniform token info:id = "ND_surface"
+            token outputs:surface
+        }
+    }
+
+    def "NodeGraphs"
+    {
+        def NodeGraph "root_graph"
+        {
+            token outputs:out (
+                renderType = "BSDF"
+            )
+            token outputs:out.connect = </MaterialX/NodeGraphs/root_graph/LamaGeneralizedSchlick.outputs:out>
+
+            def Shader "LamaGeneralizedSchlick"
+            {
+                uniform token info:id = "ND_lama_generalized_schlick"
+                color3f inputs:absorptionColor = (1, 1, 1)
+                float inputs:absorptionRadius = 1
+                float inputs:anisotropy = -1
+                float3 inputs:anisotropyDirection.connect = </MaterialX/NodeGraphs/root_graph/Tworld.outputs:out>
+                float inputs:anisotropyRotation = 0
+                int inputs:fresnelMode = 0
+                float3 inputs:IOR = (1.5, 1.5, 1.5)
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/root_graph/Nworld.outputs:out>
+                color3f inputs:reflectionTint = (1, 1, 1)
+                color3f inputs:reflectivity = (0.04, 0.04, 0.04)
+                color3f inputs:reflectivity90 = (1, 1, 1)
+                float inputs:reflectivityProfile = 0.2
+                float inputs:roughness = 0.1
+                float inputs:scatterAnisotropy = 0
+                color3f inputs:scatterColor = (0, 0, 0)
+                color3f inputs:transmissionTint = (1, 1, 1)
+                token outputs:out (
+                    renderType = "BSDF"
+                )
+            }
+
+            def Shader "Nworld"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "Tworld"
+            {
+                uniform token info:id = "ND_tangent_vector3"
+                int inputs:index = 0
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/LamaGeneralizedSchlickTest>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

@@ -1,0 +1,373 @@
+#usda 1.0
+(
+    defaultPrim = "TestScene"
+    doc = "Combined content from: ./resources_1_39_3/Materials/TestSuite/nprlib\\toon_shade_converted.mtlx, D:\\Work\\materialx\\materialxusd\\tests\\data\\sphere.usd, D:\\Work\\materialx\\materialxusd\\tests\\data\\san_giuseppe_bridge.hdr."
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def "MaterialX"
+{
+    def "NodeGraphs"
+    {
+        def NodeGraph "ND_toon_sample"
+        {
+            color3f inputs:ambient_color = (0.1, 0.1, 0.1) (
+                displayName = "Ambient Color"
+            )
+            color3f inputs:base_color = (0.4, 0.4, 0.4) (
+                displayName = "Base Color"
+            )
+            float inputs:glossiness = 16 (
+                displayName = "Glossiness"
+            )
+            color3f inputs:light_color = (0.968215, 0.968215, 0.968215) (
+                displayName = "Light Color"
+            )
+            float3 inputs:light_direction = (1, -0.5, -0.5) (
+                displayName = "Light Direction"
+            )
+            color3f inputs:rim_color = (0.5, 0.5, 0.5) (
+                displayName = "Rim Color"
+            )
+            color3f inputs:specular_color = (0.769337, 0.872861, 0.599692) (
+                displayName = "Specular Color"
+            )
+            color3f outputs:output_color3.connect = </MaterialX/NodeGraphs/ND_toon_sample/multiply_color3.outputs:out>
+
+            def Shader "normal"
+            {
+                uniform token info:id = "ND_normal_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "NdotL"
+            {
+                uniform token info:id = "ND_dotproduct_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_normal.outputs:out>
+                float3 inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/multiply_vector4.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "unit_light_direction"
+            {
+                uniform token info:id = "ND_normalize_vector3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:light_direction>
+                float3 outputs:out
+            }
+
+            def Shader "multiply_color3"
+            {
+                uniform token info:id = "ND_multiply_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:base_color>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/add_color5.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "add_color3"
+            {
+                uniform token info:id = "ND_add_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/gradient_light.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:ambient_color>
+                color3f outputs:out
+            }
+
+            def Shader "smooth_gradient"
+            {
+                uniform token info:id = "ND_smoothstep_float"
+                float inputs:high = 0.001
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/NdotL.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "viewdirection_vector3"
+            {
+                uniform token info:id = "ND_viewdirection_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+            }
+
+            def Shader "unit_viewdirection"
+            {
+                uniform token info:id = "ND_normalize_vector3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/viewdirection_vector3.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "multiply_float"
+            {
+                uniform token info:id = "ND_multiply_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/smooth_gradient.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/max_float.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "specular_intensity_power"
+            {
+                uniform token info:id = "ND_power_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/multiply_float.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:glossiness>
+                float outputs:out
+            }
+
+            def Shader "specular_intensity_color"
+            {
+                uniform token info:id = "ND_convert_float_color3"
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/specular_remap.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "add_color4"
+            {
+                uniform token info:id = "ND_add_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/add_color3.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/specular.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "multiply_vector3"
+            {
+                uniform token info:id = "ND_multiply_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_viewdirection.outputs:out>
+                float3 inputs:in2 = (-1, -1, -1)
+                float3 outputs:out
+            }
+
+            def Shader "specular_remap"
+            {
+                uniform token info:id = "ND_smoothstep_float"
+                float inputs:high = 0.008
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/specular_intensity_power.outputs:out>
+                float inputs:low = 0.005
+                float outputs:out
+            }
+
+            def Shader "specular"
+            {
+                uniform token info:id = "ND_multiply_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/specular_intensity_color.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:specular_color>
+                color3f outputs:out
+            }
+
+            def Shader "NdotV"
+            {
+                uniform token info:id = "ND_dotproduct_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_normal.outputs:out>
+                float3 inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/multiply_vector3.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "NdotV_invert"
+            {
+                uniform token info:id = "ND_invert_float"
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/NdotV.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "add_color5"
+            {
+                uniform token info:id = "ND_add_color3"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/add_color4.outputs:out>
+                color3f inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "rim_gradient"
+            {
+                uniform token info:id = "ND_smoothstep_float"
+                float inputs:high.connect = </MaterialX/NodeGraphs/ND_toon_sample/subtract_float.outputs:out>
+                float inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/rmi_intensity.outputs:out>
+                float inputs:low.connect = </MaterialX/NodeGraphs/ND_toon_sample/add_float.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "rim_amount"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 0.7
+                float outputs:out
+            }
+
+            def Shader "add_float"
+            {
+                uniform token info:id = "ND_add_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim_amount.outputs:out>
+                float inputs:in2 = 0.01
+                float outputs:out
+            }
+
+            def Shader "subtract_float"
+            {
+                uniform token info:id = "ND_subtract_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim_amount.outputs:out>
+                float inputs:in2 = 0.01
+                float outputs:out
+            }
+
+            def Shader "rmi_intensity"
+            {
+                uniform token info:id = "ND_multiply_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/NdotV_invert.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim_power.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "rim_threshold"
+            {
+                uniform token info:id = "ND_constant_float"
+                float inputs:value = 0.1
+                float outputs:out
+            }
+
+            def Shader "rim_power"
+            {
+                uniform token info:id = "ND_power_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/NdotL.outputs:out>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim_threshold.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "multiply_vector4"
+            {
+                uniform token info:id = "ND_multiply_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_light_direction.outputs:out>
+                float3 inputs:in2 = (-1, -1, -1)
+                float3 outputs:out
+            }
+
+            def Shader "unit_normal"
+            {
+                uniform token info:id = "ND_normalize_vector3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/normal.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "rim"
+            {
+                uniform token info:id = "ND_multiply_color3FA"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:rim_color>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/rim_gradient.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "gradient_light"
+            {
+                uniform token info:id = "ND_multiply_color3FA"
+                color3f inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample.inputs:light_color>
+                float inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/smooth_gradient.outputs:out>
+                color3f outputs:out
+            }
+
+            def Shader "reflect"
+            {
+                uniform token info:id = "ND_reflect_vector3"
+                float3 inputs:in.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_viewdirection.outputs:out>
+                float3 inputs:normal.connect = </MaterialX/NodeGraphs/ND_toon_sample/unit_normal.outputs:out>
+                float3 outputs:out
+            }
+
+            def Shader "LdotV"
+            {
+                uniform token info:id = "ND_dotproduct_vector3"
+                float3 inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/multiply_vector4.outputs:out>
+                float3 inputs:in2.connect = </MaterialX/NodeGraphs/ND_toon_sample/reflect.outputs:out>
+                float outputs:out
+            }
+
+            def Shader "max_float"
+            {
+                uniform token info:id = "ND_max_float"
+                float inputs:in1.connect = </MaterialX/NodeGraphs/ND_toon_sample/LdotV.outputs:out>
+                float outputs:out
+            }
+        }
+
+        def NodeGraph "root_graph"
+        {
+            color3f outputs:out.connect = </MaterialX/NodeGraphs/root_graph/ND_toon_sample.outputs:output_color3>
+
+            def "ND_toon_sample" (
+                prepend references = </MaterialX/NodeGraphs/ND_toon_sample>
+            )
+            {
+            }
+        }
+    }
+
+    def "Materials"
+    {
+        def Material "surfacematerial" (
+            prepend apiSchemas = ["MaterialXConfigAPI"]
+        )
+        {
+            string config:mtlx:version = "1.39"
+            float inputs:emission
+            color3f inputs:emission_color
+            float inputs:opacity
+            float inputs:transmission
+            color3f inputs:transmission_color
+            token outputs:mtlx:surface.connect = </MaterialX/Materials/surfacematerial/surface_unlit.outputs:surface>
+
+            def Shader "surface_unlit" (
+                prepend references = </MaterialX/Shaders/surface_unlit>
+            )
+            {
+                float inputs:emission.connect = </MaterialX/Materials/surfacematerial.inputs:emission>
+                color3f inputs:emission_color.connect = </MaterialX/Materials/surfacematerial/root_graph.outputs:out>
+                float inputs:opacity.connect = </MaterialX/Materials/surfacematerial.inputs:opacity>
+                float inputs:transmission.connect = </MaterialX/Materials/surfacematerial.inputs:transmission>
+                color3f inputs:transmission_color.connect = </MaterialX/Materials/surfacematerial.inputs:transmission_color>
+            }
+
+            def "root_graph" (
+                prepend references = </MaterialX/NodeGraphs/root_graph>
+            )
+            {
+            }
+        }
+    }
+
+    def "Shaders"
+    {
+        def Shader "surface_unlit"
+        {
+            uniform token info:id = "ND_surface_unlit"
+            token outputs:surface
+        }
+    }
+}
+
+def Xform "TestScene"
+{
+    def Xform "Geometry" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\sphere.usd@
+    )
+    {
+        rel material:binding = </MaterialX/Materials/surfacematerial>
+    }
+
+    def Xform "Lights"
+    {
+        float3 xformOp:scale = (1.3, 1.3, 1.3)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+
+        def DomeLight "EnvironmentLight"
+        {
+            float guideRadius = 1
+            float inputs:intensity = 1
+            asset inputs:texture:file = @D:\Work\materialx\materialxusd\tests\data\san_giuseppe_bridge.hdr@
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+    }
+
+    def Xform "Camera" (
+        prepend references = @D:\Work\materialx\materialxusd\tests\data\camera_sphere.usda@
+    )
+    {
+    }
+}
+

@@ -111,10 +111,12 @@
 <p><a href="https://github.com/kwokcb/materialxusd/actions">
   <img src="https://github.com/kwokcb/materialxusd/actions/workflows/static.yml/badge.svg" alt="GitHub Actions Status">
 </a></p>
-<p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. The corresponding web site is <a href="https://kwokcb.github.io/materialxusd/">here</a></p>
-<p>The utilities and results use the <code>25.05</code> version of OpenUSD which is sync'ed to MaterialX version <code>1.39.3</code>.</p>
+<p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. 
+- The web site can be found <a href="https://kwokcb.github.io/materialxusd/">here</a>
+- The <code>PyPi</code> package can be found <a href="https://pypi.org/project/materialxusd/" target="_blank">here</a>.
+- The utilities and results currently use the <code>25.05</code> version of OpenUSD which is sync'ed to MaterialX version <code>1.39.3</code>. </p>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
-<p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" width=100%></p>
+<p><img src="https://kwokcb.github.io/materialxusd/documents/results/usd_gltf_mtlx_desk_web.png" width=100%></p>
 <blockquote>
 <p>Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&material=6e933741-eeb3-4956-b756-0b44f08aa6cf"> AMD GPUOpen library</a>. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)</p>
 </blockquote>
@@ -168,6 +170,7 @@ materials and shading model nodes are valid at the top level in USD. </li>
   - <a href="https://github.com/AcademySoftwareFoundation/MaterialX/issues/2291">MaterialX</a>
   - <a href="https://github.com/PixarAnimationStudios/OpenUSD/issues/3571">OpenUSD</a></p>
 <details><summary>Notes</summary>
+
   - Color space and Real World Units:
     - Color space meta-data appears to work properly as do explicit color space conversion nodes.   
     - **Real world unit meta-data is lost during conversion**. Unknown if this is unsupportable or a known issue.
@@ -186,6 +189,10 @@ materials and shading model nodes are valid at the top level in USD. </li>
 <h3>Installation and Usage</h3>
 <p>Install from the root folder:</p>
 <div class="codehilite"><pre><span></span><code>pip install .
+</code></pre></div>
+
+<p>or install from <code>PyPi</code></p>
+<div class="codehilite"><pre><span></span><code>pip install materialxusd
 </code></pre></div>
 
 <p>Run using the <code>materialxusd</code> command.

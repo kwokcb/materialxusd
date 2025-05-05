@@ -4,13 +4,14 @@
   <img src="https://github.com/kwokcb/materialxusd/actions/workflows/static.yml/badge.svg" alt="GitHub Actions Status">
 </a>
 
-This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. The corresponding web site is <a href="https://kwokcb.github.io/materialxusd/">here</a>
-
-The utilities and results use the `25.05` version of OpenUSD which is sync'ed to MaterialX version `1.39.3`.
+This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. 
+- The web site can be found <a href="https://kwokcb.github.io/materialxusd/">here</a>
+- The `PyPi` package can be found <a href="https://pypi.org/project/materialxusd/" target="_blank">here</a>.
+- The utilities and results currently use the `25.05` version of OpenUSD which is sync'ed to MaterialX version `1.39.3`. 
 
 This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:
 
-<img src="./documents/results/usd_gltf_mtlx_desk_web.png" width=100%>
+<img src="https://kwokcb.github.io/materialxusd/documents/results/usd_gltf_mtlx_desk_web.png" width=100%>
 
 > Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&material=6e933741-eeb3-4956-b756-0b44f08aa6cf"> AMD GPUOpen library</a>. Converted to USD and displayed in `usdview` (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right)
 
@@ -52,6 +53,7 @@ Issue logging is being tracked under these "master" issues:
   - [OpenUSD](https://github.com/PixarAnimationStudios/OpenUSD/issues/3571)
 
 <details><summary>Notes</summary>
+
   - Color space and Real World Units:
     - Color space meta-data appears to work properly as do explicit color space conversion nodes.   
     - **Real world unit meta-data is lost during conversion**. Unknown if this is unsupportable or a known issue.
@@ -74,6 +76,10 @@ Install from the root folder:
 
 ```
 pip install .
+```
+or install from `PyPi`
+```
+pip install materialxusd
 ```
 
 Run using the `materialxusd` command.

@@ -35,7 +35,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="MX_LAB.svg" style="width: 48px"/></td>
   <td id="projectalign">
-   <div id="projectname">MaterialXUSD<span id="projectnumber">&#160;0.0.1</span>
+   <div id="projectname">MaterialXUSD<span id="projectnumber">&#160;0.25.05</span>
    </div>
    <div id="projectbrief">Utilities for using MaterialX with USD</div>
   </td>
@@ -110,10 +110,13 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__d_1_2_work_2materialx_2materialxusd_2_r_e_a_d_m_e"></a></p>
 <p><a href="https://github.com/kwokcb/materialxusd/actions"><img src="https://github.com/kwokcb/materialxusd/actions/workflows/static.yml/badge.svg" alt="GitHub Actions Status" style="pointer-events: none;" class="inline"/> </a></p>
-<p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD. The corresponding web site is <a href="https://kwokcb.github.io/materialxusd/">here</a></p>
-<p>The utilities and results use the <code>25.05</code> version of OpenUSD which is sync'ed to MaterialX version <code>1.39.3</code>.</p>
+<p>This is a Github <a href="https://github.com/kwokcb/materialxusd">repository</a> of utilities related to MaterialX and USD.</p><ul>
+<li>The web site can be found <a href="https://kwokcb.github.io/materialxusd/">here</a></li>
+<li>The <code>PyPi</code> package can be found <a href="https://pypi.org/project/materialxusd/" target="_blank">here</a>.</li>
+<li>The utilities and results currently use the <code>25.05</code> version of OpenUSD which is sync'ed to MaterialX version <code>1.39.3</code>.</li>
+</ul>
 <p>This can be hooked into the larger interoperability picture with glTF / MaterialX and USD as shown in the example below:</p>
-<p><img src="./documents/results/usd_gltf_mtlx_desk_web.png" alt="" width="100%" class="inline"/></p>
+<p><img src="https://kwokcb.github.io/materialxusd/documents/results/usd_gltf_mtlx_desk_web.png" alt="" width="100%" class="inline"/></p>
 <blockquote class="doxtable">
 <p>&zwj;Figure: MaterialX material from <a href="https://matlib.gpuopen.com/main/materials/all?search=TH%20Cath&amp;material=6e933741-eeb3-4956-b756-0b44f08aa6cf">AMD GPUOpen library</a>. Converted to USD and displayed in <code>usdview</code> (top left), converted to glTF and display in ThreeJS editor (top right). Display in MaterialX Viewer (bottom left), and Web editor (bottom right) </p>
 </blockquote>
@@ -164,6 +167,7 @@ Issues</h2>
 <details >
 <summary >
 Notes</summary>
+<p></p>
 <ul>
 <li>Color space and Real World Units:<ul>
 <li>Color space meta-data appears to work properly as do explicit color space conversion nodes. <br  />
@@ -187,6 +191,7 @@ Usage</h1>
 Installation and Usage</h2>
 <p>Install from the root folder:</p>
 <div class="fragment"><div class="line">pip install .</div>
+</div><!-- fragment --><p> or install from <code>PyPi</code> </p><div class="fragment"><div class="line">pip install materialxusd</div>
 </div><!-- fragment --><p>Run using the <code>materialxusd</code> command. Currently there are two commands for:</p><ul>
 <li>MaterialX to USD conversion which can be run using</li>
 </ul>

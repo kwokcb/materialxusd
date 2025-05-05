@@ -1,11 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools<=67.7.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "materialxusd"
 version = "0.25.05"
 description = "Utilities for MaterialX and USD"
+authors = [
+  { name="Bernard Kwok", email="kwokcb@gmail.com" },
+]
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE"}

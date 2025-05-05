@@ -1,11 +1,11 @@
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:19: warning: Member logger (variable) of class materialxusd.materialxusd.MaterialxUSDConverter is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:237: warning: The following parameter of materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path, use_custom=False) is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:19: warning: Member logger (variable) of class source.materialxusd.materialxusd.MaterialxUSDConverter is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:237: warning: The following parameter of source.materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path, use_custom=False) is not documented:
   parameter 'use_custom'
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_custom.py:18: warning: Member logger (variable) of class materialxusd.materialxusd_custom.MtlxToUsd is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_custom.py:26: warning: Member logger (variable) of class materialxusd.materialxusd_custom.MtlxToUsd is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:21: warning: Member logger (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _stdlib (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _libFiles (variable) of class materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:147: warning: The following parameter of materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_downstream_materials(self, mx.Document doc, logger=None) is not documented:
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_custom.py:18: warning: Member logger (variable) of class source.materialxusd.materialxusd_custom.MtlxToUsd is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_custom.py:26: warning: Member logger (variable) of class source.materialxusd.materialxusd_custom.MtlxToUsd is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:21: warning: Member logger (variable) of class source.materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _stdlib (variable) of class source.materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:19: warning: Member _libFiles (variable) of class source.materialxusd.materialxusd_utils.MaterialXUsdUtilities is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:147: warning: The following parameter of source.materialxusd.materialxusd_utils.MaterialXUsdUtilities.add_downstream_materials(self, mx.Document doc, logger=None) is not documented:
   parameter 'logger'
-D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:116: warning: argument 'logger' of command @param is not found in the argument list of materialxusd.materialxusd_utils.MaterialXUsdUtilities::add_materials_for_shaders(self, mx.Document doc)
+D:/Work/materialx/materialxusd/source/materialxusd/materialxusd_utils.py:116: warning: argument 'logger' of command @param is not found in the argument list of source.materialxusd.materialxusd_utils.MaterialXUsdUtilities::add_materials_for_shaders(self, mx.Document doc)

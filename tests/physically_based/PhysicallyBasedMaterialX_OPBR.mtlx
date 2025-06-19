@@ -1,0 +1,870 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <!--Physically Based Materials from https://api.physicallybased.info -->
+  <!--  Content Author: Anton Palmqvist, https://antonpalmqvist.com/ -->
+  <!--  Content processsed via REST API and mapped to MaterialX V1.39.3 -->
+  <!--  Target Shading Model: open_pbr_surface -->
+  <!--  Utility Author: Bernard Kwok. kwokcb@gmail.com -->
+  <!-- Generated shader: Aluminum_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Aluminum_OPBR_SHD_PBM" type="surfaceshader" uiname="Aluminum" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/aluminum.jpeg">
+    <input name="base_color" type="color3" value="0.933,0.912,0.853" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.981,0.979,0.961" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Aluminum_OPBR_MAT_PBM -->
+  <surfacematerial name="Aluminum_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Aluminum_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Banana_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Banana_OPBR_SHD_PBM" type="surfaceshader" uiname="Banana" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/banana.jpeg">
+    <input name="base_color" type="color3" value="0.634,0.532,0.111" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Banana_OPBR_MAT_PBM -->
+  <surfacematerial name="Banana_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Banana_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Blackboard_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Blackboard_OPBR_SHD_PBM" type="surfaceshader" uiname="Blackboard" uifolder="Manmade" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/blackboard.jpeg">
+    <input name="base_color" type="color3" value="0.039,0.039,0.039" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Blackboard_OPBR_MAT_PBM -->
+  <surfacematerial name="Blackboard_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Blackboard_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Blood_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Blood_OPBR_SHD_PBM" type="surfaceshader" uiname="Blood" uifolder="Human" doc="The color of blood depends on its oxygen level. When there is plenty of oxygen, the color is a brighter red. The reason is because of a protein called hemoglobin, which carries the oxygen in your blood. When hemoglobin has a full oxygen load, it has a bright red color, and when it's deoxygenated it's a darker red. For example, arterial and capillary blood is bright, and venous blood is dark.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/blood.jpeg">
+    <input name="base_color" type="color3" value="0.64448,0.003,0.005" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.301" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="0.64448,0.003,0.005" />
+  </open_pbr_surface>
+  <!-- Generated material: Blood_OPBR_MAT_PBM -->
+  <surfacematerial name="Blood_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Blood_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Bone_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Bone_OPBR_SHD_PBM" type="surfaceshader" uiname="Bone" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/bone.jpeg">
+    <input name="base_color" type="color3" value="0.793,0.793,0.664" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Bone_OPBR_MAT_PBM -->
+  <surfacematerial name="Bone_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Bone_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Brass_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Brass_OPBR_SHD_PBM" type="surfaceshader" uiname="Brass" uifolder="Metal" doc="Brass is an alloy of copper and zinc, with a bright and gold-like appearance. It is similar to bronze, another alloy containing copper that uses tin instead of zinc. Historically, the distinction between the two alloys has been less consistent and clear, and modern practice in museums and archaeology increasingly avoids both terms for historical objects in favor of the more general &quot;copper alloy&quot;.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/brass.jpeg">
+    <input name="base_color" type="color3" value="0.931,0.776,0.392" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.995,0.974,0.747" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Brass_OPBR_MAT_PBM -->
+  <surfacematerial name="Brass_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Brass_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Brick_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Brick_OPBR_SHD_PBM" type="surfaceshader" uiname="Brick" uifolder="Manmade" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/brick.jpeg">
+    <input name="base_color" type="color3" value="0.262,0.095,0.061" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Brick_OPBR_MAT_PBM -->
+  <surfacematerial name="Brick_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Brick_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Car_Paint_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Car_Paint_OPBR_SHD_PBM" type="surfaceshader" uiname="Car Paint" uifolder="Manmade" doc="Modern car paints are nearly always an acrylic polyurethane &quot;enamel&quot; with a pigmented basecoat and a clear topcoat. It may be described as &quot;acrylic&quot;, &quot;acrylic enamel&quot;, &quot;urethane&quot;, etc. and the clearcoat in particular may be described as a lacquer. The size of the metal flakes in metallic paints is typically between 100 to 400 microns in diameter. Modern automobile paint is applied in several layers, with a total thickness of around 100 μm (0.1mm).. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/car-paint.jpeg">
+    <input name="base_color" type="color3" value="0.1,0.1,0.1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Car_Paint_OPBR_MAT_PBM -->
+  <surfacematerial name="Car_Paint_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Car_Paint_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Carrot_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Carrot_OPBR_SHD_PBM" type="surfaceshader" uiname="Carrot" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/carrot.jpeg">
+    <input name="base_color" type="color3" value="0.713,0.17,0.026" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Carrot_OPBR_MAT_PBM -->
+  <surfacematerial name="Carrot_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Carrot_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Charcoal_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Charcoal_OPBR_SHD_PBM" type="surfaceshader" uiname="Charcoal" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/charcoal.jpeg">
+    <input name="base_color" type="color3" value="0.02,0.02,0.02" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Charcoal_OPBR_MAT_PBM -->
+  <surfacematerial name="Charcoal_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Charcoal_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Chocolate_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Chocolate_OPBR_SHD_PBM" type="surfaceshader" uiname="Chocolate" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/chocolate.jpeg">
+    <input name="base_color" type="color3" value="0.162,0.091,0.06" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Chocolate_OPBR_MAT_PBM -->
+  <surfacematerial name="Chocolate_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Chocolate_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Chromium_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Chromium_OPBR_SHD_PBM" type="surfaceshader" uiname="Chromium" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/chromium.jpeg">
+    <input name="base_color" type="color3" value="0.653,0.65,0.615" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.675,0.72,0.711" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Chromium_OPBR_MAT_PBM -->
+  <surfacematerial name="Chromium_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Chromium_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Cobalt_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Cobalt_OPBR_SHD_PBM" type="surfaceshader" uiname="Cobalt" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/cobalt.jpeg">
+    <input name="base_color" type="color3" value="0.715,0.702,0.622" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.731,0.775,0.715" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Cobalt_OPBR_MAT_PBM -->
+  <surfacematerial name="Cobalt_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Cobalt_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Coffee_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Coffee_OPBR_SHD_PBM" type="surfaceshader" uiname="Coffee" uifolder="Liquid" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/coffee.jpeg">
+    <input name="base_color" type="color3" value="0.027,0.019,0.018" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.33" />
+    <input name="subsurface_radius" type="float" value="10,5,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Coffee_OPBR_MAT_PBM -->
+  <surfacematerial name="Coffee_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Coffee_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Concrete_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Concrete_OPBR_SHD_PBM" type="surfaceshader" uiname="Concrete" uifolder="Manmade" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/concrete.jpeg">
+    <input name="base_color" type="color3" value="0.51,0.51,0.51" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Concrete_OPBR_MAT_PBM -->
+  <surfacematerial name="Concrete_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Concrete_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Cooking_Oil_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Cooking_Oil_OPBR_SHD_PBM" type="surfaceshader" uiname="Cooking Oil" uifolder="Liquid" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/cooking-oil.jpeg">
+    <input name="base_color" type="color3" value="0.737911,0.687,0.091" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.47" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="0.737911,0.687,0.091" />
+  </open_pbr_surface>
+  <!-- Generated material: Cooking_Oil_OPBR_MAT_PBM -->
+  <surfacematerial name="Cooking_Oil_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Cooking_Oil_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Copper_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Copper_OPBR_SHD_PBM" type="surfaceshader" uiname="Copper" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/copper.jpeg">
+    <input name="base_color" type="color3" value="0.988,0.688,0.448" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.999,0.946,0.705" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Copper_OPBR_MAT_PBM -->
+  <surfacematerial name="Copper_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Copper_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Diamond_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Diamond_OPBR_SHD_PBM" type="surfaceshader" uiname="Diamond" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/diamond.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="2.4168" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="55.3" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Diamond_OPBR_MAT_PBM -->
+  <surfacematerial name="Diamond_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Diamond_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Egg_Shell_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Egg_Shell_OPBR_SHD_PBM" type="surfaceshader" uiname="Egg Shell" uifolder="Organic" doc="White hen egg from grocery store.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/egg-shell.jpeg">
+    <input name="base_color" type="color3" value="0.61,0.624,0.631" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Egg_Shell_OPBR_MAT_PBM -->
+  <surfacematerial name="Egg_Shell_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Egg_Shell_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Eye__cornea__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Eye__cornea__OPBR_SHD_PBM" type="surfaceshader" uiname="Eye (cornea)" uifolder="Human" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/eye-cornea.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.376" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Eye__cornea__OPBR_MAT_PBM -->
+  <surfacematerial name="Eye__cornea__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Eye__cornea__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Eye__lens__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Eye__lens__OPBR_SHD_PBM" type="surfaceshader" uiname="Eye (lens)" uifolder="Human" doc="The refractive index of human lens varies from approximately 1.406 in the central layers down to 1.386 in less dense layers of the lens. This index gradient enhances the optical power of the lens.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/eye-lens.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.386" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Eye__lens__OPBR_MAT_PBM -->
+  <surfacematerial name="Eye__lens__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Eye__lens__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Eye__sclera__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Eye__sclera__OPBR_SHD_PBM" type="surfaceshader" uiname="Eye (sclera)" uifolder="Human" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/eye-sclera.jpeg">
+    <input name="base_color" type="color3" value="0.68,0.49,0.37" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+  </open_pbr_surface>
+  <!-- Generated material: Eye__sclera__OPBR_MAT_PBM -->
+  <surfacematerial name="Eye__sclera__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Eye__sclera__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Gasoline_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Gasoline_OPBR_SHD_PBM" type="surfaceshader" uiname="Gasoline" uifolder="Liquid" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gasoline.jpeg">
+    <input name="base_color" type="color3" value="1,0.97,0.617" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.427" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,0.97,0.617" />
+  </open_pbr_surface>
+  <!-- Generated material: Gasoline_OPBR_MAT_PBM -->
+  <surfacematerial name="Gasoline_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Gasoline_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Glass_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Glass_OPBR_SHD_PBM" type="surfaceshader" uiname="Glass" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/glass.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.52" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="64" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Glass_OPBR_MAT_PBM -->
+  <surfacematerial name="Glass_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Glass_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Gold_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Gold_OPBR_SHD_PBM" type="surfaceshader" uiname="Gold" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gold.jpeg">
+    <input name="base_color" type="color3" value="1.0,0.72,0.315" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="1.0,0.973,0.597" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Gold_OPBR_MAT_PBM -->
+  <surfacematerial name="Gold_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Gold_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Gray_Card_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Gray_Card_OPBR_SHD_PBM" type="surfaceshader" uiname="Gray Card" uifolder="Manmade" doc="In photography and computer graphics, middle gray is a tone that is perceptually about halfway between black and white on a lightness scale. Light meters and cameras are often calibrated using an 18% gray card or a color reference card such as a ColorChecker. It is typically defined as 18% reflectance in visible light.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/gray-card.jpeg">
+    <input name="base_color" type="color3" value="0.18,0.18,0.18" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Gray_Card_OPBR_MAT_PBM -->
+  <surfacematerial name="Gray_Card_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Gray_Card_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Honey_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Honey_OPBR_SHD_PBM" type="surfaceshader" uiname="Honey" uifolder="Liquid" doc="Variations in its water content alter its refractive index. Typically, the refractive index for honey ranges from 1.504 at 13% water content to 1.474 at 25%.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/honey.jpeg">
+    <input name="base_color" type="color3" value="0.83077,0.397,0.038" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.504" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="0.83077,0.397,0.038" />
+  </open_pbr_surface>
+  <!-- Generated material: Honey_OPBR_MAT_PBM -->
+  <surfacematerial name="Honey_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Honey_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Ice_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Ice_OPBR_SHD_PBM" type="surfaceshader" uiname="Ice" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/ice.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.3098" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="64.87" />
+  </open_pbr_surface>
+  <!-- Generated material: Ice_OPBR_MAT_PBM -->
+  <surfacematerial name="Ice_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Ice_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Iron_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Iron_OPBR_SHD_PBM" type="surfaceshader" uiname="Iron" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/iron.jpeg">
+    <input name="base_color" type="color3" value="0.542,0.512,0.458" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.612,0.541,0.422" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Iron_OPBR_MAT_PBM -->
+  <surfacematerial name="Iron_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Iron_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Ketchup_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Ketchup_OPBR_SHD_PBM" type="surfaceshader" uiname="Ketchup" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/ketchup.jpeg">
+    <input name="base_color" type="color3" value="0.164,0.006,0.002" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.1" />
+    <input name="specular_ior" type="float" value="1.3" />
+    <input name="subsurface_radius" type="float" value="0.476,0.058,0.039" />
+  </open_pbr_surface>
+  <!-- Generated material: Ketchup_OPBR_MAT_PBM -->
+  <surfacematerial name="Ketchup_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Ketchup_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Lead_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Lead_OPBR_SHD_PBM" type="surfaceshader" uiname="Lead" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/lead.jpeg">
+    <input name="base_color" type="color3" value="0.641,0.622,0.59" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.819,0.804,0.769" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Lead_OPBR_MAT_PBM -->
+  <surfacematerial name="Lead_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Lead_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Lemon_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Lemon_OPBR_SHD_PBM" type="surfaceshader" uiname="Lemon" uifolder="Organic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/lemon.jpeg">
+    <input name="base_color" type="color3" value="0.718,0.483,0" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Lemon_OPBR_MAT_PBM -->
+  <surfacematerial name="Lemon_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Lemon_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Marble_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Marble_OPBR_SHD_PBM" type="surfaceshader" uiname="Marble" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/marble.jpeg">
+    <input name="base_color" type="color3" value="0.83,0.791,0.753" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+    <input name="subsurface_radius" type="float" value="0.851,0.557,0.395" />
+  </open_pbr_surface>
+  <!-- Generated material: Marble_OPBR_MAT_PBM -->
+  <surfacematerial name="Marble_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Marble_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Mercury_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Mercury_OPBR_SHD_PBM" type="surfaceshader" uiname="Mercury" uifolder="Metal" doc="Mercury is the only metallic element that is known to be liquid at standard conditions.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/mercury.jpeg">
+    <input name="base_color" type="color3" value="0.799,0.777,0.721" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.901,0.91,0.89" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Mercury_OPBR_MAT_PBM -->
+  <surfacematerial name="Mercury_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Mercury_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Milk_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Milk_OPBR_SHD_PBM" type="surfaceshader" uiname="Milk" uifolder="Liquid" doc="Cow's milk. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/milk.jpeg">
+    <input name="base_color" type="color3" value="0.815,0.813,0.682" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.348" />
+    <input name="subsurface_radius" type="float" value="1.842,1.044,0.35" />
+  </open_pbr_surface>
+  <!-- Generated material: Milk_OPBR_MAT_PBM -->
+  <surfacematerial name="Milk_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Milk_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: MIT_Black_OPBR_SHD_PBM -->
+  <open_pbr_surface name="MIT_Black_OPBR_SHD_PBM" type="surfaceshader" uiname="MIT Black" uifolder="Manmade" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/mit-black.jpeg">
+    <input name="base_color" type="color3" value="5e-05,5e-05,5e-05" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.99" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: MIT_Black_OPBR_MAT_PBM -->
+  <surfacematerial name="MIT_Black_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="MIT_Black_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Musou_Black_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Musou_Black_OPBR_SHD_PBM" type="surfaceshader" uiname="Musou Black" uifolder="Manmade" doc="Musou Black is one of the darkest paints available. Darker materials can be achieved by using technology such as carbon nanotubes, like the MIT Black material.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/musou-black.jpeg">
+    <input name="base_color" type="color3" value="0.006,0.006,0.006" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.9" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Musou_Black_OPBR_MAT_PBM -->
+  <surfacematerial name="Musou_Black_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Musou_Black_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Nickel_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Nickel_OPBR_SHD_PBM" type="surfaceshader" uiname="Nickel" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/nickel.jpeg">
+    <input name="base_color" type="color3" value="0.664,0.606,0.495" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.824,0.798,0.68" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Nickel_OPBR_MAT_PBM -->
+  <surfacematerial name="Nickel_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Nickel_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Office_Paper_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Office_Paper_OPBR_SHD_PBM" type="surfaceshader" uiname="Office Paper" uifolder="Manmade" doc="Office paper contains optical brightening additives that absorb light in the ultraviolet and violet region (usually 340-370 nm), and re-emit light in the blue region (typically 420-470 nm) by fluorescence.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/office-paper.jpeg">
+    <input name="base_color" type="color3" value="0.794,0.834,0.884" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Office_Paper_OPBR_MAT_PBM -->
+  <surfacematerial name="Office_Paper_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Office_Paper_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Pearl_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Pearl_OPBR_SHD_PBM" type="surfaceshader" uiname="Pearl" uifolder="Organic" doc="The akoya pearl is a saltwater cultured pearl from the akoya oyster. Akoya are considered to be the classic pearl used for necklaces and other pearl jewelry. Nacre is the material of which pearls are composed and consists of aragonite crystal layers separated by conchiolin, a protein secreted by mollusk shells. The thickness of these layers determines the color of reflection from the nacre. The transmission interference color is complementary to the reflection interference color.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/pearl.jpeg">
+    <input name="base_color" type="color3" value="0.8,0.75,0.7" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.35" />
+    <input name="specular_ior" type="float" value="1.68" />
+    <input name="subsurface_radius" type="float" value="0.3,0.5,0.3" />
+    <input name="thin_film_thickness" type="float" value="420" />
+    <input name="thin_film_ior" type="float" value="2" />
+  </open_pbr_surface>
+  <!-- Generated material: Pearl_OPBR_MAT_PBM -->
+  <surfacematerial name="Pearl_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Pearl_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Petroleum_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Petroleum_OPBR_SHD_PBM" type="surfaceshader" uiname="Petroleum" uifolder="Liquid" doc="The viscosity of crude oil is sensitive to temperature.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/petroleum.jpeg">
+    <input name="base_color" type="color3" value="0.03,0.027,0.024" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+    <input name="subsurface_radius" type="float" value="3,1,0.25" />
+  </open_pbr_surface>
+  <!-- Generated material: Petroleum_OPBR_MAT_PBM -->
+  <surfacematerial name="Petroleum_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Petroleum_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Plastic__Acrylic__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Plastic__Acrylic__OPBR_SHD_PBM" type="surfaceshader" uiname="Plastic (Acrylic)" uifolder="Plastic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/plastic-acrylic.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.4905" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="53.18" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Plastic__Acrylic__OPBR_MAT_PBM -->
+  <surfacematerial name="Plastic__Acrylic__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Plastic__Acrylic__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Plastic__PC__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Plastic__PC__OPBR_SHD_PBM" type="surfaceshader" uiname="Plastic (PC)" uifolder="Plastic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/plastic-pc.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5848" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="27.86" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Plastic__PC__OPBR_MAT_PBM -->
+  <surfacematerial name="Plastic__PC__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Plastic__PC__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Plastic__PET__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Plastic__PET__OPBR_SHD_PBM" type="surfaceshader" uiname="Plastic (PET)" uifolder="Plastic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/plastic-pet.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.575" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Plastic__PET__OPBR_MAT_PBM -->
+  <surfacematerial name="Plastic__PET__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Plastic__PET__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Plastic__PP__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Plastic__PP__OPBR_SHD_PBM" type="surfaceshader" uiname="Plastic (PP)" uifolder="Plastic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/plastic-pp.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.492" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Plastic__PP__OPBR_MAT_PBM -->
+  <surfacematerial name="Plastic__PP__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Plastic__PP__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Plastic__PVC__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Plastic__PVC__OPBR_SHD_PBM" type="surfaceshader" uiname="Plastic (PVC)" uifolder="Plastic" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/plastic-pvc.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.542" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Plastic__PVC__OPBR_MAT_PBM -->
+  <surfacematerial name="Plastic__PVC__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Plastic__PVC__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Platinum_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Platinum_OPBR_SHD_PBM" type="surfaceshader" uiname="Platinum" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/platinum.jpeg">
+    <input name="base_color" type="color3" value="0.695,0.638,0.541" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.816,0.786,0.671" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Platinum_OPBR_MAT_PBM -->
+  <surfacematerial name="Platinum_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Platinum_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Polyurethane_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Polyurethane_OPBR_SHD_PBM" type="surfaceshader" uiname="Polyurethane" uifolder="Plastic" doc="Modern car paints are nearly always an acrylic polyurethane &quot;enamel&quot; with a pigmented basecoat and a clear topcoat. It may be described as &quot;acrylic&quot;, &quot;acrylic enamel&quot;, &quot;urethane&quot;, etc. and the clearcoat in particular may be described as a lacquer.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/polyurethane.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.6" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Polyurethane_OPBR_MAT_PBM -->
+  <surfacematerial name="Polyurethane_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Polyurethane_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Quartz_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Quartz_OPBR_SHD_PBM" type="surfaceshader" uiname="Quartz" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/quartz.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.54" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="67.82" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Quartz_OPBR_MAT_PBM -->
+  <surfacematerial name="Quartz_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Quartz_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Salt_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Salt_OPBR_SHD_PBM" type="surfaceshader" uiname="Salt" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/salt.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.2" />
+    <input name="specular_ior" type="float" value="1.5441" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="42.89" />
+  </open_pbr_surface>
+  <!-- Generated material: Salt_OPBR_MAT_PBM -->
+  <surfacematerial name="Salt_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Salt_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Sand_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Sand_OPBR_SHD_PBM" type="surfaceshader" uiname="Sand" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/sand.jpeg">
+    <input name="base_color" type="color3" value="0.44,0.386,0.23074" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Sand_OPBR_MAT_PBM -->
+  <surfacematerial name="Sand_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Sand_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Sapphire_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Sapphire_OPBR_SHD_PBM" type="surfaceshader" uiname="Sapphire" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/sapphire.jpeg">
+    <input name="base_color" type="color3" value="0.67,0.764,0.855" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.7682" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="72.2" />
+    <input name="transmission_color" type="color3" value="0.67,0.764,0.855" />
+  </open_pbr_surface>
+  <!-- Generated material: Sapphire_OPBR_MAT_PBM -->
+  <surfacematerial name="Sapphire_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Sapphire_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Silicon_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Silicon_OPBR_SHD_PBM" type="surfaceshader" uiname="Silicon" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/silicon.jpeg">
+    <input name="base_color" type="color3" value="0.351,0.367,0.394" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.081,0,0.004" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Silicon_OPBR_MAT_PBM -->
+  <surfacematerial name="Silicon_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Silicon_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Silver_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Silver_OPBR_SHD_PBM" type="surfaceshader" uiname="Silver" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/silver.jpeg">
+    <input name="base_color" type="color3" value="0.984,0.946,0.851" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.999,0.998,0.986" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Silver_OPBR_MAT_PBM -->
+  <surfacematerial name="Silver_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Silver_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_I_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_I_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin I" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-i.jpeg">
+    <input name="base_color" type="color3" value="0.847,0.638,0.552" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.482,0.169,0.109" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_I_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_I_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_I_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_II_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_II_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin II" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-ii.jpeg">
+    <input name="base_color" type="color3" value="0.799,0.485,0.347" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.482,0.169,0.109" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_II_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_II_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_II_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_III_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_III_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin III" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-iii.jpeg">
+    <input name="base_color" type="color3" value="0.623,0.433,0.343" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.482,0.169,0.109" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_III_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_III_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_III_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_IV_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_IV_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin IV" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-iv.jpeg">
+    <input name="base_color" type="color3" value="0.436,0.227,0.131" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.367,0.137,0.068" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_IV_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_IV_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_IV_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_V_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_V_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin V" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-v.jpeg">
+    <input name="base_color" type="color3" value="0.283,0.148,0.079" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.367,0.137,0.068" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_V_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_V_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_V_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Skin_VI_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Skin_VI_OPBR_SHD_PBM" type="surfaceshader" uiname="Skin VI" uifolder="Human/Skin" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/skin-vi.jpeg">
+    <input name="base_color" type="color3" value="0.09,0.05,0.02" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.4" />
+    <input name="subsurface_radius" type="float" value="0.367,0.137,0.068" />
+  </open_pbr_surface>
+  <!-- Generated material: Skin_VI_OPBR_MAT_PBM -->
+  <surfacematerial name="Skin_VI_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Skin_VI_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Snow_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Snow_OPBR_SHD_PBM" type="surfaceshader" uiname="Snow" uifolder="Crystal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/snow.jpeg">
+    <input name="base_color" type="color3" value="0.85,0.85,0.85" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.3098" />
+  </open_pbr_surface>
+  <!-- Generated material: Snow_OPBR_MAT_PBM -->
+  <surfacematerial name="Snow_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Snow_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Soap_Bubble_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Soap_Bubble_OPBR_SHD_PBM" type="surfaceshader" uiname="Soap Bubble" uifolder="Organic" doc="The colors of a soap bubble are the result of an interaction between the light reflected from the front and back surfaces of the soap film, a phenomenon known as thin-film interference. The thickness of a soap bubble can range between 10 nm and 1000 nm. It's thinner at the top due to gravity.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/soap-bubble.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="thin_film_thickness" type="float" value="500" />
+    <input name="thin_film_ior" type="float" value="1.4" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Soap_Bubble_OPBR_MAT_PBM -->
+  <surfacematerial name="Soap_Bubble_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Soap_Bubble_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Stainless_Steel_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Stainless_Steel_OPBR_SHD_PBM" type="surfaceshader" uiname="Stainless Steel" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/stainless-steel.jpeg">
+    <input name="base_color" type="color3" value="0.685,0.637,0.554" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.804,0.791,0.714" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Stainless_Steel_OPBR_MAT_PBM -->
+  <surfacematerial name="Stainless_Steel_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Stainless_Steel_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Tire_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Tire_OPBR_SHD_PBM" type="surfaceshader" uiname="Tire" uifolder="Manmade" doc="Car tire.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/tire.jpeg">
+    <input name="base_color" type="color3" value="0.023,0.023,0.023" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Tire_OPBR_MAT_PBM -->
+  <surfacematerial name="Tire_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Tire_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Titanium_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Titanium_OPBR_SHD_PBM" type="surfaceshader" uiname="Titanium" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/titanium.jpeg">
+    <input name="base_color" type="color3" value="0.633,0.578,0.503" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.728,0.68,0.55" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Titanium_OPBR_MAT_PBM -->
+  <surfacematerial name="Titanium_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Titanium_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Toner__black__OPBR_SHD_PBM -->
+  <open_pbr_surface name="Toner__black__OPBR_SHD_PBM" type="surfaceshader" uiname="Toner (black)" uifolder="Manmade" doc="Black toner printed on office paper with linear sRGB values of 0, 0, 0.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/toner-black.jpeg">
+    <input name="base_color" type="color3" value="0.05,0.05,0.05" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0.5" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Toner__black__OPBR_MAT_PBM -->
+  <surfacematerial name="Toner__black__OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Toner__black__OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Tungsten_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Tungsten_OPBR_SHD_PBM" type="surfaceshader" uiname="Tungsten" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/tungsten.jpeg">
+    <input name="base_color" type="color3" value="0.518,0.495,0.442" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.461,0.413,0.206" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Tungsten_OPBR_MAT_PBM -->
+  <surfacematerial name="Tungsten_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Tungsten_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Vanadium_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Vanadium_OPBR_SHD_PBM" type="surfaceshader" uiname="Vanadium" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/vanadium.jpeg">
+    <input name="base_color" type="color3" value="0.547,0.525,0.506" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.474,0.426,0.175" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Vanadium_OPBR_MAT_PBM -->
+  <surfacematerial name="Vanadium_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Vanadium_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Water_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Water_OPBR_SHD_PBM" type="surfaceshader" uiname="Water" uifolder="Liquid" doc="While relatively small quantities of water appear to be colorless, pure water has a slight blue color that becomes deeper as the thickness of the observed sample increases. The hue of water is an intrinsic property and is caused by selective absorption and scattering of white light. Dissolved elements or suspended impurities may give water a different color.. Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/water.jpeg">
+    <input name="base_color" type="color3" value="1,1,1" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.3325" />
+    <input name="transmission_weight" type="float" value="1" />
+    <input name="transmission_dispersion_abbe_number" type="float" value="55.78" />
+    <input name="transmission_color" type="color3" value="1,1,1" />
+  </open_pbr_surface>
+  <!-- Generated material: Water_OPBR_MAT_PBM -->
+  <surfacematerial name="Water_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Water_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Whiteboard_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Whiteboard_OPBR_SHD_PBM" type="surfaceshader" uiname="Whiteboard" uifolder="Manmade" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/whiteboard.jpeg">
+    <input name="base_color" type="color3" value="0.869,0.867,0.771" />
+    <input name="base_metalness" type="float" value="0" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Whiteboard_OPBR_MAT_PBM -->
+  <surfacematerial name="Whiteboard_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Whiteboard_OPBR_SHD_PBM" />
+  </surfacematerial>
+  <!-- Generated shader: Zinc_OPBR_SHD_PBM -->
+  <open_pbr_surface name="Zinc_OPBR_SHD_PBM" type="surfaceshader" uiname="Zinc" uifolder="Metal" doc="Reference: https://raw.githubusercontent.com/AntonPalmqvist/physically-based-api/main/images/renders/cycles/600/zinc.jpeg">
+    <input name="base_color" type="color3" value="0.826,0.842,0.801" />
+    <input name="base_metalness" type="float" value="1" />
+    <input name="specular_color" type="color3" value="0.854,0.922,0.923" />
+    <input name="specular_roughness" type="float" value="0" />
+    <input name="specular_ior" type="float" value="1.5" />
+  </open_pbr_surface>
+  <!-- Generated material: Zinc_OPBR_MAT_PBM -->
+  <surfacematerial name="Zinc_OPBR_MAT_PBM" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="Zinc_OPBR_SHD_PBM" />
+  </surfacematerial>
+</materialx>

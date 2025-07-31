@@ -21,6 +21,7 @@ import shutil
 import materialxusd_utils as mxusd_utils
 import materialxusd as mxusd
 import materialxusd_custom as mxcust
+import MaterialX as mx
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
@@ -175,7 +176,6 @@ def handle_preprocess_mtlx(data):
         if options.get('add_downstream_materials', True):
             ws_logger.info("Adding downstream materials...")
             try:
-                
                 # Check if we have the function available
                 if not hasattr(utils, 'add_downstream_materials'):
                     raise AttributeError("add_downstream_materials function not found in utils")
@@ -187,21 +187,34 @@ def handle_preprocess_mtlx(data):
                 if downstream_added > 0:
                     ws_logger.info(f"Added {downstream_added} downstream materials")
             except Exception as e:
-                # Restore logging level in case of error
-                logging.getLogger('MXUSDUTIL').setLevel(original_level)
                 ws_logger.warning(f"Failed to add downstream materials: {str(e)}")
                 # Continue processing even if this step fails
         
         if options.get('resolve_image_paths', True):
+            # Include absolute path of the input file's folder (like mtlx2usd.py)
+            resolved_image_paths = False
             image_paths = options.get('image_search_paths', [])
             if input_path:
                 image_paths.append(os.path.dirname(os.path.abspath(input_path)))
             
             if image_paths:
                 ws_logger.info(f"Resolving image paths with search paths: {image_paths}")
+                
+                # Use the same approach as mtlx2usd.py - compare before/after
+                beforeDoc = mx.prettyPrint(doc)
                 mx_search_path = utils.create_FileSearchPath(image_paths)
                 utils.resolve_image_file_paths(doc, mx_search_path)
-                ws_logger.info("Image path resolution completed")
+                afterDoc = mx.prettyPrint(doc)
+                
+                if beforeDoc != afterDoc:
+                    resolved_image_paths = True
+                    ws_logger.info(f"Successfully resolved image file paths using search paths: {mx_search_path.asString()}")
+                    total_changes += 1  # Count this as a change
+                else:
+                    ws_logger.info("No image paths needed resolution")
+                    
+                # Always set to True like mtlx2usd.py does for consistency
+                resolved_image_paths = True
         
         if options.get('encapsulate_nodes', False):
             nodegraph_name = options.get('nodegraph_name', 'root_graph')
@@ -246,7 +259,6 @@ def handle_preprocess_mtlx(data):
             if not success:
                 # Try to get more specific error information
                 try:
-                    import MaterialX as mx
                     mx.writeToXmlFile(doc, output_path)
                     success = True
                     ws_logger.info("Successfully wrote file using direct MaterialX call")
@@ -298,11 +310,34 @@ def handle_convert_to_usd(data):
         input_name = os.path.splitext(os.path.basename(input_path))[0]
         output_path = os.path.join(input_dir, f"{input_name}.usda")
         
+        # Set up scene assets paths
+        data_dir = os.path.join(os.path.dirname(__file__), 'data')
+        shaderball_path = os.path.join(data_dir, 'shaderball.usda') if options.get('add_geometry', True) else None
+        environment_path = os.path.join(data_dir, 'san_giuseppe_bridge.hdr') if options.get('add_environment', True) else None
+        camera_path = os.path.join(data_dir, 'camera.usda') if options.get('add_camera', True) else None
+        
+        # Ensure asset files exist, fallback to None if not found
+        if shaderball_path and not os.path.exists(shaderball_path):
+            ws_logger.warning(f"Geometry file not found: {shaderball_path}")
+            shaderball_path = None
+        if environment_path and not os.path.exists(environment_path):
+            ws_logger.warning(f"Environment file not found: {environment_path}")
+            environment_path = None
+        if camera_path and not os.path.exists(camera_path):
+            ws_logger.warning(f"Camera file not found: {camera_path}")
+            camera_path = None
+        
         if use_custom:
-            ws_logger.info("Using custom MaterialX to USD converter...")
-            # Use custom converter
-            mtlx_to_usd = mxcust.MtlxToUsd(ws_logger)
-            stage = mtlx_to_usd.emit(input_path, options.get('emit_all_value_elements', False))
+            ws_logger.info("Using complete MaterialX to USD converter with scene setup...")
+            # Use the complete conversion method that includes geometry, lights, and camera
+            stage, materials, geom_prim, light_prim, camera_prim = usd_converter.mtlx_to_usd(
+                input_path, 
+                shaderball_path, 
+                environment_path, 
+                None,  # material_file_path
+                camera_path,
+                use_custom=True
+            )
             
             if stage:
                 # Set required validation attributes
@@ -311,6 +346,19 @@ def handle_convert_to_usd(data):
                 # Export the stage
                 stage.GetRootLayer().Export(output_path)
                 ws_logger.info(f"USD stage exported to: {output_path}")
+                
+                # Log what was added
+                if materials:
+                    ws_logger.info(f"Added {len(materials)} materials to the scene")
+                if geom_prim:
+                    ws_logger.info(f"Added geometry: {geom_prim.GetPath()}")
+                if light_prim:
+                    ws_logger.info(f"Added environment light: {light_prim.GetPath()}")
+                if camera_prim:
+                    ws_logger.info(f"Added camera: {camera_prim.GetPath()}")
+            else:
+                emit('error', {'message': 'Failed to create USD stage'})
+                return
         else:
             ws_logger.info("Using built-in USD MaterialX conversion...")
             # Use built-in USD conversion

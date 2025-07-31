@@ -153,11 +153,27 @@
                             Upload MaterialX File
                         </h5>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-3">
+                    <div class="card-body">                        <div class="mb-3">
                             <label for="mtlx-file" class="form-label">Select MaterialX (.mtlx) file:</label>
                             <input type="file" class="form-control" id="mtlx-file" accept=".mtlx">
+                            <div class="form-text">
+                                For best texture resolution, also select the folder containing your MaterialX file below.
+                            </div>
                         </div>
+                        
+                        <div class="mb-3">
+                            <label for="mtlx-directory" class="form-label">Select folder containing MaterialX file (optional):</label>
+                            <input type="file" class="form-control" id="mtlx-directory" webkitdirectory multiple>
+                            <div class="form-text">
+                                This helps resolve relative texture paths in your MaterialX file. Select the same folder where your .mtlx file is located.
+                            </div>
+                        </div>
+                        
+                        <div id="directory-info" class="alert alert-info d-none">
+                            <i class="bi bi-folder"></i>
+                            <span id="directory-info-text"></span>
+                        </div>
+                        
                         <div id="file-info" class="alert alert-success d-none">
                             <i class="bi bi-check-circle"></i>
                             <span id="file-info-text"></span>
@@ -273,13 +289,29 @@
                                     Convert preprocessed MaterialX file
                                 </label>
                             </div>
-                        </div>
-
-                        <div class="mb-3">
+                        </div>                        <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="use-custom-converter" checked>
                                 <label class="form-check-label" for="use-custom-converter">
                                     Use custom MaterialX to USD converter
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-geometry" checked>
+                                <label class="form-check-label" for="add-geometry">
+                                    Add geometry (shaderball)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-environment" checked>
+                                <label class="form-check-label" for="add-environment">
+                                    Add environment lighting
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-camera" checked>
+                                <label class="form-check-label" for="add-camera">
+                                    Add camera
                                 </label>
                             </div>
                             <div class="form-check">
@@ -359,14 +391,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
 
     <script>        // Global variables
-        let socket;
-        let sessionData = {
+        let socket;        let sessionData = {
             originalFile: null,
             preprocessedFile: null,
             tempDir: null,
             originalContent: null,
             preprocessedContent: null,
-            usdContent: null
+            usdContent: null,
+            selectedDirectory: null,
+            directoryFiles: []
         };
 
         // Initialize Socket.IO connection
@@ -641,30 +674,117 @@
                 logMessage('Failed to copy to clipboard', 'error');
             });
         }        // Event Handlers
+        function handleDirectorySelection() {
+            const directoryInput = document.getElementById('mtlx-directory');
+            const files = directoryInput.files;
+            
+            console.log('Selected directory files:', files);
+            console.log('Number of files:', files ? files.length : 0);
+            
+            if (!files || files.length === 0) {
+                sessionData.selectedDirectory = null;
+                sessionData.directoryFiles = [];
+                document.getElementById('directory-info').classList.add('d-none');
+                return;
+            }
+            
+            // Store directory information
+            sessionData.directoryFiles = Array.from(files);
+            
+            // Get the common directory path from the first file
+            if (files[0].webkitRelativePath) {
+                const firstPath = files[0].webkitRelativePath;
+                console.log('First file path:', firstPath);
+                const dirParts = firstPath.split('/');
+                sessionData.selectedDirectory = dirParts[0]; // Root directory name
+                
+                console.log('Directory parts:', dirParts);
+                console.log('Selected directory name:', sessionData.selectedDirectory);
+                
+                // Count texture files immediately to verify filtering
+                const textureExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.exr', '.hdr', '.tx'];
+                const textureFiles = sessionData.directoryFiles.filter(f => {
+                    const hasTextureExt = textureExtensions.some(ext => f.name.toLowerCase().endsWith(ext));
+                    if (hasTextureExt) {
+                        console.log('Found texture file:', f.name, 'at path:', f.webkitRelativePath);
+                    }
+                    return hasTextureExt;
+                });
+                
+                console.log('Total texture files found:', textureFiles.length);
+                
+                document.getElementById('directory-info').classList.remove('d-none');
+                document.getElementById('directory-info-text').textContent = 
+                    `Selected directory: ${sessionData.selectedDirectory} (${files.length} total files, ${textureFiles.length} texture files)`;
+                    
+                logMessage(`Directory selected: ${sessionData.selectedDirectory} with ${files.length} total files (${textureFiles.length} texture files)`, 'info');
+            }
+        }
+        
         function handleFileUpload() {
             const fileInput = document.getElementById('mtlx-file');
             const file = fileInput.files[0];
 
             if (!file) return;
 
-        if (!file.name.endsWith('.mtlx')) {
-            logMessage('Please select a .mtlx file', 'error');
-            return;
+            if (!file.name.endsWith('.mtlx')) {
+                logMessage('Please select a .mtlx file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Store the original content
+                sessionData.originalContent = e.target.result;
+
+                // Prepare data to send to backend
+                const uploadData = {
+                    content: e.target.result,
+                    filename: file.name
+                };
+                  // If a directory was selected, include directory information
+                if (sessionData.selectedDirectory && sessionData.directoryFiles.length > 0) {
+                    uploadData.directory_name = sessionData.selectedDirectory;
+                    
+                    console.log('Processing directory files for upload...');
+                    console.log('Directory name:', sessionData.selectedDirectory);
+                    console.log('Directory files count:', sessionData.directoryFiles.length);
+                    
+                    // Include information about texture files in the directory
+                    const textureExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.exr', '.hdr', '.tx'];
+                    const textureFiles = sessionData.directoryFiles
+                        .filter(f => {
+                            const isTexture = textureExtensions.some(ext => f.name.toLowerCase().endsWith(ext));
+                            if (isTexture) {
+                                console.log('Including texture file:', f.name, 'at path:', f.webkitRelativePath);
+                            }
+                            return isTexture;
+                        })
+                        .map(f => {
+                            const textureInfo = {
+                                name: f.name,
+                                path: f.webkitRelativePath,
+                                size: f.size
+                            };
+                            console.log('Mapped texture file:', textureInfo);
+                            return textureInfo;
+                        });
+                    
+                    uploadData.texture_files = textureFiles;
+                    
+                    console.log('Final texture files array:', textureFiles);
+                    console.log('Upload data:', uploadData);
+                    
+                    logMessage(`Found ${textureFiles.length} potential texture files in selected directory`, 'info');
+                }
+
+                socket.emit('upload_file', uploadData);
+
+                // Show the original file content
+                showOriginalFile();
+            };
+            reader.readAsText(file);
         }
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            // Store the original content
-            sessionData.originalContent = e.target.result;
-
-            socket.emit('upload_file', {
-                content: e.target.result,
-                filename: file.name
-            });            // Show the original file content
-            showOriginalFile();
-        };
-        reader.readAsText(file);
-    }
 
         function handlePreprocess() {
             if (!sessionData.originalFile) {
@@ -688,9 +808,7 @@
                 input_path: sessionData.originalFile,
                 options: options
             });
-        }
-
-        function handleConvert() {
+        }        function handleConvert() {
             const usePreprocessed = document.getElementById('use-preprocessed').checked;
             const inputPath = usePreprocessed ? sessionData.preprocessedFile : sessionData.originalFile;
 
@@ -701,6 +819,9 @@
 
             const options = {
                 use_custom_converter: document.getElementById('use-custom-converter').checked,
+                add_geometry: document.getElementById('add-geometry').checked,
+                add_environment: document.getElementById('add-environment').checked,
+                add_camera: document.getElementById('add-camera').checked,
                 emit_all_value_elements: document.getElementById('emit-all-elements').checked,
                 validate_output: document.getElementById('validate-output').checked
             };
@@ -709,14 +830,13 @@
                 input_path: inputPath,
                 options: options
             });
-        }
-
-        // Initialize when page loads
+        }        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function () {
             initializeSocket();
 
-            // File upload handler
+            // File upload handlers
             document.getElementById('mtlx-file').addEventListener('change', handleFileUpload);
+            document.getElementById('mtlx-directory').addEventListener('change', handleDirectorySelection);
 
             // Button handlers
             document.getElementById('preprocess-btn').addEventListener('click', handlePreprocess);

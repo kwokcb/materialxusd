@@ -1,3 +1,15 @@
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:21: warning: Member GITHUB_TOKEN (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:22: warning: Member REPO_OWNER (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:23: warning: Member REPO_NAME (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:34: warning: Member RELEASES_API_URL (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:233: warning: Member _remove_zip_after_extract (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:25: warning: Member _version_count (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:26: warning: Member _version_number (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:27: warning: Member _download_directory (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:28: warning: Member _target_file_names (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:29: warning: Member _chunk_size (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:30: warning: Member _remove_zip_after_extract (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
+D:/Work/materialx/materialxusd/source/materialxusd/MaterialXDownloader.py:31: warning: Member _folder_filter (variable) of class source.materialxusd.MaterialXDownloader.MaterialXDownloader is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:19: warning: Member logger (variable) of class source.materialxusd.materialxusd.MaterialxUSDConverter is not documented.
 D:/Work/materialx/materialxusd/source/materialxusd/materialxusd.py:237: warning: The following parameter of source.materialxusd.materialxusd.MaterialxUSDConverter.mtlx_to_usd(self, str input_usd_path, str shaderball_path, str environment_path, str material_file_path, str camera_path, use_custom=False) is not documented:
   parameter 'use_custom'

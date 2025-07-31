@@ -17,6 +17,7 @@ This can be hooked into the larger interoperability picture with glTF / Material
 
 ### Available Components
 
+- `mtlxdownload.py` : Utility to download releases or source folders (such as libraries, or resources) from MaterialX.
 - `mtlx2usd.py` : Utility which takes a MaterialX document and creates a corresponding USD document with scene geometry, lights, and camera. 
 
   The main intent is currently to be able to consume documents from the MaterialX render test suite but any MaterialX file can be used as input.

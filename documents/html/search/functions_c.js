@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_5fdocument_0',['write_document',['../classsource_1_1materialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#ab374dcfb092453a20f9be17527c8fb81',1,'source::materialxusd::materialxusd_utils::MaterialXUsdUtilities']]]
+  ['validate_5fstage_0',['validate_stage',['../classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#aca957fa79bf2d7423c686e85a4269fbf',1,'source::materialxusd::materialxusd::MaterialxUSDConverter']]]
 ];

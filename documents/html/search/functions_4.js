@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['find_5ffirst_5fcamera_0',['find_first_camera',['../classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a8e96939fa66d8f77d10e2dc02871d757',1,'source::materialxusd::materialxusd::MaterialxUSDConverter']]],
-  ['find_5ffirst_5fvalid_5fprim_1',['find_first_valid_prim',['../classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a90b0c3056c24a712ed514d7aa4f19996',1,'source::materialxusd::materialxusd::MaterialxUSDConverter']]],
-  ['find_5fmaterials_2',['find_materials',['../classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html#a79421701c56fa9c33ba70216fc02c0fe',1,'source::materialxusd::materialxusd::MaterialxUSDConverter']]],
-  ['find_5fmaterialx_5fnodes_3',['find_materialx_nodes',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a4175511e312a9b82bde744a51250ccf5',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]]
+  ['emit_0',['emit',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a5936c26ff5b7c5ef18d14fab2e04f5e4',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['emit_5fdocument_5fmetadata_1',['emit_document_metadata',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#ae5941df0dd6523d392319800e8564959',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['emit_5fusd_5fconnections_2',['emit_usd_connections',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a901fe3b1de04f654a7449e426a436f11',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['emit_5fusd_5fshader_5fgraph_3',['emit_usd_shader_graph',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#a38c24d5897bc56d24194f13bed3a7b1c',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['emit_5fusd_5fvalue_5felements_4',['emit_usd_value_elements',['../classsource_1_1materialxusd_1_1materialxusd__custom_1_1_mtlx_to_usd.html#aa5367a2dec6d135d965ee7b7701ee579',1,'source::materialxusd::materialxusd_custom::MtlxToUsd']]],
+  ['encapsulate_5ftop_5flevel_5fnodes_5',['encapsulate_top_level_nodes',['../classsource_1_1materialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#adf05bde48deeb98e0f669b5d11a25848',1,'source::materialxusd::materialxusd_utils::MaterialXUsdUtilities']]],
+  ['encapsulate_5ftop_5flevel_5fnodes_5ffile_6',['encapsulate_top_level_nodes_file',['../classsource_1_1materialxusd_1_1materialxusd__utils_1_1_material_x_usd_utilities.html#a00d2fb41dab271acac1942824b03d498',1,'source::materialxusd::materialxusd_utils::MaterialXUsdUtilities']]]
 ];

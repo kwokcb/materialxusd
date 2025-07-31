@@ -2,6 +2,9 @@ var annotated_dup =
 [
     [ "source", null, [
       [ "materialxusd", null, [
+        [ "MaterialXDownloader", null, [
+          [ "MaterialXDownloader", "classsource_1_1materialxusd_1_1_material_x_downloader_1_1_material_x_downloader.html", "classsource_1_1materialxusd_1_1_material_x_downloader_1_1_material_x_downloader" ]
+        ] ],
         [ "materialxusd", null, [
           [ "MaterialxUSDConverter", "classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter.html", "classsource_1_1materialxusd_1_1materialxusd_1_1_materialx_u_s_d_converter" ]
         ] ],

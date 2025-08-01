@@ -23,7 +23,11 @@ import materialxusd as mxusd
 import materialxusd_custom as mxcust
 import MaterialX as mx
 
-app = Flask(__name__)
+# Get the directory where this script is located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+template_dir = os.path.join(script_dir, 'templates')
+
+app = Flask(__name__, template_folder=template_dir)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
 socketio = SocketIO(app, cors_allowed_origins="*", logger=False, engineio_logger=False)
 
@@ -417,10 +421,10 @@ def handle_cleanup_session(data):
         emit('error', {'message': f'Error during cleanup: {str(e)}'})
 
 if __name__ == '__main__':
-    # Create templates directory if it doesn't exist
-    templates_dir = os.path.join(os.path.dirname(__file__), 'templates')
-    os.makedirs(templates_dir, exist_ok=True)
+    # Ensure templates directory exists
+    os.makedirs(template_dir, exist_ok=True)
     
     print("Starting MaterialX Web Application...")
+    print(f"Templates directory: {template_dir}")
     print("Open your browser and navigate to: http://localhost:5000")
     socketio.run(app, debug=True, host='0.0.0.0', port=5000)

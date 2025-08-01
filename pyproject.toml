@@ -30,3 +30,4 @@ materialxusd = "materialxusd.__main__:main"
 where = ["source"]
 [tool.setuptools.package-data]
 "materialxusd.data" = ["*.*"]
+"materialxusd.templates" = ["*.*"]

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "materialxusd"
-version = "0.25.05.1"
+version = "0.25.08"
 description = "Utilities for MaterialX and USD"
 authors = [
   { name="Bernard Kwok", email="kwokcb@gmail.com" },

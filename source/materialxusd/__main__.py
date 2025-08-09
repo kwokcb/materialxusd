@@ -7,7 +7,7 @@ def main() -> int:
     Main entry point for running commands in the package.
     '''
     parser = argparse.ArgumentParser(description='MaterialX / USD command line utilities.', add_help=False)
-    parser.add_argument('option', nargs='?', help='Possible options: m2u, pmtlx, getmtlx, webpage')
+    parser.add_argument('option', nargs='?', help='Possible options: m2u, pmtlx, getmtlx, webpage, mxgl')
     args, remaining_args = parser.parse_known_args()
 
     option = args.option
@@ -23,6 +23,8 @@ def main() -> int:
         cmd = 'preprocess_mtlx.py'
     elif option == 'getmtlx':
         cmd = 'mtlxdownload.py'
+    elif option == 'mxgl':
+        cmd = 'mxglslrender.py'
     elif option == 'webpage':
         cmd = 'flask_app.py'
     else:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "materialxusd"
-version = "0.25.05.1"
+version = "0.25.08"
 description = "Utilities for MaterialX and USD"
 authors = [
   { name="Bernard Kwok", email="kwokcb@gmail.com" },
@@ -29,4 +29,5 @@ materialxusd = "materialxusd.__main__:main"
 [tool.setuptools.packages.find]
 where = ["source"]
 [tool.setuptools.package-data]
-"materialxusd.data" = ["*.*"]
+"materialxusd.data" = ["**/*"]
+"materialxusd.templates" = ["**/*"]

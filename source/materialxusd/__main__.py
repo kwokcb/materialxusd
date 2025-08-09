@@ -1,37 +1,51 @@
 import sys, os
 import subprocess
+import argparse
 
 def main() -> int:
     '''
     Main entry point for running commands in the package.
     '''
-    argCount = len(sys.argv)
-    if argCount < 2:
-        print('No arguments provided. Use -h or --help for help.')
-        return 1
-    if sys.argv[1] == '-h' or sys.argv[1] == '--help':
-        print('Usage: python -m materialxusd <command> [options] where command is: m2u, pmtlx, or getmtlx')
+    parser = argparse.ArgumentParser(description='MaterialX / USD command line utilities.', add_help=False)
+    parser.add_argument('option', nargs='?', help='Possible options: m2u, pmtlx, getmtlx, webpage, mxgl')
+    args, remaining_args = parser.parse_known_args()
 
-    # Check if the command is valid
-    cmdArgs = sys.argv[1:]
-    if cmdArgs[0] == 'm2u':
-        cmdArgs[0] = 'mtlx2usd.py'
-    elif cmdArgs[0] == 'pmtlx':
-        cmdArgs[0] = 'preprocess_mtlx.py'
-    elif cmdArgs[0] == 'getmtlx':
-        cmdArgs[0] = 'mtlxdownload.py'
+    option = args.option
+      # If no option provided or help requested for main command, show help
+    if option is None or option in ['-h', '--help']:
+        parser.add_help = True
+        parser.print_help()
+        return 0
+    
+    if option == 'm2u':
+        cmd = 'mtlx2usd.py'
+    elif option == 'pmtlx':
+        cmd = 'preprocess_mtlx.py'
+    elif option == 'getmtlx':
+        cmd = 'mtlxdownload.py'
+    elif option == 'mxgl':
+        cmd = 'mxglslrender.py'
+    elif option == 'webpage':
+        cmd = 'flask_app.py'
     else:
-        print('Unknown command specified:', cmdArgs[0])
+        print(f'Unknown option specified: {option}')
+        parser.add_help = True
+        parser.print_help()
         return 1
     
-    # Build the command
+    # Build command with remaining arguments (for non-Flask commands)
+    cmdArgs = [cmd] + remaining_args
     cmd = ' '.join(cmdArgs)
     packageLocation = os.path.dirname(__file__)
     cmd = sys.executable + ' ' + packageLocation + '/' + cmd
     print('Running command:', cmd)
 
-    # Run the command
-    return subprocess.call(cmd, shell=True)
+    # Run the command and allow breaking with Ctrl+C / Cmd-C
+    try:
+        return subprocess.call(cmd, shell=True)
+    except KeyboardInterrupt:
+        print("\nProcess interrupted by user.")
+        return 130  # Standard exit code for interrupted process
 
 if __name__ == '__main__':
     sys.exit(main())

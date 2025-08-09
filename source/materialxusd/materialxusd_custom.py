@@ -33,7 +33,7 @@ class MtlxToUsd:
             else:                
                 self.logger.info(msg)
         else:
-            self.log(msg)
+            print(msg)
 
     def get_usd_types(self):
         '''

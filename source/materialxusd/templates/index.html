@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaterialX to USD Converter</title>
+
+    <!-- Bootstrap 5.3.2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <script>
+        // Theme switcher script - must be before any other scripts
+        (() => {
+            'use strict'
+            const getStoredTheme = () => localStorage.getItem('theme')
+            const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+            const getPreferredTheme = () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme) {
+                    return storedTheme
+                }
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+
+            const setTheme = theme => {
+                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark')
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', theme)
+                }
+            }
+
+            setTheme(getPreferredTheme())
+
+            const showActiveTheme = (theme, focus = false) => {
+                const themeSwitcher = document.querySelector('#bd-theme')
+
+                if (!themeSwitcher) {
+                    return
+                }
+
+                const themeSwitcherText = document.querySelector('#bd-theme-text')
+                const activeThemeIcon = document.querySelector('.theme-icon-active i')
+                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+                const iconOfActiveBtn = btnToActive.querySelector('i').dataset.themeIcon
+
+                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+                    element.classList.remove('active')
+                    element.setAttribute('aria-pressed', 'false')
+                })
+
+                btnToActive.classList.add('active')
+                btnToActive.setAttribute('aria-pressed', 'true')
+                activeThemeIcon.className = iconOfActiveBtn
+                const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
+                themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+
+                if (focus) {
+                    themeSwitcher.focus()
+                }
+            }
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    setTheme(getPreferredTheme())
+                }
+            })
+
+            window.addEventListener('DOMContentLoaded', () => {
+                showActiveTheme(getPreferredTheme())
+
+                document.querySelectorAll('[data-bs-theme-value]')
+                    .forEach(toggle => {
+                        toggle.addEventListener('click', () => {
+                            const theme = toggle.getAttribute('data-bs-theme-value')
+                            setStoredTheme(theme)
+                            setTheme(theme)
+                            showActiveTheme(theme, true)
+                        })
+                    })
+            })
+        })()
+    </script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-diagram-3"></i>
+                MaterialX to USD Converter
+            </a>
+
+            <!-- Theme switcher -->
+            <div class="dropdown ms-auto">
+                <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" id="bd-theme"
+                    type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+                    <span class="theme-icon-active me-2">
+                        <i class="bi bi-circle-half" data-theme-icon="bi bi-circle-half"></i>
+                    </span>
+                    <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="light" aria-pressed="false">
+                            <i class="bi bi-sun-fill me-2" data-theme-icon="bi bi-sun-fill"></i>
+                            Light
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                            aria-pressed="false">
+                            <i class="bi bi-moon-stars-fill me-2" data-theme-icon="bi bi-moon-stars-fill"></i>
+                            Dark
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="dropdown-item d-flex align-items-center active"
+                            data-bs-theme-value="auto" aria-pressed="true">
+                            <i class="bi bi-circle-half me-2" data-theme-icon="bi bi-circle-half"></i>
+                            Auto
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Connection Status -->
+        <div class="row mb-4">
+            <div class="col">
+                <div id="connection-status" class="alert alert-info d-none">
+                    <i class="bi bi-wifi"></i>
+                    <span id="connection-text">Connecting...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-file-earmark-arrow-up"></i>
+                            Upload MaterialX File
+                        </h5>
+                    </div>
+                    <div class="card-body">                        <div class="mb-3">
+                            <label for="mtlx-file" class="form-label">Select MaterialX (.mtlx) file:</label>
+                            <input type="file" class="form-control" id="mtlx-file" accept=".mtlx">
+                            <div class="form-text">
+                                For best texture resolution, also select the folder containing your MaterialX file below.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mtlx-directory" class="form-label">Select folder containing MaterialX file (optional):</label>
+                            <input type="file" class="form-control" id="mtlx-directory" webkitdirectory multiple>
+                            <div class="form-text">
+                                This helps resolve relative texture paths in your MaterialX file. Select the same folder where your .mtlx file is located.
+                            </div>
+                        </div>
+                        
+                        <div id="directory-info" class="alert alert-info d-none">
+                            <i class="bi bi-folder"></i>
+                            <span id="directory-info-text"></span>
+                        </div>
+                        
+                        <div id="file-info" class="alert alert-success d-none">
+                            <i class="bi bi-check-circle"></i>
+                            <span id="file-info-text"></span>
+                        </div>
+                        <div id="file-validation" class="d-none">
+                            <!-- Validation results will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processing Options -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <!-- Preprocessing Options -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-gear"></i>
+                            Preprocessing Options
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-materials" checked>
+                                <label class="form-check-label" for="add-materials">
+                                    Add materials for shaders
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-outputs" checked>
+                                <label class="form-check-label" for="add-outputs">
+                                    Add nodegraph output qualifiers
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-downstream" checked>
+                                <label class="form-check-label" for="add-downstream">
+                                    Add downstream materials
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="resolve-images" checked>
+                                <label class="form-check-label" for="resolve-images">
+                                    Resolve image file paths
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-geometry" checked>
+                                <label class="form-check-label" for="add-geometry">
+                                    Add explicit geometry streams
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="encapsulate-nodes">
+                                <label class="form-check-label" for="encapsulate-nodes">
+                                    Encapsulate top-level nodes
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 collapse" id="encapsulate-options">
+                            <label for="nodegraph-name" class="form-label">Nodegraph name:</label>
+                            <input type="text" class="form-control form-control-sm" id="nodegraph-name"
+                                value="root_graph">
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="remove-original" checked>
+                                <label class="form-check-label" for="remove-original">
+                                    Remove original nodes
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image-paths" class="form-label">Additional image search paths
+                                (comma-separated):</label>
+                            <input type="text" class="form-control form-control-sm" id="image-paths"
+                                placeholder="path1,path2,path3">
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="preprocess-btn" disabled>
+                            <i class="bi bi-arrow-right-circle"></i>
+                            Preprocess MaterialX
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- USD Conversion Options -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-arrow-repeat"></i>
+                            USD Conversion Options
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="input-source" id="use-original"
+                                    value="original" checked>
+                                <label class="form-check-label" for="use-original">
+                                    Convert original MaterialX file
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="input-source" id="use-preprocessed"
+                                    value="preprocessed" disabled>
+                                <label class="form-check-label" for="use-preprocessed">
+                                    Convert preprocessed MaterialX file
+                                </label>
+                            </div>
+                        </div>                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="use-custom-converter" checked>
+                                <label class="form-check-label" for="use-custom-converter">
+                                    Use custom MaterialX to USD converter
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-geometry" checked>
+                                <label class="form-check-label" for="add-geometry">
+                                    Add geometry (shaderball)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-environment" checked>
+                                <label class="form-check-label" for="add-environment">
+                                    Add environment lighting
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="add-camera" checked>
+                                <label class="form-check-label" for="add-camera">
+                                    Add camera
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="emit-all-elements">
+                                <label class="form-check-label" for="emit-all-elements">
+                                    Emit all value elements
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="validate-output" checked>
+                                <label class="form-check-label" for="validate-output">
+                                    Validate USD output
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-success" id="convert-btn" disabled>
+                            <i class="bi bi-arrow-right-circle"></i>
+                            Convert to USD
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress and Logs -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-terminal"></i>
+                            Processing Log
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="progress-container" class="mb-3 d-none">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    style="width: 100%">
+                                    <span id="progress-text">Processing...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="log-container" class="border rounded p-3 bg-body-tertiary"
+                            style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.875rem;">
+                            <div class="text-muted">Ready to process MaterialX files...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-file-earmark-text"></i>
+                            Results
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="results-container">
+                            <div class="text-muted">Results will appear here after processing...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3.2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+
+    <script>        // Global variables
+        let socket;        let sessionData = {
+            originalFile: null,
+            preprocessedFile: null,
+            tempDir: null,
+            originalContent: null,
+            preprocessedContent: null,
+            usdContent: null,
+            selectedDirectory: null,
+            directoryFiles: []
+        };
+
+        // Initialize Socket.IO connection
+        function initializeSocket() {
+            socket = io();
+
+            socket.on('connect', function () {
+                showConnectionStatus('Connected', 'success');
+                logMessage('Connected to server', 'success');
+            });
+
+            socket.on('disconnect', function () {
+                showConnectionStatus('Disconnected', 'danger');
+                logMessage('Disconnected from server', 'warning');
+            });
+
+            socket.on('connected', function (data) {
+                logMessage(`Session ID: ${data.session_id}`, 'info');
+            });
+
+            socket.on('error', function (data) {
+                logMessage(data.message, 'error');
+                hideProgress();
+            });
+
+            socket.on('log_message', function (data) {
+                logMessage(data.message, data.level);
+            });
+
+            socket.on('file_uploaded', function (data) {
+                sessionData.originalFile = data.temp_path;
+                sessionData.tempDir = data.temp_dir;
+
+                document.getElementById('file-info').classList.remove('d-none');
+                document.getElementById('file-info-text').textContent =
+                    `File uploaded: ${data.filename} (${formatBytes(data.size)})`;
+
+                // Enable processing buttons
+                document.getElementById('preprocess-btn').disabled = false;
+                document.getElementById('convert-btn').disabled = false;
+
+                logMessage(`File uploaded successfully: ${data.filename}`, 'success');
+            });
+
+            socket.on('file_validation', function (data) {
+                const validationDiv = document.getElementById('file-validation');
+                validationDiv.classList.remove('d-none');
+
+                if (data.valid) {
+                    validationDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <i class="bi bi-check-circle"></i>
+                            ${data.message}
+                        </div>
+                    `;
+                } else {
+                    validationDiv.innerHTML = `
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            ${data.message}
+                            <details class="mt-2">
+                                <summary>Validation Errors</summary>
+                                <pre class="mt-2 mb-0">${data.errors}</pre>
+                            </details>
+                        </div>
+                    `;
+                }
+            });
+            socket.on('operation_started', function (data) {
+                showProgress(data.message);
+                logMessage(data.message, 'info');
+            });
+
+            socket.on('preprocess_complete', function (data) {
+                hideProgress();
+
+                if (data.success) {
+                    sessionData.preprocessedFile = data.output_path;
+                    sessionData.preprocessedContent = data.output_content;
+
+                    // Enable the preprocessed option
+                    document.getElementById('use-preprocessed').disabled = false;
+
+                    logMessage(data.message, 'success');
+
+                    // Show the preprocessed content
+                    showAllFileContents();
+                } else {
+                    logMessage('Preprocessing failed', 'error');
+                }
+            });
+            socket.on('convert_complete', function (data) {
+                hideProgress();
+
+                if (data.success) {
+                    sessionData.usdContent = data.output_content;
+
+                    logMessage(data.message, 'success');
+
+                    // Show all content areas
+                    showAllFileContents();
+                } else {
+                    logMessage('Conversion failed', 'error');
+                }
+            });
+
+            socket.on('cleanup_complete', function (data) {
+                logMessage(data.message, 'info');
+            });
+        }
+
+        // UI Helper Functions
+        function showConnectionStatus(message, type) {
+            const statusDiv = document.getElementById('connection-status');
+            const textSpan = document.getElementById('connection-text');
+
+            statusDiv.className = `alert alert-${type}`;
+            statusDiv.classList.remove('d-none');
+            textSpan.textContent = message;
+        }
+
+        function logMessage(message, level = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const timestamp = new Date().toLocaleTimeString();
+
+            let iconClass, textClass;
+            switch (level) {
+                case 'error':
+                    iconClass = 'bi-x-circle-fill';
+                    textClass = 'text-danger';
+                    break;
+                case 'warning':
+                    iconClass = 'bi-exclamation-triangle-fill';
+                    textClass = 'text-warning';
+                    break;
+                case 'success':
+                    iconClass = 'bi-check-circle-fill';
+                    textClass = 'text-success';
+                    break;
+                case 'debug':
+                    iconClass = 'bi-bug-fill';
+                    textClass = 'text-muted';
+                    break;
+                default:
+                    iconClass = 'bi-info-circle-fill';
+                    textClass = 'text-info';
+            }
+
+            const logEntry = document.createElement('div');
+            logEntry.className = 'mb-1';
+            logEntry.innerHTML = `
+                <span class="text-muted">[${timestamp}]</span>
+                <i class="bi ${iconClass} ${textClass}"></i>
+                <span class="${textClass}">${message}</span>
+            `;
+
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function showProgress(message) {
+            const progressContainer = document.getElementById('progress-container');
+            const progressText = document.getElementById('progress-text');
+
+            progressContainer.classList.remove('d-none');
+            progressText.textContent = message;
+        }
+
+        function hideProgress() {
+            const progressContainer = document.getElementById('progress-container');
+            progressContainer.classList.add('d-none');
+        }
+
+        function showOriginalFile() {
+            const resultsContainer = document.getElementById('results-container');
+
+            resultsContainer.innerHTML = `
+                <div class="mb-3">
+                    <h6>Original MaterialX File</h6>
+                    <pre class="border rounded p-3 bg-body-tertiary" style="max-height: 400px; overflow: auto;"><code>${escapeHtml(sessionData.originalContent || '')}</code></pre>
+                </div>
+            `;
+        }
+
+        function showAllFileContents() {
+            const resultsContainer = document.getElementById('results-container');
+
+            let html = '';
+
+            // Original file
+            if (sessionData.originalContent) {
+                html += `
+                    <div class="mb-4">
+                        <h6>Original MaterialX File</h6>
+                        <pre class="border rounded p-3 bg-body-tertiary" style="max-height: 300px; overflow: auto;"><code>${escapeHtml(sessionData.originalContent)}</code></pre>
+                    </div>
+                `;
+            }
+
+            // Preprocessed file
+            if (sessionData.preprocessedContent) {
+                html += `
+                    <div class="mb-4">
+                        <h6>Preprocessed MaterialX File</h6>
+                        <pre class="border rounded p-3 bg-body-tertiary" style="max-height: 300px; overflow: auto;"><code>${escapeHtml(sessionData.preprocessedContent)}</code></pre>
+                    </div>
+                `;
+            }
+
+            // USD file
+            if (sessionData.usdContent) {
+                html += `
+                    <div class="mb-4">
+                        <h6>USD File Output</h6>
+                        <pre class="border rounded p-3 bg-body-tertiary" style="max-height: 300px; overflow: auto;"><code>${escapeHtml(sessionData.usdContent)}</code></pre>
+                    </div>
+                `;
+            }
+
+            if (html) {
+                resultsContainer.innerHTML = html;
+            } else {
+                resultsContainer.innerHTML = '<div class="text-muted">Results will appear here after processing...</div>';
+            }
+        }
+
+        function showResults(title, content, language = 'xml') {
+            // This function is kept for backwards compatibility but not used anymore
+            showAllFileContents();
+        }
+
+        function showPreprocessedResults(title, content) {
+            // This function is kept for backwards compatibility but not used anymore
+            showAllFileContents();
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function downloadFile(title, content, extension) {
+            const filename = `${title.replace(/\s+/g, '_').toLowerCase()}.${extension}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                logMessage('Content copied to clipboard', 'success');
+            }).catch(() => {
+                logMessage('Failed to copy to clipboard', 'error');
+            });
+        }        // Event Handlers
+        function handleDirectorySelection() {
+            const directoryInput = document.getElementById('mtlx-directory');
+            const files = directoryInput.files;
+            
+            console.log('Selected directory files:', files);
+            console.log('Number of files:', files ? files.length : 0);
+            
+            if (!files || files.length === 0) {
+                sessionData.selectedDirectory = null;
+                sessionData.directoryFiles = [];
+                document.getElementById('directory-info').classList.add('d-none');
+                return;
+            }
+            
+            // Store directory information
+            sessionData.directoryFiles = Array.from(files);
+            
+            // Get the common directory path from the first file
+            if (files[0].webkitRelativePath) {
+                const firstPath = files[0].webkitRelativePath;
+                console.log('First file path:', firstPath);
+                const dirParts = firstPath.split('/');
+                sessionData.selectedDirectory = dirParts[0]; // Root directory name
+                
+                console.log('Directory parts:', dirParts);
+                console.log('Selected directory name:', sessionData.selectedDirectory);
+                
+                // Count texture files immediately to verify filtering
+                const textureExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.exr', '.hdr', '.tx'];
+                const textureFiles = sessionData.directoryFiles.filter(f => {
+                    const hasTextureExt = textureExtensions.some(ext => f.name.toLowerCase().endsWith(ext));
+                    if (hasTextureExt) {
+                        console.log('Found texture file:', f.name, 'at path:', f.webkitRelativePath);
+                    }
+                    return hasTextureExt;
+                });
+                
+                console.log('Total texture files found:', textureFiles.length);
+                
+                document.getElementById('directory-info').classList.remove('d-none');
+                document.getElementById('directory-info-text').textContent = 
+                    `Selected directory: ${sessionData.selectedDirectory} (${files.length} total files, ${textureFiles.length} texture files)`;
+                    
+                logMessage(`Directory selected: ${sessionData.selectedDirectory} with ${files.length} total files (${textureFiles.length} texture files)`, 'info');
+            }
+        }
+        
+        function handleFileUpload() {
+            const fileInput = document.getElementById('mtlx-file');
+            const file = fileInput.files[0];
+
+            if (!file) return;
+
+            if (!file.name.endsWith('.mtlx')) {
+                logMessage('Please select a .mtlx file', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Store the original content
+                sessionData.originalContent = e.target.result;
+
+                // Prepare data to send to backend
+                const uploadData = {
+                    content: e.target.result,
+                    filename: file.name
+                };
+                  // If a directory was selected, include directory information
+                if (sessionData.selectedDirectory && sessionData.directoryFiles.length > 0) {
+                    uploadData.directory_name = sessionData.selectedDirectory;
+                    
+                    console.log('Processing directory files for upload...');
+                    console.log('Directory name:', sessionData.selectedDirectory);
+                    console.log('Directory files count:', sessionData.directoryFiles.length);
+                    
+                    // Include information about texture files in the directory
+                    const textureExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.exr', '.hdr', '.tx'];
+                    const textureFiles = sessionData.directoryFiles
+                        .filter(f => {
+                            const isTexture = textureExtensions.some(ext => f.name.toLowerCase().endsWith(ext));
+                            if (isTexture) {
+                                console.log('Including texture file:', f.name, 'at path:', f.webkitRelativePath);
+                            }
+                            return isTexture;
+                        })
+                        .map(f => {
+                            const textureInfo = {
+                                name: f.name,
+                                path: f.webkitRelativePath,
+                                size: f.size
+                            };
+                            console.log('Mapped texture file:', textureInfo);
+                            return textureInfo;
+                        });
+                    
+                    uploadData.texture_files = textureFiles;
+                    
+                    console.log('Final texture files array:', textureFiles);
+                    console.log('Upload data:', uploadData);
+                    
+                    logMessage(`Found ${textureFiles.length} potential texture files in selected directory`, 'info');
+                }
+
+                socket.emit('upload_file', uploadData);
+
+                // Show the original file content
+                showOriginalFile();
+            };
+            reader.readAsText(file);
+        }
+
+        function handlePreprocess() {
+            if (!sessionData.originalFile) {
+                logMessage('Please upload a MaterialX file first', 'error');
+                return;
+            }
+
+            const options = {
+                add_materials: document.getElementById('add-materials').checked,
+                add_nodegraph_outputs: document.getElementById('add-outputs').checked,
+                add_downstream_materials: document.getElementById('add-downstream').checked,
+                resolve_image_paths: document.getElementById('resolve-images').checked,
+                add_geometry_streams: document.getElementById('add-geometry').checked,
+                encapsulate_nodes: document.getElementById('encapsulate-nodes').checked,
+                nodegraph_name: document.getElementById('nodegraph-name').value,
+                remove_original_nodes: document.getElementById('remove-original').checked,
+                image_search_paths: document.getElementById('image-paths').value.split(',').map(s => s.trim()).filter(s => s)
+            };
+
+            socket.emit('preprocess_mtlx', {
+                input_path: sessionData.originalFile,
+                options: options
+            });
+        }        function handleConvert() {
+            const usePreprocessed = document.getElementById('use-preprocessed').checked;
+            const inputPath = usePreprocessed ? sessionData.preprocessedFile : sessionData.originalFile;
+
+            if (!inputPath) {
+                logMessage('Please upload a MaterialX file first', 'error');
+                return;
+            }
+
+            const options = {
+                use_custom_converter: document.getElementById('use-custom-converter').checked,
+                add_geometry: document.getElementById('add-geometry').checked,
+                add_environment: document.getElementById('add-environment').checked,
+                add_camera: document.getElementById('add-camera').checked,
+                emit_all_value_elements: document.getElementById('emit-all-elements').checked,
+                validate_output: document.getElementById('validate-output').checked
+            };
+
+            socket.emit('convert_to_usd', {
+                input_path: inputPath,
+                options: options
+            });
+        }        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeSocket();
+
+            // File upload handlers
+            document.getElementById('mtlx-file').addEventListener('change', handleFileUpload);
+            document.getElementById('mtlx-directory').addEventListener('change', handleDirectorySelection);
+
+            // Button handlers
+            document.getElementById('preprocess-btn').addEventListener('click', handlePreprocess);
+            document.getElementById('convert-btn').addEventListener('click', handleConvert);
+
+            // Toggle encapsulate options
+            document.getElementById('encapsulate-nodes').addEventListener('change', function () {
+                const options = document.getElementById('encapsulate-options');
+                if (this.checked) {
+                    options.classList.add('show');
+                } else {
+                    options.classList.remove('show');
+                }
+            });
+
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', function () {
+                if (sessionData.tempDir) {
+                    socket.emit('cleanup_session', { temp_dir: sessionData.tempDir });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
